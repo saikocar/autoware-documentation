@@ -21,7 +21,7 @@
     
     
       
-        <title>Installation - Autoware Documentation</title>
+        <title>インストール - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installation" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Installation
+              インストール
             
           </span>
         </div>
@@ -5645,23 +5645,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#target-platforms" class="md-nav__link">
-    Target platforms
+  <a href="#_2" class="md-nav__link">
+    対象プラットフォーム
   </a>
   
-    <nav class="md-nav" aria-label="Target platforms">
+    <nav class="md-nav" aria-label="対象プラットフォーム">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
-    Architecture
+  <a href="#_3" class="md-nav__link">
+    アーキテクチャ
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#minimum-hardware-requirements" class="md-nav__link">
-    Minimum hardware requirements
+  <a href="#_4" class="md-nav__link">
+    ハードウェアの最小構成要件
   </a>
   
 </li>
@@ -5672,23 +5672,23 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing-autoware" class="md-nav__link">
-    Installing Autoware
+  <a href="#autoware" class="md-nav__link">
+    Autowareのインストール
   </a>
   
-    <nav class="md-nav" aria-label="Installing Autoware">
+    <nav class="md-nav" aria-label="Autowareのインストール">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-docker-installation" class="md-nav__link">
-    1. Docker installation
+  <a href="#1-docker" class="md-nav__link">
+    1. Dockerを利用したインストール
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-source-installation" class="md-nav__link">
-    2. Source installation
+  <a href="#2" class="md-nav__link">
+    2. ソースインストール
   </a>
   
 </li>
@@ -5699,15 +5699,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing-related-tools" class="md-nav__link">
-    Installing related tools
+  <a href="#_5" class="md-nav__link">
+    関連ツールのインストール
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#additional-settings-for-developers" class="md-nav__link">
-    Additional settings for developers
+  <a href="#_6" class="md-nav__link">
+    開発者向けの追加設定
   </a>
   
 </li>
@@ -5730,55 +5730,55 @@
   
 
 
-<div><h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">#</a></h1>
-<h2 id="target-platforms">Target platforms<a class="headerlink" href="#target-platforms" title="Permanent link">#</a></h2>
-<p>Autoware targets the platforms listed below. It may change in future versions of Autoware.</p>
-<p>The Autoware Foundation provides no support on other platforms than those listed below.</p>
-<h3 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">#</a></h3>
+<div><h1 id="_1">インストール<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">対象プラットフォーム<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>Autowareは以下に列挙されているプラ​​ットフォームを対象としています。Autowareの将来のバージョンでは変更される可能性があります。</p>
+<p>Autoware Foundationは以下に列挙されているプラ​​ットフォーム以外はサポートしません。</p>
+<h3 id="_3">アーキテクチャ<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
 <ul>
 <li>amd64</li>
 <li>arm64</li>
 </ul>
-<h3 id="minimum-hardware-requirements">Minimum hardware requirements<a class="headerlink" href="#minimum-hardware-requirements" title="Permanent link">#</a></h3>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>Autoware is scalable and can be customized to work with distributed or less powerful hardware.
-The minimum hardware requirements given below are just a general recommendation.
-However, performance will be improved with more cores, RAM and a higher-spec graphics card or <abbr title="Graphics Processing Unit">GPU</abbr> core.</p>
+<h3 id="_4">ハードウェアの最小構成要件<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<div class="admonition 情報">
+<p class="admonition-title">情報</p>
+<p>Autowareはスケーラブルであり、分散ハードウェアやそれほど強力ではないハードウェアで動作するようにカスタマイズできます。
+以下に示すハードウェアの最小構成要件は一般的な推奨事項にすぎません。
+ただしより多くのコア、RAM、より高スペックのグラフィックスカードまたはGPUコアを使用するとパフォーマンスが向上します。</p>
 </div>
 <ul>
-<li>CPU with 8 cores</li>
+<li>8コアのCPU</li>
 <li>16GB RAM</li>
-<li>[Optional] NVIDIA <abbr title="Graphics Processing Unit">GPU</abbr> (4GB RAM)</li>
+<li>[オプション] NVIDIA <abbr title="Graphics Processing Unit">GPU</abbr> (4GB RAM)</li>
 </ul>
 <blockquote>
-<p>Although <abbr title="Graphics Processing Unit">GPU</abbr> is not required to run basic functionality, it is mandatory to enable the following neural network related functions:</p>
+<p>基本機能の実行にGPUは必要ありませんが以下のニューラルネットワーク関連機能を有効にするには必須です:</p>
 <ul>
-<li>LiDAR based object detection</li>
-<li>Camera based object detection</li>
-<li>Traffic light detection and classification</li>
+<li>LiDARベースの物体検出</li>
+<li>カメラベースの物体検出</li>
+<li>信号機の検出と分類</li>
 </ul>
 </blockquote>
-<p>For details of how to enable object detection and traffic light detection/classification without a <abbr title="Graphics Processing Unit">GPU</abbr>, refer to the <a href="../how-to-guides/others/running-autoware-without-cuda/">Running Autoware without CUDA</a>.</p>
-<h2 id="installing-autoware">Installing Autoware<a class="headerlink" href="#installing-autoware" title="Permanent link">#</a></h2>
-<p>There are two ways to set up Autoware. Choose one according to your preference.</p>
-<p>If any issues occur during installation, refer to the <a href="../support">Support page</a>.</p>
-<h3 id="1-docker-installation">1. Docker installation<a class="headerlink" href="#1-docker-installation" title="Permanent link">#</a></h3>
-<p>Docker can ensure that all developers in a project have a common, consistent development environment.
-It is recommended for beginners, casual users, people who are unfamiliar with Ubuntu.</p>
-<p>For more information, refer to the <a href="autoware/docker-installation/">Docker installation guide</a>.</p>
-<h3 id="2-source-installation">2. Source installation<a class="headerlink" href="#2-source-installation" title="Permanent link">#</a></h3>
-<p>Source installation is for the cases where more granular control of the installation environment is needed.
-It is recommended for experienced users or people who want to customize their environment.
-Note that some problems may occur depending on your local environment.</p>
-<p>For more information, refer to the <a href="autoware/source-installation/">source installation guide</a>.</p>
-<h2 id="installing-related-tools">Installing related tools<a class="headerlink" href="#installing-related-tools" title="Permanent link">#</a></h2>
-<p>Some other tools are required depending on the evaluation you want to do.
-For example, to run an end-to-end simulation you need to install an appropriate simulator.</p>
-<p>For more information, see <a href="related-tools">here</a>.</p>
-<h2 id="additional-settings-for-developers">Additional settings for developers<a class="headerlink" href="#additional-settings-for-developers" title="Permanent link">#</a></h2>
-<p>There are also tools and settings for developers, such as Shells or IDEs.</p>
-<p>For more information, see <a href="additional-settings-for-developers">here</a>.</p>
+<p>GPUを使用せずにオブジェクト検出と信号機の検出/分類を有効にする方法の詳細については<a href="../how-to-guides/others/running-autoware-without-cuda/">CUDAを使用しないAutowareの実行</a>を参照してください。</p>
+<h2 id="autoware">Autowareのインストール<a class="headerlink" href="#autoware" title="Permanent link">#</a></h2>
+<p>Autowareをセットアップするには2つの方法があります。お好みに応じてお選びください。</p>
+<p>インストール中に問題が発生した場合は<a href="../support">サポートページ</a>を参照してください。</p>
+<h3 id="1-docker">1. Dockerを利用したインストール<a class="headerlink" href="#1-docker" title="Permanent link">#</a></h3>
+<p>Dockerを使用すると、プロジェクト内のすべての開発者が共通の一貫した開発環境を確保できます。
+初心者、カジュアルユーザー、Ubuntuに慣れていない人にお勧めします。</p>
+<p>詳細については<a href="autoware/docker-installation/">Dockerを利用したインストールガイド</a>を参照してください。</p>
+<h3 id="2">2. ソースインストール<a class="headerlink" href="#2" title="Permanent link">#</a></h3>
+<p>ソースインストールは、インストール環境をより詳細に制御する必要がある場合に使用します。
+経験豊富なユーザーや、環境をカスタマイズしたい人におすすめです。
+ローカル環境によっては問題が発生する場合があることをご了承ください。</p>
+<p>詳細については <a href="autoware/source-installation/">ソースインストールガイド</a>を参照してください。</p>
+<h2 id="_5">関連ツールのインストール<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<p>実行したい評価に応じてツールが必要になります。
+例えばエンドツーエンドのシミュレーションを実行するには適切なシミュレーターをインストールする必要があります。</p>
+<p>詳細については<a href="related-tools">こちら</a>を参照してください。</p>
+<h2 id="_6">開発者向けの追加設定<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
+<p>AutowareにはShellやIDEなど開発者向けのツールと設定もあります。</p>
+<p>詳細については<a href="additional-settings-for-developers">こちら</a>を参照してください。</p>
 <!-- prettier-ignore --></div>
 
 
