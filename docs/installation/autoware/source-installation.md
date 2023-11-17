@@ -1,6 +1,6 @@
-# Source installation
+# ソースインストール
 
-## Prerequisites
+## 前提条件
 
 - OS
 
@@ -10,64 +10,64 @@
 
   - ROS 2 Humble
 
-  For ROS 2 system dependencies, refer to [REP-2000](https://www.ros.org/reps/rep-2000.html).
+  ROS2システムの依存関係については[REP-2000](https://www.ros.org/reps/rep-2000.html)を参照してください。
 
 - [Git](https://git-scm.com/)
-  - [Registering SSH keys to GitHub](https://github.com/settings/keys) is preferable.
+  - [SSHキーをGitHubに登録すること](https://github.com/settings/keys)を推奨します。
 
 ```bash
 sudo apt-get -y update
 sudo apt-get -y install git
 ```
 
-> Note: If you wish to use ROS 2 Galactic on Ubuntu 20.04, refer to installation instruction from [galactic](https://autowarefoundation.github.io/autoware-documentation/galactic/installation/autoware/source-installation/) branch, but be aware that Galactic version of Autoware might not have latest features.
+> 注意:Ubuntu 20.04でROS2 Galacticを使用したい場合は、[galactic](https://autowarefoundation.github.io/autoware-documentation/galactic/installation/autoware/source-installation/) ブランチのインストール手順を参照してください。ただしGalactic版には最新の機能が含まれていない可能性があることに注意してください。
 
-## How to set up a development environment
+## 開発環境のセットアップ
 
-1. Clone `autowarefoundation/autoware` and move to the directory.
+1. `autowarefoundation/autoware`のクローンを作成し、ディレクトリに移動します。
 
    ```bash
    git clone https://github.com/autowarefoundation/autoware.git
    cd autoware
    ```
 
-2. If you are installing Autoware for the first time, you can automatically install the dependencies by using the provided Ansible script.
+2. Autowareを初めてインストールする場合は提供されたAnsibleスクリプトを使用して依存関係を自動的にインストールできます。
 
    ```bash
    ./setup-dev-env.sh
    ```
 
-   If you encounter any build issues, please consult the [Troubleshooting](../../support/troubleshooting/index.md#build-issues) section for assistance.
+   ビルドの問題が発生した場合は[トラブルシューティング](../../support/troubleshooting/index.md#build-issues)セクションを参照してサポートを求めてください。
 
-!!! info
+!!! 注意
 
-    Before installing NVIDIA libraries, please ensure that you have reviewed and agreed to the licenses.
+    NVIDIAライブラリをインストールする前にnvidiaライセンスに同意していることを確認してください。
 
     - [CUDA](https://docs.nvidia.com/cuda/eula/index.html)
     - [cuDNN](https://docs.nvidia.com/deeplearning/cudnn/sla/index.html)
     - [TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/sla/index.html)
 
-!!! note
+!!! 注記
 
-    The following items will be automatically installed. If the ansible script doesn't work or if you already have different versions of dependent libraries installed, please install the following items manually.
+    以下の項目が自動的にインストールされます。ansibleスクリプトが機能しない場合、または別のバージョンの依存ライブラリがすでにインストールされている場合は、以下のアイテムを手動でインストールしてください。
 
-    - [Install ROS 2](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/ros2#manual-installation)
-    - [Install ROS 2 Dev Tools](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/ros2_dev_tools#manual-installation)
-    - [Install the RMW Implementation](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/rmw_implementation#manual-installation)
-    - [Install pacmod](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/pacmod#manual-installation)
-    - [Install Autoware Core dependencies](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/autoware_core#manual-installation)
-    - [Install Autoware Universe dependencies](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/autoware_universe#manual-installation)
-    - [Install pre-commit dependencies](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/pre_commit#manual-installation)
-    - [Install Nvidia CUDA](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/cuda#manual-installation)
-    - [Install Nvidia cuDNN and TensorRT](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/tensorrt#manual-installation)
+    - [ROS2のインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/ros2#manual-installation)
+    - [ROS2 Dev Toolsのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/ros2_dev_tools#manual-installation)
+    - [RMW Implementationのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/rmw_implementation#manual-installation)
+    - [pacmodのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/pacmod#manual-installation)
+    - [Autoware Coreの依存関係のインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/autoware_core#manual-installation)
+    - [Autoware Universeの依存関係のインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/autoware_universe#manual-installation)
+    - [pre-commitの依存関係のインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/pre_commit#manual-installation)
+    - [Nvidia CUDAのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/cuda#manual-installation)
+    - [Nvidia cuDNNとTensorRTのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/tensorrt#manual-installation)
 
-    If you didn't use ansible script you will need to download some package artifacts as explained in [Manual loading of artifacts](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/artifacts). Otherwise some packages (mostly from perception) will not be able to run as they need these artifacts for the inference.
+    ansibleスクリプトを使用しなかった場合は[アーティファクトの手動ロードマニュアル](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/artifacts)で説明されているように、いくつかのパッケージアーティファクトをダウンロードする必要があります。そうしないと推論にこれらのアーティファクトが必要なため、一部のパッケージ (主に認識に関連するもの) が実行できなくなります。
 
-## How to set up a workspace
+## ワークスペースの設定方法
 
-1. Create the `src` directory and clone repositories into it.
+1. `src`ディレクトリを作成し、その中にリポジトリのクローンします。
 
-   Autoware uses [vcstool](https://github.com/dirk-thomas/vcstool) to construct workspaces.
+   Autowareは[vcstool](https://github.com/dirk-thomas/vcstool)を使用してワークスペースを構築します。
 
    ```bash
    cd autoware
@@ -75,63 +75,63 @@ sudo apt-get -y install git
    vcs import src < autoware.repos
    ```
 
-2. Install dependent ROS packages.
+2. 依存するROSパッケージをインストールします。
 
-   Autoware requires some ROS 2 packages in addition to the core components.
-   The tool `rosdep` allows an automatic search and installation of such dependencies.
-   You might need to run `rosdep update` before `rosdep install`.
+   Autowareにはコアコンポーネントに加えていくつかのROS2パッケージが必要です。
+   `rosdep`ツールを使用すると、依存関係の自動検索とインストールが可能になります。
+   `rosdep install`の前に`rosdep update`を実行する必要があります.
 
    ```bash
    source /opt/ros/humble/setup.bash
    rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
    ```
 
-3. Build the workspace.
+3. ワークスペースをビルドします。
 
-   Autoware uses [colcon](https://github.com/colcon) to build workspaces.
-   For more advanced options, refer to the [documentation](https://colcon.readthedocs.io/).
+   Autowareは[colcon](https://github.com/colcon)を使用してワークスペースをビルドします。
+   より高度なオプションについては[ドキュメント](https://colcon.readthedocs.io/)を参照してください。
 
    ```bash
    colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
    ```
 
-   If there is any build issue, refer to [Troubleshooting](../../support/troubleshooting/index.md#build-issues).
+   ビルドで問題が発生した場合は[トラブルシューティング](../../support/troubleshooting/index.md#build-issues)を参照してください。
 
-## How to update a workspace
+## ワークスペースのアップデート
 
-1. Update the `.repos` file.
+1. `.repos` ファイルを更新します。
 
    ```bash
    cd autoware
    git pull <remote> <your branch>
    ```
 
-   `<remote>` is usually `git@github.com:autowarefoundation/autoware.git`
+   `<remote>`は通常`git@github.com:autowarefoundation/autoware.git`です。
 
-2. Update the repositories.
+2. リポジトリを更新します。
 
    ```bash
    vcs import src < autoware.repos
    vcs pull src
    ```
 
-   For Git users:
+   Gitユーザーに向けて:
 
-   - `vcs import` is similar to `git checkout`.
-     - Note that it doesn't pull from the remote.
-   - `vcs pull` is similar to `git pull`.
-     - Note that it doesn't switch branches.
+   - `vcs import`は`git checkout`と似ています。
+     - remoteからは取得できないことに注意してください。
+   - `vcs pull`は`git pull`と似ています.
+     - ブランチは切り替わらないことに注意してください。
 
-   For more information, refer to the [official documentation](https://github.com/dirk-thomas/vcstool).
+   詳細については[公式ドキュメント](https://github.com/dirk-thomas/vcstool)を参照してください。
 
-3. Install dependent ROS packages.
+3. 依存するROSパッケージをインストールします。
 
    ```bash
    source /opt/ros/humble/setup.bash
    rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
    ```
 
-4. Build the workspace.
+4. ワークスペースをビルドします。
 
    ```bash
    colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
