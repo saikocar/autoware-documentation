@@ -1,97 +1,96 @@
-# Additional settings for developers
+# 開発者向け追加設定
 
-## Console settings for ROS 2
+## ROS2のコンソール設定
 
-### Colorizing logger output
+### ロガー出力の色付け
 
-By default, ROS 2 logger doesn't colorize the output.
-To colorize it, write the following in your `.bashrc`:
+デフォルトではROS2ロガーは出力を色付けしません。
+色付けするには`.bashrc`に次のように記述します。:
 
 ```bash
 export RCUTILS_COLORIZED_OUTPUT=1
 ```
 
-### Customizing the format of logger output
+### ロガー出力のフォーマットのカスタマイズ
 
-By default, ROS 2 logger doesn't output detailed information such as file name, function name, or line number.
-To customize it, write the following in your `.bashrc`:
+デフォルトではROS2ロガーはファイル名、関数名、行番号などの詳細情報を出力しません。
+カスタマイズするには`.bashrc`に次のように記述します。:
 
 ```bash
 export RCUTILS_CONSOLE_OUTPUT_FORMAT="[{severity} {time}] [{name}]: {message} ({function_name}() at {file_name}:{line_number})"
 ```
 
-For more options, see [here](https://docs.ros.org/en/rolling/Tutorials/Logging-and-logger-configuration.html#console-output-formatting).
+その他のオプションについては[こちら](https://docs.ros.org/en/rolling/Tutorials/Logging-and-logger-configuration.html#console-output-formatting)を参照してください。
 
-## Network settings for ROS 2
+## ROS2のネットワーク設定
+ROS2はDDSを採用しており、ROS2とDDSの構成については個別に説明します。
+ROS2ネットワークの概念については[公式ドキュメント](http://design.ros2.org/articles/ros_on_dds.html)を参照してください。
 
-ROS 2 employs DDS, and the configuration of ROS 2 and DDS is described separately.
-For ROS 2 networking concepts, refer to the [official documentation](http://design.ros2.org/articles/ros_on_dds.html).
+### ROS2のネットワーク設定
 
-### ROS 2 network setting
+ROS2はデフォルトでローカルネットワーク上にデータをマルチキャストします。
+したがってオフィスで開発する場合、データはオフィスのローカルネットワーク上を流れます。
+これはパケットの衝突やネットワークトラフィックの増加を引き起こす可能性があります。
 
-ROS 2 multicasts data on the local network by default.
-Therefore, when you develop in an office, the data flows over the local network of your office.
-It may cause collisions of packets or increases in network traffic.
+これらを回避するには2つのオプションがあります。
 
-To avoid these, there are two options.
+- ローカルホストのみの通信
+- ローカルネットワーク上での同一ドメインのみの通信
 
-- Localhost-only communication
-- Same domain only communication on the local network
+ローカルネットワーク上で複数のホストコンピュータを使用する予定がない限り、ローカルホストのみの通信をお勧めします。
+詳細については以下のセクションを参照してください。
 
-Unless you plan to use multiple host computers on the local network, localhost-only communication is recommended.
-For details, refer to the sections below.
+#### ローカルホストのみの通信を有効にする
 
-#### Enabling localhost-only communication
-
-Write the following in your `.bashrc`:
-For more information, see the [ROS 2 documentation](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html#the-ros-localhost-only-variable).
+`.bashrc`に次のように記述します。:
+詳細については[ROS2のドキュメント](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html#the-ros-localhost-only-variable)を参照してください。
 
 ```bash
 export ROS_LOCALHOST_ONLY=1
 ```
 
-If you export `ROS_LOCALHOST_ONLY=1`, `MULTICAST` must be enabled at the loopback address.
-To verify that `MULTICAST` is enabled, use the following command.
+`ROS_LOCALHOST_ONLY=1`をエクスポートする場合はループバック アドレスで`MULTICAST`を有効にする必要があります。
+`MULTICAST`が有効であることを確認するには次のコマンドを使用します。
 
 ```console
 $ ip link show lo
 1: lo: <LOOPBACK,MULTICAST,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
 ```
 
-If the word `MULTICAST` is not printed, use the following command to enable it.
+`MULTICAST`という単語が表示されない場合は、次のコマンドを使用して有効にします。
 
 ```bash
 sudo ip link set lo multicast on
 ```
 
-#### Same domain only communication on the local network
+#### ローカルネットワーク上の同一ドメインのみの通信
 
-ROS 2 uses `ROS_DOMAIN_ID` to create groups and communicate between machines in the groups.
-Since all ROS 2 nodes use domain ID `0` by default, it may cause unintended interference.
+ROS2は`ROS_DOMAIN_ID`を使用してグループを作成し、グループ内のマシン間で通信します。
+すべてのROS2ノードはデフォルトでドメインID`0`を使用するため意図しない干渉が発生する可能性があります。
 
-To avoid it, set a different domain ID for each group in your `.bashrc`:
+これを回避するには`.bashrc`内でグループごとに異なるドメインIDを設定します:
 
 ```bash
-# Replace X with the Domain ID you want to use
-# Domain ID should be a number in range [0, 101] (inclusive)
+# Xを使用するドメインIDに置き換えます
+# ドメインIDは[0,101]の範囲の数値である必要があります(両端の値を含む)
 export ROS_DOMAIN_ID=X
 ```
 
-Also confirm that `ROS_LOCALHOST_ONLY` is `0` by using the following command.
+また以下のコマンドを使用して`ROS_LOCALHOST_ONLY`が`0`であることを確認します。
 
 ```bash
-echo $ROS_LOCALHOST_ONLY # If the output is 1, localhost has priority.
+echo $ROS_LOCALHOST_ONLY # 出力が1の場合localhostが優先されます。
 ```
 
-For more information, see the [ROS 2 Documentation](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html#the-ros-domain-id-variable).
+詳細については[ROS2のドキュメント](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html#the-ros-domain-id-variable)を参照してください。
 
-### DDS settings
+### DDSの設定
 
-Autoware uses DDS for inter-node communication. [ROS 2 documentation](https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html) recommends users to tune DDS to utilize its capability. Especially, receive buffer size is the critical parameter for Autoware. If the parameter is not large enough, Autoware will failed in receiving large data like point cloud or image.
+Autowareはノード間通信にDDSを使用します。[ROS2のドキュメント](https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html)ではDDSの機能を活用するためにDDSを調整することをユーザーに推奨しています。特に受信バッファ サイズはAutowareにとって重要なパラメータです。パラメータが十分に大きくない場合、Autowareは点群や画像などの大きなデータの受信に失敗します。
 
-#### Tuning DDS
+#### DDSの調整
 
-Unless customized, CycloneDDS is adopted by default. For example, to execute Autoware with CycloneDDS, prepare a config file. A sample config file is given below. Save it as `cyclonedds_config.xml`.
+カスタマイズしない限りデフォルトでCycloneDDSが採用されます。例としてCycloneDDSでAutowareを実行するための設定ファイルを用意します。構成ファイルのサンプルを以下に示します。`cyclonedds_config.xml`として保存します。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -114,21 +113,21 @@ Unless customized, CycloneDDS is adopted by default. For example, to execute Aut
 </CycloneDDS>
 ```
 
-This configuration is mostly taken from [Eclipse Cyclone DDS:Run-time configuration documentation](https://github.com/eclipse-cyclonedds/cyclonedds/tree/a10ced3c81cc009e7176912190f710331a4d6caf#run-time-configuration).
-You can see why each value is set as such under the documentation link.
+この設定は主に[Eclipse Cyclone DDS:Run-time設定ドキュメント](https://github.com/eclipse-cyclonedds/cyclonedds/tree/a10ced3c81cc009e7176912190f710331a4d6caf#run-time-configuration)から引用されています。
+各値がそのように設定されている理由はドキュメントのリンクで確認できます。
 
-Set the config file path and enlarge the Linux kernel maximum buffer size before launching Autoware.
+Autowareを起動する前に構成ファイルのパスを設定し、Linuxカーネルの最大バッファサイズを拡大します。
 
 ```bash
 export CYCLONEDDS_URI=file:///absolute/path/to/cyclonedds_config.xml
 sudo sysctl -w net.core.rmem_max=2147483647
 ```
 
-For more information, Refer to [ROS 2 documentation](https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html). Reading user guide for chosen DDS is helpful for more understanding.
+詳細については[ROS2のドキュメント](https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html)を参照してください。選択したDDSのユーザーガイドを読むとより深く理解できます。
 
-#### Tuning DDS for multiple host computers (for advanced users)
+#### 複数のホストコンピューター用のDDSのチューニング(上級ユーザー向け)
 
-When Autoware runs on multiple host computers, IP Fragmentation should be taken into account. As [ROS 2 documentation](https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html#cross-vendor-tuning) recommends, parameters for IP Fragmentation should be set as shown in the following example.
+Autowareを複数のホストコンピュータで実行する場合はIPフラグメンテーションを考慮する必要があります。[ROS2のドキュメント](https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html#cross-vendor-tuning)で推奨されているようにIPフラグメンテーションのパラメータは次の例のように設定する必要があります。
 
 ```bash
 sudo sysctl -w net.ipv4.ipfrag_time=3
