@@ -1,47 +1,47 @@
-# Docker installation
+# Dockerを利用したインストール
 
-!!! info
+!!! 情報
 
-    Since this page explains Docker-specific information, it is recommended to see [Source installation](./source-installation.md) as well if you need detailed information.
+    このページでは Docker固有の情報について説明しているため、詳細な情報が必要な場合は[ソースインストール](./source-installation.md)も併せて参照することをお勧めします。
 
-Here are two ways to install Autoware by docker:
+DockerでAutowareをインストールする2つの方法は以下のとおりです:
 
-- The first way is to start Autoware with `prebuilt image`, this is a quick start, this way you can only run Autoware simulator and not develop Autoware, it is only suitable for beginners
+- 1番目の方法は事前に構築されたイメージを使用してAutowareを起動するクイックスタートです。この方法ではAutowareシミュレータの実行のみが可能でAutowareの開発はできない初心者向けです。
+- 2番目の方法は開発イメージを使用してAutowareを起動することです。これはDockerを使用したAutowareの開発と実行をサポートします。
 
-- The second way is to start Autoware with `devel image`, which supports developing and running Autoware using docker
+## クイックスタート
 
-## Docker installation for quick start
-
-[docker installation for quick start](./docker-installation-prebuilt.md)
+[クイックスタート](./docker-installation-prebuilt.md)
 
 ![type:video](https://youtube.com/embed/3KUhEFkEbI8)
 
-## Docker installation for development
+## 開発者向けのDockerインストール
 
-[docker installation for development](./docker-installation-devel.md)
+[開発者向けのDockerインストール](./docker-installation-devel.md)
 
 ![type:video](https://youtube.com/embed/UrSF-VwncGQ)
 
-## Troubleshooting
+## トラブルシューティング
 
-Here are solutions for a few specific errors:
+特定のエラーに対する解決策は次のとおりです:
 
 ### cuda error: forward compatibility was attempted on non supported hw
+### 翻訳：cudaエラー: サポートされていないハードウェア番号で上位互換性が試行されました
 
-When starting Docker with GPU support enabled for NVIDIA graphics, you may sometimes receive the following error:
+NVIDIAグラフィックスのGPUサポートを有効にしてDockerを起動すると次のエラーが発生する場合があります:
 
 ```bash
 docker: Error response from daemon: OCI runtime create failed: container_linux.go:349: starting container process caused "process_linux.go:449: container init caused \"process_linux.go:432: running prestart hook 0 caused \\\"error running hook: exit status 1, stdout: , stderr: nvidia-container-cli: initialization error: cuda error: forward compatibility was attempted on non supported hw\\\\n\\\"\"": unknown.
 ERROR: Command return non-zero exit code (see above): 125
 ```
 
-This usually indicates that a new NVIDIA graphics driver has been installed (usually via `apt`) but the system has not yet been restarted. A similar message may appear if the graphics driver is not available, for example because of resuming after suspend.
+これは通常、新しいNVIDIAグラフィックスドライバーが(通常はapt経由で)インストールされているが、システムがまだ再起動されていないことを示します。サスペンド後の再開などの理由でグラフィックスドライバーが使用できない場合にも同様のメッセージが表示されることがあります。
 
-To fix this, restart your system after installing the new NVIDIA driver.
+これを修正するには新しいNVIDIAドライバーをインストールした後にシステムを再起動します。
 
-### Docker with NVIDIA gpu fails to start Autoware on arm64 devices
+### NVIDIA GPUを搭載したDockerがarm64デバイス上でAutowareを起動できない
 
-When starting Docker with GPU support enabled for NVIDIA graphics on arm64 devices, e.g. NVIDIA jetson AGX xavier, you may receive the following error:
+例えばNVIDIA Jetson AGX xavierといったarm64デバイス上のNVIDIAグラフィックスに対してGPUサポートを有効にしてDockerを起動する場合、次のエラーが表示される場合があります:
 
 ```bash
 nvidia@xavier:~$ rocker --nvidia --x11 --user --volume $HOME/autoware -- ghcr.io/autowarefoundation/autoware-universe:humble-latest-cuda-arm64
@@ -60,26 +60,26 @@ Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-install-
 ...
 ```
 
-This error exists in current version of rocker tool, which relates to the os_detection function of rocker.
+このエラーはrockerツールの現在のバージョンに存在し、rockerのos_detection関数に関連しています。
 
-To fix this error, temporary modification of rocker source code is required, which is not recommended.
+このエラーを修正するにはrockerのソースコードを一時的に変更する必要がありますがお勧めできません。
 
-At current stage, it is recommended to run docker without NVIDIA gpu enabled for arm64 devices:
+現段階ではarm64デバイスに対してNVIDIA GPUを有効にせずにdockerを実行することをお勧めします:
 
 ```bash
 rocker -e LIBGL_ALWAYS_SOFTWARE=1 --x11 --user --volume $HOME/autoware -- ghcr.io/autowarefoundation/autoware-universe:latest-cuda
 ```
 
-This tutorial will be updated after official fix from rocker.
+このチュートリアルはrockerの公式修正後に更新されます。
 
-## Tips
+## ヒント
 
-### Non-native arm64 System
+### 非ネイティブのarm64システム
 
-This section describes a process to run `arm64` systems on `amd64` systems using [`qemu-user-static`](https://github.com/multiarch/qemu-user-static).
+このセクションでは[`qemu-user-static`](https://github.com/multiarch/qemu-user-static)を使用してamd64システム上でarm64システムを実行するプロセスについて説明します。
 
-Initially, your system is usually incompatible with `arm64` systems.
-To check that:
+はじめにamd64システムは通常arm64システムと互換性がありません。
+以下のコマンドを実行して結果を確認します:
 
 ```sh-session
 $ docker run --rm -t arm64v8/ubuntu uname -m
@@ -87,7 +87,7 @@ WARNING: The requested image's platform (linux/arm64/v8) does not match the dete
 standard_init_linux.go:228: exec user process caused: exec format error
 ```
 
-Installing `qemu-user-static` enables us to run `arm64` images on `amd64` systems.
+qemu-user-staticをインストールするとamd64システム上でarm64イメージを実行できるようになります。
 
 ```sh-session
 $ sudo apt-get install qemu-user-static
@@ -97,7 +97,7 @@ WARNING: The requested image's platform (linux/arm64/v8) does not match the dete
 aarch64
 ```
 
-To run Autoware's Docker images of `arm64` architecture, add the suffix `-arm64`.
+Autowareのarm64アーキテクチャのDockerイメージを実行するにはサフィックス`-arm64`を追加します。
 
 ```sh-session
 $ docker run --rm -it ghcr.io/autowarefoundation/autoware-universe:humble-latest-cuda-arm64
