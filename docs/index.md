@@ -1,24 +1,24 @@
-# Autoware Documentation
+# Autowareドキュメント
 
-## About Autoware
+## Autowareについて
 
-Autoware is the world’s leading open-source software project for autonomous driving. Autoware is built on Robot Operating System (ROS) and enables commercial deployment of autonomous driving in a broad range of vehicles and applications.
+Autowareは世界をリードする自動運転向けのオープンソースソフトウェアプロジェクトです。Autowareはロボットオペレーティングシステム(ROS)上に構築されており、幅広い車両やアプリケーションでの自動運転の商用展開を可能にします。
 
-Please see [here](https://www.autoware.org/autoware) for more details.
+詳細は[こちら](https://www.autoware.org/autoware)を確認してください。
 
-## Related Documentations
+## 関連ドキュメント
 
-This [Autoware Documentation](https://autowarefoundation.github.io/autoware-documentation/) is for Autoware's general information.
+この[Autowareドキュメント](https://autowarefoundation.github.io/autoware-documentation/)はAutowareの一般的な情報を記載しています。
 
-For detailed documents of Autoware Universe components, see [Autoware Universe Documentation](https://autowarefoundation.github.io/autoware.universe/).
+Autoware Universeコンポーネントの詳細については[Autoware Universeドキュメント](https://autowarefoundation.github.io/autoware.universe/)を参照してください。
 
-## Getting started
+## はじめに
 
-- [Installation](installation) pages explain the installation steps of Autoware and related tools.
-- [Tutorials](tutorials) pages explain several tutorials that you should try after installation.
-- [How-to guides](how-to-guides) pages explain advanced topics that you should read after you get used to Autoware.
-- [Design](design) pages explain the design concept of Autoware.
-- [Contributing](contributing) pages explain how to contribute to Autoware.
-- [Datasets](datasets) pages contain information about datasets that can be used with Autoware.
-- [Support](support) pages explain several support resources.
-- [Competitions](autoware-competitions) pages explain on-going challenges related to AWF
+- [インストール](installation) ページではAutowareおよび関連ツールのインストール手順について説明します。
+- [チュートリアル](tutorials) ページではインストール後に行うチュートリアルについて説明します。
+- [ハウツーガイド](how-to-guides) ページではAutowareに慣れた方向けの高度なトピックについて説明します。
+- [デザイン](design) ページではAutowareのデザインコンセプトについて説明します。
+- [コントリビューション](contributing) ページではAutowareに貢献する方法について説明します。
+- [データセット](datasets) ページではAutowareで使用できるデータセットについて説明します。
+- [サポート](support) ページではいくつかのサポートリソースについて説明します。
+- [コンペティション](autoware-competitions) ページではAutoWareFoundation(AWF)に関連する進行中の課題について説明します。
