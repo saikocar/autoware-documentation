@@ -1,5 +1,5 @@
-# Installation of related tools
+# 関連ツールのインストール
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中
