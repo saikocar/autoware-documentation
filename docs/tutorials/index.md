@@ -1,40 +1,39 @@
-# Simulation tutorials
+# シミュレーションのチュートリアル
 
-Simulations provide a way of verifying Autoware's functionality before field testing with an actual vehicle.  
-There are three main types of simulation that can be run ad hoc or via a scenario runner.
+シミュレーションは実際の車両でフィールドテストする前にAutowareの機能を検証する方法を提供します。
+アドホックまたはシナリオランナー経由で実行できるシミュレーションには主に3つのタイプがあります。
 
-## Simulation methods
+## シミュレーション方法
 
-### Ad hoc simulation
+### アドホックシミュレーション
 
-Ad hoc simulation is a flexible method for running basic simulations on your local machine, and is the recommended method for anyone new to Autoware.
+アドホックシミュレーションはローカルマシン上で基本的なシミュレーションを実行するための柔軟な方法であり、Autowareを初めて使用する人に推奨される方法です。
 
-### Scenario simulation
+### シナリオシミュレーション
 
-Scenario simulation uses a scenario runner to run more complex simulations based on predefined scenarios.
-It is often run automatically for continuous integration purposes, but can also be run on a local machine.
+シナリオシミュレーションではシナリオランナーを使用して事前に設定されたシナリオに基づいてより複雑なシミュレーションを実行します。
+多くの場合に継続的統合の目的で自動的に実行されますがローカルマシン上で実行することもできます。
 
-## Simulation types
+## シミュレーションの種類
 
-### Planning simulation
+### 計画シミュレーション
+計画シミュレーションでは単純なダミーデータを使用して計画および制御コンポーネント、特に経路生成、経路追跡、障害物回避をテストします。これは車両が歩行者や周囲の車両を回避しながら目的地に到達できることを検証するものでLanelet2マップの妥当性を検証するもう1つの手法です。信号機の取り扱いのテストも可能です。
 
-Planning simulation uses simple dummy data to test the Planning and Control components - specifically path generation, path following and obstacle avoidance. It verifies that a vehicle can reach a goal destination while avoiding pedestrians and surrounding cars, and is another method for verifying the validity of Lanelet2 maps. It also allows for testing of traffic light handling.
+#### 計画シミュレーションはどのように実行しますか?
 
-#### How does planning simulation work?
+1. 目標地点までの経路を生成します
+2. 生成された経路に沿って車を制御します
+3. 目的地に向かう途中で人間や他の車両を検知して回避します
 
-1. Generate a path to the goal destination
-2. Control the car along the generated path
-3. Detect and avoid any humans or other vehicles on the way to the goal destination
+### Rosbagリプレイシミュレーション
 
-### Rosbag replay simulation
+Rosbagリプレイシミュレーションでは事前に記録されたrosbagデータを使用して位置推定コンポーネントと知覚コンポーネントの以下の項目をテストします:
 
-Rosbag replay simulation uses prerecorded rosbag data to test the following aspects of the Localization and Perception components:
+- 位置推定: センサーと車両のフィードバックデータを地図に照合することにより地図上の車両の位置を推定します。
+- 知覚: センサーデータを使用して周囲の車、歩行者、その他の物体などの動的物体を検出、追跡、予測します。
 
-- Localization: Estimation of the vehicle's location on the map by matching sensor and vehicle feedback data to the map.
-- Perception: Using sensor data to detect, track and predict dynamic objects such as surrounding cars, pedestrians, and other objects
+データを繰り返し再生することで耐久テストにも使用できるシミュレーションタイプです。
 
-By repeatedly playing back the data, this simulation type can also be used for endurance testing.
+### デジタルツインシミュレーション
 
-### Digital twin simulation
-
-Digital twin simulation is a simulation type that is able to produce realistic data and simulate almost the entire system. It is also commonly referred to as end-to-end simulation.
+デジタルツインシミュレーションは現実的なデータを生成しシステムのほぼ全体をシミュレートできるシミュレーションタイプです。これは一般にエンドツーエンドシミュレーションとも呼ばれます。
