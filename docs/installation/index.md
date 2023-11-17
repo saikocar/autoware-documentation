@@ -1,66 +1,66 @@
-# Installation
+# インストール
 
-## Target platforms
+## 対象プラットフォーム
 
-Autoware targets the platforms listed below. It may change in future versions of Autoware.
+Autowareは以下に列挙されているプラ​​ットフォームを対象としています。Autowareの将来のバージョンでは変更される可能性があります。
 
-The Autoware Foundation provides no support on other platforms than those listed below.
+Autoware Foundationは以下に列挙されているプラ​​ットフォーム以外はサポートしません。
 
-### Architecture
+### アーキテクチャ
 
 - amd64
 - arm64
 
-### Minimum hardware requirements
+### ハードウェアの最小構成要件
 
-!!! info
+!!! 情報
 
-    Autoware is scalable and can be customized to work with distributed or less powerful hardware.
-    The minimum hardware requirements given below are just a general recommendation.
-    However, performance will be improved with more cores, RAM and a higher-spec graphics card or GPU core.
+    Autowareはスケーラブルであり、分散ハードウェアやそれほど強力ではないハードウェアで動作するようにカスタマイズできます。
+    以下に示すハードウェアの最小構成要件は一般的な推奨事項にすぎません。
+    ただしより多くのコア、RAM、より高スペックのグラフィックスカードまたはGPUコアを使用するとパフォーマンスが向上します。
 
-- CPU with 8 cores
+- 8コアのCPU
 - 16GB RAM
-- [Optional] NVIDIA GPU (4GB RAM)
+- [オプション] NVIDIA GPU (4GB RAM)
 
-> Although GPU is not required to run basic functionality, it is mandatory to enable the following neural network related functions:
+> 基本機能の実行にGPUは必要ありませんが以下のニューラルネットワーク関連機能を有効にするには必須です:
 >
-> - LiDAR based object detection
-> - Camera based object detection
-> - Traffic light detection and classification
+> - LiDARベースの物体検出
+> - カメラベースの物体検出
+> - 信号機の検出と分類
 
-For details of how to enable object detection and traffic light detection/classification without a GPU, refer to the [Running Autoware without CUDA](../how-to-guides/others/running-autoware-without-cuda.md).
+GPUを使用せずにオブジェクト検出と信号機の検出/分類を有効にする方法の詳細については[CUDAを使用しないAutowareの実行](../how-to-guides/others/running-autoware-without-cuda.md)を参照してください。
 
-## Installing Autoware
+## Autowareのインストール
 
-There are two ways to set up Autoware. Choose one according to your preference.
+Autowareをセットアップするには2つの方法があります。お好みに応じてお選びください。
 
-If any issues occur during installation, refer to the [Support page](../support).
+インストール中に問題が発生した場合は[サポートページ](../support)を参照してください。
 
-### 1. Docker installation
+### 1. Dockerを利用したインストール
 
-Docker can ensure that all developers in a project have a common, consistent development environment.
-It is recommended for beginners, casual users, people who are unfamiliar with Ubuntu.
+Dockerを使用すると、プロジェクト内のすべての開発者が共通の一貫した開発環境を確保できます。
+初心者、カジュアルユーザー、Ubuntuに慣れていない人にお勧めします。
 
-For more information, refer to the [Docker installation guide](autoware/docker-installation.md).
+詳細については[Dockerを利用したインストールガイド](autoware/docker-installation.md)を参照してください。
 
-### 2. Source installation
+### 2. ソースインストール
 
-Source installation is for the cases where more granular control of the installation environment is needed.
-It is recommended for experienced users or people who want to customize their environment.
-Note that some problems may occur depending on your local environment.
+ソースインストールは、インストール環境をより詳細に制御する必要がある場合に使用します。
+経験豊富なユーザーや、環境をカスタマイズしたい人におすすめです。
+ローカル環境によっては問題が発生する場合があることをご了承ください。
 
-For more information, refer to the [source installation guide](autoware/source-installation.md).
+詳細については [ソースインストールガイド](autoware/source-installation.md)を参照してください。
 
-## Installing related tools
+## 関連ツールのインストール
 
-Some other tools are required depending on the evaluation you want to do.
-For example, to run an end-to-end simulation you need to install an appropriate simulator.
+実行したい評価に応じてツールが必要になります。
+例えばエンドツーエンドのシミュレーションを実行するには適切なシミュレーターをインストールする必要があります。
 
-For more information, see [here](related-tools).
+詳細については[こちら](related-tools)を参照してください。
 
-## Additional settings for developers
+## 開発者向けの追加設定
 
-There are also tools and settings for developers, such as Shells or IDEs.
+AutowareにはShellやIDEなど開発者向けのツールと設定もあります。
 
-For more information, see [here](additional-settings-for-developers).
+詳細については[こちら](additional-settings-for-developers)を参照してください。
