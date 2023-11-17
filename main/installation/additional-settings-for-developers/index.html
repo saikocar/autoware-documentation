@@ -21,7 +21,7 @@
     
     
       
-        <title>Additional settings for developers - Autoware Documentation</title>
+        <title>開発者向け追加設定 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#additional-settings-for-developers" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Additional settings for developers
+              開発者向け追加設定
             
           </span>
         </div>
@@ -5645,23 +5645,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#console-settings-for-ros-2" class="md-nav__link">
-    Console settings for ROS 2
+  <a href="#ros2" class="md-nav__link">
+    ROS2のコンソール設定
   </a>
   
-    <nav class="md-nav" aria-label="Console settings for ROS 2">
+    <nav class="md-nav" aria-label="ROS2のコンソール設定">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#colorizing-logger-output" class="md-nav__link">
-    Colorizing logger output
+  <a href="#_2" class="md-nav__link">
+    ロガー出力の色付け
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#customizing-the-format-of-logger-output" class="md-nav__link">
-    Customizing the format of logger output
+  <a href="#_3" class="md-nav__link">
+    ロガー出力のフォーマットのカスタマイズ
   </a>
   
 </li>
@@ -5672,23 +5672,23 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#network-settings-for-ros-2" class="md-nav__link">
-    Network settings for ROS 2
+  <a href="#ros2_1" class="md-nav__link">
+    ROS2のネットワーク設定
   </a>
   
-    <nav class="md-nav" aria-label="Network settings for ROS 2">
+    <nav class="md-nav" aria-label="ROS2のネットワーク設定">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ros-2-network-setting" class="md-nav__link">
-    ROS 2 network setting
+  <a href="#ros2_2" class="md-nav__link">
+    ROS2のネットワーク設定
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#dds-settings" class="md-nav__link">
-    DDS settings
+  <a href="#dds" class="md-nav__link">
+    DDSの設定
   </a>
   
 </li>
@@ -5716,62 +5716,62 @@
   
 
 
-<div><h1 id="additional-settings-for-developers">Additional settings for developers<a class="headerlink" href="#additional-settings-for-developers" title="Permanent link">#</a></h1>
-<h2 id="console-settings-for-ros-2">Console settings for <abbr title="Robot Operating System">ROS</abbr> 2<a class="headerlink" href="#console-settings-for-ros-2" title="Permanent link">#</a></h2>
-<h3 id="colorizing-logger-output">Colorizing logger output<a class="headerlink" href="#colorizing-logger-output" title="Permanent link">#</a></h3>
-<p>By default, <abbr title="Robot Operating System">ROS</abbr> 2 logger doesn't colorize the output.
-To colorize it, write the following in your <code>.bashrc</code>:</p>
+<div><h1 id="_1">開発者向け追加設定<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="ros2">ROS2のコンソール設定<a class="headerlink" href="#ros2" title="Permanent link">#</a></h2>
+<h3 id="_2">ロガー出力の色付け<a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
+<p>デフォルトではROS2ロガーは出力を色付けしません。
+色付けするには<code>.bashrc</code>に次のように記述します。:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">RCUTILS_COLORIZED_OUTPUT</span><span class="o">=</span><span class="m">1</span>
 </code></pre></div>
-<h3 id="customizing-the-format-of-logger-output">Customizing the format of logger output<a class="headerlink" href="#customizing-the-format-of-logger-output" title="Permanent link">#</a></h3>
-<p>By default, <abbr title="Robot Operating System">ROS</abbr> 2 logger doesn't output detailed information such as file name, function name, or line number.
-To customize it, write the following in your <code>.bashrc</code>:</p>
+<h3 id="_3">ロガー出力のフォーマットのカスタマイズ<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
+<p>デフォルトではROS2ロガーはファイル名、関数名、行番号などの詳細情報を出力しません。
+カスタマイズするには<code>.bashrc</code>に次のように記述します。:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">RCUTILS_CONSOLE_OUTPUT_FORMAT</span><span class="o">=</span><span class="s2">"[{severity} {time}] [{name}]: {message} ({function_name}() at {file_name}:{line_number})"</span>
 </code></pre></div>
-<p>For more options, see <a href="https://docs.ros.org/en/rolling/Tutorials/Logging-and-logger-configuration.html#console-output-formatting">here</a>.</p>
-<h2 id="network-settings-for-ros-2">Network settings for <abbr title="Robot Operating System">ROS</abbr> 2<a class="headerlink" href="#network-settings-for-ros-2" title="Permanent link">#</a></h2>
-<p><abbr title="Robot Operating System">ROS</abbr> 2 employs DDS, and the configuration of <abbr title="Robot Operating System">ROS</abbr> 2 and DDS is described separately.
-For <abbr title="Robot Operating System">ROS</abbr> 2 networking concepts, refer to the <a href="http://design.ros2.org/articles/ros_on_dds.html">official documentation</a>.</p>
-<h3 id="ros-2-network-setting"><abbr title="Robot Operating System">ROS</abbr> 2 network setting<a class="headerlink" href="#ros-2-network-setting" title="Permanent link">#</a></h3>
-<p><abbr title="Robot Operating System">ROS</abbr> 2 multicasts data on the local network by default.
-Therefore, when you develop in an office, the data flows over the local network of your office.
-It may cause collisions of packets or increases in network traffic.</p>
-<p>To avoid these, there are two options.</p>
+<p>その他のオプションについては<a href="https://docs.ros.org/en/rolling/Tutorials/Logging-and-logger-configuration.html#console-output-formatting">こちら</a>を参照してください。</p>
+<h2 id="ros2_1">ROS2のネットワーク設定<a class="headerlink" href="#ros2_1" title="Permanent link">#</a></h2>
+<p>ROS2はDDSを採用しており、ROS2とDDSの構成については個別に説明します。
+ROS2ネットワークの概念については<a href="http://design.ros2.org/articles/ros_on_dds.html">公式ドキュメント</a>を参照してください。</p>
+<h3 id="ros2_2">ROS2のネットワーク設定<a class="headerlink" href="#ros2_2" title="Permanent link">#</a></h3>
+<p>ROS2はデフォルトでローカルネットワーク上にデータをマルチキャストします。
+したがってオフィスで開発する場合、データはオフィスのローカルネットワーク上を流れます。
+これはパケットの衝突やネットワークトラフィックの増加を引き起こす可能性があります。</p>
+<p>これらを回避するには2つのオプションがあります。</p>
 <ul>
-<li>Localhost-only communication</li>
-<li>Same domain only communication on the local network</li>
+<li>ローカルホストのみの通信</li>
+<li>ローカルネットワーク上での同一ドメインのみの通信</li>
 </ul>
-<p>Unless you plan to use multiple host computers on the local network, localhost-only communication is recommended.
-For details, refer to the sections below.</p>
-<h4 id="enabling-localhost-only-communication">Enabling localhost-only communication<a class="headerlink" href="#enabling-localhost-only-communication" title="Permanent link">#</a></h4>
-<p>Write the following in your <code>.bashrc</code>:
-For more information, see the <a href="https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html#the-ros-localhost-only-variable"><abbr title="Robot Operating System">ROS</abbr> 2 documentation</a>.</p>
+<p>ローカルネットワーク上で複数のホストコンピュータを使用する予定がない限り、ローカルホストのみの通信をお勧めします。
+詳細については以下のセクションを参照してください。</p>
+<h4 id="_4">ローカルホストのみの通信を有効にする<a class="headerlink" href="#_4" title="Permanent link">#</a></h4>
+<p><code>.bashrc</code>に次のように記述します。:
+詳細については<a href="https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html#the-ros-localhost-only-variable">ROS2のドキュメント</a>を参照してください。</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ROS_LOCALHOST_ONLY</span><span class="o">=</span><span class="m">1</span>
 </code></pre></div>
-<p>If you export <code>ROS_LOCALHOST_ONLY=1</code>, <code>MULTICAST</code> must be enabled at the loopback address.
-To verify that <code>MULTICAST</code> is enabled, use the following command.</p>
+<p><code>ROS_LOCALHOST_ONLY=1</code>をエクスポートする場合はループバック アドレスで<code>MULTICAST</code>を有効にする必要があります。
+<code>MULTICAST</code>が有効であることを確認するには次のコマンドを使用します。</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ip<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>lo
 <span class="go">1: lo: &lt;LOOPBACK,MULTICAST,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000</span>
 </code></pre></div>
-<p>If the word <code>MULTICAST</code> is not printed, use the following command to enable it.</p>
+<p><code>MULTICAST</code>という単語が表示されない場合は、次のコマンドを使用して有効にします。</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>lo<span class="w"> </span>multicast<span class="w"> </span>on
 </code></pre></div>
-<h4 id="same-domain-only-communication-on-the-local-network">Same domain only communication on the local network<a class="headerlink" href="#same-domain-only-communication-on-the-local-network" title="Permanent link">#</a></h4>
-<p><abbr title="Robot Operating System">ROS</abbr> 2 uses <code>ROS_DOMAIN_ID</code> to create groups and communicate between machines in the groups.
-Since all <abbr title="Robot Operating System">ROS</abbr> 2 nodes use domain ID <code>0</code> by default, it may cause unintended interference.</p>
-<p>To avoid it, set a different domain ID for each group in your <code>.bashrc</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Replace X with the Domain ID you want to use</span>
-<span class="c1"># Domain ID should be a number in range [0, 101] (inclusive)</span>
+<h4 id="_5">ローカルネットワーク上の同一ドメインのみの通信<a class="headerlink" href="#_5" title="Permanent link">#</a></h4>
+<p>ROS2は<code>ROS_DOMAIN_ID</code>を使用してグループを作成し、グループ内のマシン間で通信します。
+すべてのROS2ノードはデフォルトでドメインID<code>0</code>を使用するため意図しない干渉が発生する可能性があります。</p>
+<p>これを回避するには<code>.bashrc</code>内でグループごとに異なるドメインIDを設定します:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Xを使用するドメインIDに置き換えます</span>
+<span class="c1"># ドメインIDは[0,101]の範囲の数値である必要があります(両端の値を含む)</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">ROS_DOMAIN_ID</span><span class="o">=</span>X
 </code></pre></div>
-<p>Also confirm that <code>ROS_LOCALHOST_ONLY</code> is <code>0</code> by using the following command.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="nv">$ROS_LOCALHOST_ONLY</span><span class="w"> </span><span class="c1"># If the output is 1, localhost has priority.</span>
+<p>また以下のコマンドを使用して<code>ROS_LOCALHOST_ONLY</code>が<code>0</code>であることを確認します。</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="nv">$ROS_LOCALHOST_ONLY</span><span class="w"> </span><span class="c1"># 出力が1の場合localhostが優先されます。</span>
 </code></pre></div>
-<p>For more information, see the <a href="https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html#the-ros-domain-id-variable"><abbr title="Robot Operating System">ROS</abbr> 2 Documentation</a>.</p>
-<h3 id="dds-settings">DDS settings<a class="headerlink" href="#dds-settings" title="Permanent link">#</a></h3>
-<p>Autoware uses DDS for inter-node communication. <a href="https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html"><abbr title="Robot Operating System">ROS</abbr> 2 documentation</a> recommends users to tune DDS to utilize its capability. Especially, receive buffer size is the critical parameter for Autoware. If the parameter is not large enough, Autoware will failed in receiving large data like point cloud or image.</p>
-<h4 id="tuning-dds">Tuning DDS<a class="headerlink" href="#tuning-dds" title="Permanent link">#</a></h4>
-<p>Unless customized, CycloneDDS is adopted by default. For example, to execute Autoware with CycloneDDS, prepare a config file. A sample config file is given below. Save it as <code>cyclonedds_config.xml</code>.</p>
+<p>詳細については<a href="https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html#the-ros-domain-id-variable">ROS2のドキュメント</a>を参照してください。</p>
+<h3 id="dds">DDSの設定<a class="headerlink" href="#dds" title="Permanent link">#</a></h3>
+<p>Autowareはノード間通信にDDSを使用します。<a href="https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html">ROS2のドキュメント</a>ではDDSの機能を活用するためにDDSを調整することをユーザーに推奨しています。特に受信バッファ サイズはAutowareにとって重要なパラメータです。パラメータが十分に大きくない場合、Autowareは点群や画像などの大きなデータの受信に失敗します。</p>
+<h4 id="dds_1">DDSの調整<a class="headerlink" href="#dds_1" title="Permanent link">#</a></h4>
+<p>カスタマイズしない限りデフォルトでCycloneDDSが採用されます。例としてCycloneDDSでAutowareを実行するための設定ファイルを用意します。構成ファイルのサンプルを以下に示します。<code>cyclonedds_config.xml</code>として保存します。</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
 <span class="nt">&lt;CycloneDDS</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"https://cdds.io/config"</span><span class="w"> </span><span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="w"> </span><span class="na">xsi:schemaLocation=</span><span class="s">"https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;Domain</span><span class="w"> </span><span class="na">Id=</span><span class="s">"any"</span><span class="nt">&gt;</span>
@@ -5791,15 +5791,15 @@ Since all <abbr title="Robot Operating System">ROS</abbr> 2 nodes use domain ID 
 <span class="w">    </span><span class="nt">&lt;/Domain&gt;</span>
 <span class="nt">&lt;/CycloneDDS&gt;</span>
 </code></pre></div>
-<p>This configuration is mostly taken from <a href="https://github.com/eclipse-cyclonedds/cyclonedds/tree/a10ced3c81cc009e7176912190f710331a4d6caf#run-time-configuration">Eclipse Cyclone DDS:Run-time configuration documentation</a>.
-You can see why each value is set as such under the documentation link.</p>
-<p>Set the config file path and enlarge the Linux kernel maximum buffer size before launching Autoware.</p>
+<p>この設定は主に<a href="https://github.com/eclipse-cyclonedds/cyclonedds/tree/a10ced3c81cc009e7176912190f710331a4d6caf#run-time-configuration">Eclipse Cyclone DDS:Run-time設定ドキュメント</a>から引用されています。
+各値がそのように設定されている理由はドキュメントのリンクで確認できます。</p>
+<p>Autowareを起動する前に構成ファイルのパスを設定し、Linuxカーネルの最大バッファサイズを拡大します。</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CYCLONEDDS_URI</span><span class="o">=</span>file:///absolute/path/to/cyclonedds_config.xml
 sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </span>net.core.rmem_max<span class="o">=</span><span class="m">2147483647</span>
 </code></pre></div>
-<p>For more information, Refer to <a href="https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html"><abbr title="Robot Operating System">ROS</abbr> 2 documentation</a>. Reading user guide for chosen DDS is helpful for more understanding.</p>
-<h4 id="tuning-dds-for-multiple-host-computers-for-advanced-users">Tuning DDS for multiple host computers (for advanced users)<a class="headerlink" href="#tuning-dds-for-multiple-host-computers-for-advanced-users" title="Permanent link">#</a></h4>
-<p>When Autoware runs on multiple host computers, IP Fragmentation should be taken into account. As <a href="https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html#cross-vendor-tuning"><abbr title="Robot Operating System">ROS</abbr> 2 documentation</a> recommends, parameters for IP Fragmentation should be set as shown in the following example.</p>
+<p>詳細については<a href="https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html">ROS2のドキュメント</a>を参照してください。選択したDDSのユーザーガイドを読むとより深く理解できます。</p>
+<h4 id="dds_2">複数のホストコンピューター用のDDSのチューニング(上級ユーザー向け)<a class="headerlink" href="#dds_2" title="Permanent link">#</a></h4>
+<p>Autowareを複数のホストコンピュータで実行する場合はIPフラグメンテーションを考慮する必要があります。<a href="https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html#cross-vendor-tuning">ROS2のドキュメント</a>で推奨されているようにIPフラグメンテーションのパラメータは次の例のように設定する必要があります。</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv4.ipfrag_time<span class="o">=</span><span class="m">3</span>
 sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv4.ipfrag_high_thresh<span class="o">=</span><span class="m">134217728</span><span class="w">     </span><span class="c1"># (128 MB)</span>
 </code></pre></div>
