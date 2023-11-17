@@ -21,7 +21,7 @@
     
     
       
-        <title>Simulation tutorials - Autoware Documentation</title>
+        <title>シミュレーションのチュートリアル - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#simulation-tutorials" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Simulation tutorials
+              シミュレーションのチュートリアル
             
           </span>
         </div>
@@ -5645,23 +5645,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#simulation-methods" class="md-nav__link">
-    Simulation methods
+  <a href="#_2" class="md-nav__link">
+    シミュレーション方法
   </a>
   
-    <nav class="md-nav" aria-label="Simulation methods">
+    <nav class="md-nav" aria-label="シミュレーション方法">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ad-hoc-simulation" class="md-nav__link">
-    Ad hoc simulation
+  <a href="#_3" class="md-nav__link">
+    アドホックシミュレーション
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#scenario-simulation" class="md-nav__link">
-    Scenario simulation
+  <a href="#_4" class="md-nav__link">
+    シナリオシミュレーション
   </a>
   
 </li>
@@ -5672,30 +5672,30 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#simulation-types" class="md-nav__link">
-    Simulation types
+  <a href="#_5" class="md-nav__link">
+    シミュレーションの種類
   </a>
   
-    <nav class="md-nav" aria-label="Simulation types">
+    <nav class="md-nav" aria-label="シミュレーションの種類">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#planning-simulation" class="md-nav__link">
-    Planning simulation
+  <a href="#_6" class="md-nav__link">
+    計画シミュレーション
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#rosbag-replay-simulation" class="md-nav__link">
-    Rosbag replay simulation
+  <a href="#rosbag" class="md-nav__link">
+    Rosbagリプレイシミュレーション
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digital-twin-simulation" class="md-nav__link">
-    Digital twin simulation
+  <a href="#_8" class="md-nav__link">
+    デジタルツインシミュレーション
   </a>
   
 </li>
@@ -5723,33 +5723,33 @@
   
 
 
-<div><h1 id="simulation-tutorials">Simulation tutorials<a class="headerlink" href="#simulation-tutorials" title="Permanent link">#</a></h1>
-<p>Simulations provide a way of verifying Autoware's functionality before field testing with an actual vehicle.<br>
-There are three main types of simulation that can be run ad hoc or via a scenario runner.</p>
-<h2 id="simulation-methods">Simulation methods<a class="headerlink" href="#simulation-methods" title="Permanent link">#</a></h2>
-<h3 id="ad-hoc-simulation">Ad hoc simulation<a class="headerlink" href="#ad-hoc-simulation" title="Permanent link">#</a></h3>
-<p>Ad hoc simulation is a flexible method for running basic simulations on your local machine, and is the recommended method for anyone new to Autoware.</p>
-<h3 id="scenario-simulation">Scenario simulation<a class="headerlink" href="#scenario-simulation" title="Permanent link">#</a></h3>
-<p>Scenario simulation uses a scenario runner to run more complex simulations based on predefined scenarios.
-It is often run automatically for continuous integration purposes, but can also be run on a local machine.</p>
-<h2 id="simulation-types">Simulation types<a class="headerlink" href="#simulation-types" title="Permanent link">#</a></h2>
-<h3 id="planning-simulation">Planning simulation<a class="headerlink" href="#planning-simulation" title="Permanent link">#</a></h3>
-<p>Planning simulation uses simple dummy data to test the Planning and Control components - specifically path generation, path following and obstacle avoidance. It verifies that a vehicle can reach a goal destination while avoiding pedestrians and surrounding cars, and is another method for verifying the validity of Lanelet2 maps. It also allows for testing of traffic light handling.</p>
-<h4 id="how-does-planning-simulation-work">How does planning simulation work?<a class="headerlink" href="#how-does-planning-simulation-work" title="Permanent link">#</a></h4>
+<div><h1 id="_1">シミュレーションのチュートリアル<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<p>シミュレーションは実際の車両でフィールドテストする前にAutowareの機能を検証する方法を提供します。
+アドホックまたはシナリオランナー経由で実行できるシミュレーションには主に3つのタイプがあります。</p>
+<h2 id="_2">シミュレーション方法<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<h3 id="_3">アドホックシミュレーション<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
+<p>アドホックシミュレーションはローカルマシン上で基本的なシミュレーションを実行するための柔軟な方法であり、Autowareを初めて使用する人に推奨される方法です。</p>
+<h3 id="_4">シナリオシミュレーション<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<p>シナリオシミュレーションではシナリオランナーを使用して事前に設定されたシナリオに基づいてより複雑なシミュレーションを実行します。
+多くの場合に継続的統合の目的で自動的に実行されますがローカルマシン上で実行することもできます。</p>
+<h2 id="_5">シミュレーションの種類<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<h3 id="_6">計画シミュレーション<a class="headerlink" href="#_6" title="Permanent link">#</a></h3>
+<p>計画シミュレーションでは単純なダミーデータを使用して計画および制御コンポーネント、特に経路生成、経路追跡、障害物回避をテストします。これは車両が歩行者や周囲の車両を回避しながら目的地に到達できることを検証するものでLanelet2マップの妥当性を検証するもう1つの手法です。信号機の取り扱いのテストも可能です。</p>
+<h4 id="_7">計画シミュレーションはどのように実行しますか?<a class="headerlink" href="#_7" title="Permanent link">#</a></h4>
 <ol>
-<li>Generate a path to the goal destination</li>
-<li>Control the car along the generated path</li>
-<li>Detect and avoid any humans or other vehicles on the way to the goal destination</li>
+<li>目標地点までの経路を生成します</li>
+<li>生成された経路に沿って車を制御します</li>
+<li>目的地に向かう途中で人間や他の車両を検知して回避します</li>
 </ol>
-<h3 id="rosbag-replay-simulation">Rosbag replay simulation<a class="headerlink" href="#rosbag-replay-simulation" title="Permanent link">#</a></h3>
-<p>Rosbag replay simulation uses prerecorded rosbag data to test the following aspects of the Localization and Perception components:</p>
+<h3 id="rosbag">Rosbagリプレイシミュレーション<a class="headerlink" href="#rosbag" title="Permanent link">#</a></h3>
+<p>Rosbagリプレイシミュレーションでは事前に記録されたrosbagデータを使用して位置推定コンポーネントと知覚コンポーネントの以下の項目をテストします:</p>
 <ul>
-<li>Localization: Estimation of the vehicle's location on the map by matching sensor and vehicle feedback data to the map.</li>
-<li>Perception: Using sensor data to detect, track and predict dynamic objects such as surrounding cars, pedestrians, and other objects</li>
+<li>位置推定: センサーと車両のフィードバックデータを地図に照合することにより地図上の車両の位置を推定します。</li>
+<li>知覚: センサーデータを使用して周囲の車、歩行者、その他の物体などの動的物体を検出、追跡、予測します。</li>
 </ul>
-<p>By repeatedly playing back the data, this simulation type can also be used for endurance testing.</p>
-<h3 id="digital-twin-simulation">Digital twin simulation<a class="headerlink" href="#digital-twin-simulation" title="Permanent link">#</a></h3>
-<p>Digital twin simulation is a simulation type that is able to produce realistic data and simulate almost the entire system. It is also commonly referred to as end-to-end simulation.</p>
+<p>データを繰り返し再生することで耐久テストにも使用できるシミュレーションタイプです。</p>
+<h3 id="_8">デジタルツインシミュレーション<a class="headerlink" href="#_8" title="Permanent link">#</a></h3>
+<p>デジタルツインシミュレーションは現実的なデータを生成しシステムのほぼ全体をシミュレートできるシミュレーションタイプです。これは一般にエンドツーエンドシミュレーションとも呼ばれます。</p>
 <!-- prettier-ignore --></div>
 
 
