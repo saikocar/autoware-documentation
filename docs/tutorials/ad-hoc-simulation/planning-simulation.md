@@ -1,21 +1,21 @@
-# Planning simulation
+# 計画シミュレーション
 
-## Preparation
+## 準備
 
-Download and unpack a sample map.
+サンプルマップをダウンロードし解凍します。
 
-- You can also download [the map](https://drive.google.com/file/d/1499_nsbUbIeturZaDj7jhUownh5fvXHd/view?usp=sharing) manually.
+- 手動で[マップ](https://drive.google.com/file/d/1499_nsbUbIeturZaDj7jhUownh5fvXHd/view?usp=sharing)をダウンロードすることもできます。
 
 ```bash
 gdown -O ~/autoware_map/ 'https://docs.google.com/uc?export=download&id=1499_nsbUbIeturZaDj7jhUownh5fvXHd'
 unzip -d ~/autoware_map ~/autoware_map/sample-map-planning.zip
 ```
 
-!!! Note
+!!! 注意
 
-    Sample map: Copyright 2020 TIER IV, Inc.
+    サンプルマップ: Copyright 2020 TIER IV, Inc.
 
-Check if you have `~/autoware_data` folder and files in it.
+`~/autoware_data`フォルダとファイルがあるか確認します。
 
 ```bash
 $ cd ~/autoware_data
@@ -31,84 +31,84 @@ traffic_light_ssd_fine_detector
 yabloc_pose_initializer
 ```
 
-If not, please, follow [Manual downloading of artifacts](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/artifacts).
+もし無ければ[アーティファクトのダウンロード](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/artifacts)を確認してください。
 
-## Basic simulations
+## 基本シミュレーション
 
-### Lane driving scenario
+### レーン走行シナリオ
 
-#### 1. Launch Autoware
+#### 1. Autowareの起動
 
 ```bash
 source ~/autoware/install/setup.bash
 ros2 launch autoware_launch planning_simulator.launch.xml map_path:=$HOME/autoware_map/sample-map-planning vehicle_model:=sample_vehicle sensor_model:=sample_sensor_kit
 ```
 
-!!! warning
+!!! 警告
 
-    Note that you cannot use `~` instead of `$HOME` here.
+    `$HOME`の代わりに`~`を使用することはできないことに注意してください。
 
-    If `~` is used, the map will fail to load.
+    `~`を使用するとマップの読み込みに失敗します。
 
 ![after-autoware-launch](images/planning/lane-following/after-autoware-launch.png)
 
-#### 2. Set an initial pose for the ego vehicle
+#### 2. 自己車両の初期姿勢の設定
 
 ![set-initial-pose](images/planning/lane-following/set-initial-pose.png)
 
-a) Click the `2D Pose estimate` button in the toolbar, or hit the `P` key.
+a) ツールバーの`2D Pose estimate`をクリックするか`P`キーを押してください。
 
-b) In the 3D View pane, click and hold the left-mouse button, and then drag to set the direction for the initial pose. An image representing the vehicle should now be displayed.
+b) 3Dビューパネル上でマウスの左ボタンをクリックしたままドラッグして初期ポーズの方向を設定します。車両を表す3Dモデルが表示されます。
 
-!!! warning
+!!! 警告
 
-    Remember to set the initial pose of the car in the same direction as the lane.
+    車の初期姿勢を車線と同じ方向に設定してください。
 
-    To confirm the direction of the lane, check the arrowheads displayed on the map.
+    車線の方向を確認するには地図上に表示される矢印を確認してください。
 
-#### 3. Set a goal pose for the ego vehicle
+#### 3. 自己車両の目標姿勢の設定
 
-a) Click the `2D Goal Pose` button in the toolbar, or hit the `G` key.
+a) ツールバーの`2D Goal Pose`ボタンををクリックするか`G`キーを押してください。
 
-b) In the 3D View pane, click and hold the left-mouse button, and then drag to set the direction for the goal pose. If done correctly, you will see a planned path from initial pose to goal pose.
+b) 3Dビューパネル上でマウスの左ボタンをクリックしたままドラッグして目標姿勢の方向を設定します。正しく実行されると、初期姿勢から目標姿勢までの計画経路が表示されます。
 
 ![set-goal-pose](images/planning/lane-following/set-goal-pose.png)
 
-#### 4. Start the ego vehicle
+#### 4. 自己車両の発進
 
-Now you can start the ego vehicle driving by clicking the `AUTO` button on `OperationMode` in `AutowareStatePanel`.
-Alteratively, you can manually start the vehicle by running the following command:
+`AutowareStatePanel`の`OperationMode`にある`AUTO`ボタンをクリックすることで自己車両を発進させられます。
+あるいは次のコマンドを実行して車両を手動で始動することもできます:
 
 ```bash
 source ~/autoware/install/setup.bash
 ros2 service call /api/operation_mode/change_to_autonomous autoware_adapi_v1_msgs/srv/ChangeOperationMode {}
 ```
 
-After that, you can see `AUTONOMOUS` sign on `OperationMode` and `AUTO` button is grayed out.
+すると`OperationMode`の`AUTONOMOUS`が点灯し`AUTO`ボタンがグレーアウトすることが確認できます。
 
 ![start-driving](images/planning/lane-following/start-driving.png)
 
-### Parking scenario
+### 駐車シナリオ
 
-1. Set an initial pose and a goal pose, and engage the ego vehicle.
+1. 初期姿勢と目標姿勢を設定し、自己車両を操作します。
 
    ![after-set-goal-pose](images/planning/parking/after-set-goal-pose.png)
 
-2. When the vehicle approaches the goal, it will switch from lane driving mode to parking mode.
-3. After that, the vehicle will reverse into the destination parking spot.
+2. 車両が目標に近づくと、車線走行モードから駐車モードに切り替わります。
+3. その後車両は後進して目的の駐車場に入ります。
 
    ![parking-maneuver](images/planning/parking/parking-maneuver.png)
 
-### Lane change scenario
+### 車線変更シナリオ
 
-1. Download and unpack Nishishinjuku map.
+1. 西新宿マップをダウンロードし解凍します。
 
    ```bash
    gdown -O ~/autoware_map/ 'https://github.com/tier4/AWSIM/releases/download/v1.1.0/nishishinjuku_autoware_map.zip'
    unzip -d ~/autoware_map ~/autoware_map/nishishinjuku_autoware_map.zip
    ```
 
-2. Launch autoware with Nishishinjuku map with following command:
+2. 以下のコマンドで西新宿マップを読み込みながらautowareを起動します。:
 
    ```bash
    source ~/autoware/install/setup.bash
@@ -117,89 +117,89 @@ After that, you can see `AUTONOMOUS` sign on `OperationMode` and `AUTO` button i
 
    ![open-nishishinjuku-map](images/planning/lane-change/open-nishishinjuku-map.png)
 
-3. Set an initial pose and a goal pose in adjacent lanes.
+3. 隣接するレーンに初期姿勢と目標姿勢を設定します。
 
    ![set-position-and-goal](images/planning/lane-change/set-position-and-goal.png)
 
-4. Engage the ego vehicle. It will make a lane change along the planned path.
+4. 自己車両を操作します。計画した経路に沿って車線変更を行います。
 
    ![lane-changing](images/planning/lane-change/lane-changing.png)
 
-### Avoidance scenario
+### 回避シナリオ
 
-1. Set an initial pose and a goal pose in the same lane. A path will be planned.
+1. 初期姿勢と目標姿勢を同じレーンに設定します。経路が計画されます。
 
    ![set-position-and-goal](images/planning/avoidance/set-position-and-goal.png)
 
-2. Set a "2D Dummy Bus" on the roadside. A new path will be planned.
+2. "2D Dummy Bus"を道路上に設定します。新しい経路が計画されます。
 
    ![set-dummy-bus](images/planning/avoidance/set-dummy-bus.png)
 
-3. Engage the ego vehicle. It will avoid the obstacle along the newly planned path.
+3. 自己車両を操作します。新しい計画経路に沿って障害物を回避します。
 
-## Advanced Simulations
+## 高度なシミュレーション
 
-### Placing dummy objects
+### ダミーオブジェクトの配置
 
-1. Click the `2D Dummy Car` or `2D Dummy Pedestrian` button in the toolbar.
-2. Set the pose of the dummy object by clicking and dragging on the map.
-3. Set the velocity of the object in `Tool Properties -> 2D Dummy Car/Pedestrian` panel.
+1. ツールバーの`2D Dummy Car`か`2D Dummy Pedestrian`ボタンをクリックします。
+2. マップ上をクリックしながらドラッグしてダミーオブジェクトの姿勢を設定します。
+3. `Tool Properties -> 2D Dummy Car/Pedestrian`パネルでオブジェクトの速度を設定します。
 
-   !!! note
+   !!! 注記
 
-   Changes to the `velocity` parameter will only affect objects placed after the parameter is changed.
+   `velocity`パラメータの変更は、パラメータの変更後に配置されたオブジェクトにのみ影響します。
 
    ![set-dummy-car](images/planning/lane-following/place-dummy-car.png)
 
-4. Delete any dummy objects placed in the view by clicking the `Delete All Objects` button in the toolbar.
+4. ツールバーの`Delete All Objects`ボタンをクリックして、ビューに配置されたダミーオブジェクトを削除します。
 
-5. Click the `Interactive` button in the toolbar to make the dummy object interactive.
+5. ツールバーの`Interactive` ボタンをクリックして、ダミーオブジェクトを対話形式にします。
 
    ![set-interactive-dummy-car](images/planning/lane-following/check-interactive.png)
 
-6. For adding an interactive dummy object, press `SHIFT` and click the `right click`.
-7. For deleting an interactive dummy object, press `ALT` and click the `right click`.
-8. For moving an interactive dummy object, hold the `right click` drag and drop the object.
+6. 対話形式なダミーオブジェクトを追加するには`SHIFT`を押しながら`右クリック`をします。
+7. 対話形式なダミーオブジェクトを削除するには`ALT`を押しながら`右クリック`をします.
+8. 対話形式なダミーオブジェクトを移動するには`右クリック`をしながらオブジェクトをドラッグアンドドロップします。
 
    ![move-interactive-dummy-car](images/planning/lane-following/move-dummy-object.png)
 
-### Traffic light recognition simulation
+### 信号認識シミュレーション
 
-By default, traffic lights on the map are all treated as if they are set to green. As a result, when a path is created that passed through an intersection with a traffic light, the ego vehicle will drive through the intersection without stopping.
+デフォルトではマップ上の信号はすべて青に設定されているかのように扱われます。その結果、信号機のある交差点を通過する経路が作成された場合、自己車両は交差点を停止せずに通過することになります。
 
-The following steps explain how to set and reset traffic lights in order to test how the Planning component will respond.
+次の項目では、計画コンポーネントがどのように応答するかをテストするために信号機を設定およびリセットする方法について説明します。
 
-#### Set traffic light
+#### 信号機の設定
 
-1. Go to `Panels -> Add new panel`, select `TrafficLightPublishPanel`, and then press `OK`.
+1. `Panels -> Add new panel`へ行き、`TrafficLightPublishPanel`を選択して`OK`を押します。
 
-2. In `TrafficLightPublishPanel`, set the `ID` and color of the traffic light.
+2. `TrafficLightPublishPanel`で信号機の`ID`と色を設定します。
 
-3. Click the `SET` button.
+3. `SET`ボタンをクリックします。
    ![set-traffic-light](images/planning/traffic-light/set-traffic-light.png)
 
-4. Finally, click the `PUBLISH` button to send the traffic light status to the simulator. Any planned path that goes past the selected traffic light will then change accordingly.
+4. 最後に`PUBLISH`ボタンをクリックしてシミュレーターに信号情報を送ります。 選択した信号機を通過する計画された経路はそれに応じて変更されます。
 
 ![send-traffic-light-color](images/planning/traffic-light/send-traffic-light-color.png)
 
-By default, Rviz should display the ID of each traffic light on the map. You can have a closer look at the IDs by zooming in the region or by changing the View type.
+デフォルトではRvizは地図上に各信号機のIDを表示する必要があります。領域をズームするかビュータイプを変更することでIDを詳しく見ることができます。
 
-In case the IDs are not displayed, try the following troubleshooting steps:
+IDが表示されない場合は、次のトラブルシューティング手順を試してください。:
 
-a) In the `Displays` panel, find the `traffic_light_id` topic by toggling the triangle icons next to `Map > Lanelet2VectorMap > Namespaces`.
+a) `Displays`パネルで`Map > Lanelet2VectorMap > Namespaces`にある三角形アイコンを切り替えて`traffic_light_id`トピックを見つけます。
 
-b) Check the `traffic_light_id` checkbox.
+b) `traffic_light_id`チェックボックスをチェックします。
 
-c) Reload the topic by clicking the `Map` checkbox twice.
+c) `Map`チェックボックスを２回クリックしてトピックをリロードします。
 
 ![see-traffic-light-ID](images/planning/traffic-light/see-traffic-light-ID.png)
 
-#### Update/Reset traffic light
+#### 信号情報の更新/リセット
 
-You can update the color of the traffic light by selecting the next color (in the image it is `GREEN`) and clicking `SET` button. In the image the traffic light in front of the ego vehicle changed from `RED` to `GREEN` and the vehicle restarted.
+次の色を選択し(画像では`GREEN`)`SET`ボタンをクリックすると信号機の色を更新できます。画像では自車両の前の信号機が`RED`から`GREEN`に変わり車両が発進しました。
 
 ![after-traffic-light-color-update](images/planning/traffic-light/after-traffic-light-color-update.png)
 
-To remove a traffic light from `TrafficLightPublishPanel`, click the `RESET` button.
+`TrafficLightPublishPanel`から信号機を削除するには`RESET`ボタンをクリックします。
 
-[Reference video tutorials](https://drive.google.com/file/d/1bs_dX1JJ76qHk-SGvS6YF9gmekkN8fz7/view?usp=sharing)
+[ビデオチュートリアルを参照する](https://drive.google.com/file/d/1bs_dX1JJ76qHk-SGvS6YF9gmekkN8fz7/view?usp=sharing)
