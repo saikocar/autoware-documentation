@@ -1,26 +1,26 @@
-# How-to guides
+# ハウツーガイド
 
-## Integrating Autoware
+## Autowareの統合
 
-- [Overview](integrating-autoware/overview.md)
+- [概要](integrating-autoware/overview.md)
 
-## Training Machine Learning Models
+## 機械学習モデルの訓練
 
-- [Training and Deploying Models](training-machine-learning-models/training-models.md)
+- [モデルのトレーニングとデプロイ](training-machine-learning-models/training-models.md)
 
-## Others
+## その他
 
-- [Debug Autoware](others/debug-autoware.md)
-- [Running Autoware without CUDA](others/running-autoware-without-cuda.md)
-- [Fixing dependent package versions](others/fixing-dependent-package-versions.md)
-- [Add a custom ROS message](others/add-a-custom-ros-message.md)
-- [Determining component dependencies](others/determining-component-dependencies.md)
-- [Advanced usage of colcon](others/advanced-usage-of-colcon.md)
-- [Applying Clang-Tidy to ROS packages](others/applying-clang-tidy-to-ros-packages.md)
-- [Defining temporal performance metrics on components](others/defining-temporal-performance-metrics.md)
-- [An example procedure for adding and evaluating a new node](others/an-example-procedure-for-adding-and-evaluating-a-new-node.md)
+- [Autowareのデバッグを行う](others/debug-autoware.md)
+- [CUDAを利用しないでAutowareを実行する](others/running-autoware-without-cuda.md)
+- [依存パッケージのバージョンを修正する](others/fixing-dependent-package-versions.md)
+- [カスタムROSメッセージを追加する](others/add-a-custom-ros-message.md)
+- [コンポーネントの依存関係の決定](others/determining-component-dependencies.md)
+- [Colconの高度な使用法](others/advanced-usage-of-colcon.md)
+- [ROSパッケージへのClang-Tidyの適用](others/applying-clang-tidy-to-ros-packages.md)
+- [コンポーネントの一時的なパフォーマンスメトリックの定義](others/defining-temporal-performance-metrics.md)
+- [新しいノードを追加して評価する手順の例](others/an-example-procedure-for-adding-and-evaluating-a-new-node.md)
 
-TODO: Write the following contents.
+TODO: 以下のコンテンツを記述する
 
-- Create an Autoware package
-- etc.
+- Autowareパッケージの作成
+- 等
