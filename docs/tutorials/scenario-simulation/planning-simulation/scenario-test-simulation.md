@@ -1,20 +1,19 @@
-# Scenario test simulation
+# シナリオテストシミュレーション
 
-!!! note
+!!! 注記
 
-    Running the Scenario Simulator requires some additional steps on top of building and installing Autoware, so make sure that [Scenario Simulator installation](installation.md) has been completed first before proceeding.
+    シナリオシミュレーターを実行するには、Autowareのビルドとインストールに加えていくつかの追加手順が必要となるため、先に進む前にまず[シナリオシミュレーターのインストール](installation.md)が完了していることを確認してください。
 
-## Running steps
+## 実行手順
 
-1. Move to the workspace directory where Autoware and the Scenario Simulator have been built.
-
-2. Source the workspace setup script:
+1. Autowareとシナリオシミュレーターがビルドされたワークスペースディレクトリに移動します。ワークスペースセットアップスクリプトを実行します。
+2. ワークスペースセットアップスクリプトを実行します:
 
    ```bash
    source install/setup.bash
    ```
 
-3. Run the simulation:
+3. シミュレーションを実行します:
 
    ```bash
    ros2 launch scenario_test_runner scenario_test_runner.launch.py \
@@ -27,4 +26,4 @@
 
 ![scenario_test_runner](images/scenario_test_runner.png)
 
-[Reference video tutorials](https://user-images.githubusercontent.com/102840938/206996920-758b62ae-270a-497c-8a72-f9e4867df695.mp4)
+[ビデオチュートリアルを参照する](https://user-images.githubusercontent.com/102840938/206996920-758b62ae-270a-497c-8a72-f9e4867df695.mp4)
