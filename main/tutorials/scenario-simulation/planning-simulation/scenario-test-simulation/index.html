@@ -21,7 +21,7 @@
     
     
       
-        <title>Scenario test simulation - Autoware Documentation</title>
+        <title>シナリオテストシミュレーション - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#scenario-test-simulation" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Scenario test simulation
+              シナリオテストシミュレーション
             
           </span>
         </div>
@@ -990,12 +990,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Scenario test simulation
+          シナリオテストシミュレーション
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Scenario test simulation
+        シナリオテストシミュレーション
       </a>
       
         
@@ -1014,8 +1014,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#running-steps" class="md-nav__link">
-    Running steps
+  <a href="#_2" class="md-nav__link">
+    実行手順
   </a>
   
 </li>
@@ -5686,8 +5686,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#running-steps" class="md-nav__link">
-    Running steps
+  <a href="#_2" class="md-nav__link">
+    実行手順
   </a>
   
 </li>
@@ -5710,23 +5710,21 @@
   
 
 
-<div><h1 id="scenario-test-simulation">Scenario test simulation<a class="headerlink" href="#scenario-test-simulation" title="Permanent link">#</a></h1>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Running the Scenario Simulator requires some additional steps on top of building and installing Autoware, so make sure that <a href="../installation/">Scenario Simulator installation</a> has been completed first before proceeding.</p>
+<div><h1 id="_1">シナリオテストシミュレーション<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+<p>シナリオシミュレーターを実行するには、Autowareのビルドとインストールに加えていくつかの追加手順が必要となるため、先に進む前にまず<a href="../installation/">シナリオシミュレーターのインストール</a>が完了していることを確認してください。</p>
 </div>
-<h2 id="running-steps">Running steps<a class="headerlink" href="#running-steps" title="Permanent link">#</a></h2>
+<h2 id="_2">実行手順<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <ol>
+<li>Autowareとシナリオシミュレーターがビルドされたワークスペースディレクトリに移動します。ワークスペースセットアップスクリプトを実行します。</li>
 <li>
-<p>Move to the workspace directory where Autoware and the Scenario Simulator have been built.</p>
-</li>
-<li>
-<p>Source the workspace setup script:</p>
+<p>ワークスペースセットアップスクリプトを実行します:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>install/setup.bash
 </code></pre></div>
 </li>
 <li>
-<p>Run the simulation:</p>
+<p>シミュレーションを実行します:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>scenario_test_runner<span class="w"> </span>scenario_test_runner.launch.py<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>architecture_type:<span class="o">=</span>awf/universe<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>record:<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
@@ -5737,7 +5735,7 @@
 </li>
 </ol>
 <p><img alt="scenario_test_runner" src="../images/scenario_test_runner.png"></p>
-<p><a href="https://user-images.githubusercontent.com/102840938/206996920-758b62ae-270a-497c-8a72-f9e4867df695.mp4">Reference video tutorials</a></p>
+<p><a href="https://user-images.githubusercontent.com/102840938/206996920-758b62ae-270a-497c-8a72-f9e4867df695.mp4">ビデオチュートリアルを参照する</a></p>
 <!-- prettier-ignore --></div>
 
 
