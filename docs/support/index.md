@@ -1,7 +1,7 @@
-# Support
+# サポート
 
-This page explains several support resources.
+このページではいくつかのサポートリソースを紹介します。
 
-- [Support guidelines](support-guidelines.md) pages explain the support mechanisms and guidelines.
-- [Troubleshooting](troubleshooting/index.md) pages explain solutions for common issues.
-- [Docs guide](docs-guide.md) pages explain related documentation sites.
+- [サポートガイドライン](support-guidelines.md)ページではサポート方法とガイドラインを説明します。
+- [トラブルシューティング](troubleshooting/index.md)ページではよくある問題の解決法を紹介します。
+- [ドキュメントガイド](docs-guide.md)ページでは関連するドキュメントサイトを紹介します。
