@@ -1,88 +1,88 @@
-# Support guidelines
+# サポートのガイドライン
 
-This page explains the support mechanisms we provide.
+このページでは当社が提供するサポートの仕組みについて説明します
 
-!!! warning
+!!! 警告
 
-    Before asking for help, search and read this documentation site carefully.
-    Also, follow the [discussion guidelines](../contributing/discussion-guidelines/index.md) for discussions.
+    ヘルプを求める前にこのドキュメントサイトを検索してよく読んでください。
+    また議論の際には[議論のガイドライン](../contributing/discussion-guidelines/index.md)に従ってください。
 
-Choose appropriate resources depending on what kind of help you need and read the detailed description in the sections below.
+必要なヘルプの種類に応じて適切なリソースを選択し、以下のセクションの詳細な説明をお読みください。
 
-- [Documentation sites](#documentation-sites)
-  - Various information
-- [GitHub Discussions](#github-discussions)
-  - Questions
-  - Unconfirmed bugs
-  - Feature requests
-  - Design discussions
-- [GitHub Issues](#github-issues)
-  - Confirmed bugs
+- [ドキュメントサイト](#documentation-sites)
+  - 各種情報
+- [GitHubの議論](#github-discussions)
+  - 質問
+  - 未確認の不具合
+  - 機能のリクエスト
+  - デザインに関する議論
+- [GitHubの問題](#github-issues)
+  - 確認されている不具合
 - [Discord](#discord)
-  - Instant messaging between contributors
-- [ROS Discourse](#ros-discourse)
-  - General topics that should be widely announced
+  - 投稿者間のインスタントメッセージ
+- [ROS談話](#ros-discourse)
+  - 広く公表すべき一般的な話題
 
-## Documentation sites
+## ドキュメントサイト
 
-[Docs guide](docs-guide.md) shows the list of useful documentation sites.
-Visit them and see if there is any information related to your problem.
+[ドキュメントガイド](docs-guide.md)には役立つドキュメントサイトのリストがあります。
+それらにアクセスして問題に関連する情報があるかどうかを確認してください。
 
-Note that the documentation sites aren't always up-to-date and perfect.
-If you find out that some information is wrong, unclear, or missing in Autoware docs, feel free to submit a pull request following the [contribution guidelines](../contributing/index.md).
+ドキュメントサイトは常に最新で完璧であるとは限らないことに注意してください。
+Autowareドキュメントの一部の情報が間違っている、不明瞭である、または欠落していることに気付いた場合は[貢献ガイドライン](../contributing/index.md)に従って遠慮なくプルリクエストを送信してください。
 
-!!! warning
+!!! 警告
 
-    Since this documentation site is still under construction, there are some empty pages.
+    このドキュメント サイトはまだ作成中であるため、空白のページがいくつかあります。
 
-## GitHub Discussions
+## GitHubの議論
 
-If you encounter a problem with Autoware, check existing issues and questions and search for similar issues first.
+Autowareで問題が発生した場合は、まず既存の問題と質問を確認し、同様の問題を検索してください。
 
-- [Issues](https://github.com/autowarefoundation/autoware/issues)
+- [問題](https://github.com/autowarefoundation/autoware/issues)
 
-  Note that Autoware has multiple repositories listed in [autoware.repos](https://github.com/autowarefoundation/autoware/blob/main/autoware.repos).  
-  It is recommended to search across the repositories.
+  Autowareには[autoware.repos](https://github.com/autowarefoundation/autoware/blob/main/autoware.repos)にリストされている複数のリポジトリがあることに注意してください。  
+  リポジトリ全体を検索することをお勧めします。
 
-- [Questions](https://github.com/autowarefoundation/autoware/discussions/categories/q-a)
+- [質問](https://github.com/autowarefoundation/autoware/discussions/categories/q-a)
 
-If no answer was found, create a new question thread [here](https://github.com/autowarefoundation/autoware/discussions/categories/q-a).
-If your question is not answered within a week, then @mention the maintainers to remind them.
+回答が見つからなかった場合は[ここ](https://github.com/autowarefoundation/autoware/discussions/categories/q-a)で新しい質問スレッドを作成してください。
+質問が1週間以内に回答されない場合は保守管理者に@メンションして思い出させてください。
 
-Also, there are other discussion types such as [feature requests](https://github.com/autowarefoundation/autoware/discussions/categories/feature-requests) or [design discussions](https://github.com/autowarefoundation/autoware/discussions/categories/design).
-Feel free to open or join such discussions.
+また[機能リクエスト](https://github.com/autowarefoundation/autoware/discussions/categories/feature-requests)や[デザインに関する議論](https://github.com/autowarefoundation/autoware/discussions/categories/design)など、他の種類の議論もあります。
+ご自由にそのような議論を開いたり、参加したりしてください。
 
-If you don't know how to create a discussion, refer to [GitHub Docs](https://docs.github.com/en/discussions/quickstart#creating-a-new-discussion).
+ディスカッションの作成方法がわからない場合は[GitHubドキュメント](https://docs.github.com/en/discussions/quickstart#creating-a-new-discussion)を参照してください。
 
-## GitHub Issues
+## GitHubの問題
 
-If you have a problem and you have confirmed it is a bug, find the appropriate repository and create a new issue there.
-If you can't determine the appropriate repository, ask the maintainers for help by creating a new discussion in the [Q&A category](https://github.com/autowarefoundation/autoware/discussions/categories/q-a).
+問題があり、それがバグであることが確認された場合は、適切なリポジトリを見つけて、そこで新しいissueを作成します。
+適切なリポジトリを判断できない場合は[Q&Aカテゴリ](https://github.com/autowarefoundation/autoware/discussions/categories/q-a)Q&Aカテゴリに新しいディスカッションを作成してメンテナに助けを求めてください。
 
-!!! warning
+!!! 警告
 
-    Do not create issues for questions or unconfirmed bugs. If such issues are created, maintainers will transfer them to GitHub Discussions.
+    質問や未確認のバグについては問題を作成しないでください。このような問題が発生した場合、メンテナは問題をGitHubの議論に転送します。
 
-If you want to fix the bug by yourself, discuss the approach with maintainers and submit a pull request.
+自分でバグを修正したい場合は、保守管理者とアプローチについて話し合い、プルリクエストを送信してください。
 
 ## Discord
 
 [![Discord](https://img.shields.io/discord/953808765935816715?label=Join%20Autoware%20Discord&style=for-the-badge)](https://discord.gg/Q94UsPvReQ)
 
-Autoware has a Discord server for casual communication between contributors.
+Autowareには、投稿者間のカジュアルなコミュニケーションのためにDiscordサーバーがあります。
 
-The Autoware Discord server is a good place for the following activities:
+Autoware Discordサーバーは以下の活動に適しています:
 
-- Introduce yourself to the community.
-- Chat with contributors.
-- Take a quick straw poll.
+- コミュニティに自己紹介をする
+- 寄稿者とチャットをする
+- 迅速なストローポールの実施
 
-Note that it is not the right place to get help for your issues.
+ここは問題の解決に役立つ場所ではないことに注意してください。
 
-## ROS Discourse
+## ROS談話
 
-If you want to widely discuss a topic with the general Autoware and ROS community or ask a question not related to Autoware's bugs, post to [the Autoware category on ROS Discourse](https://discourse.ros.org/c/autoware).
+一般的なAutowareおよびROSコミュニティでトピックについて広く議論したい場合、またはAutowareのバグに関係のない質問をしたい場合は[ROS談話のAutowareカテゴリ](https://discourse.ros.org/c/autoware)に投稿してください。
 
-!!! warning
+!!! 警告
 
-    Do not post questions about bugs to ROS Discourse!
+    バグに関する質問をROS談話に投稿しないでください!
