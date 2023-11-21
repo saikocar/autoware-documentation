@@ -1,12 +1,12 @@
-# Troubleshooting
+# トラブルシューティング
 
-## Setup issues
+## セットアップの問題
 
-### CUDA-related errors
+### CUDAに関連するエラー
 
-When installing CUDA, errors may occur because of version conflicts. To resolve these types of errors, try one of the following methods:
+CUDAをインストールする際にバージョンの競合によりエラーが発生する場合があります。このようなタイプのエラーを解決するには、次のいずれかの方法を試してください:
 
-- Unhold all CUDA-related libraries and rerun the setup script.
+- すべてのCUDA関連ライブラリの保留を解除し、セットアップスクリプトを再実行します。
 
   ```bash
   sudo apt-mark unhold  \
@@ -21,7 +21,7 @@ When installing CUDA, errors may occur because of version conflicts. To resolve 
   ./setup-dev-env.sh
   ```
 
-- Uninstall all CUDA-related libraries and rerun the setup script.
+- すべてのCUDA関連ライブラリをアンインストールし、セットアップスクリプトを再実行します。
 
   ```bash
   sudo apt purge        \
@@ -38,26 +38,26 @@ When installing CUDA, errors may occur because of version conflicts. To resolve 
   ./setup-dev-env.sh
   ```
 
-!!! warning
+!!! 警告
 
-    Note that this may break your system and run carefully.
+    これによりシステムが破損する可能性があるため、慎重に実行してください。
 
-- Run the setup script without installing CUDA-related libraries.
+- CUDA関連のライブラリをインストールせずにセットアップスクリプトを実行します。
 
   ```bash
   ./setup-dev-env.sh --no-nvidia
   ```
 
-!!! warning
+!!! 警告
 
-    Note that some components in Autoware Universe require CUDA, and only the CUDA version in the [env file](https://github.com/autowarefoundation/autoware/blob/main/amd64.env) is supported at this time.
-    Autoware may work with other CUDA versions, but those versions are not supported and functionality is not guaranteed.
+    Autoware Universeの一部のコンポーネントにはCUDAが必要であり、現時点では[envファイル](https://github.com/autowarefoundation/autoware/blob/main/amd64.env)のCUDAバージョンのみがサポートされていることに注意してください。
+    Autowareは他のCUDAバージョンでも動作する可能性がありますが、それらのバージョンはサポートされておらず機能は保証されていません。
 
-## Build issues
+## ビルド上の問題
 
-### Insufficient memory
+### メモリの不足
 
-Building Autoware requires a lot of memory, and your machine can freeze or crash if memory runs out during a build. To avoid this problem, 16-32GB of swap should be configured.
+Autowareのビルドには大量のメモリが必要で、ビルド中にメモリが不足するとマシンがフリーズしたりクラッシュしたりする可能性があります。この問題を回避するには16-32GB のスワップを構成する必要があります。
 
 ```bash
 # Optional: Check the current swapfile
@@ -77,109 +77,108 @@ sudo swapon /swapfile
 free -h
 ```
 
-For more detailed configuration steps, along with an explanation of swap, refer to Digital Ocean's ["How To Add Swap Space on Ubuntu 20.04" tutorial](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-20-04)
+より詳細な構成手順とスワップの説明についてはDigital Oceanの["How To Add Swap Space on Ubuntu 20.04" tutorial](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-20-04)を参照してください。
 
-If there are too many CPU cores (more than 64) in your machine, it might requires larger memory.
-A workaround here is to limit the job number while building.
+マシンのCPUコアが多すぎる(64個以上)場合、より大きなメモリが必要になる可能性があります。
+この問題を回避するにはビルド中のジョブの数を制限します。
 
 ```bash
 MAKEFLAGS="-j4" colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
 
-You can adjust `-j4` to any number based on your system.
-For more details, see the [manual page of GNU make](https://www.gnu.org/software/make/manual/make.html#Parallel-Disable).
+`-j4`はシステムに基づいて任意の数値に調整できます。
+詳細については[manual page of GNU makeのマニュアルページ](https://www.gnu.org/software/make/manual/make.html#Parallel-Disable)を確認してください.
 
-By reducing the number of packages built in parallel, you can also reduce the amount of memory used.
-In the following example, the number of packages built in parallel is set to 1, and the number of jobs used by `make` is limited to 1.
+並行してビルドされるパッケージの数を減らすことで、使用されるメモリの量も減らすことができます。
+以下の例では、並行してビルドされるパッケージの数が1に設定され、`make`で使用されるジョブの数は1に制限されます。
 
 ```bash
 MAKEFLAGS="-j1" colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 1
 ```
 
-!!! note
+!!! 注記
 
-    By lowering both the number of packages built in parallel and the number of jobs used by `make`, you can reduce the memory usage.
-    However, this also means that the build process takes longer.
+    並行してビルドされるパッケージの数と`make`で使用されるジョブの数の両方を減らすことで、メモリ使用量を減らすことができます。
+    ただし、これはビルドプロセスに時間がかかることも意味します。
 
-### Errors when using the latest version of Autoware
+### 最新版のAutowareを使用している時のエラー
 
-If you are working with the latest version of Autoware, issues can occur due to out-of-date software or old build files.
+最新版のAutowareを使用している場合は、古いソフトウェアまたは古いビルドファイルが原因で問題が発生する可能性があります。
 
-To resolve these types of problems, first try cleaning your build artifacts and rebuilding:
+このようなタイプの問題を解決するには、まずビルドの成果物を削除して再構築してみてください:
 
 ```bash
 rm -rf build/ install/ log/
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
 
-If the error is not resolved, remove `src/` and update your workspace according to installation type ([Docker](../../installation/autoware/docker-installation.md#how-to-update-a-workspace) / [source](../../installation/autoware/source-installation.md#how-to-update-a-workspace)).
+エラーが解決しない場合は、`src/`を削除してインストールタイプ([Docker](../../installation/autoware/docker-installation.md#how-to-update-a-workspace) / [ソース](../../installation/autoware/source-installation.md#how-to-update-a-workspace))に応じてワークスペースをアップデートしてください。
 
-!!! Warning
+!!! 警告
 
-    Before removing `src/`, confirm that there are no modifications in your local environment that you want to keep!
+    `src/`を削除する前にローカル環境に保持したい変更がないことを確認してください!
 
-If errors still persist after trying the steps above, delete the entire workspace, clone the repository once again and restart the installation process.
+上記の手順を試してもエラーが解決しない場合は、ワークスペース全体を削除し、もう一度リポジトリのクローンを作成して、インストール手順をやりなおしてください。
 
 ```bash
 rm -rf autoware/
 git clone https://github.com/autowarefoundation/autoware.git
 ```
 
-### Errors when using a fixed version of Autoware
+### 修正版のAutowareを使用している時のエラー
 
-In principle, errors should not occur when using a fixed version. That said, possible causes include:
+修正版を使用する場合、原則としてエラーは発生しません。つまり、考えられる原因は以下のとおりです:
 
-- ROS 2 has been updated with breaking changes.
-  - For confirmation, check the [Packaging and Release Management](https://discourse.ros.org/c/release/16) tag on ROS Discourse.
-- Your local environment is broken.
-  - Confirm your `.bashrc` file, environment variables, and library versions.
+- ROS2が重大な変更を伴うアップデートを行った。
+  - 確認のために、ROS談話の[Packaging and Release Management](https://discourse.ros.org/c/release/16)タグを確認してください。
+- ローカル環境が壊れています。
+  - `.bashrc`ファイル、環境変数およびライブラリのバージョンを確認します。
 
-In addition to the causes listed above, there are two common misunderstandings around the use of fixed versions.
+上記の原因に加えて修正バージョンの使用に関してよくある誤解が2つあります。
 
-1. You used a fixed version for `autowarefoundation/autoware` only.
-   All of the repository versions in the `.repos` file must be specified in order to use a completely fixed version.
+1. `autowarefoundation/autoware`修正バージョンのみ使用しました。
+   完全に修正されたバージョンを使用するには`.repos`ファイル内のすべてのリポジトリバージョンを指定する必要があります。
 
-2. You didn't update the workspace after changing the branch of `autowarefoundation/autoware`.
-   Changing the branch of `autowarefoundation/autoware` does not affect the files under `src/`. You have to run the `vcs import` command to update them.
+2. `autowarefoundation/autoware`のブランチを変更した後、ワークスペースを更新しませんでした。
+   `autowarefoundation/autoware`のブランチを変更しても`src/`下のファイルには影響しません。これらを更新するには`vcs import`コマンドを実行する必要があります。
 
-### Error when building python package
+### pythonパッケージのビルド中のエラー
 
-During building the following issue can occurs
+ビルド中に以下の問題が発生する可能性があります
 
 ```bash
 pkg_resources.extern.packaging.version.InvalidVersion: Invalid version: '0.23ubuntu1'
 ```
 
-The error is due to the fact that for versions between 66.0.0 and 67.5.0 `setuptools` enforces the python packages to be
-[PEP-440](https://peps.python.org/pep-0440/) conformant.
-Since version 67.5.1 `setuptools` has a [fallback](https://github.com/pypa/setuptools/commit/1640731114734043b8500d211366fc941b741f67) that makes it possible to work with old packages again.
+このエラーは66.0.0と67.5.0の間のバージョンでは`setuptools`がPythonパッケージを[PEP-440](https://peps.python.org/pep-0440/)準拠にすることを強制するために発生します。
+バージョン 67.5.1 以降、`setuptools`には古いパッケージを再び操作できるようにする[フォールバック](https://github.com/pypa/setuptools/commit/1640731114734043b8500d211366fc941b741f67) があります。
 
-The solution is to update `setuptools` to the newest version with the following command
+解決策は、次のコマンドを使用して`setuptools`を最新バージョンに更新することです。
 
 ```bash
 pip install --upgrade setuptools
 ```
 
-## Docker/rocker issues
+## Docker/rockerの問題
 
-If any errors occur when running Autoware with Docker or rocker, first confirm that your Docker installation is working correctly by running the following commands:
+DockerまたはrockerでAutowareを実行するときにエラーが発生した場合は、まず次のコマンドを実行して、Docker インストールが正しく動作していることを確認します:
 
 ```bash
 docker run --rm -it hello-world
 docker run --rm -it ubuntu:latest
 ```
 
-Next, confirm that you are able to access the base Autoware image that is stored on the GitHub Packages website
+次にGitHubパッケージWebサイトに保存されているAutowareのベースイメージにアクセスできることを確認します。
 
 ```bash
 docker run --rm -it ghcr.io/autowarefoundation/autoware-universe:latest
 ```
 
-## Runtime issues
+## ランタイムの問題
 
-### Performance related issues
+### パフォーマンス関連の問題
 
-Symptoms:
+症状:
 
 - Autoware is running slower than expected
 - Messages show up late in RViz2
