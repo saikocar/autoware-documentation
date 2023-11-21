@@ -1,33 +1,33 @@
-# Installation
+# インストール
 
-This document contains step-by-step instruction on how to build [AWF Autoware Core/Universe](https://github.com/autowarefoundation/autoware) with `scenario_simulator_v2`.
+このドキュメントでは[AWF Autoware Core/Universe](https://github.com/autowarefoundation/autoware)と`scenario_simulator_v2`の構築方法に関する段階的な説明をします。
 
-## Prerequisites
+## 前提条件
 
-1. [Autoware has been built and installed](../../../installation/)
+1. [Autowareがビルド済みでインストールされていること](../../../installation/)
 
-## How to build
+## ビルドの方法
 
-1. Navigate to the Autoware workspace:
+1. Autowareのワークスペースに移動します:
 
    ```bash
    cd autoware
    ```
 
-2. Import Simulator dependencies:
+2. シミュレータの依存関係をインポートします:
 
    ```bash
    vcs import src < simulator.repos
    ```
 
-3. Install dependent ROS packages:
+3. 依存するROSパッケージをインポートします:
 
    ```bash
    source /opt/ros/humble/setup.bash
    rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
    ```
 
-4. Build the workspace:
+5. ワークスペースをビルドします:
 
    ```bash
    colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
