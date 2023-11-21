@@ -21,7 +21,7 @@
     
     
       
-        <title>Troubleshooting - Autoware Documentation</title>
+        <title>トラブルシューティング - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#troubleshooting" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Troubleshooting
+              トラブルシューティング
             
           </span>
         </div>
@@ -6141,16 +6141,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setup-issues" class="md-nav__link">
-    Setup issues
+  <a href="#_2" class="md-nav__link">
+    セットアップの問題
   </a>
   
-    <nav class="md-nav" aria-label="Setup issues">
+    <nav class="md-nav" aria-label="セットアップの問題">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#cuda-related-errors" class="md-nav__link">
-    CUDA-related errors
+  <a href="#cuda" class="md-nav__link">
+    CUDAに関連するエラー
   </a>
   
 </li>
@@ -6161,37 +6161,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-issues" class="md-nav__link">
-    Build issues
+  <a href="#_3" class="md-nav__link">
+    ビルド上の問題
   </a>
   
-    <nav class="md-nav" aria-label="Build issues">
+    <nav class="md-nav" aria-label="ビルド上の問題">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#insufficient-memory" class="md-nav__link">
-    Insufficient memory
+  <a href="#_4" class="md-nav__link">
+    メモリの不足
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#errors-when-using-the-latest-version-of-autoware" class="md-nav__link">
-    Errors when using the latest version of Autoware
+  <a href="#autoware" class="md-nav__link">
+    最新版のAutowareを使用している時のエラー
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#errors-when-using-a-fixed-version-of-autoware" class="md-nav__link">
-    Errors when using a fixed version of Autoware
+  <a href="#autoware_1" class="md-nav__link">
+    修正版のAutowareを使用している時のエラー
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#error-when-building-python-package" class="md-nav__link">
-    Error when building python package
+  <a href="#python" class="md-nav__link">
+    pythonパッケージのビルド中のエラー
   </a>
   
 </li>
@@ -6202,23 +6202,23 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dockerrocker-issues" class="md-nav__link">
-    Docker/rocker issues
+  <a href="#dockerrocker" class="md-nav__link">
+    Docker/rockerの問題
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#runtime-issues" class="md-nav__link">
-    Runtime issues
+  <a href="#_5" class="md-nav__link">
+    ランタイムの問題
   </a>
   
-    <nav class="md-nav" aria-label="Runtime issues">
+    <nav class="md-nav" aria-label="ランタイムの問題">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#performance-related-issues" class="md-nav__link">
-    Performance related issues
+  <a href="#_6" class="md-nav__link">
+    パフォーマンス関連の問題
   </a>
   
 </li>
@@ -6253,13 +6253,13 @@
   
 
 
-<div><h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h1>
-<h2 id="setup-issues">Setup issues<a class="headerlink" href="#setup-issues" title="Permanent link">#</a></h2>
-<h3 id="cuda-related-errors">CUDA-related errors<a class="headerlink" href="#cuda-related-errors" title="Permanent link">#</a></h3>
-<p>When installing CUDA, errors may occur because of version conflicts. To resolve these types of errors, try one of the following methods:</p>
+<div><h1 id="_1">トラブルシューティング<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">セットアップの問題<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<h3 id="cuda">CUDAに関連するエラー<a class="headerlink" href="#cuda" title="Permanent link">#</a></h3>
+<p>CUDAをインストールする際にバージョンの競合によりエラーが発生する場合があります。このようなタイプのエラーを解決するには、次のいずれかの方法を試してください:</p>
 <ul>
 <li>
-<p>Unhold all CUDA-related libraries and rerun the setup script.</p>
+<p>すべてのCUDA関連ライブラリの保留を解除し、セットアップスクリプトを再実行します。</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-mark<span class="w"> </span>unhold<span class="w">  </span><span class="se">\</span>
 <span class="w">  </span><span class="s2">"cuda*"</span><span class="w">             </span><span class="se">\</span>
 <span class="w">  </span><span class="s2">"libcudnn*"</span><span class="w">         </span><span class="se">\</span>
@@ -6275,7 +6275,7 @@
 </ul>
 <ul>
 <li>
-<p>Uninstall all CUDA-related libraries and rerun the setup script.</p>
+<p>すべてのCUDA関連ライブラリをアンインストールし、セットアップスクリプトを再実行します。</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>purge<span class="w">        </span><span class="se">\</span>
 <span class="w">  </span><span class="s2">"cuda*"</span><span class="w">             </span><span class="se">\</span>
 <span class="w">  </span><span class="s2">"libcudnn*"</span><span class="w">         </span><span class="se">\</span>
@@ -6291,25 +6291,25 @@ sudo<span class="w"> </span>apt<span class="w"> </span>autoremove
 </code></pre></div>
 </li>
 </ul>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Note that this may break your system and run carefully.</p>
+<div class="admonition 警告">
+<p class="admonition-title">警告</p>
+<p>これによりシステムが破損する可能性があるため、慎重に実行してください。</p>
 </div>
 <ul>
 <li>
-<p>Run the setup script without installing CUDA-related libraries.</p>
+<p>CUDA関連のライブラリをインストールせずにセットアップスクリプトを実行します。</p>
 <div class="highlight"><pre><span></span><code>./setup-dev-env.sh<span class="w"> </span>--no-nvidia
 </code></pre></div>
 </li>
 </ul>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Note that some components in Autoware Universe require CUDA, and only the CUDA version in the <a href="https://github.com/autowarefoundation/autoware/blob/main/amd64.env">env file</a> is supported at this time.
-Autoware may work with other CUDA versions, but those versions are not supported and functionality is not guaranteed.</p>
+<div class="admonition 警告">
+<p class="admonition-title">警告</p>
+<p>Autoware Universeの一部のコンポーネントにはCUDAが必要であり、現時点では<a href="https://github.com/autowarefoundation/autoware/blob/main/amd64.env">envファイル</a>のCUDAバージョンのみがサポートされていることに注意してください。
+Autowareは他のCUDAバージョンでも動作する可能性がありますが、それらのバージョンはサポートされておらず機能は保証されていません。</p>
 </div>
-<h2 id="build-issues">Build issues<a class="headerlink" href="#build-issues" title="Permanent link">#</a></h2>
-<h3 id="insufficient-memory">Insufficient memory<a class="headerlink" href="#insufficient-memory" title="Permanent link">#</a></h3>
-<p>Building Autoware requires a lot of memory, and your machine can freeze or crash if memory runs out during a build. To avoid this problem, 16-32GB of swap should be configured.</p>
+<h2 id="_3">ビルド上の問題<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h3 id="_4">メモリの不足<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<p>Autowareのビルドには大量のメモリが必要で、ビルド中にメモリが不足するとマシンがフリーズしたりクラッシュしたりする可能性があります。この問題を回避するには16-32GB のスワップを構成する必要があります。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Optional: Check the current swapfile</span>
 free<span class="w"> </span>-h
 
@@ -6326,81 +6326,80 @@ sudo<span class="w"> </span>swapon<span class="w"> </span>/swapfile
 <span class="c1"># Optional: Check if the change is reflected</span>
 free<span class="w"> </span>-h
 </code></pre></div>
-<p>For more detailed configuration steps, along with an explanation of swap, refer to Digital Ocean's <a href="https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-20-04">"How To Add Swap Space on Ubuntu 20.04" tutorial</a></p>
-<p>If there are too many CPU cores (more than 64) in your machine, it might requires larger memory.
-A workaround here is to limit the job number while building.</p>
+<p>より詳細な構成手順とスワップの説明についてはDigital Oceanの<a href="https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-20-04">"How To Add Swap Space on Ubuntu 20.04" tutorial</a>を参照してください。</p>
+<p>マシンのCPUコアが多すぎる(64個以上)場合、より大きなメモリが必要になる可能性があります。
+この問題を回避するにはビルド中のジョブの数を制限します。</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MAKEFLAGS</span><span class="o">=</span><span class="s2">"-j4"</span><span class="w"> </span>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<span class="w"> </span>--cmake-args<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
 </code></pre></div>
-<p>You can adjust <code>-j4</code> to any number based on your system.
-For more details, see the <a href="https://www.gnu.org/software/make/manual/make.html#Parallel-Disable">manual page of GNU make</a>.</p>
-<p>By reducing the number of packages built in parallel, you can also reduce the amount of memory used.
-In the following example, the number of packages built in parallel is set to 1, and the number of jobs used by <code>make</code> is limited to 1.</p>
+<p><code>-j4</code>はシステムに基づいて任意の数値に調整できます。
+詳細については<a href="https://www.gnu.org/software/make/manual/make.html#Parallel-Disable">manual page of GNU makeのマニュアルページ</a>を確認してください.</p>
+<p>並行してビルドされるパッケージの数を減らすことで、使用されるメモリの量も減らすことができます。
+以下の例では、並行してビルドされるパッケージの数が1に設定され、<code>make</code>で使用されるジョブの数は1に制限されます。</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MAKEFLAGS</span><span class="o">=</span><span class="s2">"-j1"</span><span class="w"> </span>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<span class="w"> </span>--cmake-args<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>--parallel-workers<span class="w"> </span><span class="m">1</span>
 </code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>By lowering both the number of packages built in parallel and the number of jobs used by <code>make</code>, you can reduce the memory usage.
-However, this also means that the build process takes longer.</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+<p>並行してビルドされるパッケージの数と<code>make</code>で使用されるジョブの数の両方を減らすことで、メモリ使用量を減らすことができます。
+ただし、これはビルドプロセスに時間がかかることも意味します。</p>
 </div>
-<h3 id="errors-when-using-the-latest-version-of-autoware">Errors when using the latest version of Autoware<a class="headerlink" href="#errors-when-using-the-latest-version-of-autoware" title="Permanent link">#</a></h3>
-<p>If you are working with the latest version of Autoware, issues can occur due to out-of-date software or old build files.</p>
-<p>To resolve these types of problems, first try cleaning your build artifacts and rebuilding:</p>
+<h3 id="autoware">最新版のAutowareを使用している時のエラー<a class="headerlink" href="#autoware" title="Permanent link">#</a></h3>
+<p>最新版のAutowareを使用している場合は、古いソフトウェアまたは古いビルドファイルが原因で問題が発生する可能性があります。</p>
+<p>このようなタイプの問題を解決するには、まずビルドの成果物を削除して再構築してみてください:</p>
 <div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-rf<span class="w"> </span>build/<span class="w"> </span>install/<span class="w"> </span>log/
 colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<span class="w"> </span>--cmake-args<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
 </code></pre></div>
-<p>If the error is not resolved, remove <code>src/</code> and update your workspace according to installation type (<a href="../../installation/autoware/docker-installation/#how-to-update-a-workspace">Docker</a> / <a href="../../installation/autoware/source-installation/#how-to-update-a-workspace">source</a>).</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Before removing <code>src/</code>, confirm that there are no modifications in your local environment that you want to keep!</p>
+<p>エラーが解決しない場合は、<code>src/</code>を削除してインストールタイプ(<a href="../../installation/autoware/docker-installation/#how-to-update-a-workspace">Docker</a> / <a href="../../installation/autoware/source-installation/#how-to-update-a-workspace">ソース</a>)に応じてワークスペースをアップデートしてください。</p>
+<div class="admonition 警告">
+<p class="admonition-title">警告</p>
+<p><code>src/</code>を削除する前にローカル環境に保持したい変更がないことを確認してください!</p>
 </div>
-<p>If errors still persist after trying the steps above, delete the entire workspace, clone the repository once again and restart the installation process.</p>
+<p>上記の手順を試してもエラーが解決しない場合は、ワークスペース全体を削除し、もう一度リポジトリのクローンを作成して、インストール手順をやりなおしてください。</p>
 <div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-rf<span class="w"> </span>autoware/
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/autowarefoundation/autoware.git
 </code></pre></div>
-<h3 id="errors-when-using-a-fixed-version-of-autoware">Errors when using a fixed version of Autoware<a class="headerlink" href="#errors-when-using-a-fixed-version-of-autoware" title="Permanent link">#</a></h3>
-<p>In principle, errors should not occur when using a fixed version. That said, possible causes include:</p>
+<h3 id="autoware_1">修正版のAutowareを使用している時のエラー<a class="headerlink" href="#autoware_1" title="Permanent link">#</a></h3>
+<p>修正版を使用する場合、原則としてエラーは発生しません。つまり、考えられる原因は以下のとおりです:</p>
 <ul>
-<li><abbr title="Robot Operating System">ROS</abbr> 2 has been updated with breaking changes.<ul>
-<li>For confirmation, check the <a href="https://discourse.ros.org/c/release/16">Packaging and Release Management</a> tag on <abbr title="Robot Operating System">ROS</abbr> Discourse.</li>
+<li>ROS2が重大な変更を伴うアップデートを行った。<ul>
+<li>確認のために、ROS談話の<a href="https://discourse.ros.org/c/release/16">Packaging and Release Management</a>タグを確認してください。</li>
 </ul>
 </li>
-<li>Your local environment is broken.<ul>
-<li>Confirm your <code>.bashrc</code> file, environment variables, and library versions.</li>
+<li>ローカル環境が壊れています。<ul>
+<li><code>.bashrc</code>ファイル、環境変数およびライブラリのバージョンを確認します。</li>
 </ul>
 </li>
 </ul>
-<p>In addition to the causes listed above, there are two common misunderstandings around the use of fixed versions.</p>
+<p>上記の原因に加えて修正バージョンの使用に関してよくある誤解が2つあります。</p>
 <ol>
 <li>
-<p>You used a fixed version for <code>autowarefoundation/autoware</code> only.
-   All of the repository versions in the <code>.repos</code> file must be specified in order to use a completely fixed version.</p>
+<p><code>autowarefoundation/autoware</code>修正バージョンのみ使用しました。
+   完全に修正されたバージョンを使用するには<code>.repos</code>ファイル内のすべてのリポジトリバージョンを指定する必要があります。</p>
 </li>
 <li>
-<p>You didn't update the workspace after changing the branch of <code>autowarefoundation/autoware</code>.
-   Changing the branch of <code>autowarefoundation/autoware</code> does not affect the files under <code>src/</code>. You have to run the <code>vcs import</code> command to update them.</p>
+<p><code>autowarefoundation/autoware</code>のブランチを変更した後、ワークスペースを更新しませんでした。
+   <code>autowarefoundation/autoware</code>のブランチを変更しても<code>src/</code>下のファイルには影響しません。これらを更新するには<code>vcs import</code>コマンドを実行する必要があります。</p>
 </li>
 </ol>
-<h3 id="error-when-building-python-package">Error when building python package<a class="headerlink" href="#error-when-building-python-package" title="Permanent link">#</a></h3>
-<p>During building the following issue can occurs</p>
+<h3 id="python">pythonパッケージのビルド中のエラー<a class="headerlink" href="#python" title="Permanent link">#</a></h3>
+<p>ビルド中に以下の問題が発生する可能性があります</p>
 <div class="highlight"><pre><span></span><code>pkg_resources.extern.packaging.version.InvalidVersion:<span class="w"> </span>Invalid<span class="w"> </span>version:<span class="w"> </span><span class="s1">'0.23ubuntu1'</span>
 </code></pre></div>
-<p>The error is due to the fact that for versions between 66.0.0 and 67.5.0 <code>setuptools</code> enforces the python packages to be
-<a href="https://peps.python.org/pep-0440/">PEP-440</a> conformant.
-Since version 67.5.1 <code>setuptools</code> has a <a href="https://github.com/pypa/setuptools/commit/1640731114734043b8500d211366fc941b741f67">fallback</a> that makes it possible to work with old packages again.</p>
-<p>The solution is to update <code>setuptools</code> to the newest version with the following command</p>
+<p>このエラーは66.0.0と67.5.0の間のバージョンでは<code>setuptools</code>がPythonパッケージを<a href="https://peps.python.org/pep-0440/">PEP-440</a>準拠にすることを強制するために発生します。
+バージョン 67.5.1 以降、<code>setuptools</code>には古いパッケージを再び操作できるようにする<a href="https://github.com/pypa/setuptools/commit/1640731114734043b8500d211366fc941b741f67">フォールバック</a> があります。</p>
+<p>解決策は、次のコマンドを使用して<code>setuptools</code>を最新バージョンに更新することです。</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>setuptools
 </code></pre></div>
-<h2 id="dockerrocker-issues">Docker/rocker issues<a class="headerlink" href="#dockerrocker-issues" title="Permanent link">#</a></h2>
-<p>If any errors occur when running Autoware with Docker or rocker, first confirm that your Docker installation is working correctly by running the following commands:</p>
+<h2 id="dockerrocker">Docker/rockerの問題<a class="headerlink" href="#dockerrocker" title="Permanent link">#</a></h2>
+<p>DockerまたはrockerでAutowareを実行するときにエラーが発生した場合は、まず次のコマンドを実行して、Docker インストールが正しく動作していることを確認します:</p>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>hello-world
 docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>ubuntu:latest
 </code></pre></div>
-<p>Next, confirm that you are able to access the base Autoware image that is stored on the GitHub Packages website</p>
+<p>次にGitHubパッケージWebサイトに保存されているAutowareのベースイメージにアクセスできることを確認します。</p>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>ghcr.io/autowarefoundation/autoware-universe:latest
 </code></pre></div>
-<h2 id="runtime-issues">Runtime issues<a class="headerlink" href="#runtime-issues" title="Permanent link">#</a></h2>
-<h3 id="performance-related-issues">Performance related issues<a class="headerlink" href="#performance-related-issues" title="Permanent link">#</a></h3>
-<p>Symptoms:</p>
+<h2 id="_5">ランタイムの問題<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<h3 id="_6">パフォーマンス関連の問題<a class="headerlink" href="#_6" title="Permanent link">#</a></h3>
+<p>症状:</p>
 <ul>
 <li>Autoware is running slower than expected</li>
 <li>Messages show up late in RViz2</li>
