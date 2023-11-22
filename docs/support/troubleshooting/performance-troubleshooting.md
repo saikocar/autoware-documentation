@@ -1,51 +1,50 @@
-# Performance Troubleshooting
+# パフォーマンスのトラブルシューティング
+全体的な症状:
 
-Overall symptoms:
+- Autowareの実行が予想よりも遅い
+- RViz2でメッセージが遅く表示される
+- 点群の遅れ
+- カメラの映像が遅れている
+- RViz2で点群またはマーカーがちらつく
+- 複数のサブスクライバが同じパブリッシャーを使用するとメッセージレートが低下する
 
-- Autoware is running slower than expected
-- Messages show up late in RViz2
-- Point clouds are lagging
-- Camera images are lagging behind
-- Point clouds or markers flicker on RViz2
-- When multiple subscribers use the same publishers, the message rate drops
+## 診断手順
 
-## Diagnostic Steps
+### マルチキャストが有効になっているかどうかを確認する
 
-### Check if multicast is enabled
+#### 対象の症状
 
-#### Target symptoms
+- 複数のサブスクライバが同じパブリッシャーを使用するとメッセージレートが低下する
 
-- When multiple subscribers use the same publishers, the message rate drops
+#### 診断
 
-#### Diagnosis
+マルチキャストがインターフェイスで有効になっていることを確認してください。
 
-Make sure that the multicast is enabled for your interface.
-
-For example when you run following:
+たとえば以下を実行すると:
 
 ```bash
 source /opt/ros/humble/setup.bash
 ros2 run demo_nodes_cpp talker
 ```
 
-If you get the error message `selected interface "{your-interface-name}" is not multicast-capable: disabling multicast`, this should be fixed.
+"{your-interface-name}" is not multicast-capable: disabling multicast`というエラーメッセージが表示された場合はこれを修正する必要があります。
 
-#### Solution
+#### 解決法
 
-Run the following command to allow multicast:
+以下のコマンドを実行しマルチキャストを許可します:
 
 ```bash
 sudo ip link set multicast on {your-interface-name}
 ```
 
-This way DDS will function as intended and multiple subscribers can receive data from a single publisher without any significant degradation in performance.
+こうすることでDDSは意図したとおりに機能し、パフォーマンスを大幅に低下させることなく、複数のサブスクライバーが1つのパブリッシャーからデータを受信できます。
 
-This is a temporary solution. And will be reverted once the computer restarts.
+これは一時的な解決策です。コンピュータが再起動すると元に戻ります。
 
-To make it permanent either,
+それを永続的にするには、
 
-- Create a service to run this on startup (recommended)
-- **OR** put following lines to the `~/.bashrc` file:
+- 起動時にこれを実行するサービスを作成します (推奨)
+- **あるいは** 以下の行を`~/.bashrc`ファイルに追加します:
 
   ```bash
   if [ ! -e /tmp/multicast_is_set ]; then
@@ -54,30 +53,30 @@ To make it permanent either,
   fi
   ```
 
-  - This will probably ask for password on the terminal every time you restart the computer.
+  - これによりコンピュータを再起動するたびに端末でパスワードを要求される可能性があります。
 
-### Check the compilation flags
+### コンパイルフラグを確認する
 
-#### Target symptoms
+#### 対象の症状
 
-- Autoware is running slower than expected
-- Point clouds are lagging
-- When multiple subscribers use the same publishers, the message rate drops even further
+- Autowareの実行が予想よりも遅い
+- 点群の遅れ
+- 複数のサブスクライバーが同じパブリッシャーを使用すると、メッセージレートはさらに低下する。
 
-#### Diagnosis
+#### 診断
 
-Check the `~/.bash_history` file to see if there are any `colcon build` directives without `-DCMAKE_BUILD_TYPE=Release` or `-DCMAKE_BUILD_TYPE=RelWithDebInfo` flags at all.
+`~/.bash_history`ファイルを確認して`-DCMAKE_BUILD_TYPE=Release`または`-DCMAKE_BUILD_TYPE=RelWithDebInfo`フラグがまったくない`colcon build`ディレクティブがあるかどうかを確認します。
 
-Even if a build starts with these flags but same workspace gets compiled without these flags, it will still be a slow build in the end.
+これらのフラグを使用してビルドが開始され、同じワークスペースがこれらのフラグなしでコンパイルされた場合でも、最終的には依然として遅いビルドになります。
 
-In addition, the nodes will run slow in general, especially the `pointcloud_preprocessor` nodes.
+さらにノード、特に`pointcloud_preprocessor`ノードの動作が一般的に遅くなります。
 
-Example issue: [issue2597](https://github.com/autowarefoundation/autoware.universe/issues/2597#issuecomment-1491789081)
+問題の例: [issue2597](https://github.com/autowarefoundation/autoware.universe/issues/2597#issuecomment-1491789081)
 
-#### Solution
+#### 解決法
 
-- Remove the `build`, `install` and optionally `log` folders in the main `autoware` folder.
-- Compile the Autoware with either `Release` or `RelWithDebInfo` tags:
+- メインの`autoware`フォルダ内の`build`、`install`フォルダと必要に応じて`log`フォルダを削除します。
+- `Release`または`RelWithDebInfo`タグを使用してAutowareをコンパイルします:
 
   ```bash
   colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
@@ -85,83 +84,83 @@ Example issue: [issue2597](https://github.com/autowarefoundation/autoware.univer
   colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo
   ```
 
-### Check the DDS settings
+### DDS設定を確認する
 
-#### Target symptoms
+#### 対象の症状
 
-- Autoware is running slower than expected
-- Messages show up late in RViz2
-- Point clouds are lagging
-- Camera images are lagging behind
-- When multiple subscribers use the same publishers, the message rate drops
+- Autowareの実行が予想よりも遅い
+- RViz2でメッセージが遅く表示される
+- 点群の遅れ
+- カメラの映像が遅れている
+- 複数のサブスクライバが同じパブリッシャーを使用するとメッセージ レートが低下する
 
-#### Check the RMW (ROS Middleware) implementation
+#### RMW(ROSのミドルウェア)の実装を確認する
 
-##### Diagnosis
+##### 診断
 
-Run following to check the middleware used:
+以下のコマンドを実行して使用されているミドルウェアを確認します。:
 
 ```bash
 echo $RMW_IMPLEMENTATION
 ```
 
-The return line should be `rmw_cyclonedds_cpp`. If not, apply the solution.
+`rmw_cyclonedds_cpp`が返ってくるはずです。そうでない場合は解決法を適用します。
 
-If you are using a different DDS middleware, we might not have official support for it just yet.
+別のDDSミドルウェアを使用している場合はまだ正式なサポートが提供されていない可能性があります。
 
-##### Solution
+##### 解決法
 
-Add `export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp` as a separate line in you `~/.bashrc` file.
+`~/.bashrc`ファイルの独立した行に`export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp`を追加します。
 
-#### Check if the CycloneDDS is configured correctly
+#### CycloneDDSが正しく設定されているか確認する
 
-##### Diagnosis
+##### 診断
 
-Run following to check the configuration `.xml` file of the `CycloneDDS`:
+以下を実行して`CycloneDDS`の`.xml`ファイルの設定を確認します:
 
 ```bash
 echo $CYCLONEDDS_URI
 ```
 
-The return line should be a valid path pointing to an `.xml` file with `CycloneDDS` configuration.
+戻り行は`CycloneDDS`設定を含む`.xml`ファイルを指す有効なパスである必要があります。
 
-Also check if the file is configured correctly:
+ファイルが正しく構成されているかどうかも確認します:
 
 ```bash
 cat !{echo $CYCLONEDDS_URI}
 ```
 
-This should print the `.xml` file on the terminal.
+`.xml`ファイルがターミナル上で表示されるはずです。
 
-##### Solution
+##### 解決法
 
-Follow [DDS settings:Tuning DDS documentation](../../installation/additional-settings-for-developers/index.md#tuning-dds) and make sure:
+[DDSの設定:DDS設定ドキュメント](../../installation/additional-settings-for-developers/index.md#tuning-dds)を確認します:
 
-- you have `export CYCLONEDDS_URI=/absolute_path_to_your/cyclonedds_config.xml` as a line on your `~/.bashrc` file.
-- you have the `cyclonedds_config.xml` with the configuration provided in the documentation.
+- `~/.bashrc`ファイルに`export CYCLONEDDS_URI=/absolute_path_to_your/cyclonedds_config.xml`を記述します。
+- ドキュメントで提供されている設定を含む`cyclonedds_config.xml`を作成します。 
 
-#### Check the Linux kernel maximum buffer size
+#### Linuxカーネルの最大バッファサイズを確認する
 
-##### Diagnosis
+##### 診断
 
-- Run: `sysctl net.core.rmem_max`, it should return at least `net.core.rmem_max = 2147483647`.
-  - This parameter specifies the maximum size of the "receive buffer" for each network connection, which determines the maximum amount of data that can be held in memory at any given time. By increasing the maximum buffer size, the operating system can accommodate larger bursts of data, which can help prevent network congestion and reduce packet loss, resulting in faster and more reliable data transfers.
-- Run: `sysctl net.ipv4.ipfrag_time`, it should return around: `net.ipv4.ipfrag_time = 3`
-  - The "net.ipv4.ipfrag_time" parameter specifies the maximum time in seconds that the kernel should retain partially fragmented IP packets before discarding them. The default value for this parameter is usually set to 30 seconds, but it may vary depending on the specific operating system and configuration.
-  - By setting this parameter to a lower value, such as 3 seconds, the kernel can free up memory resources more quickly by discarding partially fragmented packets that are no longer needed, which can help improve the overall performance and stability of the system.
-- Run: `sysctl net.ipv4.ipfrag_high_thresh`, it should return at around: `net.ipv4.ipfrag_high_thresh = 134217728`
-  - The "net.ipv4.ipfrag_high_thresh" parameter specifies the high watermark threshold for the number of partially fragmented packets allowed in the kernel IP packet reassembly queue. When the number of partially fragmented packets in the queue exceeds this threshold, the kernel will start to drop newly arrived packets until the number of partially fragmented packets drops below the threshold.
-  - By setting this parameter to a higher value, such as 134217728 (128 MB), the kernel can accommodate a larger number of partially fragmented packets in the queue, which can help improve the performance of network applications that transfer large amounts of data, such as file transfer protocols and multimedia streaming applications.
+- `sysctl net.core.rmem_max`を実行すると少なくとも`net.core.rmem_max = 2147483647`が返されるはずです。
+  - このパラメータは各ネットワーク接続の"受信バッファ"の最大サイズを指定します。これにより任意の時点でメモリに保持できるデータの最大量が決まります。最大バッファサイズを増やすことによりオペレーティングシステムはより大きなデータバーストに対応できるようになり、ネットワークの輻輳を防止しパケット損失を減らすことができ、その結果より高速で信頼性の高いデータ転送が可能になります。
+- `sysctl net.ipv4.ipfrag_time`を実行すると`net.ipv4.ipfrag_time = 3`が返されるはずです。
+  - "net.ipv4.ipfrag_time"パラメータはカーネルが部分的に断片化されたIPパケットを破棄するまで保持する最大時間を秒単位で指定します。このパラメータのデフォルト値は通常30秒に設定されていますが特定のオペレーティングシステムと構成によって異なる場合があります。
+  - このパラメータを3秒などの低い値に設定するとカーネルは不要になった部分的に断片化されたパケットを破棄することでメモリリソースをより迅速に解放でき、システム全体のパフォーマンスと安定性の向上に役立ちます。
+- `sysctl net.ipv4.ipfrag_high_thresh`を実行すると`net.ipv4.ipfrag_high_thresh = 134217728`が返されるはずです。
+  - "net.ipv4.ipfrag_high_thresh"パラメータは、カーネルIPパケット再構成キュー内で許可される部分的に断片化されたパケットの数の最高基準しきい値を指定します。キュー内の部分的に断片化されたパケットの数がこのしきい値を超えると、カーネルは部分的に断片化されたパケットの数がしきい値を下回るまで、新しく到着したパケットのドロップを開始します。
+  - このパラメータを134217728(128MB)などのより高い値に設定すると、カーネルはキュー内でより多くの部分的に断片化されたパケットに対応できるようになり、ファイル転送プロトコルやマルチメディアストリーミングアプリケーションのような大量のデータを転送するネットワークアプリケーションのパフォーマンスの向上に役立ちます。
 
-More info on these values: [Cross-vendor tuning](https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html#cross-vendor-tuning)
+これらの値の詳細な情報については[クロスベンダー調整](https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html#cross-vendor-tuning)を確認してください。
 
-##### Solution
+##### 解決法
 
-Either:
+いずれかを実行します:
 
-- Create the following file: `sudo touch /etc/sysctl.d/10-cyclone-max.conf` (recommended)
+- 以下のように`sudo touch /etc/sysctl.d/10-cyclone-max.conf`ファイルを作成します (推奨)
 
-  - Edit the file to contain (`sudo gedit /etc/sysctl.d/10-cyclone-max.conf`):
+  - (`sudo gedit /etc/sysctl.d/10-cyclone-max.conf`)を含めるファイルを編集します:
 
     ```bash
     net.core.rmem_max=2147483647
@@ -169,7 +168,7 @@ Either:
     net.ipv4.ipfrag_high_thresh=134217728 # (128 MB)
     ```
 
-    - Either restart the computer or run following to enable the changes:
+    - コンピューターを再起動するか以下を実行して変更を有効にします:
 
       ```bash
       sudo sysctl -w net.core.rmem_max=2147483647
@@ -177,7 +176,7 @@ Either:
       sudo sysctl -w net.ipv4.ipfrag_high_thresh=134217728
       ```
 
-- **OR** put following lines to the `~/.bashrc` file:
+- **あるいは** 以下の行を`~/.bashrc`ファイルに記述します:
 
   ```bash
   if [ ! -e /tmp/kernel_network_conf_is_set ]; then
@@ -187,34 +186,34 @@ Either:
   fi
   ```
 
-  - This will probably ask for password on the terminal every time you restart the computer.
+  - これによりコンピュータを再起動するたびに端末でパスワードを要求される可能性があります。
 
-### Check if ROS localhost only communication is enabled
+### ROSローカルホストのみの通信が有効になっているか確認する
 
-- If you are using multi computer setup, please skip this check.
-- Enabling ROS localhost only communication can help improve the performance of ROS by reducing network traffic and avoiding potential conflicts with other devices on the network.
-- Also check [Enable localhost-only communication](../../installation/additional-settings-for-developers/index.md#enabling-localhost-only-communication)
+- マルチコンピュータセットアップを使用している場合は、このチェックをスキップしてください。
+- ROSのローカルホストのみの通信を有効にするとネットワークトラフィックが削減され、ネットワーク上の他のデバイスとの潜在的な競合が回避されるため、ROSのパフォーマンスが向上します。
+- [localhostのみの通信を有効にする](../../installation/additional-settings-for-developers/index.md#enabling-localhost-only-communication)も確認してください。
 
-#### Target symptoms
+#### 対象の症状
 
-- You see topics that shouldn't exist
-- You see point clouds that don't belong to your machine
-  - They might be from another computer running ROS 2 on your network
-- Point clouds or markers flicker on RViz2
-  - Another publisher (on another machine) may be publishing on the same topic as your node does.
-  - Causing the flickering.
+- 存在すべきではないトピックが表示される
+- 自分のマシンに属さない点群が表示される
+  - ネットワーク上でROS2を実行している別のコンピュータからのものである可能性があります
+- RViz2で点群またはマーカーがちらつく
+  - 別のパブリッシャー(別のマシン上)が、ノードと同じトピックをパブリッシュしている可能性があります。
+  - ちらつきの原因となります。
 
-#### Diagnosis
+#### 診断
 
-Run following to check it:
+以下を実行して確認します:
 
 ```bash
 echo $ROS_LOCALHOST_ONLY
 ```
 
-The return line should be `1`. If not, apply the solution.
+`1`が返ってくるはずです。そうでなければ解決法を適用します。
 
-#### Solution
+#### 解決法
 
-- Add `export $ROS_LOCALHOST_ONLY=1` as a separate line in you `~/.bashrc` file.
-  - This environment variable tells ROS to only use the `loopback` network interface (i.e., localhost) for communication, rather than using the network interface card (NIC) for Ethernet or Wi-Fi. This can reduce network traffic and potential conflicts with other devices on the network, resulting in better performance and stability.
+- `~/.bashrc`ファイルの独立した行に`export $ROS_LOCALHOST_ONLY=1`を加えます。
+  - この環境変数は、イーサネットやWi-Fiにネットワークインターフェイスカード(NIC) を使用するのではなく、通信にループバックネットワークインターフェイス (つまりlocalhost) のみを使用するようにROSに指示します。これによりネットワークトラフィックとネットワーク上の他のデバイスとの潜在的な競合が軽減されパフォーマンスと安定性が向上します。
