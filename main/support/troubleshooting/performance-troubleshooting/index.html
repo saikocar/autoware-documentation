@@ -21,7 +21,7 @@
     
     
       
-        <title>Performance Troubleshooting - Autoware Documentation</title>
+        <title>パフォーマンスのトラブルシューティング - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#performance-troubleshooting" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Performance Troubleshooting
+              パフォーマンスのトラブルシューティング
             
           </span>
         </div>
@@ -6042,12 +6042,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Performance Troubleshooting
+          パフォーマンスのトラブルシューティング
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Performance Troubleshooting
+        パフォーマンスのトラブルシューティング
       </a>
       
         
@@ -6066,37 +6066,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#diagnostic-steps" class="md-nav__link">
-    Diagnostic Steps
+  <a href="#_2" class="md-nav__link">
+    診断手順
   </a>
   
-    <nav class="md-nav" aria-label="Diagnostic Steps">
+    <nav class="md-nav" aria-label="診断手順">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#check-if-multicast-is-enabled" class="md-nav__link">
-    Check if multicast is enabled
+  <a href="#_3" class="md-nav__link">
+    マルチキャストが有効になっているかどうかを確認する
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#check-the-compilation-flags" class="md-nav__link">
-    Check the compilation flags
+  <a href="#_7" class="md-nav__link">
+    コンパイルフラグを確認する
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#check-the-dds-settings" class="md-nav__link">
-    Check the DDS settings
+  <a href="#dds" class="md-nav__link">
+    DDS設定を確認する
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#check-if-ros-localhost-only-communication-is-enabled" class="md-nav__link">
-    Check if ROS localhost only communication is enabled
+  <a href="#ros" class="md-nav__link">
+    ROSローカルホストのみの通信が有効になっているか確認する
   </a>
   
 </li>
@@ -6216,37 +6216,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#diagnostic-steps" class="md-nav__link">
-    Diagnostic Steps
+  <a href="#_2" class="md-nav__link">
+    診断手順
   </a>
   
-    <nav class="md-nav" aria-label="Diagnostic Steps">
+    <nav class="md-nav" aria-label="診断手順">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#check-if-multicast-is-enabled" class="md-nav__link">
-    Check if multicast is enabled
+  <a href="#_3" class="md-nav__link">
+    マルチキャストが有効になっているかどうかを確認する
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#check-the-compilation-flags" class="md-nav__link">
-    Check the compilation flags
+  <a href="#_7" class="md-nav__link">
+    コンパイルフラグを確認する
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#check-the-dds-settings" class="md-nav__link">
-    Check the DDS settings
+  <a href="#dds" class="md-nav__link">
+    DDS設定を確認する
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#check-if-ros-localhost-only-communication-is-enabled" class="md-nav__link">
-    Check if ROS localhost only communication is enabled
+  <a href="#ros" class="md-nav__link">
+    ROSローカルホストのみの通信が有効になっているか確認する
   </a>
   
 </li>
@@ -6274,141 +6274,141 @@
   
 
 
-<div><h1 id="performance-troubleshooting">Performance Troubleshooting<a class="headerlink" href="#performance-troubleshooting" title="Permanent link">#</a></h1>
-<p>Overall symptoms:</p>
+<div><h1 id="_1">パフォーマンスのトラブルシューティング<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<p>全体的な症状:</p>
 <ul>
-<li>Autoware is running slower than expected</li>
-<li>Messages show up late in RViz2</li>
-<li>Point clouds are lagging</li>
-<li>Camera images are lagging behind</li>
-<li>Point clouds or markers flicker on RViz2</li>
-<li>When multiple subscribers use the same publishers, the message rate drops</li>
+<li>Autowareの実行が予想よりも遅い</li>
+<li>RViz2でメッセージが遅く表示される</li>
+<li>点群の遅れ</li>
+<li>カメラの映像が遅れている</li>
+<li>RViz2で点群またはマーカーがちらつく</li>
+<li>複数のサブスクライバが同じパブリッシャーを使用するとメッセージレートが低下する</li>
 </ul>
-<h2 id="diagnostic-steps">Diagnostic Steps<a class="headerlink" href="#diagnostic-steps" title="Permanent link">#</a></h2>
-<h3 id="check-if-multicast-is-enabled">Check if multicast is enabled<a class="headerlink" href="#check-if-multicast-is-enabled" title="Permanent link">#</a></h3>
-<h4 id="target-symptoms">Target symptoms<a class="headerlink" href="#target-symptoms" title="Permanent link">#</a></h4>
+<h2 id="_2">診断手順<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<h3 id="_3">マルチキャストが有効になっているかどうかを確認する<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
+<h4 id="_4">対象の症状<a class="headerlink" href="#_4" title="Permanent link">#</a></h4>
 <ul>
-<li>When multiple subscribers use the same publishers, the message rate drops</li>
+<li>複数のサブスクライバが同じパブリッシャーを使用するとメッセージレートが低下する</li>
 </ul>
-<h4 id="diagnosis">Diagnosis<a class="headerlink" href="#diagnosis" title="Permanent link">#</a></h4>
-<p>Make sure that the multicast is enabled for your interface.</p>
-<p>For example when you run following:</p>
+<h4 id="_5">診断<a class="headerlink" href="#_5" title="Permanent link">#</a></h4>
+<p>マルチキャストがインターフェイスで有効になっていることを確認してください。</p>
+<p>たとえば以下を実行すると:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>/opt/ros/humble/setup.bash
 ros2<span class="w"> </span>run<span class="w"> </span>demo_nodes_cpp<span class="w"> </span>talker
 </code></pre></div>
-<p>If you get the error message <code>selected interface "{your-interface-name}" is not multicast-capable: disabling multicast</code>, this should be fixed.</p>
-<h4 id="solution">Solution<a class="headerlink" href="#solution" title="Permanent link">#</a></h4>
-<p>Run the following command to allow multicast:</p>
+<p>"{your-interface-name}" is not multicast-capable: disabling multicast`というエラーメッセージが表示された場合はこれを修正する必要があります。</p>
+<h4 id="_6">解決法<a class="headerlink" href="#_6" title="Permanent link">#</a></h4>
+<p>以下のコマンドを実行しマルチキャストを許可します:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>multicast<span class="w"> </span>on<span class="w"> </span><span class="o">{</span>your-interface-name<span class="o">}</span>
 </code></pre></div>
-<p>This way DDS will function as intended and multiple subscribers can receive data from a single publisher without any significant degradation in performance.</p>
-<p>This is a temporary solution. And will be reverted once the computer restarts.</p>
-<p>To make it permanent either,</p>
+<p>こうすることでDDSは意図したとおりに機能し、パフォーマンスを大幅に低下させることなく、複数のサブスクライバーが1つのパブリッシャーからデータを受信できます。</p>
+<p>これは一時的な解決策です。コンピュータが再起動すると元に戻ります。</p>
+<p>それを永続的にするには、</p>
 <ul>
-<li>Create a service to run this on startup (recommended)</li>
+<li>起動時にこれを実行するサービスを作成します (推奨)</li>
 <li>
-<p><strong>OR</strong> put following lines to the <code>~/.bashrc</code> file:</p>
+<p><strong>あるいは</strong> 以下の行を<code>~/.bashrc</code>ファイルに追加します:</p>
 <div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-e<span class="w"> </span>/tmp/multicast_is_set<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>lo<span class="w"> </span>multicast<span class="w"> </span>on
 touch<span class="w"> </span>/tmp/multicast_is_set
 <span class="k">fi</span>
 </code></pre></div>
 <ul>
-<li>This will probably ask for password on the terminal every time you restart the computer.</li>
+<li>これによりコンピュータを再起動するたびに端末でパスワードを要求される可能性があります。</li>
 </ul>
 </li>
 </ul>
-<h3 id="check-the-compilation-flags">Check the compilation flags<a class="headerlink" href="#check-the-compilation-flags" title="Permanent link">#</a></h3>
-<h4 id="target-symptoms_1">Target symptoms<a class="headerlink" href="#target-symptoms_1" title="Permanent link">#</a></h4>
+<h3 id="_7">コンパイルフラグを確認する<a class="headerlink" href="#_7" title="Permanent link">#</a></h3>
+<h4 id="_8">対象の症状<a class="headerlink" href="#_8" title="Permanent link">#</a></h4>
 <ul>
-<li>Autoware is running slower than expected</li>
-<li>Point clouds are lagging</li>
-<li>When multiple subscribers use the same publishers, the message rate drops even further</li>
+<li>Autowareの実行が予想よりも遅い</li>
+<li>点群の遅れ</li>
+<li>複数のサブスクライバーが同じパブリッシャーを使用すると、メッセージレートはさらに低下する。</li>
 </ul>
-<h4 id="diagnosis_1">Diagnosis<a class="headerlink" href="#diagnosis_1" title="Permanent link">#</a></h4>
-<p>Check the <code>~/.bash_history</code> file to see if there are any <code>colcon build</code> directives without <code>-DCMAKE_BUILD_TYPE=Release</code> or <code>-DCMAKE_BUILD_TYPE=RelWithDebInfo</code> flags at all.</p>
-<p>Even if a build starts with these flags but same workspace gets compiled without these flags, it will still be a slow build in the end.</p>
-<p>In addition, the nodes will run slow in general, especially the <code>pointcloud_preprocessor</code> nodes.</p>
-<p>Example issue: <a href="https://github.com/autowarefoundation/autoware.universe/issues/2597#issuecomment-1491789081">issue2597</a></p>
-<h4 id="solution_1">Solution<a class="headerlink" href="#solution_1" title="Permanent link">#</a></h4>
+<h4 id="_9">診断<a class="headerlink" href="#_9" title="Permanent link">#</a></h4>
+<p><code>~/.bash_history</code>ファイルを確認して<code>-DCMAKE_BUILD_TYPE=Release</code>または<code>-DCMAKE_BUILD_TYPE=RelWithDebInfo</code>フラグがまったくない<code>colcon build</code>ディレクティブがあるかどうかを確認します。</p>
+<p>これらのフラグを使用してビルドが開始され、同じワークスペースがこれらのフラグなしでコンパイルされた場合でも、最終的には依然として遅いビルドになります。</p>
+<p>さらにノード、特に<code>pointcloud_preprocessor</code>ノードの動作が一般的に遅くなります。</p>
+<p>問題の例: <a href="https://github.com/autowarefoundation/autoware.universe/issues/2597#issuecomment-1491789081">issue2597</a></p>
+<h4 id="_10">解決法<a class="headerlink" href="#_10" title="Permanent link">#</a></h4>
 <ul>
-<li>Remove the <code>build</code>, <code>install</code> and optionally <code>log</code> folders in the main <code>autoware</code> folder.</li>
+<li>メインの<code>autoware</code>フォルダ内の<code>build</code>、<code>install</code>フォルダと必要に応じて<code>log</code>フォルダを削除します。</li>
 <li>
-<p>Compile the Autoware with either <code>Release</code> or <code>RelWithDebInfo</code> tags:</p>
+<p><code>Release</code>または<code>RelWithDebInfo</code>タグを使用してAutowareをコンパイルします:</p>
 <div class="highlight"><pre><span></span><code>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<span class="w"> </span>--cmake-args<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
 <span class="c1"># Or build with debug flags too (comparable performance but you can debug too)</span>
 colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<span class="w"> </span>--cmake-args<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>RelWithDebInfo
 </code></pre></div>
 </li>
 </ul>
-<h3 id="check-the-dds-settings">Check the DDS settings<a class="headerlink" href="#check-the-dds-settings" title="Permanent link">#</a></h3>
-<h4 id="target-symptoms_2">Target symptoms<a class="headerlink" href="#target-symptoms_2" title="Permanent link">#</a></h4>
+<h3 id="dds">DDS設定を確認する<a class="headerlink" href="#dds" title="Permanent link">#</a></h3>
+<h4 id="_11">対象の症状<a class="headerlink" href="#_11" title="Permanent link">#</a></h4>
 <ul>
-<li>Autoware is running slower than expected</li>
-<li>Messages show up late in RViz2</li>
-<li>Point clouds are lagging</li>
-<li>Camera images are lagging behind</li>
-<li>When multiple subscribers use the same publishers, the message rate drops</li>
+<li>Autowareの実行が予想よりも遅い</li>
+<li>RViz2でメッセージが遅く表示される</li>
+<li>点群の遅れ</li>
+<li>カメラの映像が遅れている</li>
+<li>複数のサブスクライバが同じパブリッシャーを使用するとメッセージ レートが低下する</li>
 </ul>
-<h4 id="check-the-rmw-ros-middleware-implementation">Check the RMW (<abbr title="Robot Operating System">ROS</abbr> Middleware) implementation<a class="headerlink" href="#check-the-rmw-ros-middleware-implementation" title="Permanent link">#</a></h4>
-<h5 id="diagnosis_2">Diagnosis<a class="headerlink" href="#diagnosis_2" title="Permanent link">#</a></h5>
-<p>Run following to check the middleware used:</p>
+<h4 id="rmwros">RMW(ROSのミドルウェア)の実装を確認する<a class="headerlink" href="#rmwros" title="Permanent link">#</a></h4>
+<h5 id="_12">診断<a class="headerlink" href="#_12" title="Permanent link">#</a></h5>
+<p>以下のコマンドを実行して使用されているミドルウェアを確認します。:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="nv">$RMW_IMPLEMENTATION</span>
 </code></pre></div>
-<p>The return line should be <code>rmw_cyclonedds_cpp</code>. If not, apply the solution.</p>
-<p>If you are using a different DDS middleware, we might not have official support for it just yet.</p>
-<h5 id="solution_2">Solution<a class="headerlink" href="#solution_2" title="Permanent link">#</a></h5>
-<p>Add <code>export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp</code> as a separate line in you <code>~/.bashrc</code> file.</p>
-<h4 id="check-if-the-cyclonedds-is-configured-correctly">Check if the CycloneDDS is configured correctly<a class="headerlink" href="#check-if-the-cyclonedds-is-configured-correctly" title="Permanent link">#</a></h4>
-<h5 id="diagnosis_3">Diagnosis<a class="headerlink" href="#diagnosis_3" title="Permanent link">#</a></h5>
-<p>Run following to check the configuration <code>.xml</code> file of the <code>CycloneDDS</code>:</p>
+<p><code>rmw_cyclonedds_cpp</code>が返ってくるはずです。そうでない場合は解決法を適用します。</p>
+<p>別のDDSミドルウェアを使用している場合はまだ正式なサポートが提供されていない可能性があります。</p>
+<h5 id="_13">解決法<a class="headerlink" href="#_13" title="Permanent link">#</a></h5>
+<p><code>~/.bashrc</code>ファイルの独立した行に<code>export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp</code>を追加します。</p>
+<h4 id="cyclonedds">CycloneDDSが正しく設定されているか確認する<a class="headerlink" href="#cyclonedds" title="Permanent link">#</a></h4>
+<h5 id="_14">診断<a class="headerlink" href="#_14" title="Permanent link">#</a></h5>
+<p>以下を実行して<code>CycloneDDS</code>の<code>.xml</code>ファイルの設定を確認します:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="nv">$CYCLONEDDS_URI</span>
 </code></pre></div>
-<p>The return line should be a valid path pointing to an <code>.xml</code> file with <code>CycloneDDS</code> configuration.</p>
-<p>Also check if the file is configured correctly:</p>
+<p>戻り行は<code>CycloneDDS</code>設定を含む<code>.xml</code>ファイルを指す有効なパスである必要があります。</p>
+<p>ファイルが正しく構成されているかどうかも確認します:</p>
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>!<span class="o">{</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$CYCLONEDDS_URI</span><span class="o">}</span>
 </code></pre></div>
-<p>This should print the <code>.xml</code> file on the terminal.</p>
-<h5 id="solution_3">Solution<a class="headerlink" href="#solution_3" title="Permanent link">#</a></h5>
-<p>Follow <a href="../../../installation/additional-settings-for-developers/#tuning-dds">DDS settings:Tuning DDS documentation</a> and make sure:</p>
+<p><code>.xml</code>ファイルがターミナル上で表示されるはずです。</p>
+<h5 id="_15">解決法<a class="headerlink" href="#_15" title="Permanent link">#</a></h5>
+<p><a href="../../../installation/additional-settings-for-developers/#tuning-dds">DDSの設定:DDS設定ドキュメント</a>を確認します:</p>
 <ul>
-<li>you have <code>export CYCLONEDDS_URI=/absolute_path_to_your/cyclonedds_config.xml</code> as a line on your <code>~/.bashrc</code> file.</li>
-<li>you have the <code>cyclonedds_config.xml</code> with the configuration provided in the documentation.</li>
+<li><code>~/.bashrc</code>ファイルに<code>export CYCLONEDDS_URI=/absolute_path_to_your/cyclonedds_config.xml</code>を記述します。</li>
+<li>ドキュメントで提供されている設定を含む<code>cyclonedds_config.xml</code>を作成します。 </li>
 </ul>
-<h4 id="check-the-linux-kernel-maximum-buffer-size">Check the Linux kernel maximum buffer size<a class="headerlink" href="#check-the-linux-kernel-maximum-buffer-size" title="Permanent link">#</a></h4>
-<h5 id="diagnosis_4">Diagnosis<a class="headerlink" href="#diagnosis_4" title="Permanent link">#</a></h5>
+<h4 id="linux">Linuxカーネルの最大バッファサイズを確認する<a class="headerlink" href="#linux" title="Permanent link">#</a></h4>
+<h5 id="_16">診断<a class="headerlink" href="#_16" title="Permanent link">#</a></h5>
 <ul>
-<li>Run: <code>sysctl net.core.rmem_max</code>, it should return at least <code>net.core.rmem_max = 2147483647</code>.<ul>
-<li>This parameter specifies the maximum size of the "receive buffer" for each network connection, which determines the maximum amount of data that can be held in memory at any given time. By increasing the maximum buffer size, the operating system can accommodate larger bursts of data, which can help prevent network congestion and reduce packet loss, resulting in faster and more reliable data transfers.</li>
+<li><code>sysctl net.core.rmem_max</code>を実行すると少なくとも<code>net.core.rmem_max = 2147483647</code>が返されるはずです。<ul>
+<li>このパラメータは各ネットワーク接続の"受信バッファ"の最大サイズを指定します。これにより任意の時点でメモリに保持できるデータの最大量が決まります。最大バッファサイズを増やすことによりオペレーティングシステムはより大きなデータバーストに対応できるようになり、ネットワークの輻輳を防止しパケット損失を減らすことができ、その結果より高速で信頼性の高いデータ転送が可能になります。</li>
 </ul>
 </li>
-<li>Run: <code>sysctl net.ipv4.ipfrag_time</code>, it should return around: <code>net.ipv4.ipfrag_time = 3</code><ul>
-<li>The "net.ipv4.ipfrag_time" parameter specifies the maximum time in seconds that the kernel should retain partially fragmented IP packets before discarding them. The default value for this parameter is usually set to 30 seconds, but it may vary depending on the specific operating system and configuration.</li>
-<li>By setting this parameter to a lower value, such as 3 seconds, the kernel can free up memory resources more quickly by discarding partially fragmented packets that are no longer needed, which can help improve the overall performance and stability of the system.</li>
+<li><code>sysctl net.ipv4.ipfrag_time</code>を実行すると<code>net.ipv4.ipfrag_time = 3</code>が返されるはずです。<ul>
+<li>"net.ipv4.ipfrag_time"パラメータはカーネルが部分的に断片化されたIPパケットを破棄するまで保持する最大時間を秒単位で指定します。このパラメータのデフォルト値は通常30秒に設定されていますが特定のオペレーティングシステムと構成によって異なる場合があります。</li>
+<li>このパラメータを3秒などの低い値に設定するとカーネルは不要になった部分的に断片化されたパケットを破棄することでメモリリソースをより迅速に解放でき、システム全体のパフォーマンスと安定性の向上に役立ちます。</li>
 </ul>
 </li>
-<li>Run: <code>sysctl net.ipv4.ipfrag_high_thresh</code>, it should return at around: <code>net.ipv4.ipfrag_high_thresh = 134217728</code><ul>
-<li>The "net.ipv4.ipfrag_high_thresh" parameter specifies the high watermark threshold for the number of partially fragmented packets allowed in the kernel IP packet reassembly queue. When the number of partially fragmented packets in the queue exceeds this threshold, the kernel will start to drop newly arrived packets until the number of partially fragmented packets drops below the threshold.</li>
-<li>By setting this parameter to a higher value, such as 134217728 (128 MB), the kernel can accommodate a larger number of partially fragmented packets in the queue, which can help improve the performance of network applications that transfer large amounts of data, such as file transfer protocols and multimedia streaming applications.</li>
+<li><code>sysctl net.ipv4.ipfrag_high_thresh</code>を実行すると<code>net.ipv4.ipfrag_high_thresh = 134217728</code>が返されるはずです。<ul>
+<li>"net.ipv4.ipfrag_high_thresh"パラメータは、カーネルIPパケット再構成キュー内で許可される部分的に断片化されたパケットの数の最高基準しきい値を指定します。キュー内の部分的に断片化されたパケットの数がこのしきい値を超えると、カーネルは部分的に断片化されたパケットの数がしきい値を下回るまで、新しく到着したパケットのドロップを開始します。</li>
+<li>このパラメータを134217728(128MB)などのより高い値に設定すると、カーネルはキュー内でより多くの部分的に断片化されたパケットに対応できるようになり、ファイル転送プロトコルやマルチメディアストリーミングアプリケーションのような大量のデータを転送するネットワークアプリケーションのパフォーマンスの向上に役立ちます。</li>
 </ul>
 </li>
 </ul>
-<p>More info on these values: <a href="https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html#cross-vendor-tuning">Cross-vendor tuning</a></p>
-<h5 id="solution_4">Solution<a class="headerlink" href="#solution_4" title="Permanent link">#</a></h5>
-<p>Either:</p>
+<p>これらの値の詳細な情報については<a href="https://docs.ros.org/en/humble/How-To-Guides/DDS-tuning.html#cross-vendor-tuning">クロスベンダー調整</a>を確認してください。</p>
+<h5 id="_17">解決法<a class="headerlink" href="#_17" title="Permanent link">#</a></h5>
+<p>いずれかを実行します:</p>
 <ul>
 <li>
-<p>Create the following file: <code>sudo touch /etc/sysctl.d/10-cyclone-max.conf</code> (recommended)</p>
+<p>以下のように<code>sudo touch /etc/sysctl.d/10-cyclone-max.conf</code>ファイルを作成します (推奨)</p>
 <ul>
 <li>
-<p>Edit the file to contain (<code>sudo gedit /etc/sysctl.d/10-cyclone-max.conf</code>):</p>
+<p>(<code>sudo gedit /etc/sysctl.d/10-cyclone-max.conf</code>)を含めるファイルを編集します:</p>
 <div class="highlight"><pre><span></span><code>net.core.rmem_max<span class="o">=</span><span class="m">2147483647</span>
 net.ipv4.ipfrag_time<span class="o">=</span><span class="m">3</span>
 net.ipv4.ipfrag_high_thresh<span class="o">=</span><span class="m">134217728</span><span class="w"> </span><span class="c1"># (128 MB)</span>
 </code></pre></div>
 <ul>
 <li>
-<p>Either restart the computer or run following to enable the changes:</p>
+<p>コンピューターを再起動するか以下を実行して変更を有効にします:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </span>net.core.rmem_max<span class="o">=</span><span class="m">2147483647</span>
 sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv4.ipfrag_time<span class="o">=</span><span class="m">3</span>
 sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv4.ipfrag_high_thresh<span class="o">=</span><span class="m">134217728</span>
@@ -6421,7 +6421,7 @@ sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </s
 </ul>
 <ul>
 <li>
-<p><strong>OR</strong> put following lines to the <code>~/.bashrc</code> file:</p>
+<p><strong>あるいは</strong> 以下の行を<code>~/.bashrc</code>ファイルに記述します:</p>
 <div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-e<span class="w"> </span>/tmp/kernel_network_conf_is_set<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </span>net.core.rmem_max<span class="o">=</span><span class="m">2147483647</span>
 sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv4.ipfrag_time<span class="o">=</span><span class="m">3</span>
@@ -6429,38 +6429,38 @@ sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </s
 <span class="k">fi</span>
 </code></pre></div>
 <ul>
-<li>This will probably ask for password on the terminal every time you restart the computer.</li>
+<li>これによりコンピュータを再起動するたびに端末でパスワードを要求される可能性があります。</li>
 </ul>
 </li>
 </ul>
-<h3 id="check-if-ros-localhost-only-communication-is-enabled">Check if <abbr title="Robot Operating System">ROS</abbr> localhost only communication is enabled<a class="headerlink" href="#check-if-ros-localhost-only-communication-is-enabled" title="Permanent link">#</a></h3>
+<h3 id="ros">ROSローカルホストのみの通信が有効になっているか確認する<a class="headerlink" href="#ros" title="Permanent link">#</a></h3>
 <ul>
-<li>If you are using multi computer setup, please skip this check.</li>
-<li>Enabling <abbr title="Robot Operating System">ROS</abbr> localhost only communication can help improve the performance of <abbr title="Robot Operating System">ROS</abbr> by reducing network traffic and avoiding potential conflicts with other devices on the network.</li>
-<li>Also check <a href="../../../installation/additional-settings-for-developers/#enabling-localhost-only-communication">Enable localhost-only communication</a></li>
+<li>マルチコンピュータセットアップを使用している場合は、このチェックをスキップしてください。</li>
+<li>ROSのローカルホストのみの通信を有効にするとネットワークトラフィックが削減され、ネットワーク上の他のデバイスとの潜在的な競合が回避されるため、ROSのパフォーマンスが向上します。</li>
+<li><a href="../../../installation/additional-settings-for-developers/#enabling-localhost-only-communication">localhostのみの通信を有効にする</a>も確認してください。</li>
 </ul>
-<h4 id="target-symptoms_3">Target symptoms<a class="headerlink" href="#target-symptoms_3" title="Permanent link">#</a></h4>
+<h4 id="_18">対象の症状<a class="headerlink" href="#_18" title="Permanent link">#</a></h4>
 <ul>
-<li>You see topics that shouldn't exist</li>
-<li>You see point clouds that don't belong to your machine<ul>
-<li>They might be from another computer running <abbr title="Robot Operating System">ROS</abbr> 2 on your network</li>
+<li>存在すべきではないトピックが表示される</li>
+<li>自分のマシンに属さない点群が表示される<ul>
+<li>ネットワーク上でROS2を実行している別のコンピュータからのものである可能性があります</li>
 </ul>
 </li>
-<li>Point clouds or markers flicker on RViz2<ul>
-<li>Another publisher (on another machine) may be publishing on the same topic as your node does.</li>
-<li>Causing the flickering.</li>
+<li>RViz2で点群またはマーカーがちらつく<ul>
+<li>別のパブリッシャー(別のマシン上)が、ノードと同じトピックをパブリッシュしている可能性があります。</li>
+<li>ちらつきの原因となります。</li>
 </ul>
 </li>
 </ul>
-<h4 id="diagnosis_5">Diagnosis<a class="headerlink" href="#diagnosis_5" title="Permanent link">#</a></h4>
-<p>Run following to check it:</p>
+<h4 id="_19">診断<a class="headerlink" href="#_19" title="Permanent link">#</a></h4>
+<p>以下を実行して確認します:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="nv">$ROS_LOCALHOST_ONLY</span>
 </code></pre></div>
-<p>The return line should be <code>1</code>. If not, apply the solution.</p>
-<h4 id="solution_5">Solution<a class="headerlink" href="#solution_5" title="Permanent link">#</a></h4>
+<p><code>1</code>が返ってくるはずです。そうでなければ解決法を適用します。</p>
+<h4 id="_20">解決法<a class="headerlink" href="#_20" title="Permanent link">#</a></h4>
 <ul>
-<li>Add <code>export $ROS_LOCALHOST_ONLY=1</code> as a separate line in you <code>~/.bashrc</code> file.<ul>
-<li>This environment variable tells <abbr title="Robot Operating System">ROS</abbr> to only use the <code>loopback</code> network interface (i.e., localhost) for communication, rather than using the network interface card (NIC) for Ethernet or Wi-Fi. This can reduce network traffic and potential conflicts with other devices on the network, resulting in better performance and stability.</li>
+<li><code>~/.bashrc</code>ファイルの独立した行に<code>export $ROS_LOCALHOST_ONLY=1</code>を加えます。<ul>
+<li>この環境変数は、イーサネットやWi-Fiにネットワークインターフェイスカード(NIC) を使用するのではなく、通信にループバックネットワークインターフェイス (つまりlocalhost) のみを使用するようにROSに指示します。これによりネットワークトラフィックとネットワーク上の他のデバイスとの潜在的な競合が軽減されパフォーマンスと安定性が向上します。</li>
 </ul>
 </li>
 </ul>
