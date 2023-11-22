@@ -6224,8 +6224,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#map-does-not-display-when-running-the-planning-simulator" class="md-nav__link">
-    Map does not display when running the Planning Simulator
+  <a href="#_7" class="md-nav__link">
+    計画シミュレーターの実行時にマップが表示されない
   </a>
   
 </li>
@@ -6401,17 +6401,17 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 <h3 id="_6">パフォーマンス関連の問題<a class="headerlink" href="#_6" title="Permanent link">#</a></h3>
 <p>症状:</p>
 <ul>
-<li>Autoware is running slower than expected</li>
-<li>Messages show up late in RViz2</li>
-<li>Point clouds are lagging</li>
-<li>Camera images are lagging behind</li>
-<li>Point clouds or markers flicker on RViz2</li>
-<li>When multiple subscribers use the same publishers, the message rate drops</li>
+<li>Autowareの実行が予想よりも遅い</li>
+<li>RViz2でメッセージが遅く表示される</li>
+<li>点群の遅れ</li>
+<li>カメラの映像が遅れている</li>
+<li>RViz2で点群またはマーカーがちらつく</li>
+<li>複数のサブスクライバが同じパブリッシャーを使用するとメッセージレートが低下する</li>
 </ul>
-<p>If you have any of these symptoms, please the <a href="performance-troubleshooting/">Performance Troubleshooting</a> page.</p>
-<h3 id="map-does-not-display-when-running-the-planning-simulator">Map does not display when running the Planning Simulator<a class="headerlink" href="#map-does-not-display-when-running-the-planning-simulator" title="Permanent link">#</a></h3>
-<p>When running the Planning Simulator, the most common reason for the map not being displayed in RViz is because <a href="../../tutorials/ad-hoc-simulation/planning-simulation/#how-to-run-a-planning-simulation">the map path has not been specified correctly in the launch command</a>. You can confirm if this is the case by searching for <code>Could not find lanelet map under {path-to-map-dir}/lanelet2_map.osm</code> errors in the log.</p>
-<p>Another possible reason is that map loading is taking a long time due to poor DDS performance. For this, please visit the <a href="performance-troubleshooting/">Performance Troubleshooting</a> page.</p>
+<p>これらの症状が発生した場合は<a href="performance-troubleshooting/">パフォーマンスに関するトラブルシューティング</a>ページを参照してください。</p>
+<h3 id="_7">計画シミュレーターの実行時にマップが表示されない<a class="headerlink" href="#_7" title="Permanent link">#</a></h3>
+<p>計画シミュレータを実行するときに、RVizにマップが表示されない最も一般的な理由は<a href="../../tutorials/ad-hoc-simulation/planning-simulation/#how-to-run-a-planning-simulation">起動コマンドでマップパスが正しく指定されていないこと</a>です。これに該当するかどうかは<code>{path-to-map-dir}/lanelet2_map.osm</code>ログ内で<code>Could not find lanelet map</code>エラーを検索することで確認できます。</p>
+<p>考えられるもう1つの理由はDDSのパフォーマンスが低いためにマップの読み込みに時間がかかっていることです。これについては<a href="performance-troubleshooting/">パフォーマンスのトラブルシューティング</a>ページを参照してください。</p>
 <!-- prettier-ignore --></div>
 
 
