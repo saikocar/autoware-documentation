@@ -180,17 +180,17 @@ docker run --rm -it ghcr.io/autowarefoundation/autoware-universe:latest
 
 症状:
 
-- Autoware is running slower than expected
-- Messages show up late in RViz2
-- Point clouds are lagging
-- Camera images are lagging behind
-- Point clouds or markers flicker on RViz2
-- When multiple subscribers use the same publishers, the message rate drops
+- Autowareの実行が予想よりも遅い
+- RViz2でメッセージが遅く表示される
+- 点群の遅れ
+- カメラの映像が遅れている
+- RViz2で点群またはマーカーがちらつく
+- 複数のサブスクライバが同じパブリッシャーを使用するとメッセージレートが低下する
 
-If you have any of these symptoms, please the [Performance Troubleshooting](performance-troubleshooting.md) page.
+これらの症状が発生した場合は[パフォーマンスに関するトラブルシューティング](performance-troubleshooting.md)ページを参照してください。
 
-### Map does not display when running the Planning Simulator
+### 計画シミュレーターの実行時にマップが表示されない
 
-When running the Planning Simulator, the most common reason for the map not being displayed in RViz is because [the map path has not been specified correctly in the launch command](../../tutorials/ad-hoc-simulation/planning-simulation.md#how-to-run-a-planning-simulation). You can confirm if this is the case by searching for `Could not find lanelet map under {path-to-map-dir}/lanelet2_map.osm` errors in the log.
+計画シミュレータを実行するときに、RVizにマップが表示されない最も一般的な理由は[起動コマンドでマップパスが正しく指定されていないこと](../../tutorials/ad-hoc-simulation/planning-simulation.md#how-to-run-a-planning-simulation)です。これに該当するかどうかは`{path-to-map-dir}/lanelet2_map.osm`ログ内で`Could not find lanelet map`エラーを検索することで確認できます。
 
-Another possible reason is that map loading is taking a long time due to poor DDS performance. For this, please visit the [Performance Troubleshooting](performance-troubleshooting.md) page.
+考えられるもう1つの理由はDDSのパフォーマンスが低いためにマップの読み込みに時間がかかっていることです。これについては[パフォーマンスのトラブルシューティング](performance-troubleshooting.md)ページを参照してください。
