@@ -1,78 +1,78 @@
-# Reference HW Design
+# ハードウェアデザインリファレンス
 
-This document is created to describe and give additional information of the sensors and systems supported by Autoware.Universe software.
+このドキュメントはAutoware.Universeソフトウェアでサポートされるセンサーとシステムについて説明および追加情報を提供するために作成されています。
 
-All equipment listed in this document has available ROS 2 drivers and has been tested by one or more of the community members on field in autonomous vehicle and robotics applications.
+このドキュメントに記載されているすべての機器には利用可能なROS2ドライバーが搭載されており、自動運転車およびロボット工学アプリケーションの現場で1人以上のコミュニティメンバーによってテストされています。
 
-The listed sensors and systems are not sold, developed or given direct technical support by the Autoware community. Having said that any ROS 2 and Autoware related issue regarding the hardware usage could be asked using the community guidelines which found [here.](https://answers.ros.org/questions/ask/?tags=autoware)
+リストされているセンサーとシステムはAutowareコミュニティによって販売、開発、または直接の技術サポートが提供されていません。ただしハードウェアの使用に関するROS2およびAutoware関連の問題は[ここ](https://answers.ros.org/questions/ask/?tags=autoware)にあるコミュニティガイドラインを使用して問い合わせることができます。
 
-The documents consists of the sections listed below:
+このドキュメントは、以下にリストされているセクションで構成されています:
 
-- AD COMPUTERs
+- ADコンピューター
 
-  - ADLINK In-Vehicle Computers
-    - NXP In-Vehicle Computers
-    - Neousys In-Vehicle Computers
-    - Crystal Rugged In-Vehicle Computers
+  - ADLINK車載コンピュータ
+    - NXP車載コンピュータ
+    - Neousys車載コンピュータ
+    - Crystal Rugged車載コンピュータ
 
-- LiDARs
+- LiDAR
 
-  - Velodyne 3D LiDAR Sensors
-  - Robosense 3D LiDAR Sensors
-  - HESAI 3D LiDAR Sensors
-  - Leishen 3D LiDAR Sensors
-  - Livox 3D LiDAR Sensors
-  - Ouster 3D LiDAR Sensors
+  - Velodyne 3D LiDARセンサー
+  - Robosense 3D LiDARセンサー
+  - HESAI 3D LiDARセンサー
+  - Leishen 3D LiDARセンサー
+  - Livox 3D LiDARセンサー
+  - Ouster 3D LiDARセンサー
 
-- RADARs
+- RADAR
 
-  - Smartmicro Automotive Radars
-  - Aptiv Automotive Radars
-  - Continental Engineering Radars
+  - Smartmicro自動車用Radar
+  - Aptiv自動車用Radar
+  - Continental工学用Radars
 
-- CAMERAs
+- カメラ
 
-  - FLIR Machine Vision Cameras
-  - Lucid Vision Cameras
-  - Allied Vision Cameras
-  - Tier IV Cameras
-  - Neousys Technology Cameras
+  - FLIRマシンビジョンカメラ
+  - Lucidビジョンカメラ
+  - Alliedビジョンカメラ
+  - Tier IVカメラ
+  - Neousysテクノロジーカメラ
 
-- Thermal CAMERAs
+- サーマルカメラ
 
-  - FLIR Thermal Automotive Dev. Kit
+  - FLIRサーマル自動車開発キット
 
 - IMU, AHRS & GNSS/INS
 
-  - NovAtel GNSS/INS Sensors
-  - XSens GNSS/INS & IMU Sensors
-  - SBG GNSS/INS & IMU Sensors
-  - Applanix GNSS/INS Sensors
-  - PolyExplore GNSS/INS Sensors
-  - Fix Position GNSS/INS Sensors
+  - NovAtel GNSS/INSセンサー
+  - XSens GNSS/INS & IMUセンサー
+  - SBG GNSS/INS & IMUセンサー
+  - Applanix GNSS/INSセンサー
+  - PolyExplore GNSS/INSセンサー
+  - Fix Position GNSS/INSセンサー
 
-- Vehicle Drive By Wire Suppliers
+- ドライブ・バイ・ワイヤ車両供給者
   <!-- cspell: ignore Paravan -->
 
   - Dataspeed DBW Solutions
   - AStuff Pacmod DBW Solutions
   - Schaeffler-Paravan Space Drive DBW Solutions
 
-- Vehicle Platform Suppliers
+- 車両プラットホーム供給者
 
   - PIX MOVING Autonomous Vehicle Solutions
   - Autonomoustuff AV Solutions
   - NAVYA AV Solutions
 
-- Remote Drive
+- リモート走行
 
   - FORT ROBOTICS
   - LOGITECH
 
-- Full Drivers List
+- すべてのドライバーのリスト
 
-- AD Sensor Kit Suppliers
+- ADセンサーキット供給者
 
-  - LEO Drive AD Sensor Kit
-  - TIER IV AD Kit
-  - RoboSense AD Sensor Kit
+  - LEO Drive ADセンサーキット
+  - TIER IV ADキット
+  - RoboSense ADセンサーキット
