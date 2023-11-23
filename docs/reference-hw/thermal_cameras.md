@@ -1,11 +1,11 @@
-# Thermal CAMERAs
+# サーマルカメラ
 
-## **FLIR Thermal Automotive Dev. Kit**
+## **FLIRサーマル自動車開発者向けキット**
 
 ![images/thermal_camera-flir.png](images/thermal_camera-flir.png)
 
-FLIR ADK Thermal Vision cameras which has ROS 2 driver and tested by one or more community members are listed below:
+ROS2ドライバーを備え、1人以上のコミュニティメンバーによってテストされた FLIR ADKサーマルビジョンカメラは以下のとおりです:
 
-| Supported Products List | MP      | FPS | Interface         | Spectral Band  | FOV                    | ROS 2 Driver | Autoware Tested (Y/N) |
+| 対応製品一覧 | MP      | FPS | インターフェース         | スペクトラル帯域  | FOV                    | ROS2ドライバー | Autowareテスト済み (Y/N) |
 | ----------------------- | ------- | --- | ----------------- | -------------- | ---------------------- | ------------ | --------------------- |
 | FLIR ADK                | 640x512 | 30  | USB-GMSL,Ethernet | 8-14 um (LWIR) | 75˚, 50˚, 32˚, and 24˚ | -            | -                     |
