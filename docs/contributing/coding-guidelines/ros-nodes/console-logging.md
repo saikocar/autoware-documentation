@@ -1,53 +1,53 @@
-# Console logging
+# コンソールの記録
 
-ROS 2 logging is a powerful tool for understanding and debugging ROS nodes.
+ROS2ログはROSノードを理解してデバッグするための強力なツールです。
 
-This page focuses on how to design console logging in Autoware and shows several practical examples.
-To comprehensively understand how ROS 2 logging works, refer to the [logging documentation](https://docs.ros.org/en/humble/Concepts/About-Logging.html).
+このページではAutowareでコンソールログを設計する方法に焦点を当ていくつかの実用的な例を示します。
+ROS2ログの仕組みを包括的に理解するには[ログのドキュメント](https://docs.ros.org/en/humble/Concepts/About-Logging.html)を参照してください。
 
-## Logging use cases in Autoware
+## Autowareでのログ記録の使用例
 
-- Developers debug code by seeing the console logs.
-- Vehicle operators take appropriate risk-avoiding actions depending on the console logs.
-- Log analysts analyze the console logs that are recorded in rosbag files.
+- 開発者はコンソールログを確認してコードをデバッグします。
+- 車両のオペレーターはコンソールのログに応じて適切なリスク回避行動をとります。
+- ログ解析者はrosbagファイルに記録されているコンソールログを分析します。
 
-To efficiently support these use cases, clean and highly visible logs are required.
-For that, several rules are defined below.
+これらのユースケースを効率的にサポートするにはクリーンで視認性の高いログが必要です。
+そのためにいくつかのルールを以下に定義します。
 
-## Rules
+## ルール
 
-### Choose appropriate severity levels (required, non-automated)
+### 適切な重大度レベルを選択します (必須、非自動化)
 
-#### Rationale
+#### 理論的根拠
 
-It's confusing if severity levels are inappropriate as follows:
+次のように重大度レベルが不適切だと混乱を招きます。:
 
-- Useless messages are marked as `FATAL`.
-- Very important error messages are marked as `INFO`.
+- 役に立たないメッセージが`FATAL`としてマークされる。
+- 非常に重要なエラー メッセージは`INFO`としてマークされています。
 
-#### Example
+#### 例
 
-Use the following criteria as a reference:
+次の基準を参考にしてください:
 
-- **DEBUG:** Use this level to show debug information for developers. Note that logs with this level is hidden by default.
-- **INFO:** Use this level to notify events (cyclic notifications during initialization, state changes, service responses, etc.) to operators.
-- **WARN:** Use this level when a node can continue working correctly, but unintended behaviors might happen.
-  - For example, "path optimization failed but the previous data can be used", "the localization score is low", etc.
-- **ERROR:** Use this level when a node can't continue working correctly, and unintended behaviors would happen.
-  - For example, "path optimization failed and the path is empty", "the vehicle will trigger an emergency stop", etc.
-- **FATAL:** Use this level when the entire system can't continue working correctly, and the system must be stopped.
-  - For example, "the vehicle control ECU doesn't respond", "the system storage crashed", etc.
+- **DEBUG:**  開発者向けにデバッグ情報を表示するにはこのレベルを使用します。このレベルのログはデフォルトでは非表示になることに注意してください。
+- **INFO:** このレベルを使用して、イベント (初期化中の周期的な通知、状態変化、サービス応答など) をオペレーターに通知します。
+- **WARN:** ノードは正常に動作し続けるが、意図しない動作が発生する可能性がある場合は、このレベルを使用します。
+  - たとえば"パスの最適化は失敗したが、以前のデータは使用できる"、"位置推定スコアが低い"などです。
+- **ERROR:** ノードが正常に動作し続けることができず、意図しない動作が発生する可能性がある場合は、このレベルを使用します。
+  - たとえば"経路の最適化に失敗し、経路が空いている"、"車両が緊急停止する"などです。
+- **FATAL:** システム全体が正しく動作し続けることができず、システムを停止する必要がある場合に、このレベルを使用します。
+  - たとえば"車両制御ECUが応答しない"、"システム ストレージがクラッシュした"などです。
 
-### Filter out unnecessary logs by setting logging options (required, non-automated)
+### ログオプションを設定して不要なログを除外する(必須、非自動)
 
-#### Rationale
+#### 理論的根拠
 
-Some third-party nodes such as drivers may not follow the Autoware's guidelines.
-If the logs are noisy, unnecessary logs should be filtered out.
+ドライバーなどの一部のサードパーティノードはAutowareのガイドラインに従っていない場合があります。
+ログにノイズが多い場合は、不要なログを除外する必要があります。
 
-#### Example
+#### 例
 
-Use the `--log-level {level}` option to change the minimum level of logs to be displayed:
+`--log-level {level}`オプションを使用して、表示されるログの最小レベルを変更します:
 
 ```xml
 <launch>
@@ -56,7 +56,7 @@ Use the `--log-level {level}` option to change the minimum level of logs to be d
 </launch>
 ```
 
-If you want to disable only specific output targets, use the `--disable-stdout-logs`, `--disable-rosout-logs`, and/or `--disable-external-lib-logs` options:
+特定の出力ターゲットのみを無効にする場合は、`--disable-stdout-logs`、`--disable-rosout-logs`および/または`--disable-external-lib-logs`オプションを使用します:
 
 ```xml
 <launch>
@@ -72,19 +72,19 @@ If you want to disable only specific output targets, use the `--disable-stdout-l
 </launch>
 ```
 
-### Use throttled logging when the log is unnecessarily shown repeatedly (required, non-automated)
+### ログが不必要に繰り返し表示される場合は、調整されたログを使用します(必須、非自動)
 
-#### Rationale
+#### 理論的根拠
 
-If tons of logs are shown on the console, people miss important message.
+大量のログがコンソールに表示されると、重要なメッセージを見逃してしまいます。
 
-#### Example
+#### 例
 
-While waiting for some messages, throttled logs are usually enough.
-In such cases, wait about 5 seconds as a reference value.
+いくつかのメッセージを待機している間は、通常は調整されたログで十分です。
+この場合は5秒程度を目安としてお待ちください。
 
 ```cpp
-// Compliant
+// 準拠
 void FooNode::on_timer() {
   if (!current_pose_) {
     RCLCPP_ERROR_THROTTLE(get_logger(), *get_clock(), 5000, "Waiting for current_pose_.");
@@ -92,7 +92,7 @@ void FooNode::on_timer() {
   }
 }
 
-// Non-compliant
+// 非準拠
 void FooNode::on_timer() {
   if (!current_pose_) {
     RCLCPP_ERROR(get_logger(), "Waiting for current_pose_.");
@@ -101,24 +101,24 @@ void FooNode::on_timer() {
 }
 ```
 
-#### Exception
+#### 例外
 
-The following cases are acceptable even if it's not throttled.
+以下の場合は、スロットルしていなくても許容されます。
 
-- The message is really worth displaying every time.
-- The message level is DEBUG.
+- このメッセージは毎回表示する価値があります。
+- メッセージレベルはDEBUGです。
 
-### Do not depend on rclcpp::Node in core library classes but depend only on rclcpp/logging.hpp (advisory, non-automated)
+### コアライブラリクラスのrclcpp::Node には依存せず、rclcpp/logging.hppのみに依存します(助言、非自動)
 
-#### Rationale
+#### 理論的根拠
 
-Core library classes, which contain reusable algorithms, may also be used for non-ROS platforms.
-When porting libraries to other platforms, fewer dependencies are preferred.
+再利用可能なアルゴリズムを含むコアライブラリクラスは、非ROSプラットフォームでも使用できます。
+ライブラリを他のプラットフォームに移植する場合は、依存関係が少ないことが優先されます。
 
-#### Example
+#### 例
 
 ```cpp
-// Compliant
+// 準拠
 #include <rclcpp/logging.hpp>
 
 class FooCore {
@@ -133,8 +133,8 @@ private:
   rclcpp::Logger logger_;
 };
 
-// Compliant
-// Note that logs aren't published to `/rosout` if the logger name is different from the node name.
+// 準拠
+// ロガー名がノード名と異なる場合、ログは`/rosout`に公開されないことに注意してください。
 #include <rclcpp/logging.hpp>
 
 class FooCore {
@@ -144,7 +144,7 @@ class FooCore {
 };
 
 
-// Non-compliant
+// 非準拠
 #include <rclcpp/node.hpp>
 
 class FooCore {
@@ -160,22 +160,22 @@ private:
 };
 ```
 
-## Tips
+## チップ
 
-### Use rqt_console to filter logs
+### rqt_consoleを使用してログをフィルタリングする
 
-To filter logs, using `rqt_console` is useful:
+ログをフィルタリングするには`rqt_console`を使用するのが便利である:
 
 ```bash
 ros2 run rqt_console rqt_console
 ```
 
-For more details, refer to [ROS 2 Documentation](https://docs.ros.org/en/rolling/Tutorials/Beginner-CLI-Tools/Using-Rqt-Console/Using-Rqt-Console.html).
+詳細は[ROS2ドキュメント](https://docs.ros.org/en/rolling/Tutorials/Beginner-CLI-Tools/Using-Rqt-Console/Using-Rqt-Console.html)を参照してください。
 
-### Useful marco expressions
+### 便利なmarco（原文ママ）表現
 
-To debug program, sometimes you need to see which functions and lines of code are executed.
-In that case, you can use `__FILE__`, `__LINE__` and `__FUNCTION__` macro:
+プログラムをデバッグするには、どの関数やコード行が実行されるかを確認する必要がある場合があります。
+その場合、`__FILE__`、 `__LINE__`、`__FUNCTION__`マクロを使用できます:
 
 ```cpp
 void FooNode::on_timer() {
@@ -183,6 +183,6 @@ void FooNode::on_timer() {
 }
 ```
 
-The example output is as follows:
+出力例は次のとおりです:
 
 > [DEBUG] [1671720414.395456931] [foo]: file: /path/to/file.cpp, line: 100, function: on_timer
