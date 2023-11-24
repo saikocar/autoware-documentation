@@ -1,14 +1,14 @@
-# Machine learning models
+# 機械学習モデル
 
-The Autoware perception stack uses models for inference. These models are automatically downloaded if using `ansible`, but they can also be downloaded manually.
+Autoware認識スタックは推論にモデルを使用します。Ansibleを使用している場合、これらのモデルは自動的にダウンロードされますが、手動でダウンロードすることもできます。
 
-## ONNX model files
+## ONNXモデルファイル
 
-### Download instructions
+### ダウンロード手順
 
-The ONNX model files are stored in a common location, hosted by Web.Auto
+ONNXモデルファイルは、Web.Autoによってホストされる共通の場所に保存されます。
 
-Any tool that can download files from the web (e.g. `wget` or `curl`) is the only requirement for downloading these files:
+これらのファイルをダウンロードするための唯一の要件は、Webからファイルをダウンロードできるツール(wgetやcurlなど) です:
 
 ```console
 # yabloc_pose_initializer
