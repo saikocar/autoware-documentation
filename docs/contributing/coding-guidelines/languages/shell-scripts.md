@@ -1,10 +1,10 @@
-# Shell scripts
+# シェルスクリプト
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築
 
-Refer to the following links for now:
+今は以下のリンクを参照してください:
 
 - <https://google.github.io/styleguide/shellguide.html>
 - <https://github.com/koalaman/shellcheck>
