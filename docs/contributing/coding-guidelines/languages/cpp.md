@@ -1,49 +1,49 @@
 # C++
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中
 
-## References
+## 参考
 
-Follow the guidelines below if a rule is not defined on this page.
+このページでルールが定義されていない場合は、以下のガイドラインに従ってください。
 
 1. <https://docs.ros.org/en/humble/Contributing/Code-Style-Language-Versions.html>
 2. <https://www.autosar.org/fileadmin/standards/adaptive/22-11/AUTOSAR_RS_CPP14Guidelines.pdf>
 3. <https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines>
 
-Also, it is encouraged to apply Clang-Tidy to each file.
-For the usage, see [Applying Clang-Tidy to ROS packages](../../../how-to-guides/others/applying-clang-tidy-to-ros-packages.md).
+また、各ファイルにClang-Tidyを適用することをお勧めします。
+使用方法については[ROSパッケージへのClang-Tidyの適用](../../../how-to-guides/others/applying-clang-tidy-to-ros-packages.md)を参照してください。
 
-Note that not all rules are covered by Clang-Tidy.
+Clang-Tidyではすべてのルールがカバーされているわけではないことに注意してください。
 
-## Style rules
+## スタイルルール
 
-### Include header files in the defined order (required, partially automated)
+### 定義された順序でヘッダーファイルをインクルードする (必須、部分的に自動化)
 
-#### Rationale
+#### 理論的根拠
 
-- Due to indirect dependencies, the include system of C++ makes different behaviors if the header order is different.
-- To reduce unintended bugs, local header files should come first.
+- ヘッダーの順序が異なる場合、間接的な依存関係によりC++のインクルードシステムは異なる動作をします。
+- 意図しないバグを減らすにはローカルヘッダーファイルを最初に配置する必要があります。
 
-#### Reference
+#### 参考
 
 - <https://llvm.org/docs/CodingStandards.html#include-style>
 
-#### Example
+#### 例
 
-Include the headers in the following order:
+次の順序でヘッダーをインクルードします:
 
-- Main module header
-- Local package headers
-- Other package headers
-- Message headers
-- Boost headers
-- C system headers
-- C++ system headers
+- メインモジュールのヘッダー
+- ローカルパッケージのヘッダー
+- その他のパッケージのヘッダー
+- メッセージヘッダーMessage headers
+- Boostヘッダー
+- Cのシステムヘッダー
+- C++のシステムヘッダー
 
 ```cpp
-// Compliant
+// 準拠
 #include "my_header.hpp"
 
 #include "my_package/foo.hpp"
@@ -57,12 +57,12 @@ Include the headers in the following order:
 #include <vector>
 ```
 
-If you use `""` and `<>` properly, `ClangFormat` in `pre-commit` sorts headers automatically.
+""と<>を適切に使用すると、事前に設定したClangFormatはヘッダーを自動的にソートします。
 
-Do not define macros between `#include` lines because it prevents automatic sorting.
+自動ソートが妨げられるため、`#include`行の間にマクロを定義しないでください。
 
 ```cpp
-// Non-compliant
+// 非準拠
 #include <package1/foo.hpp>
 #include <package2/bar.hpp>
 
@@ -78,10 +78,10 @@ Do not define macros between `#include` lines because it prevents automatic sort
 #include <vector>
 ```
 
-Instead, define macros before `#include` lines.
+代わりに`#include`行の前にマクロを定義します。
 
 ```cpp
-// Compliant
+// 準拠
 #define EIGEN_MPL2_ONLY
 
 #include "my_header.hpp"
@@ -98,10 +98,10 @@ Instead, define macros before `#include` lines.
 #include <vector>
 ```
 
-If there are any reasons for defining macros at a specific position, write a comment before the macro.
+特定の位置にマクロを定義する理由がある場合は、マクロの前にコメントを記述します。
 
 ```cpp
-// Compliant
+// 準拠
 #include "my_header.hpp"
 
 #include "my_package/foo.hpp"
@@ -119,22 +119,21 @@ If there are any reasons for defining macros at a specific position, write a com
 #include <foo/bar.hpp>
 ```
 
-### Use lower snake case for function names (required, partially automated)
+### 関数名には小文字のスネークケースを使用します(必須、部分的に自動化)
 
-#### Rationale
+#### 理論的根拠
 
-- It is consistent with the C++ standard library.
-- It is consistent with other programming languages such as Python and Rust.
+- これはC++標準ライブラリと一致しています。
+- PythonやRustなどの他のプログラミング言語と一貫性があります。
+#### 例外
 
-#### Exception
+- Qtなどの外部プロジェクトクラスから継承したクラスのメンバー関数についてはその命名規則に従ってください。
 
-- For member functions of classes inherited from external project classes such as Qt, follow that naming convention.
-
-#### Reference
+#### 参考
 
 - <https://docs.ros.org/en/humble/The-ROS2-Project/Contributing/Code-Style-Language-Versions.html#function-and-method-naming>
 
-#### Example
+#### 例
 
 ```cpp
 void function_name()
@@ -142,21 +141,21 @@ void function_name()
 }
 ```
 
-### Use upper camel case for enum names (required, partially automated)
+### 列挙名に大文字のキャメルケースを使用する(必須、部分的に自動化)
 
-#### Rationale
+#### 理論的根拠
 
-- It is consistent with ROS 2 core packages.
+- ROS2コアパッケージと一貫性があります。
 
-#### Exception
+#### 例外
 
-- Enums defined in the `rosidl` file can use other naming conventions.
+- `rosidl`ファイルで定義された列挙型では、他の命名規則を使用できます。
 
-#### Reference
+#### 参考
 
 - <http://wiki.ros.org/CppStyleGuide> (Refer to "15. Enumerations")
 
-#### Example
+#### 例
 
 ```cpp
 enum class Color
@@ -165,38 +164,38 @@ enum class Color
 }
 ```
 
-### Use lower snake case for constant names (required, partially automated)
+### 定数名には小文字のスネークケースを使用する(必須、部分的に自動化)
 
-#### Rationale
+#### 理論的根拠
 
-- It is consistent with ROS 2 core packages.
-- It is consistent with `std::numbers`.
+- ROS2コアパッケージと一貫性があります。
+- `std::numbers`と一貫性があります。
 
-#### Exception
+#### 例外
 
-- Constants defined in the `rosidl` file can use other naming conventions.
+- `rosidl`ファイルで定義された定数には、他の命名規則を使用できます。
 
-#### Reference
+#### 参考
 
 - <https://en.cppreference.com/w/cpp/numeric/constants>
 
-#### Example
+#### 例
 
 ```cpp
 constexpr double gravity = 9.80665;
 ```
 
-### Count acronyms and contractions of compound words as one word (required, partially automated)
+### 複合語の頭字語と短縮形を1つの単語として数える (必須、部分的に自動化)
 
-#### Rationale
+#### 理論的根拠
 
-- To clarify the boundaries of words when acronyms are consecutive.
+- 頭字語が連続する場合に単語の境界を明確にするため。
 
-#### Reference
+#### 参考
 
 - <https://rust-lang.github.io/api-guidelines/naming.html#casing-conforms-to-rfc-430-c-case>
 
-#### Example
+#### 例
 
 ```cpp
 class RosApi;
