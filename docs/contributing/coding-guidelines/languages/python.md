@@ -1,10 +1,10 @@
 # Python
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中
 
-Refer to the following links for now:
+今は以下のリンクを参照してください:
 
 - <https://docs.ros.org/en/foxy/Contributing/Code-Style-Language-Versions.html#python>
 - <https://github.com/psf/black>
