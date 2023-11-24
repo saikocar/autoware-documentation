@@ -1,40 +1,34 @@
-# License
+# ライセンス
 
-Autoware is licensed under Apache License 2.0.
-Thus all contributions will be licensed as such as per clause 5 of the Apache License 2.0:
+Autowareは、Apache License 2.0に基づいてライセンスされています。
+したがって、すべての投稿はApache License 2.0の第5条に従ってライセンス供与されます:
 
 ```text
-5. Submission of Contributions. Unless You explicitly state otherwise,
-   any Contribution intentionally submitted for inclusion in the Work
-   by You to the Licensor shall be under the terms and conditions of
-   this License, without any additional terms or conditions.
-   Notwithstanding the above, nothing herein shall supersede or modify
-   the terms of any separate license agreement you may have executed
-   with Licensor regarding such Contributions.
+5. 特に断りがない限り、あなたが成果物への組み込みを意図してライセンサーに提出したコントリビューションは、付加的な条項がなければ、本ライセンスの条項に従うものとします。上述の規定にかかわらず、そうしたコントリビューションに関してあなたがライセンサーと結んだかもしれない別のライセンス契約の条項を、ここで無効にしたり修正したりすることはありません。
 ```
 
-Here is an example copyright header to add to the top of a new file:
+新しいファイルの先頭に追加する著作権ヘッダーの例を次に示します:
 
 ```text
 Copyright [first year of contribution] The Autoware Contributors
 SPDX-License-Identifier: Apache-2.0
 ```
 
-We don't write copyright notations of each contributor here.
-Instead, we place them in the `NOTICE` file like the following.
+ここでは各投稿者の著作権表記は書きません。
+代わりに、次のように`NOTICE`ファイルにそれらを配置します。
 
 ```text
 This product includes code developed by [company name].
 Copyright [first year of contribution] [company name]
 ```
 
-Let us know if your legal department has a special request for the copyright notation.
+法務部門から著作権表記について特別なリクエストがある場合はお知らせください。
 
-Currently, the old formats explained [here](https://gitlab.com/autowarefoundation/autoware.auto/AutowareAuto/-/blob/87c5e5880a18068116dd886ad56e1bfc29e694c4/CONTRIBUTING.md) are also acceptable.
-Those old formats can be replaced by this new format if the original authors agree.  
-Note that we won't write their copyrights to the `NOTICE` file unless they agree with the new format.
+現在、[ここ](https://gitlab.com/autowarefoundation/autoware.auto/AutowareAuto/-/blob/87c5e5880a18068116dd886ad56e1bfc29e694c4/CONTRIBUTING.md)で説明する古い形式も使用できます。
+元の作成者が同意した場合、これらの古い形式をこの新しい形式に置き換えることができます。  
+彼らが新しい形式に同意しない限り、`NOTICE`ファイルに彼らの著作権は書き込まれないことに注意してください。
 
-References:
+参考:
 
 - <https://opensource.google/docs/copyright/#the-year>
 - <https://www.linuxfoundation.org/blog/copyright-notices-in-open-source-software-projects/>
