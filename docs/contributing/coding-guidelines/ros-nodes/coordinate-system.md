@@ -1,30 +1,30 @@
-# Coordinate system
+# 座標系
 
-## Overview
+## 概要
 
-The commonly used coordinate systems include the world coordinate system, the vehicle coordinate system, and the sensor coordinate system.
+一般的に使用される座標系には世界座標系、車両座標系、センサー座標系などがあります。
 
-- The world coordinate system is a fixed coordinate system that defines the physical space in the environment where the vehicle is located.
+- 世界座標系は車両が配置されている環境内の物理空間を定義する固定座標系です。
 
-- The vehicle coordinate system is the vehicle's own coordinate system, which defines the vehicle's position and orientation in the world coordinate system.
+- 車両座標系は車両独自の座標系であり、世界座標系における車両の位置と方向を定義します。
 
-- The sensor coordinate system is the sensor's own coordinate system, which is used to define the sensor's position and orientation in the vehicle coordinate system.
+- センサー座標系はセンサー独自の座標系であり、車両座標系におけるセンサーの位置と方向を定義するために使用されます。
 
-## How coordinates are used in Autoware
+## Autowareにおける座標の使用方法
 
-In Autoware, coordinate systems are typically used to represent the position and movement of vehicles and obstacles in space. Coordinate systems are commonly used for path planning, perception and control, can help the vehicle decide how to avoid obstacles and to plan a safe and efficient path of travel.
+Autowareでは通常、空間内の車両や障害物の位置と動きを表すために座標系が使用されます。座標系は経路計画、認識、制御に一般的に使用され、車両が障害物を回避する方法を決定し、安全で効率的な移動経路を計画するのに役立ちます。
 
-1. Transformation of sensor data
+1. センサーデータの変換
 
-   In Autoware, each sensor has a unique coordinate system and their data is expressed in terms of the coordinates. In order to correlate the independent data between different sensors, we need to find the position relationship between each sensor and the vehicle body. Once the installation position of the sensor on the vehicle body is determined, it will remain fixed during running, so the offline calibration method can be used to determine the precise position of each sensor relative to the vehicle body.
+   Autowareでは各センサーに固有の座標系があり、そのデータは座標で表現されます。異なるセンサー間の独立したデータを関連付けるためには各センサーと車体の位置関係を見つける必要があります。センサーの車体への取り付け位置が決まると走行中はセンサーが固定されるため、オフラインキャリブレーション方法を使用して、車体に対する各センサーの正確な位置を決定できます。
 
 2. ROS TF2
 
-   The `TF2` system maintains a tree of coordinate transformations to represent the relationships between different coordinate systems. Each coordinate system is given a unique name and they are connected by coordinate transformations. How to use `TF2`, refer to the [TF2 tutorial](http://docs.ros.org/en/galactic/Concepts/About-Tf2.html).
+   `TF2`システムは、異なる座標系間の関係を表す座標変換のツリーを維持します。各座標系には一意の名前が付けられ、座標変換によって接続されます。 `TF2`の使用方法については[TF2チュートリアル](http://docs.ros.org/en/galactic/Concepts/About-Tf2.html)を参照してください。
 
-## TF tree
+## TFツリー
 
-In Autoware, a common coordinate system structure is shown below:
+Autowareにおける一般的な座標系の構造を以下に示します。:
 
 ```mermaid
 graph TD
@@ -38,55 +38,55 @@ graph TD
     /camera_link --> /camera_optical_link
 ```
 
-- earth: `earth` coordinate system describe the position of any point on the earth in terms of geodetic longitude, latitude, and altitude. In Autoware, the `earth` frame is only used in the `GnssInsPositionStamped` message.
+- earth: `earth`座標系は、測地経度、緯度、高度の観点から地球上の任意の点の位置を表します。Autowareでは`earth`フレームは`GnssInsPositionStamped`メッセージでのみ使用されます。
 
-- map: `map` coordinate system is used to represent the location of points on a local map. Geographical coordinate system are mapped into plane rectangular coordinate system using UTM or MGRS. The `map` frame`s axes point to the East, North, Up directions as explained in [Coordinate Axes Conventions](#coordinate-axes-conventions).
+- map: `map`座標系は、ローカルマップ上の点の位置を表すために使用されます。地理座標系はUTMまたはMGRSを使用して平面直交座標系にマッピングされます。[座標軸の規則](#coordinate-axes-conventions)で説明されているように、`map`フレームの軸は東、北、上方向を指します。.
 
-- base_link: vehicle coordinate system, the origin of the coordinate system is the center of the rear axle of the vehicle.
+- base_link: 車両座標系のことでこの座標系の原点は車両の後車軸の中心です。
 
-- imu, lidar, gnss, radar: these are sensor frames, transfer to vehicle coordinate system through mounting relationship.
+- imu, lidar, gnss, radar: これらはセンサーフレームであり、取り付け関係を通じて車両座標系に転送されます。
 
-- camera_link: `camera_link` is ROS standard camera coordinate system .
+- camera_link: `camera_link`はROS標準のカメラ座標系です。
 
-- camera_optical_link: `camera_optical_link` is image standard camera coordinate system.
+- camera_optical_link: `camera_optical_link`は画像標準のカメラ座標系です。
 
-### Estimating the `base_link` frame by using the other sensors
+### 他のセンサーを使用した`base_link`フレームの推定
 
-Generally we don't have the localization sensors physically at the `base_link` frame. So various sensors localize with respect to their own frames, let's call it `sensor` frame.
+一般に、`base_link`フレームには物理的に位置特定センサーがありません。したがってさまざまなセンサーは、それ自体のフレーム (`sensor`フレームと呼ぶことにします) を基準にして位置を特定します。
 
-We introduce a new frame naming convention: `x_by_y`:
+新しいフレーム命名規則`x_by_y`を導入します:
 
 ```yaml
-x: estimated frame name
-y: localization method/source
+x: 推定フレーム名
+y: 位置推定手法/ソース
 ```
 
-We cannot directly get the `sensor` frame. Because we would need the EKF module to estimate the `base_link` frame first.
+`sensor`フレームを直接取得することはできません。最初に`base_link`フレームを推定するためにEKFモジュールが必要になるためです。
 
-Without the EKF module the best we can do is to estimate `Map[map] --> sensor_by_sensor --> base_link_by_sensor` using this sensor.
+EKFモジュールがなければ、私たちができる最善のことは、このセンサーを使用して`Map[map] --> sensor_by_sensor --> base_link_by_sensor`を推定することです。
 
-#### Example by the GNSS/INS sensor
+#### GNSS/INSセンサーによる例
 
-For the integrated GNSS/INS we use the following frames:
+統合されたGNSS/INSでは以下のフレームを使用します:
 
 ```mermaid
 flowchart LR
     earth --> Map[map] --> gnss_ins_by_gnss_ins --> base_link_by_gnss_ins
 ```
 
-The `gnss_ins_by_gnss_ins` frame is obtained by the coordinates from GNSS/INS sensor. The coordinates are converted to `map` frame using the `gnss_poser` node.
+`gnss_ins_by_gnss_ins`フレームは、GNSS/INSセンサーからの座標によって取得されます。座標は`gnss_poser`ノードを使用して`map`フレームに変換されます。
 
-Finally `gnss_ins_by_gnss_ins` frame represents the position of the `gnss_ins` estimated by the `gnss_ins` sensor in the `map`.
+最後に`gnss_ins_by_gnss_ins`フレームは、`map`内の`gnss_ins`センサーによって推定された`gnss_ins`の位置を表します。
 
-Then by using the static transformation between `gnss_ins` and the `base_link` frame, we can obtain the `base_link_by_gnss_ins` frame. Which represents the `base_link` estimated by the `gnss_ins` sensor.
+次に`gnss_ins`と`base_link`フレームの間の静的変換を使用することにより`base_link_by_gnss_ins`フレームを取得できます。これは`gnss_ins`センサーによって推定された`base_link`を表します。
 
-References:
+参考:
 
 - <https://www.ros.org/reps/rep-0105.html#earth>
 
-### Coordinate Axes Conventions
+### 座標軸の規則
 
-We are using East, North, Up (ENU) coordinate axes convention by default throughout the stack.
+デフォルトではスタック全体でEast、North、Up(ENU)座標軸規則を使用しています。
 
 ```yaml
 X+: East
@@ -94,13 +94,13 @@ Y+: North
 Z+: Up
 ```
 
-The position, orientation, velocity, acceleration are all defined in the same axis convention.
+位置、方向、速度、加速度はすべて同じ軸規則で定義されます。
 
-Position by the GNSS/INS sensor is expected to be in `earth` frame.
+GNSS/INSセンサーによる位置は`earth`座標系であると予想されます。
 
-Orientation, velocity, acceleration by the GNSS/INS sensor are expected to be in the sensor frame. Axes parallel to the `map` frame.
+GNSS/INSセンサーによる方向、速度、加速度はセンサーフレーム内にあることが期待されます。軸は`map`フレームに平行です。
 
-If roll, pitch, yaw is provided, they correspond to rotation around X, Y, Z axes respectively.
+ロール、ピッチ、ヨーが指定されている場合、それらはそれぞれ X、Y、Z 軸の周りの回転に対応します。
 
 ```yaml
 Rotation around:
@@ -109,23 +109,21 @@ Rotation around:
   Z+: yaw
 ```
 
-References:
+参考:
 
 - <https://www.ros.org/reps/rep-0103.html#axis-orientation>
 
-## How they can be created
+## 作成方法
 
-1. Calibration of sensor
+1. センサーの校正
 
-   The conversion relationship between every sensor coordinate system and `base_link` can be obtained through sensor calibration technology.
-   Please consult the following link
-   [calibrating your sensors](../../../how-to-guides/integrating-autoware/creating-vehicle-and-sensor-model/calibrating-sensors) for instructions
-   on how to calibrate your sensors.
+   各センサー座標系と`base_link`の間の変換関係はセンサーキャリブレーション技術によって取得できます。
+   センサーを調整する方法については[センサーの調整](../../../how-to-guides/integrating-autoware/creating-vehicle-and-sensor-model/calibrating-sensors) を参照してください。
 
-2. Localization
+2. 位置推定
 
-   The relationship between the `base_link` coordinate system and the `map` coordinate system is determined by the position and orientation of the vehicle, and can be obtained from the vehicle localization result.
+   `base_link`座標系と`map`座標系の関係は車両の位置と姿勢によって決まり、車両の位置推定結果から求めることができます。
 
-3. Geo-referencing of map data
+3. 地図データの地理参照
 
-   The geo-referencing information can get the transformation relationship of `earth` coordinate system to local `map` coordinate system.
+   地理参照情報は、`earth`座標系からローカル`map`座標系への変換関係を取得できます。
