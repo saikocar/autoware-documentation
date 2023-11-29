@@ -1,10 +1,10 @@
-# Directory structure
+# ディレクトリ構造
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中
 
-## C++ package
+## C++パッケージ
 
 ```txt
 <package_name>
@@ -33,43 +33,43 @@
 └─ README.md
 ```
 
-### Directory descriptions
+### ディレクトリの説明
 
 #### `config`
 
-Place configuration files such as node parameters.
-For ROS parameters, use the extension `.param.yaml`.
-For non-ROS parameters, use the extension `.yaml`.
+ノードパラメータなどの設定ファイルを配置します。
+ROSパラメーターの場合は拡張子`.param.yaml`を使用します。
+ROS以外のパラメーターの場合は拡張子`.yaml`を使用します。
 
-Rationale: Since ROS parameters files are type-sensitive, they should not be the target of some code formatters and linters. In order to distinguish the file type, we use different file extensions.
+理論的根拠: ROSパラメーターファイルは型に依存するため一部のコードフォーマッタやリンターのターゲットにするべきではありません。ファイルの種類を区別するために異なるファイル拡張子を使用します。
 
 #### `doc`
 
-Place document files and link from README.
+ドキュメントファイルを配置し、READMEからリンクします。
 
 #### `include`
 
-Place header files exposed to other packages. Do not place files directly under the `include` directory, but place files under the directory with the package name.
-This directory is used for mostly library headers. Note that many headers do not need to be placed here. It is enough to place the headers under the `src` directory.
+ヘッダーファイルを他のパッケージに公開して配置します。`include`ディレクトリ直下にはファイルを配置せず、パッケージ名のディレクトリ下にファイルを配置してください。
+このディレクトリは主にライブラリヘッダーに使用されます。多くのヘッダーをここに配置する必要はないことに注意してください。ヘッダーを`src`ディレクトリの下に配置するだけで十分です。
 
-Reference: <https://docs.ros.org/en/rolling/How-To-Guides/Ament-CMake-Documentation.html#adding-files-and-headers>
+参考: <https://docs.ros.org/en/rolling/How-To-Guides/Ament-CMake-Documentation.html#adding-files-and-headers>
 
 #### `launch`
 
-Place launch files (`.launch.xml` and `.launch.py`).
+launchファイル(`.launch.xml` and `.launch.py`)を配置します。
 
 #### `schema`
 
-Place parameter definition files. See [parameters](./parameters.md) for details.
+パラメータ定義ファイルを配置します。詳細は[パラメータ](./parameters.md)を参照してください。
 
 #### `src`
 
-Place source files and private header files.
+ソースファイルとプライベートヘッダーファイルを配置します。
 
 #### `test`
 
-Place source files for testing. See [unit testing](../../testing-guidelines/unit-testing.md) for details.
+テスト用のソースファイルを配置します。詳細については[単体テスト](../../testing-guidelines/unit-testing.md)を参照してください。
 
-## Python package
+## Pythonパッケージ
 
-T.B.D.
+未決定
