@@ -1,71 +1,71 @@
-# Message guidelines
+# メッセージのガイドライン
 
-## Format
+## 形式
 
-All messages should follow [ROS message description specification](https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#background).
+すべてのメッセージは[ROSメッセージ記述仕様](https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#background)に従う必要があります。
 
-The accepted formats are:
+受け入れられる形式は以下のとおりです:
 
 - `.msg`
 - `.srv`
 - `.action`
 
-## Naming
+## 命名法則
 
-!!! warning ""
+!!! 警告 ""
 
-    Under Construction
+    構築中
 
-Use `Array` as a suffix when creating a plural type of a message. This suffix is commonly used in [common_interfaces](https://github.com/ros2/common_interfaces).
+複数のタイプのメッセージを作成する場合は`Array`を接尾辞として使用します。この接尾辞は[common_interfaces](https://github.com/ros2/common_interfaces)でよく使用されます。
 
-## Default units
+## 基本単位
 
-All the fields by default have the following units depending on their types:
+デフォルトではすべてのフィールドにはそのタイプに応じて以下の単位があります:
 
-| type           | default unit  |
+| タイプ           | 基本単位  |
 | -------------- | ------------- |
-| distance       | meter (m)     |
-| angle          | radians (rad) |
-| time           | second (s)    |
-| speed          | m/s           |
-| velocity       | m/s           |
-| acceleration   | m/s²          |
-| angular vel.   | rad/s         |
-| angular accel. | rad/s²        |
+| 距離       | メートル (m)     |
+| 角度          | ラジアン (rad) |
+| 時間           | 秒 (s)    |
+| 速さ          | m/s           |
+| 速度       | m/s           |
+| 加速度   | m/s²          |
+| 角速度   | rad/s         |
+| 角加速度 | rad/s²        |
 
-!!! warning ""
+!!! 警告 ""
 
-    If a field in a message has any of these default units, don't add any suffix or prefix denoting the type.
+    メッセージ内のフィールドにこれらのデフォルト単位のいずれかが含まれている場合は、タイプを示すサフィックスやプレフィックスを追加しないでください。
 
-## Non-default units
+## 非基本単位
 
-For non-default units, use following suffixes:
+デフォルト以外の単位の場合は、次の接尾辞を使用します:
 
-| type     | non-default unit | suffix  |
+| タイプ     | 非基本単位 | 接尾辞  |
 | -------- | ---------------- | ------- |
-| distance | nanometer        | `_nm`   |
-| distance | micrometer       | `_um`   |
-| distance | millimeter       | `_mm`   |
-| distance | kilometer        | `_km`   |
-| angle    | degree (deg)     | `_deg`  |
-| time     | nanosecond       | `_ns`   |
-| time     | microsecond      | `_us`   |
-| time     | millisecond      | `_ms`   |
-| time     | minute           | `_min`  |
-| time     | hour (h)         | `_hour` |
-| velocity | km/h             | `_kmph` |
+| 距離 | ナノメートル        | `_nm`   |
+| 距離 | マイクロメートル       | `_um`   |
+| 距離 | ミリメートル       | `_mm`   |
+| 距離 | キロメートル        | `_km`   |
+| 角度    | 度 (deg)     | `_deg`  |
+| 時間     | ナノ秒       | `_ns`   |
+| 時間     | マイクロ秒      | `_us`   |
+| 時間     | ミリ秒      | `_ms`   |
+| 時間     | 分           | `_min`  |
+| 時間     | 時間 (h)         | `_hour` |
+| 速度 | km/h             | `_kmph` |
 
-!!! tip ""
+!!! ヒント ""
 
-    If a unit that you'd like to use doesn't exist here, [create an issue/PR](https://github.com/autowarefoundation/autoware-documentation/issues) to add it to this list.
+    使用したいユニットがここに存在しない場合は[問題/PRを作成](https://github.com/autowarefoundation/autoware-documentation/issues)してこのリストに追加します。
 
-## Message field types
+## メッセージフィールドのタイプ
 
-For list of types supported by the ROS interfaces [see here](https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types).
+ROSインターフェイスでサポートされているタイプのリストについては[ここを参照](https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types)してください。
 
-Also copied here for convenience:
+便宜のため以下にコピーします:
 
-| Message Field Type | C++ equivalent   |
+| メッセージフィールドの型 | C++で等価   |
 | ------------------ | ---------------- |
 | `bool`             | `bool`           |
 | `byte`             | `uint8_t`        |
@@ -83,31 +83,31 @@ Also copied here for convenience:
 | `string`           | `std::string`    |
 | `wstring`          | `std::u16string` |
 
-### Arrays
+### 配列
 
-For arrays, use `unbounded dynamic array` type.
+配列の場合は`無制限の動的配列`タイプを使用します。
 
-Example:
+例:
 
 ```text
 int32[] unbounded_integer_array
 ```
 
-## Enumerations
+## 列挙
 
-ROS 2 interfaces don't support enumerations directly.
+ROS2インターフェイスは列挙を直接サポートしません。
 
-It is possible to define integers constants and assign them to a non-constant integer parameter.
+整数定数を定義し、それを非定数整数パラメータに割り当てることができます。
 
-!!! success ""
+!!! 成功 ""
 
-    Constants are written in `CONSTANT_CASE`.
+    定数は`CONSTANT_CASE`に記述します。
 
-!!! success ""
+!!! 成功 ""
 
-    Assign a different value to each element of a constant.
+    定数の各要素に異なる値を割り当てます。
 
-Example from [shape_msgs/msg/SolidPrimitive.msg](https://github.com/ros2/common_interfaces/blob/f3cb4848560e91596e7688e8ac1816828fa460cb/shape_msgs/msg/SolidPrimitive.msg#L4-L11)
+[shape_msgs/msg/SolidPrimitive.msg](https://github.com/ros2/common_interfaces/blob/f3cb4848560e91596e7688e8ac1816828fa460cb/shape_msgs/msg/SolidPrimitive.msg#L4-L11)の例
 
 ```text
 uint8 BOX=1
@@ -116,44 +116,44 @@ uint8 CYLINDER=3
 uint8 CONE=4
 uint8 PRISM=5
 
-# The type of the shape
+# 形状の種類
 uint8 type
 ```
 
-## Comments
+## コメント
 
-On top of the message, briefly explain what the message contains and/or what it is used for. For an example, see [sensor_msgs/msg/Imu.msg](https://github.com/ros2/common_interfaces/blob/master/sensor_msgs/msg/Imu.msg#L1-L13).
+メッセージの上にメッセージの内容や用途を簡単に説明します。例については[sensor_msgs/msg/Imu.msg](https://github.com/ros2/common_interfaces/blob/master/sensor_msgs/msg/Imu.msg#L1-L13)を参照してください。
 
-!!! tip ""
+!!! ヒント ""
 
-    If necessary, add line comments before the fields that explain the context and/or meaning.
+    必要に応じてフィールドの前にコンテキストや意味を説明する行コメントを追加します。
 
-!!! tip ""
+!!! ヒント ""
 
-    For simple fields like `x, y, z, w` you might not need to add comments.
+    `x, y, z, w`のような単純なフィールドの場合は、コメントを追加する必要がない場合があります。
 
-!!! success ""
+!!! 成功 ""
 
-    Even though it is not strictly checked, try not to pass 100 characters in a line.
+    厳密にチェックされているわけではありませんが、1行に100文字を超えないようにしてください。
 
-_Example:_
+_例:_
 
 ```text
-# Number of times the vehicle performed an emergency brake
+# 車両が緊急ブレーキを実行した回数
 uint32 count_emergency_brake
 
-# Seconds passed since the last emergency brake
+# 最後の緊急ブレーキから経過した秒数
 uint64 duration
 ```
 
-## Example usages
+## 使用例
 
-- Don't use unit suffixes for default types:
-  - Bad: `float32 path_length_m`
-  - Good: `float32 path_length`
-- Don't prefix the units:
-  - Bad: `float32 kmph_velocity_vehicle`
-  - Good: `float32 velocity_vehicle_kmph`
-- Use recommended suffixes [if they are available in the table](#non-default-units):
-  - Bad: `float32 velocity_vehicle_km_h`
-  - Good: `float32 velocity_vehicle_kmph`
+- デフォルトのタイプには単位接尾辞を使用しないでください:
+  - 悪い: `float32 path_length_m`
+  - 良い: `float32 path_length`
+- 単位を接頭辞にしないでください:
+  - 悪い: `float32 kmph_velocity_vehicle`
+  - 良い: `float32 velocity_vehicle_kmph`
+- 推奨される接尾辞が[表にある場合](#non-default-units)はそれを使用します:
+  - 悪い: `float32 velocity_vehicle_km_h`
+  - 良い: `float32 velocity_vehicle_kmph`
