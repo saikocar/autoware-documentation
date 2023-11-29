@@ -1,24 +1,24 @@
-# Parameters
+# パラメーター
 
-Autoware ROS nodes have declared parameters which values are provided during the node start up in the form of a parameter file. All the expected parameters with corresponding values should exist in the parameter file. Depending on the application, the parameter values might need to be modified.
+Autoware ROSノードは宣言されたパラメーターを持ち、その値はノードの起動時にパラメーターファイルの形式で提供されます。対応する値を持つすべての予期されるパラメータがパラメータファイルに存在する必要があります。アプリケーションによってはパラメータ値の変更が必要になる場合があります。
 
-Find more information on parameters from the official ROS documentation:
+パラメーターの詳細についてはROSの公式ドキュメントを参照してください:
 
-- [Understanding ROS 2 Parameters](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html)
-- [About ROS 2 Parameters](https://docs.ros.org/en/humble/Concepts/About-ROS-2-Parameters.html)
+- [ROS2パラメータを理解する](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html)
+- [ROS2パラメータについて](https://docs.ros.org/en/humble/Concepts/About-ROS-2-Parameters.html)
 
-## Workflow
+## ワークフロー
 
-A ROS package which uses the [declare_parameter(...)](https://docs.ros.org/en/ros2_packages/humble/api/rclcpp/generated/classrclcpp_1_1Node.html#_CPPv4N6rclcpp4Node17declare_parameterERKNSt6stringERKN6rclcpp14ParameterValueERKN14rcl_interfaces3msg19ParameterDescriptorEb) function should:
+[declare_parameter(...)](https://docs.ros.org/en/ros2_packages/humble/api/rclcpp/generated/classrclcpp_1_1Node.html#_CPPv4N6rclcpp4Node17declare_parameterERKNSt6stringERKN6rclcpp14ParameterValueERKN14rcl_interfaces3msg19ParameterDescriptorEb)関数を使用するROSパッケージは次のことを行う必要があります:
 
-- use the [declare_parameter(...)](https://docs.ros.org/en/ros2_packages/humble/api/rclcpp/generated/classrclcpp_1_1Node.html#_CPPv4N6rclcpp4Node17declare_parameterERKNSt6stringERKN6rclcpp14ParameterValueERKN14rcl_interfaces3msg19ParameterDescriptorEb) with out a default value
-- create a parameter file
-- create a schema file
+- デフォルト値を指定せずに[declare_parameter(...)](https://docs.ros.org/en/ros2_packages/humble/api/rclcpp/generated/classrclcpp_1_1Node.html#_CPPv4N6rclcpp4Node17declare_parameterERKNSt6stringERKN6rclcpp14ParameterValueERKN14rcl_interfaces3msg19ParameterDescriptorEb)を使用する
+- パラメータファイルを作成する
+- スキーマファイルを作成する
 
-The rationale behind this workflow is to have a verified single source of truth to pass to the ROS node and to be used in the web documentation. The approach reduces the risk of using invalid parameter values and makes maintenance of documentation easier. This is achieved by:
+このワークフローの背後にある理論的根拠は、ROSノードに渡し、Webドキュメントで使用する検証済みの信頼できる単一ソースを用意することです。このアプローチにより、無効なパラメータ値を使用するリスクが軽減され、ドキュメントのメンテナンスが容易になります。これは次のようにして実現されます:
 
-- [declare_parameter(...)](https://docs.ros.org/en/ros2_packages/humble/api/rclcpp/generated/classrclcpp_1_1Node.html#_CPPv4N6rclcpp4Node17declare_parameterERKNSt6stringERKN6rclcpp14ParameterValueERKN14rcl_interfaces3msg19ParameterDescriptorEb) throws an exception if an expected parameter is missing in the parameter file
-- the schema validates the parameter file in the CI and renders a parameter table, as depicted in the graphics below
+- パラメータ ファイルに予期されたパラメータが存在しない場合[declare_parameter(...)](https://docs.ros.org/en/ros2_packages/humble/api/rclcpp/generated/classrclcpp_1_1Node.html#_CPPv4N6rclcpp4Node17declare_parameterERKNSt6stringERKN6rclcpp14ParameterValueERKN14rcl_interfaces3msg19ParameterDescriptorEb)は例外をスローします。
+- 以下の図に示すように、スキーマはCI内のパラメータファイルを検証し、パラメータテーブルをレンダリングします。
 
   ```mermaid
   flowchart TD
@@ -30,20 +30,20 @@ The rationale behind this workflow is to have a verified single source of truth 
       NodeSchema -->|Generate| WebDocumentation
   ```
 
-Note: a parameter value can still be modified and bypass the validation, as there is no validation during runtime.
+注記: 実行時に検証が行われないため、パラメータ値を変更して検証を回避することができます。
 
-## Declare Parameter Function
+## パラメータ関数の宣言
 
-It is the [declare_parameter(...)](https://docs.ros.org/en/ros2_packages/humble/api/rclcpp/generated/classrclcpp_1_1Node.html#_CPPv4N6rclcpp4Node17declare_parameterERKNSt6stringERKN6rclcpp14ParameterValueERKN14rcl_interfaces3msg19ParameterDescriptorEb) function which sets the parameter values during a node startup.
+ノードの起動時にパラメータ値を設定するのは[declare_parameter(...)](https://docs.ros.org/en/ros2_packages/humble/api/rclcpp/generated/classrclcpp_1_1Node.html#_CPPv4N6rclcpp4Node17declare_parameterERKNSt6stringERKN6rclcpp14ParameterValueERKN14rcl_interfaces3msg19ParameterDescriptorEb)関数です。
 
 ```cpp
 declare_parameter<INSERT_TYPE>("INSERT_PARAMETER_1_NAME"),
 declare_parameter<INSERT_TYPE>("INSERT_PARAMETER_N_NAME")
 ```
 
-As there is no _default_value_ provided, the function throws an exception if a parameter were to be missing in the provided `*.param.yaml` file. Use a type from the _C++ Type_ column in the table below for the [declare_parameter(...)](https://docs.ros.org/en/ros2_packages/humble/api/rclcpp/generated/classrclcpp_1_1Node.html#_CPPv4N6rclcpp4Node17declare_parameterERKNSt6stringERKN6rclcpp14ParameterValueERKN14rcl_interfaces3msg19ParameterDescriptorEb) function, replacing _INSERT_TYPE_.
+_default_value_が提供されていないため、提供された`*.param.yaml`ファイルにパラメーターが欠落している場合、関数は例外をスローします。[declare_parameter(...)](https://docs.ros.org/en/ros2_packages/humble/api/rclcpp/generated/classrclcpp_1_1Node.html#_CPPv4N6rclcpp4Node17declare_parameterERKNSt6stringERKN6rclcpp14ParameterValueERKN14rcl_interfaces3msg19ParameterDescriptorEb)関数には、_INSERT_TYPE_を置き換えて、以下の表の_C++ Type_列の型を使用します。
 
-| ParameterType Enum        | C++ Type                   |
+| パラメータ型の列挙        | C++型                   |
 | ------------------------- | -------------------------- |
 | `PARAMETER_BOOL`          | `bool`                     |
 | `PARAMETER_INTEGER`       | `int64_t`                  |
@@ -55,13 +55,14 @@ As there is no _default_value_ provided, the function throws an exception if a p
 | `PARAMETER_DOUBLE_ARRAY`  | `std::vector<double>`      |
 | `PARAMETER_STRING_ARRAY`  | `std::vector<std::string>` |
 
-The table has been derived from [Parameter Type](https://github.com/ros2/rcl_interfaces/blob/humble/rcl_interfaces/msg/ParameterType.msg) and [Parameter Value](https://github.com/ros2/rcl_interfaces/blob/humble/rcl_interfaces/msg/ParameterValue.msg).
+この表は[パラメータの型](https://github.com/ros2/rcl_interfaces/blob/humble/rcl_interfaces/msg/ParameterType.msg)と[パラメータの値](https://github.com/ros2/rcl_interfaces/blob/humble/rcl_interfaces/msg/ParameterValue.msg)から派生しています。
 
-See example: _Lidar Apollo Segmentation TVM Nodes_ [declare function](https://github.com/autowarefoundation/autoware.universe/blob/f85c90b56ed4c7d6b52e787570e590cff786b28b/perception/lidar_apollo_segmentation_tvm_nodes/src/lidar_apollo_segmentation_tvm_node.cpp#L38)
+例を確認します: _Lidar Apollo Segmentation TVM Nodes_ [declare function](https://github.com/autowarefoundation/autoware.universe/blob/f85c90b56ed4c7d6b52e787570e590cff786b28b/perception/lidar_apollo_segmentation_tvm_nodes/src/lidar_apollo_segmentation_tvm_node.cpp#L38)
 
-## Parameter File
+## パラメータファイル
 
-The parameter file is minimal as there is no need to provide the user with additional information, e.g., description or type. This is because the associated schema file provides the additional information. Use the template below as a starting point for a ROS node.
+パラメータファイル
+説明やタイプなどの追加情報をユーザーに提供する必要がないため、パラメータファイルは最小限です。これは関連するスキーマファイルが追加情報を提供するためです。 ROSノードの開始点として以下のテンプレートを使用します。
 
 ```yaml
 /**:
@@ -70,18 +71,18 @@ The parameter file is minimal as there is no need to provide the user with addit
     INSERT_PARAMETER_N_NAME: INSERT_PARAMETER_N_VALUE
 ```
 
-Note: `/**` is used instead of the explicit node namespace, this allows the parameter file to be passed to a ROS node which has been [remapped](https://design.ros2.org/articles/static_remapping.html).
+注記: `/**`は明示的なノード名前空間の代わりに使用されます。これにより[再マップ](https://design.ros2.org/articles/static_remapping.html)されたROS ノードにパラメータファイルを渡すことができます。
 
-To adapt the template to the ROS node, replace each `INSERT_PARAMETER_..._NAME` and `INSERT_PARAMETER_..._VALUE` for all parameters. Each [declare_parameter(...)](https://docs.ros.org/en/ros2_packages/humble/api/rclcpp/generated/classrclcpp_1_1Node.html#_CPPv4N6rclcpp4Node17declare_parameterERKNSt6stringERKN6rclcpp14ParameterValueERKN14rcl_interfaces3msg19ParameterDescriptorEb) takes one parameter as input. All the parameter files should have the `.param.yaml` suffix so that the auto-format can be applied properly.
+テンプレートをROSノードに適合させるには、すべてのパラメーターの`INSERT_PARAMETER_..._NAME`と `INSERT_PARAMETER_..._VALUE`をそれぞれ置き換えます。各[declare_parameter(...)](https://docs.ros.org/en/ros2_packages/humble/api/rclcpp/generated/classrclcpp_1_1Node.html#_CPPv4N6rclcpp4Node17declare_parameterERKNSt6stringERKN6rclcpp14ParameterValueERKN14rcl_interfaces3msg19ParameterDescriptorEb)は入力として1つのパラメータを受け取ります。自動フォーマットを適切に適用できるようにすべてのパラメーターファイルには`.param.yaml`接尾辞が必要です。
 
-Autoware has the following two types of parameter files for ROS packages:
+AutowareにはROSパッケージ用の次の2種類のパラメータファイルがあります:
 
-- **Node parameter file**
-  - Node parameter files store the default parameters provided for each package in Autoware.
-    - For example, [the parameter of `behavior_path_planner`](https://github.com/autowarefoundation/autoware.universe/tree/245242cee866de2d113e89c562353c5fc17f1f98/planning/behavior_path_planner/config)
-  - All nodes in Autoware must have a parameter file if ROS parameters are declared in the node.
-  - For `FOO_package`, the parameter is expected to be stored in `FOO_package/config`.
-  - The launch file for individual packages must load node parameter by default:
+- **ノードパラメータファイル**
+  - ノードパラメータファイルにはAutowareの各パッケージに提供されるデフォルトパラメータが保存されます。
+    - 例えば[`behavior_path_planner`のパラメータ](https://github.com/autowarefoundation/autoware.universe/tree/245242cee866de2d113e89c562353c5fc17f1f98/planning/behavior_path_planner/config)
+  - ROSパラメータがノード内で宣言されている場合Autowareのすべてのノードにパラメータファイルが必要です。
+  - `FOO_package`の場合、パラメータは`FOO_package/config`に保存されることが想定されます。
+  - 個々のパッケージの起動ファイルはデフォルトでノードパラメータをロードする必要があります:
 
 ```xml
 <launch>
@@ -94,15 +95,15 @@ Autoware has the following two types of parameter files for ROS packages:
 </launch>
 ```
 
-- **Launch parameter file**
-  - When a user creates a launch package for the user's vehicle, the user should copy node parameter files for the nodes that are called in the launch file as "launch parameter files".
-  - Launch parameter files are then customized specifically for user's vehicle.
-    - For example, [the customized parameter of `behavior_path_planner` stored under `autoware_launch`](https://github.com/autowarefoundation/autoware_launch/tree/5fa613b9d80bf4f0db77efde03a43f7ede6bac86/autoware_launch/config)
-  - The examples for launch parameter files are stored under `autoware_launch`.
+- **起動パラメータファイル**
+  - ユーザーが自分の車両の起動パッケージを作成するとき、ユーザーは起動ファイル内で"launch parameter files"として呼び出されるノードのノードパラメータファイルをコピーする必要があります。
+  - その後、起動パラメータファイルがユーザーの車両に合わせて特別にカスタマイズされます。
+    - 例えば[`autoware_launch`配下に登録されているカスタマイズされた`behavior_path_planner`のパラメータ](https://github.com/autowarefoundation/autoware_launch/tree/5fa613b9d80bf4f0db77efde03a43f7ede6bac86/autoware_launch/config)
+  - 起動パラメータファイルの例は`autoware_launch`に保存されています。
 
-## JSON Schema
+## JSONスキーマ
 
-[JSON Schema](https://json-schema.org/understanding-json-schema/index.html) is used the validate the parameter file(s) ensuring that it has the correct structure and content. Using JSON Schema for this purpose is considered best practice for cloud-native development. The schema template below shall be used as a starting point when defining the schema for a ROS node.
+[JSONスキーマ](https://json-schema.org/understanding-json-schema/index.html)は、パラメータファイルを検証して、ファイルの構造と内容が正しいことを確認するために使用されます。この目的でJSONスキーマを使用することは、クラウドネイティブ開発のベストプラクティスと考えられます。以下のスキーマテンプレートは、ROSノードのスキーマを定義する際の開始点として使用されます。
 
 ```json
 {
@@ -147,33 +148,32 @@ Autoware has the following two types of parameter files for ROS packages:
 }
 ```
 
-The schema file path is `INSERT_PATH_TO_PACKAGE/schema/` and the schema file name is `INSERT_NODE_NAME.schema.json`. To adapt the template to the ROS node, replace each `INSERT_...` and add all parameters `1..N`.
+スキーマファイルのパスは`INSERT_PATH_TO_PACKAGE/schema/`で、スキーマファイル名は`INSERT_NODE_NAME.schema.json`です。テンプレートをROSノードに適合させるには、各`INSERT_...`を置き換え、すべてのパラメーター`1..N`を追加します。
+例を参照します: _Lidar Apollo Segmentation TVM Nodes_ [スキーマ](https://github.com/autowarefoundation/autoware.universe/blob/main/perception/lidar_apollo_segmentation_tvm_nodes/schema/lidar_apollo_segmentation_tvm_nodes.schema.json)
 
-See example: _Lidar Apollo Segmentation TVM Nodes_ [schema](https://github.com/autowarefoundation/autoware.universe/blob/main/perception/lidar_apollo_segmentation_tvm_nodes/schema/lidar_apollo_segmentation_tvm_nodes.schema.json)
+### 属性
 
-### Attributes
+パラメータにはいくつかの属性があり、必須のものとオプションのものがあります。オプションの属性は、パラメーターに関する有用な情報を提供し、パラメーターの値がその範囲内にあることを保証できるため、該当する場合は使用することを強くお勧めします。
 
-Parameters have several attributes, some are required and some optional. The optional attributes are highly encouraged when applicable, as they provide useful information about a parameter and can ensure the value of the parameter is within its bounds.
+#### 必須
 
-#### Required
+- 名前
+- 型
+  - [JSONスキーマの型](http://json-schema.org/understanding-json-schema/reference/type.html)を参照してください
+- 説明
 
-- name
-- type
-  - see [JSON Schema types](http://json-schema.org/understanding-json-schema/reference/type.html)
-- description
+#### オプション
 
-#### Optional
+- デフォルト
+  - テストおよび検証された値。[JSONスキーマのデフォルト](https://json-schema.org/understanding-json-schema/reference/generic.html)を参照してください。
+- 境界
+  - 型に依存します。例えば[整数](https://json-schema.org/understanding-json-schema/reference/numeric.html#integer), [範囲](https://json-schema.org/understanding-json-schema/reference/numeric.html#range) および [サイズ](https://json-schema.org/understanding-json-schema/reference/object.html#size)
 
-- default
-  - a tested and verified value, see [JSON Schema default](https://json-schema.org/understanding-json-schema/reference/generic.html)
-- bound(s)
-  - type dependent, e.g., [integer](https://json-schema.org/understanding-json-schema/reference/numeric.html#integer), [range](https://json-schema.org/understanding-json-schema/reference/numeric.html#range) and [size](https://json-schema.org/understanding-json-schema/reference/object.html#size)
+## ヒントとコツ
 
-## Tips and Tricks
+確立された標準を使用することで、従来のツールを使用できるようになります。以下は、VS Codeを使用してスキーマをパラメータファイルにリンクする方法の例です。これにより、開発者はオートコンプリートやパラメーターバインドされた検証などの便利な機能を利用できるようになります。
 
-Using well established standards enables the use of conventional tooling. Below is an example of how to link a schema to the parameter file(s) using VS Code. This enables a developer with convenient features such as auto-complete and parameter bound validation.
-
-In the root directory of where the project is hosted, create a `.vscode` folder with two files; `extensions.json` containing
+プロジェクトがホストされているルートディレクトリに、以下の2つのファイルを含む`.vscode`フォルダーを作成します。`extensions.json`の内容は以下の通りです。
 
 ```json
 {
@@ -181,7 +181,7 @@ In the root directory of where the project is hosted, create a `.vscode` folder 
 }
 ```
 
-and `settings.json` containing
+また`settings.json`の内容は以下の通りです。
 
 ```json
 {
@@ -191,4 +191,4 @@ and `settings.json` containing
 }
 ```
 
-The RedHat YAML extension enables validation of YAML files using JSON Schema and the `"yaml.schemas"` setting associates the `*.schema.json` file with all `*.param.yaml` files in the `config/` folder.
+RedHat YAML拡張機能によりJSONスキーマを使用したYAMLファイルの検証が可能になり`"yaml.schemas"`設定により、`*.schema.json`ファイルが`config/`フォルダー内のすべての`*.param.yaml`ファイルに関連付けられます。
