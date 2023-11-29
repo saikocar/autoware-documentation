@@ -1,32 +1,32 @@
-# Launch files
+# Launchファイル
 
 ## Overview
 
-Autoware use ROS 2 launch system to startup the software. Please see the [official documentation](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Launch-Main.html) to get a basic understanding about ROS 2 Launch system if you are not familiar with it.
+AutowareはROS2起動システムを使用してソフトウェアを起動します。ROS2起動システムに詳しくない場合は[公式ドキュメント](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Launch-Main.html)を参照して、ROS2起動システムの基本を理解してください。
 
-## Guideline
+## ガイドライン
 
-### The organization of launch files in Autoware
+### Autowareの起動ファイルの構成
 
-Autoware mainly has two repositories related to launch file organization: the [autoware.universe](https://github.com/autowarefoundation/autoware.universe) and the [autoware_launch](https://github.com/autowarefoundation/autoware_launch).
+Autowareには主に、起動ファイルの構成に関連する2つのリポジトリ: [autoware.universe](https://github.com/autowarefoundation/autoware.universe)と[autoware_launch](https://github.com/autowarefoundation/autoware_launch)があります。
 
 #### autoware.universe
 
-the `autoware.universe` contains the code of the main Autoware modules, and its `launch` directory is responsible for launching the nodes of each module. Autoware software stack is organized based on the [architecture](https://autowarefoundation.github.io/autoware-documentation/main/design/autoware-architecture/#high-level-architecture-design), so you may find that we try to match the launch structure similar to the architecture (splitting of files, namespace). For example, the `tier4_map_launch` subdirectory corresponds to the map module, so do the other `tier4_*_launch` subdirectories.
+`autoware.universe`にはメインのAutowareモジュールのコードが含まれており、その`launch`ディレクトリは各モジュールのノードの起動を担当します。Autowareソフトウェアスタックは[アーキテクチャ](https://autowarefoundation.github.io/autoware-documentation/main/design/autoware-architecture/#high-level-architecture-design)に基づいて編成されているため、アーキテクチャ (ファイルの分割、名前空間) と同様の起動構造を一致させようとしていることがわかります。たとえば`tier4_map_launch`サブディレクトリはマップモジュールに対応し、他の`tier4_*_launch`サブディレクトリも同様です。
 
 #### autoware_launch
 
-The `autoware_launch` is a repository referring to `autoware.universe`. The mainly purpose of introducing this repository is to provide the general entrance to start the Autoware software stacks, i.e, calling the launch file of each module.
+`autoware_launch`は`autoware.universe`を参照するリポジトリです。このリポジトリを導入する主な目的はAutowareソフトウェアスタックを開始するための一般的な入り口を提供すること、つまり各モジュールの起動ファイルを呼び出すことです。
 
-- The `autoware.launch.xml` is the basic launch file for road driving scenarios.
+- `autoware.launch.xml`は、道路運転シナリオの基本的な起動ファイルです。
 
-  As can be seen from the content, the entire launch file is divided into several different modules, including _Vehicle_, _System_, _Map_, _Sensing_, _Localization_, _Perception_, _Planning_, _Control_, etc. By setting the `launch_*` argument equals to `true` or `false` , we can determine which modules to be loaded.
+  内容からわかるように、起動ファイル全体は、_車両_、_システム_、_マップ_、_センシング_、_ローカリゼーション_、_知覚_、_計画_、_制御_などを含むいくつかの異なるモジュールに分割されています。`launch_*`引数を`true`または`false`に設定することで、どのモジュールをロードするかを決定できます。
 
-- The `logging_simulator.launch.xml` is often used together with the recorded ROS bag to debug if the target module (e.g, _Sensing_, _Localization_ or _Perception_) functions normally.
+- `logging_simulator.launch.xml`は、ターゲットモジュール(_センシング_、_位置推定_、_知覚_など)が正常に機能するかどうかをデバッグするために、記録されたROSバグと一緒によく使用されます。
 
-- The `planning_simulator.launch.xml` is based on the Planning Simulator tool, mainly used for testing/validation of _Planning_ module by simulating traffic rules, interactions with dynamic objects and control commands to the ego vehicle.
+- `planning_simulator.launch.xml`は、計画シミュレータツールに基づいており、主に交通ルール、動的オブジェクトとの相互作用、自車両への制御コマンドをシミュレートすることにより、_Planning_モジュールのテスト/検証に使用されます。
 
-- The `e2e_simulator.launch.xml` is the launcher for digital twin simulation environment.
+- `e2e_simulator.launch.xml`はデジタルツインシミュレーション環境のランチャーです。
 
 ```mermaid
 graph LR
@@ -52,16 +52,16 @@ A33-->A42[ekf_localizer.launch.xml]
 A33-->A43[twist2accel.launch.xml]
 ```
 
-### Add a new package in Autoware
+### Autowareに新しいパッケージを追加する
 
-If a newly created package has executable node, we expect sample launch file and configuration within the package, just like the recommended structure shown in previous [directory structure](https://autowarefoundation.github.io/autoware-documentation/main/contributing/coding-guidelines/ros-nodes/directory-structure/) page.
+新しく作成されたパッケージに実行可能ノードがある場合、前の[ディレクトリ構造](https://autowarefoundation.github.io/autoware-documentation/main/contributing/coding-guidelines/ros-nodes/directory-structure/)ページで示した推奨構造と同様に、パッケージ内にサンプルの起動ファイルと構成が含まれることが予想されます。
 
-In order to automatically load the newly added package when starting Autoware, you need to make some necessary changes to the corresponding launch file. For example, if using ICP instead of NDT as the pointcloud registration algorithm, you can modify the `autoware.universe/launch/tier4_localization_launch/launch/pose_estimator/pose_estimator.launch.xml` file to load the newly added ICP package.
+Autowareの起動時に新しく追加されたパッケージを自動的にロードするには対応する起動ファイルに必要な変更を加える必要があります。たとえばポイントクラウド登録アルゴリズムとしてNDTの代わりにICPを使用する場合、`autoware.universe/launch/tier4_localization_launch/launch/pose_estimator/pose_estimator.launch.xml`ファイルを変更して、新しく追加されたICPパッケージをロードできます。
 
-## Parameter management
+## パラメータ管理
 
-Another purpose of introducing the `autoware_launch` repository is to facilitate the parameter management of Autoware. Thinking about this situation: if we want to integrate Autoware to a specific vehicle and modify parameters, we have to fork `autoware.universe` which also has a lot of code other than parameters and is frequently updated by developers. By integrating these parameters in `autoware_launch`, we can customize the Autoware parameters just by forking `autoware_launch` repository. Taking the localization module as an examples:
+`autoware_launch`リポジトリを導入するもう1つの目的は、Autowareのパラメータ管理を容易にすることです。この状況について考えてみます。Autowareを特定の車両に統合してパラメータを変更したい場合は`autoware.universe`をフォークする必要があります。`autoware.universe`にはパラメータ以外にも多くのコードがあり、開発者によって頻繁に更新されます。これらのパラメータを `autoware_launch`に統合することで、`autoware_launch`リポジトリをフォークするだけでAutowareパラメータをカスタマイズできます。位置推定モジュールを例に挙げます:
 
-1. all the “launch parameters” for localization component is listed in the files under `autoware_launch/autoware_launch/config/localization`.
-2. the "launch parameters" file paths are set in the `autoware_launch/autoware_launch/launch/components/tier4_localization_component.launch.xml` file.
-3. in `autoware.universe/launch/tier4_localization_launch/launch`, the launch files loads the “launch parameters” if the argument is given in the parameter configuration file. You can still use the default parameters in each packages to launch `tier4_localization_launch` within `autoware.universe`.
+1. 位置推定コンポーネントのすべての“launch parameters”は、`autoware_launch/autoware_launch/config/localization`の下のファイルにリストされています。
+2. "launch parameters"ファイルのパスは、`autoware_launch/autoware_launch/launch/components/tier4_localization_component.launch.xml`ファイルに設定されます。
+3. `autoware.universe/launch/tier4_localization_launch/launch`では、パラメータ設定ファイルで引数が指定されている場合、起動ファイルは“launch parameters”をロードします。各パッケージのデフォルトパラメータを使用して、`autoware.universe`内で`tier4_localization_launch`を起動することもできます。
