@@ -21,7 +21,7 @@
     
     
       
-        <title>Directory structure - Autoware Documentation</title>
+        <title>ディレクトリ構造 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#directory-structure" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Directory structure
+              ディレクトリ構造
             
           </span>
         </div>
@@ -5436,12 +5436,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Directory structure
+          ディレクトリ構造
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Directory structure
+        ディレクトリ構造
       </a>
       
         
@@ -5460,16 +5460,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#c-package" class="md-nav__link">
-    C++ package
+  <a href="#c" class="md-nav__link">
+    C++パッケージ
   </a>
   
-    <nav class="md-nav" aria-label="C++ package">
+    <nav class="md-nav" aria-label="C++パッケージ">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#directory-descriptions" class="md-nav__link">
-    Directory descriptions
+  <a href="#_2" class="md-nav__link">
+    ディレクトリの説明
   </a>
   
 </li>
@@ -5480,8 +5480,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#python-package" class="md-nav__link">
-    Python package
+  <a href="#python" class="md-nav__link">
+    Pythonパッケージ
   </a>
   
 </li>
@@ -6202,16 +6202,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#c-package" class="md-nav__link">
-    C++ package
+  <a href="#c" class="md-nav__link">
+    C++パッケージ
   </a>
   
-    <nav class="md-nav" aria-label="C++ package">
+    <nav class="md-nav" aria-label="C++パッケージ">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#directory-descriptions" class="md-nav__link">
-    Directory descriptions
+  <a href="#_2" class="md-nav__link">
+    ディレクトリの説明
   </a>
   
 </li>
@@ -6222,8 +6222,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#python-package" class="md-nav__link">
-    Python package
+  <a href="#python" class="md-nav__link">
+    Pythonパッケージ
   </a>
   
 </li>
@@ -6246,12 +6246,12 @@
   
 
 
-<div><h1 id="directory-structure">Directory structure<a class="headerlink" href="#directory-structure" title="Permanent link">#</a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Under Construction</p>
+<div><h1 id="_1">ディレクトリ構造<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<div class="admonition 警告">
+<p class="admonition-title">警告</p>
+<p>構築中</p>
 </div>
-<h2 id="c-package">C++ package<a class="headerlink" href="#c-package" title="Permanent link">#</a></h2>
+<h2 id="c">C++パッケージ<a class="headerlink" href="#c" title="Permanent link">#</a></h2>
 <div class="highlight"><pre><span></span><code>&lt;package_name&gt;
 ├─ config
 │   ├─ foo_ros.param.yaml
@@ -6277,28 +6277,28 @@
 ├─ CMakeLists.txt
 └─ README.md
 </code></pre></div>
-<h3 id="directory-descriptions">Directory descriptions<a class="headerlink" href="#directory-descriptions" title="Permanent link">#</a></h3>
+<h3 id="_2">ディレクトリの説明<a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
 <h4 id="config"><code>config</code><a class="headerlink" href="#config" title="Permanent link">#</a></h4>
-<p>Place configuration files such as node parameters.
-For <abbr title="Robot Operating System">ROS</abbr> parameters, use the extension <code>.param.yaml</code>.
-For non-<abbr title="Robot Operating System">ROS</abbr> parameters, use the extension <code>.yaml</code>.</p>
-<p>Rationale: Since <abbr title="Robot Operating System">ROS</abbr> parameters files are type-sensitive, they should not be the target of some code formatters and linters. In order to distinguish the file type, we use different file extensions.</p>
+<p>ノードパラメータなどの設定ファイルを配置します。
+ROSパラメーターの場合は拡張子<code>.param.yaml</code>を使用します。
+ROS以外のパラメーターの場合は拡張子<code>.yaml</code>を使用します。</p>
+<p>理論的根拠: ROSパラメーターファイルは型に依存するため一部のコードフォーマッタやリンターのターゲットにするべきではありません。ファイルの種類を区別するために異なるファイル拡張子を使用します。</p>
 <h4 id="doc"><code>doc</code><a class="headerlink" href="#doc" title="Permanent link">#</a></h4>
-<p>Place document files and link from README.</p>
+<p>ドキュメントファイルを配置し、READMEからリンクします。</p>
 <h4 id="include"><code>include</code><a class="headerlink" href="#include" title="Permanent link">#</a></h4>
-<p>Place header files exposed to other packages. Do not place files directly under the <code>include</code> directory, but place files under the directory with the package name.
-This directory is used for mostly library headers. Note that many headers do not need to be placed here. It is enough to place the headers under the <code>src</code> directory.</p>
-<p>Reference: <a href="https://docs.ros.org/en/rolling/How-To-Guides/Ament-CMake-Documentation.html#adding-files-and-headers">https://docs.ros.org/en/rolling/How-To-Guides/Ament-CMake-Documentation.html#adding-files-and-headers</a></p>
+<p>ヘッダーファイルを他のパッケージに公開して配置します。<code>include</code>ディレクトリ直下にはファイルを配置せず、パッケージ名のディレクトリ下にファイルを配置してください。
+このディレクトリは主にライブラリヘッダーに使用されます。多くのヘッダーをここに配置する必要はないことに注意してください。ヘッダーを<code>src</code>ディレクトリの下に配置するだけで十分です。</p>
+<p>参考: <a href="https://docs.ros.org/en/rolling/How-To-Guides/Ament-CMake-Documentation.html#adding-files-and-headers">https://docs.ros.org/en/rolling/How-To-Guides/Ament-CMake-Documentation.html#adding-files-and-headers</a></p>
 <h4 id="launch"><code>launch</code><a class="headerlink" href="#launch" title="Permanent link">#</a></h4>
-<p>Place launch files (<code>.launch.xml</code> and <code>.launch.py</code>).</p>
+<p>launchファイル(<code>.launch.xml</code> and <code>.launch.py</code>)を配置します。</p>
 <h4 id="schema"><code>schema</code><a class="headerlink" href="#schema" title="Permanent link">#</a></h4>
-<p>Place parameter definition files. See <a href="../parameters/">parameters</a> for details.</p>
+<p>パラメータ定義ファイルを配置します。詳細は<a href="../parameters/">パラメータ</a>を参照してください。</p>
 <h4 id="src"><code>src</code><a class="headerlink" href="#src" title="Permanent link">#</a></h4>
-<p>Place source files and private header files.</p>
+<p>ソースファイルとプライベートヘッダーファイルを配置します。</p>
 <h4 id="test"><code>test</code><a class="headerlink" href="#test" title="Permanent link">#</a></h4>
-<p>Place source files for testing. See <a href="../../../testing-guidelines/unit-testing/">unit testing</a> for details.</p>
-<h2 id="python-package">Python package<a class="headerlink" href="#python-package" title="Permanent link">#</a></h2>
-<p>T.B.D.</p>
+<p>テスト用のソースファイルを配置します。詳細については<a href="../../../testing-guidelines/unit-testing/">単体テスト</a>を参照してください。</p>
+<h2 id="python">Pythonパッケージ<a class="headerlink" href="#python" title="Permanent link">#</a></h2>
+<p>未決定</p>
 <!-- prettier-ignore --></div>
 
 
