@@ -1,86 +1,86 @@
-# CI checks
+# CIチェック
 
-Autoware has several checks for a pull request.
-The results are shown at the bottom of the pull request page as below.
+Autoware には、プルリクエストに対していくつかのチェックがあります。
+結果は以下のようにプルリクエストページの下部に表示されます。
 
 ![ci-checks](images/ci-checks.png)
 
-If the ❌ mark is shown, click the `Details` button and investigate the failure reason.
+❌マークが表示されている場合は、`Details`ボタンをクリックして失敗の原因を調査してください。
 
-If the `Required` mark is shown, you cannot merge the pull request unless you resolve the error.
-If not, it is optional, but preferably it should be fixed.
+`Required`マークが表示されている場合は、エラーを解決しない限りプルリクエストをマージできません。
+そうでない場合はオプションですが、できれば修正する必要があります。
 
-The following sections explain about common CI checks in Autoware.  
-Note that some repositories may have different settings.
+次のセクションではAutowareの一般的なCIチェックについて説明します。  
+一部のリポジトリでは設定が異なる場合があることに注意してください。
 
 ## DCO
 
-The Developer Certificate of Origin (DCO) is a lightweight way for contributors to certify that they wrote or otherwise have the right to submit the code they are contributing to the project.
+開発者証明書(DCO)は、貢献者がプロジェクトに貢献しているコードを作成したこと、またはそのコードを提出する権利を持っていることを証明するための軽量な方法です。
 
-This workflow checks whether the pull request fulfills `DCO`.  
-You need to confirm the [required items](https://developercertificate.org/) and commit with `git commit -s`.
+このワークフローは、プルリクエストが`DCO`を満たすかどうかをチェックします。  
+[必要な項目](https://developercertificate.org/)を確認して`git commit -s`でコミットする必要があります。
 
-For more information, refer to the [GitHub App page](https://github.com/apps/dco).
+詳細については[GitHubアプリページ](https://github.com/apps/dco)を参照してください。
 
-## semantic-pull-request
+## セマンティックプルリクエスト
 
-This workflow checks whether the pull request follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+このワークフローはプルリクエストが[従来のコミット](https://www.conventionalcommits.org/en/v1.0.0/)に従っているかどうかをチェックします。
 
-For the detailed rules, see the [pull request rules](index.md#pull-request-rules).
+詳しいルールについては[プルリクエストのルール](index.md#pull-request-rules)をご覧ください。
 
-## pre-commit
+## 事前コミット
 
-[pre-commit](https://pre-commit.com/) is a tool to run formatters or linters when you commit.
+[pre-commit](https://pre-commit.com/)はコミット時にフォーマッタまたはリンターを実行するツールです。
 
-This workflow checks whether the pull request has no error with `pre-commit`.
+このワークフローは、プルリクエストに`pre-commit`でエラーがないかどうかをチェックします。
 
-In the workflow `pre-commit.ci - pr` is enabled in the repository, it will automatically fix errors by [pre-commit.ci](https://pre-commit.ci/) as many as possible.  
-If there are some errors remain, fix them manually.
+ワークフローでは、リポジトリで`pre-commit.ci - pr`が有効になっており、[pre-commit.ci](https://pre-commit.ci/)によって可能な限り多くのエラーが自動的に修正されます。  
+エラーが残っている場合は、手動で修正してください。
 
-You can run `pre-commit` in your local environment by the following command:
+次のコマンドを使用して、ローカル環境で`pre-commit`を実行できます:
 
 ```bash
 pre-commit run -a
 ```
 
-Or you can install `pre-commit` to the repository and automatically run it before committing:
+もしくは`pre-commit`をリポジトリにインストールし、コミット前に自動で実行することができます:
 
 ```bash
 pre-commit install
 ```
 
-Since it is difficult to detect errors with no false positives, some jobs are split into another config file and marked as optional.  
-To check them, use the `--config` option:
+誤検知のないエラーを検出することは難しいため、一部のジョブは別の構成ファイルに分割され、オプションとしてマークされています。  
+それらを確認するには、`--config`オプションを使用します:
 
 ```bash
 pre-commit run -a --config .pre-commit-config-optional.yaml
 ```
 
-## spell-check-differential
+## スペルチェックの差分
 
-This workflow detects spelling mistakes using [CSpell](https://github.com/streetsidesoftware/cspell) with [our dictionary file](https://github.com/tier4/autoware-spell-check-dict/blob/main/.cspell.json).
-Since it is difficult to detect errors with no false positives, it is an optional workflow, but it is preferable to remove spelling mistakes as many as possible.
+このワークフローは[辞書ファイル](https://github.com/tier4/autoware-spell-check-dict/blob/main/.cspell.json)を用いた[CSpell](https://github.com/streetsidesoftware/cspell)とを使用してスペルミスを検出します。
+誤検知のないエラーを検出することは難しいため、オプションのワークフローですが、スペルミスはできるだけ削除することが望ましいです。
 
-You have the following options if you need to use a word that is not registered in the dictionary.
+辞書に登録されていない単語を使用する場合は、以下の選択肢があります。
 
-- If the word is only used in a few files, you can use [inline document settings "cspell:ignore"](https://cspell.org/configuration/document-settings/) to suppress the check.
-- If the word is widely used in the repository, you can create a local cspell json and pass it to the [spell-check action](https://github.com/autowarefoundation/autoware-github-actions/tree/main/spell-check).
-- If the word is common and may be used in many repositories, you can submit pull requests to [tier4/autoware-spell-check-dict](https://github.com/tier4/autoware-spell-check-dict) or [tier4/cspell-dicts](https://github.com/tier4/cspell-dicts) to update the dictionary.
+- その単語が少数のファイルでのみ使用されている場合は、[インライン文書設定 "cspell:ignore"](https://cspell.org/configuration/document-settings/)を使用してチェックを抑制できます。
+- その単語がリポジトリ内で広く使用されている場合は、ローカルのcspell jsonを作成し、それを[スペルチェックアクション](https://github.com/autowarefoundation/autoware-github-actions/tree/main/spell-check)に渡すことができます。
+- 単語が一般的で、多くのリポジトリで使用される可能性がある場合は、[tier4/autoware-spell-check-dict](https://github.com/tier4/autoware-spell-check-dict)または[tier4/cspell-dicts](https://github.com/tier4/cspell-dicts)にプルリクエストを送信して、辞書を更新できます。
 
-## build-and-test-differential
+## ビルドとテストの差分
 
-This workflow checks `colcon build` and `colcon test` for the pull request.  
-To make the CI faster, it doesn't check all packages but only modified packages and the dependencies.
+このワークフローは、プル リクエストの`colcon build`と`colcon test`をチェックします。  
+CIを高速化するために、すべてのパッケージをチェックするのではなく、変更されたパッケージと依存関係のみをチェックします。
 
-## build-and-test-differential-self-hosted
+## 自己ホスト型のビルドとテストの差分
 
-This workflow is the `ARM64` version of `build-and-test-differential`.  
-You need to add the `ARM64` label to run this workflow.
+このワークフローは`build-and-test-differential`の`ARM64`バージョンです。  
+このワークフローを実行するには`ARM64`ラベルを追加する必要があります。
 
-For reference information, since ARM machines are not supported by GitHub-hosted runners, we use self-hosted runners prepared by the AWF.  
-For the details about self-hosted runners, refer to [GitHub Docs](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners).
+参考までに、ARMマシンはGitHubホストランナーではサポートされていないため、AWFが用意したセルフホストランナーを使用します。 
+セルフホストランナーの詳細については[GitHubドキュメント](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners)を参照してください。
 
-## deploy-docs
+## デプロイドキュメント
 
-This workflow deploys the preview documentation site for the pull request.  
-You need to add the `deploy-docs` label to run this workflow.
+このワークフローは、プルリクエストのプレビュードキュメントサイトをデプロイします。  
+このワークフローを実行するには、`deploy-docs`ラベルを追加する必要があります。
