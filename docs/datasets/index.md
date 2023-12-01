@@ -1,29 +1,29 @@
-# Datasets
+# データセット
 
-Autoware partners provide datasets for testing and development. These datasets are available for download here.
+Autowareパートナーは、テストと開発用のデータセットを提供します。これらのデータセットはここからダウンロードできます。
 
-## Bus-ODD (Operational Design Domain) datasets
+## Bus-ODD (オペレーショナルデザインドメイン)データセット
 
-### Leo Drive - ISUZU sensor data
+### Leo Drive - ISUZUセンサーデータ
 
-This dataset contains data from the Isuzu bus used in the Bus ODD project.
+このデータセットには、Bus ODDプロジェクトで使用されるいすゞバスのデータが含まれています。
 
-The data contains data from following sensors:
+データには次のセンサーからのデータが含まれます:
 
 - 1 x VLP16
 - 2 x VLP32C
 - 1 x Applanix POS LV 120 GNSS/INS
-- 3 x Lucid Vision Triton 5.4MP cameras (left, right, front)
-- Vehicle status report
+- 3 x Lucid Vision Triton 5.4MPカメラ (左、右、前)
+- 車両状況レポート
 
-It also contains `/tf` topic for static transformations between sensors.
+また、センサー間の静的変換のための`/tf`トピックも含まれています。
 
-#### Required message types
+#### 必要なメッセージの種類
 
-The GNSS data is available in `sensor_msgs/msg/NavSatFix` message type.
+GNSSデータは、`sensor_msgs/msg/NavSatFix`メッセージタイプで利用できます。
 
-But also the Applanix raw messages are also included in `applanix_msgs/msg/NavigationPerformanceGsof50` and `applanix_msgs/msg/NavigationSolutionGsof49` message types.
-In order to be able to play back these messages, you need to build and source the `applanix_msgs` package.
+ただしApplanixの生メッセージは、`applanix_msgs/msg/NavigationPerformanceGsof50`および`applanix_msgs/msg/NavigationSolutionGsof49`メッセージタイプにも含まれます。
+これらのメッセージを再生できるようにするには、`applanix_msgs`パッケージをビルドしてソースする必要があります。
 
 ```bash
 # Create a workspace and clone the repository
@@ -40,9 +40,9 @@ source ~/applanix_ws/install/setup.bash
 # Now you can play back the messages
 ```
 
-Also make sure to source Autoware Universe workspace too.
+また、必ずAutoware Universeワークスペースもソースしてください。
 
-#### Download instructions
+#### ダウンロード手順
 
 ```console
 # Install awscli
@@ -68,11 +68,11 @@ $ aws s3 ls s3://autoware-files/collected_data/2022-08-22_leo_drive_isuzu_bags/ 
 aws s3 sync s3://autoware-files/collected_data/2022-08-22_leo_drive_isuzu_bags/all-sensors-bag1_compressed/ ./all-sensors-bag1_compressed  --no-sign-request
 ```
 
-### AutoCore.ai - lidar ROS 2 bag file and pcap
+### AutoCore.ai - ROS2バグファイルとpcap
 
-This dataset contains pcap files and ros2 bag files from Ouster OS1-64 Lidar.
-The pcap file and ros2 bag file is recorded in the same time with slight difference in duration.
+このデータセットにはOuster OS1-64 Lidarのpcapファイルとros2バグファイルが含まれています。
+pcapファイルとros2バグファイルは、時間にわずかな違いはありますが、同時に記録されます。
 
-[Click here to download (~553MB)](https://autoware-files.s3.us-west-2.amazonaws.com/collected_data/2022-04-14_autocore-lidar-bag-pcap/Lidar_Data_220414_bag_pcap.zip)
+[ここをクリックしてダウンロードしてください (~553MB))](https://autoware-files.s3.us-west-2.amazonaws.com/collected_data/2022-04-14_autocore-lidar-bag-pcap/Lidar_Data_220414_bag_pcap.zip)
 
-[Reference Issue](https://github.com/autowarefoundation/autoware.universe/issues/562#issuecomment-1102662448)
+[問題の参考](https://github.com/autowarefoundation/autoware.universe/issues/562#issuecomment-1102662448)
