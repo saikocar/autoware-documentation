@@ -21,7 +21,7 @@
     
     
       
-        <title>Datasets - Autoware Documentation</title>
+        <title>データセット - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#datasets" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Datasets
+              データセット
             
           </span>
         </div>
@@ -6141,23 +6141,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#bus-odd-operational-design-domain-datasets" class="md-nav__link">
-    Bus-ODD (Operational Design Domain) datasets
+  <a href="#bus-odd" class="md-nav__link">
+    Bus-ODD (オペレーショナルデザインドメイン)データセット
   </a>
   
-    <nav class="md-nav" aria-label="Bus-ODD (Operational Design Domain) datasets">
+    <nav class="md-nav" aria-label="Bus-ODD (オペレーショナルデザインドメイン)データセット">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#leo-drive-isuzu-sensor-data" class="md-nav__link">
-    Leo Drive - ISUZU sensor data
+  <a href="#leo-drive-isuzu" class="md-nav__link">
+    Leo Drive - ISUZUセンサーデータ
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#autocoreai-lidar-ros-2-bag-file-and-pcap" class="md-nav__link">
-    AutoCore.ai - lidar ROS 2 bag file and pcap
+  <a href="#autocoreai-ros2pcap" class="md-nav__link">
+    AutoCore.ai - ROS2バグファイルとpcap
   </a>
   
 </li>
@@ -6185,24 +6185,24 @@
   
 
 
-<div><h1 id="datasets">Datasets<a class="headerlink" href="#datasets" title="Permanent link">#</a></h1>
-<p>Autoware partners provide datasets for testing and development. These datasets are available for download here.</p>
-<h2 id="bus-odd-operational-design-domain-datasets">Bus-<abbr title="Operational Design Domain">ODD</abbr> (Operational Design Domain) datasets<a class="headerlink" href="#bus-odd-operational-design-domain-datasets" title="Permanent link">#</a></h2>
-<h3 id="leo-drive-isuzu-sensor-data">Leo Drive - ISUZU sensor data<a class="headerlink" href="#leo-drive-isuzu-sensor-data" title="Permanent link">#</a></h3>
-<p>This dataset contains data from the Isuzu bus used in the Bus <abbr title="Operational Design Domain">ODD</abbr> project.</p>
-<p>The data contains data from following sensors:</p>
+<div><h1 id="_1">データセット<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<p>Autowareパートナーは、テストと開発用のデータセットを提供します。これらのデータセットはここからダウンロードできます。</p>
+<h2 id="bus-odd">Bus-<abbr title="Operational Design Domain">ODD</abbr> (オペレーショナルデザインドメイン)データセット<a class="headerlink" href="#bus-odd" title="Permanent link">#</a></h2>
+<h3 id="leo-drive-isuzu">Leo Drive - ISUZUセンサーデータ<a class="headerlink" href="#leo-drive-isuzu" title="Permanent link">#</a></h3>
+<p>このデータセットには、Bus ODDプロジェクトで使用されるいすゞバスのデータが含まれています。</p>
+<p>データには次のセンサーからのデータが含まれます:</p>
 <ul>
 <li>1 x VLP16</li>
 <li>2 x VLP32C</li>
 <li>1 x Applanix POS LV 120 <abbr title="Global Navigation Satellite System">GNSS</abbr>/INS</li>
-<li>3 x Lucid Vision Triton 5.4MP cameras (left, right, front)</li>
-<li>Vehicle status report</li>
+<li>3 x Lucid Vision Triton 5.4MPカメラ (左、右、前)</li>
+<li>車両状況レポート</li>
 </ul>
-<p>It also contains <code>/tf</code> topic for static transformations between sensors.</p>
-<h4 id="required-message-types">Required message types<a class="headerlink" href="#required-message-types" title="Permanent link">#</a></h4>
-<p>The <abbr title="Global Navigation Satellite System">GNSS</abbr> data is available in <code>sensor_msgs/msg/NavSatFix</code> message type.</p>
-<p>But also the Applanix raw messages are also included in <code>applanix_msgs/msg/NavigationPerformanceGsof50</code> and <code>applanix_msgs/msg/NavigationSolutionGsof49</code> message types.
-In order to be able to play back these messages, you need to build and source the <code>applanix_msgs</code> package.</p>
+<p>また、センサー間の静的変換のための<code>/tf</code>トピックも含まれています。</p>
+<h4 id="_2">必要なメッセージの種類<a class="headerlink" href="#_2" title="Permanent link">#</a></h4>
+<p>GNSSデータは、<code>sensor_msgs/msg/NavSatFix</code>メッセージタイプで利用できます。</p>
+<p>ただしApplanixの生メッセージは、<code>applanix_msgs/msg/NavigationPerformanceGsof50</code>および<code>applanix_msgs/msg/NavigationSolutionGsof49</code>メッセージタイプにも含まれます。
+これらのメッセージを再生できるようにするには、<code>applanix_msgs</code>パッケージをビルドしてソースする必要があります。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Create a workspace and clone the repository</span>
 mkdir<span class="w"> </span>-p<span class="w"> </span>~/applanix_ws/src<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$_</span><span class="s2">"</span>
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/autowarefoundation/applanix.git
@@ -6216,8 +6216,8 @@ colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<spa
 
 <span class="c1"># Now you can play back the messages</span>
 </code></pre></div>
-<p>Also make sure to source Autoware Universe workspace too.</p>
-<h4 id="download-instructions">Download instructions<a class="headerlink" href="#download-instructions" title="Permanent link">#</a></h4>
+<p>また、必ずAutoware Universeワークスペースもソースしてください。</p>
+<h4 id="_3">ダウンロード手順<a class="headerlink" href="#_3" title="Permanent link">#</a></h4>
 <div class="highlight"><pre><span></span><code><span class="gp"># </span>Install<span class="w"> </span>awscli
 <span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>awscli<span class="w"> </span>-y
 
@@ -6240,11 +6240,11 @@ colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<spa
 <span class="gp"># </span>Then<span class="w"> </span>you<span class="w"> </span>can<span class="w"> </span>download<span class="w"> </span>a<span class="w"> </span>single<span class="w"> </span>bag<span class="w"> </span>file<span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>following:
 <span class="go">aws s3 sync s3://autoware-files/collected_data/2022-08-22_leo_drive_isuzu_bags/all-sensors-bag1_compressed/ ./all-sensors-bag1_compressed  --no-sign-request</span>
 </code></pre></div>
-<h3 id="autocoreai-lidar-ros-2-bag-file-and-pcap">AutoCore.ai - lidar <abbr title="Robot Operating System">ROS</abbr> 2 bag file and pcap<a class="headerlink" href="#autocoreai-lidar-ros-2-bag-file-and-pcap" title="Permanent link">#</a></h3>
-<p>This dataset contains pcap files and ros2 bag files from Ouster OS1-64 Lidar.
-The pcap file and ros2 bag file is recorded in the same time with slight difference in duration.</p>
-<p><a href="https://autoware-files.s3.us-west-2.amazonaws.com/collected_data/2022-04-14_autocore-lidar-bag-pcap/Lidar_Data_220414_bag_pcap.zip">Click here to download (~553MB)</a></p>
-<p><a href="https://github.com/autowarefoundation/autoware.universe/issues/562#issuecomment-1102662448">Reference Issue</a></p>
+<h3 id="autocoreai-ros2pcap">AutoCore.ai - ROS2バグファイルとpcap<a class="headerlink" href="#autocoreai-ros2pcap" title="Permanent link">#</a></h3>
+<p>このデータセットにはOuster OS1-64 Lidarのpcapファイルとros2バグファイルが含まれています。
+pcapファイルとros2バグファイルは、時間にわずかな違いはありますが、同時に記録されます。</p>
+<p><a href="https://autoware-files.s3.us-west-2.amazonaws.com/collected_data/2022-04-14_autocore-lidar-bag-pcap/Lidar_Data_220414_bag_pcap.zip">ここをクリックしてダウンロードしてください (~553MB))</a></p>
+<p><a href="https://github.com/autowarefoundation/autoware.universe/issues/562#issuecomment-1102662448">問題の参考</a></p>
 <!-- prettier-ignore --></div>
 
 
