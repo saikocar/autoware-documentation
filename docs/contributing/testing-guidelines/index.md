@@ -1,21 +1,21 @@
-# Testing guidelines
+# テストのガイドライン
 
-## Unit testing
+## 単体テスト
 
-Unit testing is a software testing method that tests individual units of source code to determine whether they satisfy the specification.
+単体テストはソースコードの個々のユニットをテストして、仕様を満たしているかどうかを判断するソフトウェアテスト手法です。
 
-For details, see the [Unit testing guidelines](unit-testing.md).
+詳細については[単体テストのガイドライン](unit-testing.md)を参照してください。
 
-## Integration testing
+## 結合テスト
 
-Integration testing combines and tests the individual software modules as a group, and is done after unit testing.
+統合テストは個々のソフトウェアモジュールをグループとして組み合わせてテストし、単体テストの後に行われます。
 
-While performing integration testing, the following subtypes of tests are written:
+統合テストの実行中に、次のサブタイプのテストが作成されます:
 
-1. Fault injection testing
-2. Back-to-back comparison between a model and code
-3. Requirements-based testing
-4. Anomaly detection during integration testing
-5. Random input testing
+1. フォールト注入テスト
+2. モデルとコードの連続比較
+3. 要件ベースのテスト
+4. 統合テスト中の異常検出
+5. ランダム入力テスト
 
-For details, see the [Integration testing guidelines](integration-testing.md).
+詳細については[統合テストのガイドライン](integration-testing.md)を参照してください。
