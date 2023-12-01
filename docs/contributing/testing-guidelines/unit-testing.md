@@ -1,24 +1,23 @@
-# Unit testing
+# 単体テスト
 
-Unit testing is the first phase of testing and is used to validate units of source code such as classes and functions.
-Typically, a unit of code is tested by validating its output for various inputs.
-Unit testing helps ensure that the code behaves as intended and prevents accidental changes of behavior.
+単体テストはテストの最初のフェーズであり、クラスや関数などのソースコードの単位を検証するために使用されます。
+通常、コードのユニットはさまざまな入力に対する出力を検証することによってテストされます。
+単体テストはコードが意図したとおりに動作することを確認し、誤って動作が変更されるのを防ぐのに役立ちます。
 
-Autoware uses the `ament_cmake` framework to build and run tests.
-The same framework is also used to analyze the test results.
+Autowareは、`ament_cmake`フレームワークを使用してテストを構築および実行します。
+テスト結果の分析にも同じフレームワークが使用されます。
 
-`ament_cmake` provides several convenience functions to make it easy to register tests in a CMake-based package and to ensure that JUnit-compatible result files are generated.
-It currently supports a few different testing frameworks like `pytest`, `gtest`, and `gmock`.
+`ament_cmake`は、CMakeベースのパッケージにテストを簡単に登録し、JUnit互換の結果ファイルが生成されるようにするための便利な関数をいくつか提供します。
+現在`pytest`、`gtest`、`gmock`などのいくつかの異なるテストフレームワークをサポートしています。
 
-In order to prevent tests running in parallel from interfering with each other when publishing and subscribing to ROS topics,
-it is recommended to use commands from [`ament_cmake_ros`](https://github.com/ros2/ament_cmake_ros/tree/master/ament_cmake_ros/cmake) to run tests in isolation.
+ROSトピックのパブリッシュおよびサブスクライブ時に並行して実行されるテストが相互に干渉するのを防ぐために[`ament_cmake_ros`](https://github.com/ros2/ament_cmake_ros/tree/master/ament_cmake_ros/cmake)のコマンドを使用してテストを分離して実行することをお勧めします。
 
-See below for an example of using `ament_add_ros_isolated_gtest` with `colcon test`.
-All other tests follow a similar pattern.
+`ament_add_ros_isolated_gtest`を`colcon test`で使用する例については以下を参照してください。
+他のすべてのテストも同様のパターンに従います。
 
-## Create a unit test with gtest
+## gtestで単体テストを作成する
 
-In `my_cool_pkg/test`, create the `gtest` code file `test_my_cool_pkg.cpp`:
+`my_cool_pkg/test`で、`gtest`コードファイル`test_my_cool_pkg.cpp`を作成します:
 
 ```cpp
 #include "gtest/gtest.h"
@@ -28,13 +27,13 @@ TEST(TestMyCoolPkg, TestHello) {
 }
 ```
 
-In `package.xml`, add the following line:
+`package.xml`に次の行を追加します:
 
 ```xml
 <test_depend>ament_cmake_ros</test_depend>
 ```
 
-Next add an entry under `BUILD_TESTING` in the `CMakeLists.txt` to compile the test source files:
+次に`CMakeLists.txt`の`BUILD_TESTING`の下にエントリを追加して、テストソースファイルをコンパイルします:
 
 ```cmake
 if(BUILD_TESTING)
@@ -46,43 +45,39 @@ if(BUILD_TESTING)
 endif()
 ```
 
-This automatically links the test with the default main function provided by `gtest`.
-The code under test is usually in a different CMake target (`${PROJECT_NAME}` in the example) and its shared object for linking needs to be added.
-If the test source files include private headers from the `src` directory, the directory needs to be added to the include path using `target_include_directories()` function.
+これによりテストが`gtest`によって提供されるデフォルトのmain関数に自動的にリンクされます。
+テスト対象のコードは通常、別のCMakeターゲット(この例では`${PROJECT_NAME}`)にあり、リンク用の共有オブジェクトを追加する必要があります。
+テストソースファイルに`src`ディレクトリのプライベート ヘッダーが含まれている場合は、`target_include_directories()`関数を使用してディレクトリをインクルード パスに追加する必要があります。
 
-To register a new `gtest` item, wrap the test code with the macro `TEST ()`.
-`TEST ()` is a predefined macro that helps generate the final test code,
-and also registers a `gtest` item to be available for execution.
-The test case name should be in CamelCase, since gtest inserts an underscore between the fixture name and the class case name when creating the test executable.
+新しい`gtest`項目を登録するには、テストコードをマクロ`TEST ()`でラップします。
+`TEST ()`は、最終的なテストコードの生成に役立つ定義済みマクロであり、実行に使用できる`gtest`項目も登録します。
+gtestはテスト実行可能ファイルの作成時にフィクスチャ名とクラスケース名の間にアンダースコアを挿入するため、テストケース名はキャメルケースである必要があります。
 
-`gtest/gtest.h` also contains predefined macros of `gtest` like `ASSERT_TRUE(condition)`,
-`ASSERT_FALSE(condition)`, `ASSERT_EQ(val1,val2)`, `ASSERT_STREQ(str1,str2)`, `EXPECT_EQ()`, etc.
-`ASSERT_*` will abort the test if the condition is not satisfied,
-while `EXPECT_*` will mark the test as failed but continue on to the next test condition.
+`gtest/gtest.h`には、`ASSERT_TRUE(condition)`、`ASSERT_FALSE(condition)`、`ASSERT_EQ(val1,val2)`、`ASSERT_STREQ(str1,str2)`、`EXPECT_EQ()`などの`gtest`の事前定義マクロも含まれています。条件が満たされていない場合、`EXPECT_*`はテストを失敗としてマークしますが、次のテスト条件に進みます。
 
-!!! info
+!!! 情報
 
-    More information about `gtest` and its features can be found in the [gtest repo](https://github.com/google/googletest).
+    `gtest`とその機能の詳細については[gtestリポジトリ](https://github.com/google/googletest)を参照してください。
 
-In the demo `CMakeLists.txt`, `ament_add_ros_isolated_gtest` is a predefined macro in `ament_cmake_ros` that helps simplify adding `gtest` code.
-Details can be viewed in [ament_add_gtest.cmake](https://github.com/ros2/ament_cmake_ros/tree/master/ament_cmake_ros/cmake).
+デモ`CMakeLists.txt`の`ament_add_ros_isolated_gtest`は、`gtest`コードの追加を簡素化する`ament_cmake_ros`の事前定義マクロです。
+詳細は[ament_add_gtest.cmake](https://github.com/ros2/ament_cmake_ros/tree/master/ament_cmake_ros/cmake)で確認できます。
 
-## Build test
+## ビルドテスト
 
 <!-- cspell:ignore Testfile -->
 
-By default, all necessary test files (`ELF`, `CTestTestfile.cmake`, etc.) are compiled by `colcon`:
+デフォルトでは必要なテストファイル(`ELF`、`CTestTestfile.cmake`など)はすべて`colcon`によってコンパイルされます:
 
 ```console
 cd ~/workspace/
 colcon build --packages-select my_cool_pkg
 ```
 
-Test files are generated under `~/workspace/build/my_cool_pkg`.
+テストファイルは`~/workspace/build/my_cool_pkg`に生成されます。
 
-## Run test
+## テストの実行
 
-To run all tests for a specific package, call:
+特定のパッケージのすべてのテストを実行するには次を呼び出します。:
 
 ```console
 $ colcon test --packages-select my_cool_pkg
@@ -93,9 +88,9 @@ Finished <<< my_cool_pkg [7.80s]
 Summary: 1 package finished [9.27s]
 ```
 
-The test command output contains a brief report of all the test results.
+テストコマンドの出力には、すべてのテスト結果の簡単なレポートが含まれています。
 
-To get job-wise information of all executed tests, call:
+実行されたすべてのテストのジョブごとの情報を取得するには次を呼び出します:
 
 ```console
 $ colcon test-result --all
@@ -110,10 +105,10 @@ build/my_cool_pkg/test_results/my_cool_pkg/xmllint.xunit.xml: 1 test, 0 errors, 
 Summary: 18 tests, 0 errors, 0 failures, 0 skipped
 ```
 
-Look in the `~/workspace/log/test_<date>/<package_name>` directory for all the raw test commands, `std_out`, and `std_err`.
-There is also the `~/workspace/log/latest_*/` directory containing symbolic links to the most recent package-level build and test output.
+`~/workspace/log/test_<date>/<package_name>`ディレクトリで、すべての生のテストコマンド、`std_out`、および`std_err`を探します。
+最新のパッケージレベルのビルドおよびテスト出力へのシンボリックリンクを含む`~/workspace/log/latest_*/`ディレクトリもあります。
 
-To print the tests' details while the tests are being run, use the `--event-handlers console_cohesion+` option to print the details directly to the console:
+テストの実行中にテストの詳細を出力するには、`--event-handlers console_cohesion+`オプションを使用して詳細をコンソールに直接出力します:
 
 ```console
 $ colcon test --event-handlers console_cohesion+ --packages-select my_cool_pkg
@@ -158,11 +153,10 @@ Total Test time (real) =   7.91 sec
 ...
 ```
 
-## Code coverage
+## コードカバレッジ
 
-Loosely described,
-a code coverage metric is a measure of how much of the program code has been exercised (covered) during testing.
+大まかに説明するとコードカバレッジメトリックとはテスト中にどの程度のプログラムコードが実行された (カバーされた) かを示す尺度です。
 
-In the Autoware repositories, [Codecov](https://app.codecov.io/gh/autowarefoundation/autoware.universe/) is used to automatically calculate coverage of any open pull request.
+Autowareリポジトリでは[Codecov](https://app.codecov.io/gh/autowarefoundation/autoware.universe/)を使用してオープンなプルリクエストのカバレッジを自動的に計算します。
 
-More details about the code coverage metrics can be found in the [Codecov documentation](https://docs.codecov.com/docs/about-code-coverage).
+コードカバレッジメトリックの詳細については[Codecovのドキュメント](https://docs.codecov.com/docs/about-code-coverage)を参照してください。
