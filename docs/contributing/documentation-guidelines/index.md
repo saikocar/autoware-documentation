@@ -1,59 +1,62 @@
-# Documentation guidelines
+# 文書化ガイドライン
 
-## Workflow
+!!! 独自警告
 
-Contributions to Autoware's documentation are welcome, and the same principles [described in the contribution guidelines](../index.md#pull-requests) should be followed. Small, limited changes can be made by forking this repository and submitting a pull request, but larger changes should be discussed with the community and Autoware maintainers via GitHub Discussion first.
+    この記事は[こちら](https://github.com/autowarefoundation/autoware-documentation/blob/main/docs/contributing/documentation-guidelines/index.md)の日本語訳であり、日本語訳のガイドラインではありません
 
-Examples of small changes include:
+## ワークフロー
 
-- Fixing spelling or grammatical mistakes
-- Fixing broken links
-- Making an addition to an existing, well-defined page, such as the [Troubleshooting](../../support/troubleshooting/index.md) guide.
+Autowareのドキュメントへの貢献は歓迎されており、[貢献ガイドラインに記載されている事項](../index.md#pull-requests)と同じ原則に従う必要があります。小規模で限定的な変更は、このリポジトリをフォークしてプルリクエストを送信することで行うことができますが、より大きな変更についてはまずGitHubディスカッションを介してコミュニティおよびAutowareメンテナと話し合う必要があります。
 
-Examples of larger changes include:
+小さな変更の例は以下のとおりです:
 
-- Adding new pages with a large amount of detail, such as a tutorial
-- Re-organization of the existing documentation structure
+- スペルや文法の間違いを修正する
+- 壊れたリンクを修正する
+- [トラブルシューティング](../../support/troubleshooting/index.md)ガイドなど、明確に定義された既存のページに追加を行う。
 
-## Style guide
+より大きな変更の例としては、以下のようなものがあります:
 
-You should refer to the [Google developer documentation style guide](https://developers.google.com/style) as much as possible. Reading the [Highlights page](https://developers.google.com/style/highlights) of that guide is recommended, but if not then the key points below should be noted.
+- チュートリアルなど、大量の詳細情報を含む新しいページを追加する
+- 既存のドキュメント構造の再編成
 
-- [Use standard American English spelling](https://developers.google.com/style/spelling) and punctuation.
-- [Use sentence case](https://developers.google.com/style/capitalization) for document titles and section headings.
-- [Use descriptive link text](https://developers.google.com/style/link-text).
-- [Write short sentences](https://developers.google.com/style/translation#write-short,-clear,-and-precise-sentences) that are easy to understand and translate.
+## スタイルガイド
 
-## Tips
+可能な限り[Google開発者ドキュメントのスタイルガイド](https://developers.google.com/style)を参照する必要があります。そのガイドの[ハイライトページ](https://developers.google.com/style/highlights)を読むことをお勧めしますが、そうでない場合は以下の重要な点に注意してください。
 
-### How to preview your modification
+- [標準的なアメリカ英語](https://developers.google.com/style/spelling)のスペルと句読点を使用してください。
+- [大文字と小文字を区別して](https://developers.google.com/style/capitalization)文書のタイトルとセクションの見出しを記述します。
+- [説明的なリンクテキストを使用します](https://developers.google.com/style/link-text).
+- [短い文章](https://developers.google.com/style/translation#write-short,-clear,-and-precise-sentences)を理解と翻訳のしやすさのために記述します。
 
-There are two ways to preview your modification on a documentation website.
+## ヒント
 
-#### 1. Using GitHub Actions workflow
+### 変更をプレビューする方法
 
-Follow the steps below.
+ドキュメントWebサイトで変更をプレビューするには2つの方法があります。
 
-1. Create a pull request to the repository.
-2. Add the `deploy-docs` label from the sidebar (See below figure).
-3. Wait for a couple of minutes, and the `github-actions` bot will notify the URL for the pull request's preview.
+#### 1. GitHub Actionsワークフローの使用
+
+以下の手順に従ってください。
+
+1. リポジトリへのプルリクエストを作成します。
+2. サイドバーから`deploy-docs`ラベルを追加します(下の図を参照)。
+3. 数分待つと、`github-actions`ボットがプルリクエストのプレビューのURLを通知します。
 
 ![deploy-docs-label](images/deploy-docs-label-for-pull-request.png){ width="800" }
 
-#### 2. Running an MkDocs server in your local environment
+#### 2. ローカル環境でMkDocsサーバーを実行する
 
-Instead of creating a PR, you can use the `mkdocs` command to build Autoware's documentation websites on your local computer.
-Assuming that you are using Ubuntu OS, run the following to install the required libraries.
+PRを作成する代わりに、`mkdocs`コマンドを使用して、ローカルコンピュータ上に AutowareのドキュメントWebサイトを構築できます。 Ubuntu OS を使用していると仮定して、次のコマンドを実行して必要なライブラリをインストールします。
 
 ```bash
 python3 -m pip install -U $(curl -fsSL https://raw.githubusercontent.com/autowarefoundation/autoware-github-actions/main/deploy-docs/mkdocs-requirements.txt)
 ```
 
-Then, run `mkdocs serve` on your documentation directory.
+次にドキュメントディレクトリで`mkdocs serve`を実行します。
 
 ```bash
 cd /PATH/TO/YOUR-autoware-documentation
 mkdocs serve
 ```
 
-It will launch the MkDocs server. Access [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see the preview of the website.
+MkDocsサーバーが起動します。[http://127.0.0.1:8000/](http://127.0.0.1:8000/)にアクセスして、Webサイトのプレビューを表示します。
