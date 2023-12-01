@@ -1,47 +1,47 @@
-# Integration testing
+# 結合テスト
 
-An integration test is defined as the phase in software testing where individual software modules are combined and tested as a group.
-Integration tests occur after unit tests, and before validation tests.
+統合テストは個々のソフトウェアモジュールを組み合わせてグループとしてテストするソフトウェアテストのフェーズとして定義されます。
+統合テストは単体テストの後、検証テストの前に行われます。
 
-The input to an integration test is a set of independent modules that have been unit tested.
-The set of modules is tested against the defined integration test plan,
-and the output is a set of properly integrated software modules that is ready for system testing.
+統合テストへの入力は単体テストが行​​われた独立したモジュールのセットです。
+モジュールのセットは定義された統合テスト計画に対してテストされ、出力はシステムテストの準備ができた、
+適切に統合されたソフトウェア モジュールのセットになります。
 
-## Value of integration testing
+## 統合テストの価値
 
-Integration tests determine if independently developed software modules work correctly when the modules are connected to each other.
-In ROS 2, the software modules are called nodes.
-Testing a single node is a special type of integration test that is commonly referred to as component testing.
+統合テストでは、個別に開発されたソフトウェアモジュールが相互に接続されたときに正しく動作するかどうかを判断します。
+ROS2ではソフトウェアモジュールはノードと呼ばれます。
+単一ノードのテストは一般にコンポーネントテストと呼ばれる特殊なタイプの統合テストです。
 
-Integration tests help to find the following types of errors:
+統合テストは次の種類のエラーを見つけるのに役立ちます:
 
-- Incompatible interactions between nodes, such as non-matching topics, different message types, or incompatible QoS settings.
-- Edge cases that were not touched by unit testing, such as a critical timing issue, network communication delays, disk I/O failures, and other such problems that can occur in production environments.
-- Issues that can occur while the system is under high CPU/memory load, such as `malloc` failures. This can be tested using tools like `stress` and `udpreplay` to test the performance of nodes with real data.
+- ノード間の互換性のない対話(トピックの不一致、異なるメッセージタイプ、互換性のないQoS設定など)。
+- 単体テストでは触れられなかったエッジケース。重大なタイミング問題、ネットワーク通信の遅延、ディスクI/O障害、実稼働環境で発生する可能性のあるその他の問題など。
+- システムのCPUあるいはメモリ負荷が高いときに発生する可能性のある問題 (`malloc`エラーなど)。これは、`stress`や`udpreplay`などのツールを使用してテストし、実際のデータでノードのパフォーマンスをテストできます。
 
-With ROS 2, it is possible to program complex autonomous-driving applications with a large number of nodes.
-Therefore, a lot of effort has been made to provide an integration-test framework that helps developers test the interaction of ROS 2 nodes.
+ROS2を使用すると、多数のノードを含む複雑な自動運転アプリケーションをプログラムすることができます。
+したがって、開発者がROS2ノードの相互作用をテストするのに役立つ統合テストフレームワークを提供するために、多大な努力が払われてきました。
 
-## Integration-test framework
+## 統合テストフレームワーク
 
-A typical integration-test framework has three parts:
+一般的な統合テストフレームワークには、次の3つの部品があります:
 
-1. A series of executables with arguments that work together and generate outputs.
-2. A series of expected outputs that should match the output of the executables.
-3. A launcher that starts the tests, compares the outputs to the expected outputs, and determines if the test passes.
+1. 連携して出力を生成する引数を持つ一連の実行可能ファイル。
+2. 実行可能ファイルの出力と一致する必要がある一連の予期される出力。
+3. テストを開始し、出力を予想される出力と比較し、テストが合格したかどうかを判断するランチャー。
 
-In Autoware, we use the [launch_testing](https://github.com/ros2/launch/tree/master/launch_testing) framework.
+Autowareでは[launch_testing](https://github.com/ros2/launch/tree/master/launch_testing)フレームワークを使用します。
 
-### Smoke tests
+### スモークテスト
 
-Autoware has a dedicated API for smoke testing.
-To use this framework, in `package.xml` add:
+Autowareにはスモークテスト用の専用APIがあります。
+このフレームワークを使用するには、`package.xml`に以下を追加します:
 
 ```xml
 <test_depend>autoware_testing</test_depend>
 ```
 
-And in `CMakeLists.txt` add:
+そして`CMakeLists.txt`に以下を追加します:
 
 ```cmake
 if(BUILD_TESTING)
@@ -50,37 +50,35 @@ if(BUILD_TESTING)
 endif()
 ```
 
-Doing so adds smoke tests that ensure that a node can be:
+これによりノードが次の状態にあることを確認するスモークテストが追加されます:
 
-1. Launched with a default parameter file.
-2. Terminated with a standard `SIGTERM` signal.
+1. デフォルトのパラメータファイルを使用して起動します。
+2. 標準の`SIGTERM`シグナルで終了します。
 
-For the full API documentation,
-refer to the [package design page](https://github.com/autowarefoundation/autoware.universe/blob/main/common/autoware_testing/design/autoware_testing-design.md).
+完全なAPIドキュメントについては[パッケージ設計ページ](https://github.com/autowarefoundation/autoware.universe/blob/main/common/autoware_testing/design/autoware_testing-design.md)を参照してください。
 
-!!! note
+!!! 注記
 
-    This API is not suitable for all smoke test cases.
-    It cannot be used when a specific file location (eg: for a map) is required to be passed to the node, or if some preparation needs to be conducted before node launch.
-    In such cases use the manual solution from the [component test section below](#integration-test-with-a-single-node-component-test).
+    このAPIはすべてのスモークテストケースに適しているわけではありません。
+    特定のファイルの場所 (マップなど) をノードに渡す必要がある場合、またはノードの起動前に何らかの準備を行う必要がある場合は使用できません。
+    このような場合は[以下のコンポーネント テストセクション](#integration-test-with-a-single-node-component-test)の手動ソリューションを使用してください。
 
-### Integration test with a single node: component test
+### 単一ノードでの統合テスト: コンポーネントテスト
 
-The simplest scenario is a single node.
-In this case, the integration test is commonly referred to as a component test.
+最も単純なシナリオは単一ノードです。
+この場合、統合テストは一般にコンポーネントテストと呼ばれます。
 
-To add a component test to an existing node,
-you can follow the example of the `lanelet2_map_loader` in the [`map_loader` package](https://github.com/autowarefoundation/autoware.universe/tree/main/map/map_loader)
-(added in [this PR](https://github.com/autowarefoundation/autoware.universe/pull/1056)).
+コンポーネントテストを既存のノードに追加するには[`map_loader`パッケージ](https://github.com/autowarefoundation/autoware.universe/tree/main/map/map_loader)
+([このPR](https://github.com/autowarefoundation/autoware.universe/pull/1056)に追加)の`lanelet2_map_loader`の例に従うことができます。
 
-In [`package.xml`](https://github.com/autowarefoundation/autoware.universe/blob/main/map/map_loader/package.xml), add:
+[`package.xml`](https://github.com/autowarefoundation/autoware.universe/blob/main/map/map_loader/package.xml)に以下を追加します:
 
 ```xml
 <test_depend>ros_testing</test_depend>
 ```
 
-In [`CMakeLists.txt`](https://github.com/autowarefoundation/autoware.universe/blob/main/map/map_loader/CMakeLists.txt),
-add or modify the `BUILD_TESTING` section:
+[`CMakeLists.txt`](https://github.com/autowarefoundation/autoware.universe/blob/main/map/map_loader/CMakeLists.txt)で,
+`BUILD_TESTING`セクションを追加または変更します:
 
 ```cmake
 if(BUILD_TESTING)
@@ -95,19 +93,18 @@ if(BUILD_TESTING)
 endif()
 ```
 
-In addition to the command `add_ros_test`, we also install any data that is required by the test using the `install` command.
+コマンド`add_ros_test`に加えて、`install`コマンドを使用してテストに必要なデータもインストールします。
 
-!!! note
+!!! 注記
 
-    - The `TIMEOUT` argument is given in seconds; see the [add_ros_test.cmake file](https://github.com/ros2/ros_testing/blob/master/ros_testing/cmake/add_ros_test.cmake) for details.
-    - The `add_ros_test` command will run the test in a unique `ROS_DOMAIN_ID` which avoids interference between tests running in parallel.
+    - `TIMEOUT`引数は秒単位で指定します。詳細については、[add_ros_test.cmakeファイル](https://github.com/ros2/ros_testing/blob/master/ros_testing/cmake/add_ros_test.cmake)を参照してください。
+    - `add_ros_test`コマンドは、並行して実行されるテスト間の干渉を避けるため、一意の`ROS_DOMAIN_ID`でテストを実行します。
 
-To create a test,
-either read the [launch_testing quick-start example](https://github.com/ros2/launch/tree/master/launch_testing#quick-start-example),
-or follow the steps below.
+テストを作成するには[launch_testingクイックスタート例](https://github.com/ros2/launch/tree/master/launch_testing#quick-start-example)を読むか、
+以下の手順に従います。or follow the steps below.
 
-Taking [`test/lanelet2_map_loader_launch.test.py`](https://github.com/autowarefoundation/autoware.universe/blob/main/map/map_loader/test/lanelet2_map_loader_launch.test.py) as an example,
-first dependencies are imported:
+[`test/lanelet2_map_loader_launch.test.py`](https://github.com/autowarefoundation/autoware.universe/blob/main/map/map_loader/test/lanelet2_map_loader_launch.test.py)を例として、
+最初の依存関係がインポートされます:
 
 ```python
 import os
@@ -121,9 +118,9 @@ import launch_testing
 import pytest
 ```
 
-Then a launch description is created to launch the node under test.
-Note that the [`test_map.osm`](https://github.com/autowarefoundation/autoware.universe/blob/main/map/map_loader/test/data/test_map.osm) file path is found and passed to the node,
-something that cannot be done with the [smoke testing API](#smoke-tests):
+次に、テスト対象のノードを起動するための起動説明が作成されます。
+[`test_map.osm`](https://github.com/autowarefoundation/autoware.universe/blob/main/map/map_loader/test/data/test_map.osm) ファイルパスが検出され、ノードに渡されることに注意してください。
+これは[スモークテストAPI](#smoke-tests)では実行できません:
 
 ```python
 @pytest.mark.launch_test
@@ -155,14 +152,14 @@ def generate_test_description():
     )
 ```
 
-!!! note
+!!! 注記
 
-    - Since the node need time to process the input lanelet2 map, we use a `TimerAction` to delay the start of the test by 1s.
-    - In the example above, the `context` is empty but it can be used to pass objects to the test cases.
-    - You can find an example of using the `context` in the [ROS 2 context_launch_test.py](https://github.com/ros2/launch/blob/humble/launch_testing/test/launch_testing/examples/context_launch_test.py) test example.
+    - ノードが入力のlanelet2マップを処理するのに時間がかかるため、`TimerAction`を使用してテストの開始を1秒遅らせます。
+    - 上の例では`context`は空ですがオブジェクトをテストケースに渡すために使用できます。
+    - `context`の使用例は、[ROS 2 context_launch_test.py](https://github.com/ros2/launch/blob/humble/launch_testing/test/launch_testing/examples/context_launch_test.py)のテスト例で見つけることができます。
 
-Finally, a test is executed after the node executable has been shut down (`post_shutdown_test`).
-Here we ensure that the node was launched without error and exited cleanly.
+最後にノードの実行可能ファイルがシャットダウンされた後にテストが実行されます (`post_shutdown_test`)。
+ここではノードがエラーなく起動され、正常に終了したことを確認します。
 
 ```python
 @launch_testing.post_shutdown_test()
@@ -172,28 +169,28 @@ class TestProcessOutput(unittest.TestCase):
         launch_testing.asserts.assertExitCodes(proc_info)
 ```
 
-## Running the test
+## テストの実行
 
-Continuing the example from above, first build your package:
+上記の例を続けて、最初にパッケージをビルドします:
 
 ```console
 colcon build --packages-up-to map_loader
 source install/setup.bash
 ```
 
-Then either execute the component test manually:
+次に、コンポーネントテストを手動で実行します。:
 
 ```console
 ros2 test src/universe/autoware.universe/map/map_loader/test/lanelet2_map_loader_launch.test.py
 ```
 
-Or as part of testing the entire package:
+または、パッケージ全体のテストの一環として:
 
 ```console
 colcon test --packages-select map_loader
 ```
 
-Verify that the test is executed; e.g.
+テストが実行されたことを確認します。例えば
 
 ```console
 $ colcon test-result --all --verbose
@@ -201,15 +198,14 @@ $ colcon test-result --all --verbose
 build/map_loader/test_results/map_loader/test_lanelet2_map_loader_launch.test.py.xunit.xml: 1 test, 0 errors, 0 failures, 0 skipped
 ```
 
-### Next steps
+### 次の手順
 
-The simple test described in [Integration test with a single node: component test](#integration-test-with-a-single-node-component-test) can be extended in numerous directions, such as testing a node's output.
+[単一ノードでの統合テスト: コンポーネントテスト](#integration-test-with-a-single-node-component-test)で説明されている単純なテストは、ノードの出力のテストなど、さまざまな方向に拡張できます。
 
-#### Testing the output of a node
+#### ノードの出力のテスト
 
-To test while the node is running,
-create an [_active test_](https://github.com/ros2/launch/tree/foxy/launch_testing#active-tests) by adding a subclass of Python's `unittest.TestCase` to `*launch.test.py`.
-Some boilerplate code is required to access output by creating a node and a subscription to a particular topic, e.g.
+ノードの実行中にテストするには、Pythonの`unittest.TestCase`のサブクラスを`*launch.test.py`に追加して[アクティブテスト](https://github.com/ros2/launch/tree/foxy/launch_testing#active-tests)を作成します。
+ノードと特定のトピックへのサブスクリプションを作成して出力にアクセスするには、いくつかのボイラープレートコードが必要です。例えば
 
 ```python
 import unittest
@@ -263,8 +259,8 @@ class TestRunningDataPublisher(unittest.TestCase):
         self.assertEqual(msg, "Hello, world")
 ```
 
-## References
+## 参考
 
-- [colcon](https://github.com/ros2/ros2/wiki/Colcon-Tutorial) is used to build and run tests.
-- [launch testing](https://github.com/ros2/launch/tree/master/launch_testing) launches nodes and runs tests.
-- [Testing guidelines](index.md) describes the different types of tests performed in Autoware and links to the corresponding guidelines.
+- [colcon](https://github.com/ros2/ros2/wiki/Colcon-Tutorial) はテストの構築と実行に使用されます。
+- [launch testing](https://github.com/ros2/launch/tree/master/launch_testing)はノードを起動し、テストを実行します。
+- [テストのガイドライン](index.md)ではAutowareで実行されるさまざまな種類のテストについて説明し、対応するガイドラインへのリンクを示します。
