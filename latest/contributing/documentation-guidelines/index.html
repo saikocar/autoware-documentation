@@ -21,7 +21,7 @@
     
     
       
-        <title>Documentation guidelines - Autoware Documentation</title>
+        <title>文書化ガイドライン - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#documentation-guidelines" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Documentation guidelines
+              文書化ガイドライン
             
           </span>
         </div>
@@ -6141,30 +6141,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#workflow" class="md-nav__link">
-    Workflow
+  <a href="#_2" class="md-nav__link">
+    ワークフロー
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#style-guide" class="md-nav__link">
-    Style guide
+  <a href="#_3" class="md-nav__link">
+    スタイルガイド
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#tips" class="md-nav__link">
-    Tips
+  <a href="#_4" class="md-nav__link">
+    ヒント
   </a>
   
-    <nav class="md-nav" aria-label="Tips">
+    <nav class="md-nav" aria-label="ヒント">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#how-to-preview-your-modification" class="md-nav__link">
-    How to preview your modification
+  <a href="#_5" class="md-nav__link">
+    変更をプレビューする方法
   </a>
   
 </li>
@@ -6192,49 +6192,52 @@
   
 
 
-<div><h1 id="documentation-guidelines">Documentation guidelines<a class="headerlink" href="#documentation-guidelines" title="Permanent link">#</a></h1>
-<h2 id="workflow">Workflow<a class="headerlink" href="#workflow" title="Permanent link">#</a></h2>
-<p>Contributions to Autoware's documentation are welcome, and the same principles <a href="../#pull-requests">described in the contribution guidelines</a> should be followed. Small, limited changes can be made by forking this repository and submitting a pull request, but larger changes should be discussed with the community and Autoware maintainers via GitHub Discussion first.</p>
-<p>Examples of small changes include:</p>
+<div><h1 id="_1">文書化ガイドライン<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<div class="admonition 独自警告">
+<p class="admonition-title">独自警告</p>
+<p>この記事は<a href="https://github.com/autowarefoundation/autoware-documentation/blob/main/docs/contributing/documentation-guidelines/index.md">こちら</a>の日本語訳であり、日本語訳のガイドラインではありません</p>
+</div>
+<h2 id="_2">ワークフロー<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>Autowareのドキュメントへの貢献は歓迎されており、<a href="../#pull-requests">貢献ガイドラインに記載されている事項</a>と同じ原則に従う必要があります。小規模で限定的な変更は、このリポジトリをフォークしてプルリクエストを送信することで行うことができますが、より大きな変更についてはまずGitHubディスカッションを介してコミュニティおよびAutowareメンテナと話し合う必要があります。</p>
+<p>小さな変更の例は以下のとおりです:</p>
 <ul>
-<li>Fixing spelling or grammatical mistakes</li>
-<li>Fixing broken links</li>
-<li>Making an addition to an existing, well-defined page, such as the <a href="../../support/troubleshooting/">Troubleshooting</a> guide.</li>
+<li>スペルや文法の間違いを修正する</li>
+<li>壊れたリンクを修正する</li>
+<li><a href="../../support/troubleshooting/">トラブルシューティング</a>ガイドなど、明確に定義された既存のページに追加を行う。</li>
 </ul>
-<p>Examples of larger changes include:</p>
+<p>より大きな変更の例としては、以下のようなものがあります:</p>
 <ul>
-<li>Adding new pages with a large amount of detail, such as a tutorial</li>
-<li>Re-organization of the existing documentation structure</li>
+<li>チュートリアルなど、大量の詳細情報を含む新しいページを追加する</li>
+<li>既存のドキュメント構造の再編成</li>
 </ul>
-<h2 id="style-guide">Style guide<a class="headerlink" href="#style-guide" title="Permanent link">#</a></h2>
-<p>You should refer to the <a href="https://developers.google.com/style">Google developer documentation style guide</a> as much as possible. Reading the <a href="https://developers.google.com/style/highlights">Highlights page</a> of that guide is recommended, but if not then the key points below should be noted.</p>
+<h2 id="_3">スタイルガイド<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>可能な限り<a href="https://developers.google.com/style">Google開発者ドキュメントのスタイルガイド</a>を参照する必要があります。そのガイドの<a href="https://developers.google.com/style/highlights">ハイライトページ</a>を読むことをお勧めしますが、そうでない場合は以下の重要な点に注意してください。</p>
 <ul>
-<li><a href="https://developers.google.com/style/spelling">Use standard American English spelling</a> and punctuation.</li>
-<li><a href="https://developers.google.com/style/capitalization">Use sentence case</a> for document titles and section headings.</li>
-<li><a href="https://developers.google.com/style/link-text">Use descriptive link text</a>.</li>
-<li><a href="https://developers.google.com/style/translation#write-short,-clear,-and-precise-sentences">Write short sentences</a> that are easy to understand and translate.</li>
+<li><a href="https://developers.google.com/style/spelling">標準的なアメリカ英語</a>のスペルと句読点を使用してください。</li>
+<li><a href="https://developers.google.com/style/capitalization">大文字と小文字を区別して</a>文書のタイトルとセクションの見出しを記述します。</li>
+<li><a href="https://developers.google.com/style/link-text">説明的なリンクテキストを使用します</a>.</li>
+<li><a href="https://developers.google.com/style/translation#write-short,-clear,-and-precise-sentences">短い文章</a>を理解と翻訳のしやすさのために記述します。</li>
 </ul>
-<h2 id="tips">Tips<a class="headerlink" href="#tips" title="Permanent link">#</a></h2>
-<h3 id="how-to-preview-your-modification">How to preview your modification<a class="headerlink" href="#how-to-preview-your-modification" title="Permanent link">#</a></h3>
-<p>There are two ways to preview your modification on a documentation website.</p>
-<h4 id="1-using-github-actions-workflow">1. Using GitHub Actions workflow<a class="headerlink" href="#1-using-github-actions-workflow" title="Permanent link">#</a></h4>
-<p>Follow the steps below.</p>
+<h2 id="_4">ヒント<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h3 id="_5">変更をプレビューする方法<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
+<p>ドキュメントWebサイトで変更をプレビューするには2つの方法があります。</p>
+<h4 id="1-github-actions">1. GitHub Actionsワークフローの使用<a class="headerlink" href="#1-github-actions" title="Permanent link">#</a></h4>
+<p>以下の手順に従ってください。</p>
 <ol>
-<li>Create a pull request to the repository.</li>
-<li>Add the <code>deploy-docs</code> label from the sidebar (See below figure).</li>
-<li>Wait for a couple of minutes, and the <code>github-actions</code> bot will notify the URL for the pull request's preview.</li>
+<li>リポジトリへのプルリクエストを作成します。</li>
+<li>サイドバーから<code>deploy-docs</code>ラベルを追加します(下の図を参照)。</li>
+<li>数分待つと、<code>github-actions</code>ボットがプルリクエストのプレビューのURLを通知します。</li>
 </ol>
 <p><img alt="deploy-docs-label" src="images/deploy-docs-label-for-pull-request.png" width="800"></p>
-<h4 id="2-running-an-mkdocs-server-in-your-local-environment">2. Running an MkDocs server in your local environment<a class="headerlink" href="#2-running-an-mkdocs-server-in-your-local-environment" title="Permanent link">#</a></h4>
-<p>Instead of creating a PR, you can use the <code>mkdocs</code> command to build Autoware's documentation websites on your local computer.
-Assuming that you are using Ubuntu OS, run the following to install the required libraries.</p>
+<h4 id="2-mkdocs">2. ローカル環境でMkDocsサーバーを実行する<a class="headerlink" href="#2-mkdocs" title="Permanent link">#</a></h4>
+<p>PRを作成する代わりに、<code>mkdocs</code>コマンドを使用して、ローカルコンピュータ上に AutowareのドキュメントWebサイトを構築できます。 Ubuntu OS を使用していると仮定して、次のコマンドを実行して必要なライブラリをインストールします。</p>
 <div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/autowarefoundation/autoware-github-actions/main/deploy-docs/mkdocs-requirements.txt<span class="k">)</span>
 </code></pre></div>
-<p>Then, run <code>mkdocs serve</code> on your documentation directory.</p>
+<p>次にドキュメントディレクトリで<code>mkdocs serve</code>を実行します。</p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/PATH/TO/YOUR-autoware-documentation
 mkdocs<span class="w"> </span>serve
 </code></pre></div>
-<p>It will launch the MkDocs server. Access <a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a> to see the preview of the website.</p>
+<p>MkDocsサーバーが起動します。<a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a>にアクセスして、Webサイトのプレビューを表示します。</p>
 <!-- prettier-ignore --></div>
 
 
