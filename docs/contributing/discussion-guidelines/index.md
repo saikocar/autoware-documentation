@@ -1,10 +1,10 @@
-# Discussion guidelines
+# 議論のガイドライン
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中
 
-Refer to the following links for now:
+今は以下のリンクを参照してください:
 
 - <https://docs.github.com/en/discussions/guides/best-practices-for-community-conversations-on-github>
 - <https://opensource.guide/how-to-contribute/#communicating-effectively>
