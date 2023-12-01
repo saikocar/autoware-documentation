@@ -1,33 +1,33 @@
-# Review tips
+# 査読のヒント
 
-## Toggle annotations or review comments in the diff view
+## 注釈を切り替えたり、差分ビューでコメントを確認したりできます
 
-There might be some annotations or review comments in the diff view during your review.
+レビュー中に差分ビューに注釈やレビューコメントが表示される場合があります。
 
-To toggle annotations, press the `A` key.
+注釈を切り替えるには`A`キーを押します。
 
-Before:
+切り替え前:
 
 ![before-press-a](images/before-press-a.png)
 
-After:
+切り替え後:
 
 ![after-press-a](images/after-press-a.png)
 
-To toggle review comments, press the `I` key.
+レビューコメントを切り替えるには`I`キーを押します。
 
-For other keyboard shortcuts, refer to [GitHub Docs](https://docs.github.com/en/get-started/using-github/keyboard-shortcuts).
+他のキーボード ショートカットについては[GitHubドキュメント](https://docs.github.com/en/get-started/using-github/keyboard-shortcuts)を参照してください。
 
-## View code in the web-based Visual Studio Code
+## WebベースのVisual Studio Codeでコードを表示する
 
-You can open `Visual Studio Code` from your browser to view code in a rich UI.
-To use it, press the `.` key on any repository or pull request.
+ブラウザーから`Visual Studio Code`を開いて、リッチなUIでコードを表示できます。
+使用するには、リポジトリで`.`キーまたプルリクエストのキーはを押します。
 
-For more detailed usage, refer to [github/dev](https://github.com/github/dev).
+詳しい使用方法については[github/dev](https://github.com/github/dev)を参照してください。
 
-## Check out the branch of a pull request quickly
+## プルリクエストのブランチをすぐにチェックアウトする
 
-If you want to check out the branch of a pull request, it's generally troublesome with the fork-and-pull model.
+プル リクエストのブランチをチェックアウトしたい場合フォークアンドプルモデルでは一般に面倒です。
 
 ```bash
 # Copy the user name and the fork URL.
@@ -36,8 +36,8 @@ git checkout {user-name}/{branch-name}
 git remote rm {user-name} # To clean up
 ```
 
-Instead, you can use [GitHub CLI](https://cli.github.com/) to simplify the steps, just run `gh pr checkout {pr-number}`.
+代わりに[GitHub CLI](https://cli.github.com/)を使用して手順を簡素化し`gh pr checkout {pr-number}`を実行します。
 
-You can copy the command from the top right of the pull request page.
+プルリクエストページの右上からコマンドをコピーできます。
 
 ![gh-pr-checkout](images/gh-pr-checkout.png)
