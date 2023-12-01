@@ -1,36 +1,36 @@
-# Topic namespaces
+# トピックの名前空間
 
-## Overview
+## 概要
 
-ROS allows topics, parameters and nodes to be namespaced which provides the following benefits:
+ROS では、トピック、パラメータ、ノードに名前空間を付けることができ、以下のような利点があります:
 
-- Multiple instances of the same node type will not cause naming clashes.
-- Topics published by a node can be automatically namespaced with the node's namespace providing a meaningful and easily-visible connection.
-- Keeps from cluttering the root namespace.
-- Helps to maintain separation-of-concerns.
+- 同じノード タイプの複数のインスタンスによって名前の衝突が発生することはありません。
+- ノードによって公開されたトピックには、ノードの名前空間を使用して自動的に名前空間が設定され、意味のあるわかりやすい接続が提供されます。
+- 根元の名前空間が乱雑になるのを防ぎます。
+- 関心事の分離を維持するのに役立ちます。
 
-This page focuses on how to use namespaces in Autoware and shows some useful examples. For basic information on topic namespaces, refer to [this tutorial](https://design.ros2.org/articles/topic_and_service_names.html).
+このページでは、Autoware での名前空間の使用方法に焦点を当て、いくつかの役立つ例を示します。トピック名前空間の基本情報については、[このチュートリアル](https://design.ros2.org/articles/topic_and_service_names.html)を参照してください。
 
-## How topics should be named in node
+## ノード内でトピックに名前を付ける方法
 
-Autoware divides the node into the following functional categories, and adds the start namespace for the nodes according to the categories.
+Autoware はノードを次の機能カテゴリに分割し、カテゴリに従ってノードの開始名前空間を追加します。
 
-- localization
-- perception
-- planning
-- control
-- sensing
-- vehicle
-- map
-- system
+- 位置推定
+- 知覚
+- 計画
+- 操作
+- 計測
+- 車両
+- 地図
+- システム
 
-When a node is run in a namespace, all topics which that node publishes are given that same namespace. All nodes in the Autoware stack must support namespaces by avoiding practices such as publishing topics in the global namespace.
+ノードが名前空間で実行されると、そのノードが公開するすべてのトピックに同じ名前空間が与えられます。 Autoware スタック内のすべてのノードは、グローバル名前空間でトピックを公開するなどの行為を避けて、名前空間をサポートする必要があります。
 
-In general, topics should be namespaced based on the function of the node which produces them and not the node (or nodes) which consume them.
+一般に、トピックは、トピックを消費するノードではなく、トピックを生成するノードの機能に基づいて名前空間を設定する必要があります。
 
-Classify topics as input or output topics based on they are subscribed or published by the node. In the node, input topic is named `input/topic_name` and output topic is named `output/topic_name`.
+ノードによってサブスクライブまたはパブリッシュされているかに基づいて、トピックを入力トピックまたは出力トピックとして分類します。ノードでは、入力トピックの名前は`input/topic_name`、出力トピックの名前は`output/topic_name`です。
 
-Configure the topic in the node's launch file. Take the `joy_controller` node as an example, in the following example, set the input and output topics and remap topics in the `joy_controller.launch.xml` file.
+ノードの起動ファイルでトピックを構成します。`joy_controller`ノードを例に挙げます。以下の例では`joy_controller.launch.xml`ファイルで入力トピックと出力トピックを設定し、トピックを再割り当てします。
 
 ```xml
 <launch>
@@ -60,13 +60,13 @@ Configure the topic in the node's launch file. Take the `joy_controller` node as
 </launch>
 ```
 
-## Topic names in the code
+## コード内のトピック名
 
-1. Have `~` so that namespace in launch configuration is applied(should not start from root `/`).
+1. 起動設定の名前空間が適用されるように`~`を付けます (根元`/`から開始しないでください)。
 
-2. Have `~/input` `~/output` namespace before topic name used to communicate with other nodes.
+2. 他のノードとの通信に使用されるトピック名の前に`~/input`あるいは`~/output`と名前空間を付けます。
 
-   e.g., In node `obstacle_avoidance_planner`, using topic names of type `~/input/topic_name` to subscribe to topics.
+   たとえば、`obstacle_avoidance_planner`は、`~/input/topic_name`のタイプのトピック名を使用してトピックを公開します。
 
    ```cpp
    objects_sub_ = create_subscription<PredictedObjects>(
@@ -74,15 +74,15 @@ Configure the topic in the node's launch file. Take the `joy_controller` node as
     std::bind(&ObstacleAvoidancePlanner::onObjects, this, std::placeholders::_1));
    ```
 
-   e.g., In node `obstacle_avoidance_planner`, using topic names of type `~/output/topic_name` to publish topic.
+   たとえば、`obstacle_avoidance_planner`では、`~/output/topic_name`のタイプのトピック名を使用してトピックを公開します。
 
    ```cpp
    traj_pub_ = create_publisher<Trajectory>("~/output/path", 1);
    ```
 
-3. Visualization or debug purpose topics should have `~/debug/` namespace.
+3. 視覚化またはデバッグ目的のトピックには`~/debug/`名前空間が必要です。
 
-   e.g., In node `obstacle_avoidance_planner`, in order to debug or visualizing topics, using topic names of type `~/debug/topic_name` to publish information.
+   たとえば、`obstacle_avoidance_planner`ノードでは、トピックをデバッグまたは視覚化するために、`~/debug/topic_name`タイプのトピック名を使用して情報を公開します。
 
    ```cpp
    debug_markers_pub_ =
@@ -92,8 +92,8 @@ Configure the topic in the node's launch file. Take the `joy_controller` node as
     create_publisher<tier4_debug_msgs::msg::StringStamped>("~/debug/calculation_time", 1);
    ```
 
-   The launch configured namespace will be add the topics before, so the topic names will be as following:
+   名前空間を設定して起動するとトピックが追加されるため、トピック名は次のようになります:
 
    `/planning/scenario_planning/lane_driving/motion_planning/obstacle_avoidance_planner/debug/marker /planning/scenario_planning/lane_driving/motion_planning/obstacle_avoidance_planner/debug/calculation_time`
 
-4. Rationale: we want to make topic names remapped and configurable from launch files.
+4. 理論的根拠: トピック名を再割り当てし、起動ファイルから構成できるようにしたいと考えています。
