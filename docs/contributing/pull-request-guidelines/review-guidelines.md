@@ -1,10 +1,10 @@
-# Review guidelines
+# 査読のガイドライン
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中
 
-Refer to the following links for now:
+今は以下のリンクを参照してください:
 
 - <https://google.github.io/eng-practices/review/>
 - <https://docs.gitlab.com/ee/development/code_review.html>
