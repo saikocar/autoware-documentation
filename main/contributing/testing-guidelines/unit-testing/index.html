@@ -21,7 +21,7 @@
     
     
       
-        <title>Unit testing - Autoware Documentation</title>
+        <title>単体テスト - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#unit-testing" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Unit testing
+              単体テスト
             
           </span>
         </div>
@@ -5583,12 +5583,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Unit testing
+          単体テスト
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Unit testing
+        単体テスト
       </a>
       
         
@@ -5607,29 +5607,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-a-unit-test-with-gtest" class="md-nav__link">
-    Create a unit test with gtest
+  <a href="#gtest" class="md-nav__link">
+    gtestで単体テストを作成する
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-test" class="md-nav__link">
-    Build test
+  <a href="#_2" class="md-nav__link">
+    ビルドテスト
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#run-test" class="md-nav__link">
-    Run test
+  <a href="#_3" class="md-nav__link">
+    テストの実行
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#code-coverage" class="md-nav__link">
-    Code coverage
+  <a href="#_4" class="md-nav__link">
+    コードカバレッジ
   </a>
   
 </li>
@@ -6203,29 +6203,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-a-unit-test-with-gtest" class="md-nav__link">
-    Create a unit test with gtest
+  <a href="#gtest" class="md-nav__link">
+    gtestで単体テストを作成する
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-test" class="md-nav__link">
-    Build test
+  <a href="#_2" class="md-nav__link">
+    ビルドテスト
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#run-test" class="md-nav__link">
-    Run test
+  <a href="#_3" class="md-nav__link">
+    テストの実行
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#code-coverage" class="md-nav__link">
-    Code coverage
+  <a href="#_4" class="md-nav__link">
+    コードカバレッジ
   </a>
   
 </li>
@@ -6248,30 +6248,29 @@
   
 
 
-<div><h1 id="unit-testing">Unit testing<a class="headerlink" href="#unit-testing" title="Permanent link">#</a></h1>
-<p>Unit testing is the first phase of testing and is used to validate units of source code such as classes and functions.
-Typically, a unit of code is tested by validating its output for various inputs.
-Unit testing helps ensure that the code behaves as intended and prevents accidental changes of behavior.</p>
-<p>Autoware uses the <code>ament_cmake</code> framework to build and run tests.
-The same framework is also used to analyze the test results.</p>
-<p><code>ament_cmake</code> provides several convenience functions to make it easy to register tests in a CMake-based package and to ensure that JUnit-compatible result files are generated.
-It currently supports a few different testing frameworks like <code>pytest</code>, <code>gtest</code>, and <code>gmock</code>.</p>
-<p>In order to prevent tests running in parallel from interfering with each other when publishing and subscribing to <abbr title="Robot Operating System">ROS</abbr> topics,
-it is recommended to use commands from <a href="https://github.com/ros2/ament_cmake_ros/tree/master/ament_cmake_ros/cmake"><code>ament_cmake_ros</code></a> to run tests in isolation.</p>
-<p>See below for an example of using <code>ament_add_ros_isolated_gtest</code> with <code>colcon test</code>.
-All other tests follow a similar pattern.</p>
-<h2 id="create-a-unit-test-with-gtest">Create a unit test with gtest<a class="headerlink" href="#create-a-unit-test-with-gtest" title="Permanent link">#</a></h2>
-<p>In <code>my_cool_pkg/test</code>, create the <code>gtest</code> code file <code>test_my_cool_pkg.cpp</code>:</p>
+<div><h1 id="_1">単体テスト<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<p>単体テストはテストの最初のフェーズであり、クラスや関数などのソースコードの単位を検証するために使用されます。
+通常、コードのユニットはさまざまな入力に対する出力を検証することによってテストされます。
+単体テストはコードが意図したとおりに動作することを確認し、誤って動作が変更されるのを防ぐのに役立ちます。</p>
+<p>Autowareは、<code>ament_cmake</code>フレームワークを使用してテストを構築および実行します。
+テスト結果の分析にも同じフレームワークが使用されます。</p>
+<p><code>ament_cmake</code>は、CMakeベースのパッケージにテストを簡単に登録し、JUnit互換の結果ファイルが生成されるようにするための便利な関数をいくつか提供します。
+現在<code>pytest</code>、<code>gtest</code>、<code>gmock</code>などのいくつかの異なるテストフレームワークをサポートしています。</p>
+<p>ROSトピックのパブリッシュおよびサブスクライブ時に並行して実行されるテストが相互に干渉するのを防ぐために<a href="https://github.com/ros2/ament_cmake_ros/tree/master/ament_cmake_ros/cmake"><code>ament_cmake_ros</code></a>のコマンドを使用してテストを分離して実行することをお勧めします。</p>
+<p><code>ament_add_ros_isolated_gtest</code>を<code>colcon test</code>で使用する例については以下を参照してください。
+他のすべてのテストも同様のパターンに従います。</p>
+<h2 id="gtest">gtestで単体テストを作成する<a class="headerlink" href="#gtest" title="Permanent link">#</a></h2>
+<p><code>my_cool_pkg/test</code>で、<code>gtest</code>コードファイル<code>test_my_cool_pkg.cpp</code>を作成します:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">"gtest/gtest.h"</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">"my_cool_pkg/my_cool_pkg.hpp"</span>
 <span class="n">TEST</span><span class="p">(</span><span class="n">TestMyCoolPkg</span><span class="p">,</span><span class="w"> </span><span class="n">TestHello</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">my_cool_pkg</span><span class="o">::</span><span class="n">print_hello</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>In <code>package.xml</code>, add the following line:</p>
+<p><code>package.xml</code>に次の行を追加します:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;test_depend&gt;</span>ament_cmake_ros<span class="nt">&lt;/test_depend&gt;</span>
 </code></pre></div>
-<p>Next add an entry under <code>BUILD_TESTING</code> in the <code>CMakeLists.txt</code> to compile the test source files:</p>
+<p>次に<code>CMakeLists.txt</code>の<code>BUILD_TESTING</code>の下にエントリを追加して、テストソースファイルをコンパイルします:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">if</span><span class="p">(</span><span class="s">BUILD_TESTING</span><span class="p">)</span>
 
 <span class="w">  </span><span class="nb">ament_add_ros_isolated_gtest</span><span class="p">(</span><span class="s">test_my_cool_pkg</span><span class="w"> </span><span class="s">test/test_my_cool_pkg.cpp</span><span class="p">)</span>
@@ -6280,33 +6279,29 @@ All other tests follow a similar pattern.</p>
 <span class="err">...</span>
 <span class="nb">endif</span><span class="p">()</span>
 </code></pre></div>
-<p>This automatically links the test with the default main function provided by <code>gtest</code>.
-The code under test is usually in a different CMake target (<code>${PROJECT_NAME}</code> in the example) and its shared object for linking needs to be added.
-If the test source files include private headers from the <code>src</code> directory, the directory needs to be added to the include path using <code>target_include_directories()</code> function.</p>
-<p>To register a new <code>gtest</code> item, wrap the test code with the macro <code>TEST ()</code>.
-<code>TEST ()</code> is a predefined macro that helps generate the final test code,
-and also registers a <code>gtest</code> item to be available for execution.
-The test case name should be in CamelCase, since gtest inserts an underscore between the fixture name and the class case name when creating the test executable.</p>
-<p><code>gtest/gtest.h</code> also contains predefined macros of <code>gtest</code> like <code>ASSERT_TRUE(condition)</code>,
-<code>ASSERT_FALSE(condition)</code>, <code>ASSERT_EQ(val1,val2)</code>, <code>ASSERT_STREQ(str1,str2)</code>, <code>EXPECT_EQ()</code>, etc.
-<code>ASSERT_*</code> will abort the test if the condition is not satisfied,
-while <code>EXPECT_*</code> will mark the test as failed but continue on to the next test condition.</p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>More information about <code>gtest</code> and its features can be found in the <a href="https://github.com/google/googletest">gtest repo</a>.</p>
+<p>これによりテストが<code>gtest</code>によって提供されるデフォルトのmain関数に自動的にリンクされます。
+テスト対象のコードは通常、別のCMakeターゲット(この例では<code>${PROJECT_NAME}</code>)にあり、リンク用の共有オブジェクトを追加する必要があります。
+テストソースファイルに<code>src</code>ディレクトリのプライベート ヘッダーが含まれている場合は、<code>target_include_directories()</code>関数を使用してディレクトリをインクルード パスに追加する必要があります。</p>
+<p>新しい<code>gtest</code>項目を登録するには、テストコードをマクロ<code>TEST ()</code>でラップします。
+<code>TEST ()</code>は、最終的なテストコードの生成に役立つ定義済みマクロであり、実行に使用できる<code>gtest</code>項目も登録します。
+gtestはテスト実行可能ファイルの作成時にフィクスチャ名とクラスケース名の間にアンダースコアを挿入するため、テストケース名はキャメルケースである必要があります。</p>
+<p><code>gtest/gtest.h</code>には、<code>ASSERT_TRUE(condition)</code>、<code>ASSERT_FALSE(condition)</code>、<code>ASSERT_EQ(val1,val2)</code>、<code>ASSERT_STREQ(str1,str2)</code>、<code>EXPECT_EQ()</code>などの<code>gtest</code>の事前定義マクロも含まれています。条件が満たされていない場合、<code>EXPECT_*</code>はテストを失敗としてマークしますが、次のテスト条件に進みます。</p>
+<div class="admonition 情報">
+<p class="admonition-title">情報</p>
+<p><code>gtest</code>とその機能の詳細については<a href="https://github.com/google/googletest">gtestリポジトリ</a>を参照してください。</p>
 </div>
-<p>In the demo <code>CMakeLists.txt</code>, <code>ament_add_ros_isolated_gtest</code> is a predefined macro in <code>ament_cmake_ros</code> that helps simplify adding <code>gtest</code> code.
-Details can be viewed in <a href="https://github.com/ros2/ament_cmake_ros/tree/master/ament_cmake_ros/cmake">ament_add_gtest.cmake</a>.</p>
-<h2 id="build-test">Build test<a class="headerlink" href="#build-test" title="Permanent link">#</a></h2>
+<p>デモ<code>CMakeLists.txt</code>の<code>ament_add_ros_isolated_gtest</code>は、<code>gtest</code>コードの追加を簡素化する<code>ament_cmake_ros</code>の事前定義マクロです。
+詳細は<a href="https://github.com/ros2/ament_cmake_ros/tree/master/ament_cmake_ros/cmake">ament_add_gtest.cmake</a>で確認できます。</p>
+<h2 id="_2">ビルドテスト<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <!-- cspell:ignore Testfile -->
 
-<p>By default, all necessary test files (<code>ELF</code>, <code>CTestTestfile.cmake</code>, etc.) are compiled by <code>colcon</code>:</p>
+<p>デフォルトでは必要なテストファイル(<code>ELF</code>、<code>CTestTestfile.cmake</code>など)はすべて<code>colcon</code>によってコンパイルされます:</p>
 <div class="highlight"><pre><span></span><code><span class="go">cd ~/workspace/</span>
 <span class="go">colcon build --packages-select my_cool_pkg</span>
 </code></pre></div>
-<p>Test files are generated under <code>~/workspace/build/my_cool_pkg</code>.</p>
-<h2 id="run-test">Run test<a class="headerlink" href="#run-test" title="Permanent link">#</a></h2>
-<p>To run all tests for a specific package, call:</p>
+<p>テストファイルは<code>~/workspace/build/my_cool_pkg</code>に生成されます。</p>
+<h2 id="_3">テストの実行<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>特定のパッケージのすべてのテストを実行するには次を呼び出します。:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>colcon<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--packages-select<span class="w"> </span>my_cool_pkg
 
 <span class="go">Starting &gt;&gt;&gt; my_cool_pkg</span>
@@ -6314,8 +6309,8 @@ Details can be viewed in <a href="https://github.com/ros2/ament_cmake_ros/tree/m
 
 <span class="go">Summary: 1 package finished [9.27s]</span>
 </code></pre></div>
-<p>The test command output contains a brief report of all the test results.</p>
-<p>To get job-wise information of all executed tests, call:</p>
+<p>テストコマンドの出力には、すべてのテスト結果の簡単なレポートが含まれています。</p>
+<p>実行されたすべてのテストのジョブごとの情報を取得するには次を呼び出します:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>colcon<span class="w"> </span>test-result<span class="w"> </span>--all
 
 <span class="go">build/my_cool_pkg/test_results/my_cool_pkg/copyright.xunit.xml: 8 tests, 0 errors, 0 failures, 0 skipped</span>
@@ -6327,9 +6322,9 @@ Details can be viewed in <a href="https://github.com/ros2/ament_cmake_ros/tree/m
 
 <span class="go">Summary: 18 tests, 0 errors, 0 failures, 0 skipped</span>
 </code></pre></div>
-<p>Look in the <code>~/workspace/log/test_&lt;date&gt;/&lt;package_name&gt;</code> directory for all the raw test commands, <code>std_out</code>, and <code>std_err</code>.
-There is also the <code>~/workspace/log/latest_*/</code> directory containing symbolic links to the most recent package-level build and test output.</p>
-<p>To print the tests' details while the tests are being run, use the <code>--event-handlers console_cohesion+</code> option to print the details directly to the console:</p>
+<p><code>~/workspace/log/test_&lt;date&gt;/&lt;package_name&gt;</code>ディレクトリで、すべての生のテストコマンド、<code>std_out</code>、および<code>std_err</code>を探します。
+最新のパッケージレベルのビルドおよびテスト出力へのシンボリックリンクを含む<code>~/workspace/log/latest_*/</code>ディレクトリもあります。</p>
+<p>テストの実行中にテストの詳細を出力するには、<code>--event-handlers console_cohesion+</code>オプションを使用して詳細をコンソールに直接出力します:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>colcon<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--event-handlers<span class="w"> </span>console_cohesion+<span class="w"> </span>--packages-select<span class="w"> </span>my_cool_pkg
 
 <span class="go">...</span>
@@ -6371,11 +6366,10 @@ There is also the <code>~/workspace/log/latest_*/</code> directory containing sy
 <span class="go">Total Test time (real) =   7.91 sec</span>
 <span class="go">...</span>
 </code></pre></div>
-<h2 id="code-coverage">Code coverage<a class="headerlink" href="#code-coverage" title="Permanent link">#</a></h2>
-<p>Loosely described,
-a code coverage metric is a measure of how much of the program code has been exercised (covered) during testing.</p>
-<p>In the Autoware repositories, <a href="https://app.codecov.io/gh/autowarefoundation/autoware.universe/">Codecov</a> is used to automatically calculate coverage of any open pull request.</p>
-<p>More details about the code coverage metrics can be found in the <a href="https://docs.codecov.com/docs/about-code-coverage">Codecov documentation</a>.</p>
+<h2 id="_4">コードカバレッジ<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<p>大まかに説明するとコードカバレッジメトリックとはテスト中にどの程度のプログラムコードが実行された (カバーされた) かを示す尺度です。</p>
+<p>Autowareリポジトリでは<a href="https://app.codecov.io/gh/autowarefoundation/autoware.universe/">Codecov</a>を使用してオープンなプルリクエストのカバレッジを自動的に計算します。</p>
+<p>コードカバレッジメトリックの詳細については<a href="https://docs.codecov.com/docs/about-code-coverage">Codecovのドキュメント</a>を参照してください。</p>
 <!-- prettier-ignore --></div>
 
 
