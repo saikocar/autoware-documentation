@@ -21,7 +21,7 @@
     
     
       
-        <title>CI checks - Autoware Documentation</title>
+        <title>CIチェック - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ci-checks" class="md-skip">
+        <a href="#ci" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              CI checks
+              CIチェック
             
           </span>
         </div>
@@ -5719,12 +5719,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          CI checks
+          CIチェック
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        CI checks
+        CIチェック
       </a>
       
         
@@ -5750,43 +5750,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#semantic-pull-request" class="md-nav__link">
-    semantic-pull-request
+  <a href="#_1" class="md-nav__link">
+    セマンティックプルリクエスト
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#pre-commit" class="md-nav__link">
-    pre-commit
+  <a href="#_2" class="md-nav__link">
+    事前コミット
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#spell-check-differential" class="md-nav__link">
-    spell-check-differential
+  <a href="#_3" class="md-nav__link">
+    スペルチェックの差分
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-and-test-differential" class="md-nav__link">
-    build-and-test-differential
+  <a href="#_4" class="md-nav__link">
+    ビルドとテストの差分
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-and-test-differential-self-hosted" class="md-nav__link">
-    build-and-test-differential-self-hosted
+  <a href="#_5" class="md-nav__link">
+    自己ホスト型のビルドとテストの差分
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#deploy-docs" class="md-nav__link">
-    deploy-docs
+  <a href="#_6" class="md-nav__link">
+    デプロイドキュメント
   </a>
   
 </li>
@@ -6231,43 +6231,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#semantic-pull-request" class="md-nav__link">
-    semantic-pull-request
+  <a href="#_1" class="md-nav__link">
+    セマンティックプルリクエスト
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#pre-commit" class="md-nav__link">
-    pre-commit
+  <a href="#_2" class="md-nav__link">
+    事前コミット
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#spell-check-differential" class="md-nav__link">
-    spell-check-differential
+  <a href="#_3" class="md-nav__link">
+    スペルチェックの差分
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-and-test-differential" class="md-nav__link">
-    build-and-test-differential
+  <a href="#_4" class="md-nav__link">
+    ビルドとテストの差分
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-and-test-differential-self-hosted" class="md-nav__link">
-    build-and-test-differential-self-hosted
+  <a href="#_5" class="md-nav__link">
+    自己ホスト型のビルドとテストの差分
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#deploy-docs" class="md-nav__link">
-    deploy-docs
+  <a href="#_6" class="md-nav__link">
+    デプロイドキュメント
   </a>
   
 </li>
@@ -6290,58 +6290,58 @@
   
 
 
-<div><h1 id="ci-checks">CI checks<a class="headerlink" href="#ci-checks" title="Permanent link">#</a></h1>
-<p>Autoware has several checks for a pull request.
-The results are shown at the bottom of the pull request page as below.</p>
+<div><h1 id="ci">CIチェック<a class="headerlink" href="#ci" title="Permanent link">#</a></h1>
+<p>Autoware には、プルリクエストに対していくつかのチェックがあります。
+結果は以下のようにプルリクエストページの下部に表示されます。</p>
 <p><img alt="ci-checks" src="../images/ci-checks.png"></p>
-<p>If the ❌ mark is shown, click the <code>Details</code> button and investigate the failure reason.</p>
-<p>If the <code>Required</code> mark is shown, you cannot merge the pull request unless you resolve the error.
-If not, it is optional, but preferably it should be fixed.</p>
-<p>The following sections explain about common CI checks in Autoware.<br>
-Note that some repositories may have different settings.</p>
+<p>❌マークが表示されている場合は、<code>Details</code>ボタンをクリックして失敗の原因を調査してください。</p>
+<p><code>Required</code>マークが表示されている場合は、エラーを解決しない限りプルリクエストをマージできません。
+そうでない場合はオプションですが、できれば修正する必要があります。</p>
+<p>次のセクションではAutowareの一般的なCIチェックについて説明します。<br>
+一部のリポジトリでは設定が異なる場合があることに注意してください。</p>
 <h2 id="dco">DCO<a class="headerlink" href="#dco" title="Permanent link">#</a></h2>
-<p>The Developer Certificate of Origin (DCO) is a lightweight way for contributors to certify that they wrote or otherwise have the right to submit the code they are contributing to the project.</p>
-<p>This workflow checks whether the pull request fulfills <code>DCO</code>.<br>
-You need to confirm the <a href="https://developercertificate.org/">required items</a> and commit with <code>git commit -s</code>.</p>
-<p>For more information, refer to the <a href="https://github.com/apps/dco">GitHub App page</a>.</p>
-<h2 id="semantic-pull-request">semantic-pull-request<a class="headerlink" href="#semantic-pull-request" title="Permanent link">#</a></h2>
-<p>This workflow checks whether the pull request follows <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a>.</p>
-<p>For the detailed rules, see the <a href="../#pull-request-rules">pull request rules</a>.</p>
-<h2 id="pre-commit">pre-commit<a class="headerlink" href="#pre-commit" title="Permanent link">#</a></h2>
-<p><a href="https://pre-commit.com/">pre-commit</a> is a tool to run formatters or linters when you commit.</p>
-<p>This workflow checks whether the pull request has no error with <code>pre-commit</code>.</p>
-<p>In the workflow <code>pre-commit.ci - pr</code> is enabled in the repository, it will automatically fix errors by <a href="https://pre-commit.ci/">pre-commit.ci</a> as many as possible.<br>
-If there are some errors remain, fix them manually.</p>
-<p>You can run <code>pre-commit</code> in your local environment by the following command:</p>
+<p>開発者証明書(DCO)は、貢献者がプロジェクトに貢献しているコードを作成したこと、またはそのコードを提出する権利を持っていることを証明するための軽量な方法です。</p>
+<p>このワークフローは、プルリクエストが<code>DCO</code>を満たすかどうかをチェックします。<br>
+<a href="https://developercertificate.org/">必要な項目</a>を確認して<code>git commit -s</code>でコミットする必要があります。</p>
+<p>詳細については<a href="https://github.com/apps/dco">GitHubアプリページ</a>を参照してください。</p>
+<h2 id="_1">セマンティックプルリクエスト<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p>このワークフローはプルリクエストが<a href="https://www.conventionalcommits.org/en/v1.0.0/">従来のコミット</a>に従っているかどうかをチェックします。</p>
+<p>詳しいルールについては<a href="../#pull-request-rules">プルリクエストのルール</a>をご覧ください。</p>
+<h2 id="_2">事前コミット<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p><a href="https://pre-commit.com/">pre-commit</a>はコミット時にフォーマッタまたはリンターを実行するツールです。</p>
+<p>このワークフローは、プルリクエストに<code>pre-commit</code>でエラーがないかどうかをチェックします。</p>
+<p>ワークフローでは、リポジトリで<code>pre-commit.ci - pr</code>が有効になっており、<a href="https://pre-commit.ci/">pre-commit.ci</a>によって可能な限り多くのエラーが自動的に修正されます。<br>
+エラーが残っている場合は、手動で修正してください。</p>
+<p>次のコマンドを使用して、ローカル環境で<code>pre-commit</code>を実行できます:</p>
 <div class="highlight"><pre><span></span><code>pre-commit<span class="w"> </span>run<span class="w"> </span>-a
 </code></pre></div>
-<p>Or you can install <code>pre-commit</code> to the repository and automatically run it before committing:</p>
+<p>もしくは<code>pre-commit</code>をリポジトリにインストールし、コミット前に自動で実行することができます:</p>
 <div class="highlight"><pre><span></span><code>pre-commit<span class="w"> </span>install
 </code></pre></div>
-<p>Since it is difficult to detect errors with no false positives, some jobs are split into another config file and marked as optional.<br>
-To check them, use the <code>--config</code> option:</p>
+<p>誤検知のないエラーを検出することは難しいため、一部のジョブは別の構成ファイルに分割され、オプションとしてマークされています。<br>
+それらを確認するには、<code>--config</code>オプションを使用します:</p>
 <div class="highlight"><pre><span></span><code>pre-commit<span class="w"> </span>run<span class="w"> </span>-a<span class="w"> </span>--config<span class="w"> </span>.pre-commit-config-optional.yaml
 </code></pre></div>
-<h2 id="spell-check-differential">spell-check-differential<a class="headerlink" href="#spell-check-differential" title="Permanent link">#</a></h2>
-<p>This workflow detects spelling mistakes using <a href="https://github.com/streetsidesoftware/cspell">CSpell</a> with <a href="https://github.com/tier4/autoware-spell-check-dict/blob/main/.cspell.json">our dictionary file</a>.
-Since it is difficult to detect errors with no false positives, it is an optional workflow, but it is preferable to remove spelling mistakes as many as possible.</p>
-<p>You have the following options if you need to use a word that is not registered in the dictionary.</p>
+<h2 id="_3">スペルチェックの差分<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>このワークフローは<a href="https://github.com/tier4/autoware-spell-check-dict/blob/main/.cspell.json">辞書ファイル</a>を用いた<a href="https://github.com/streetsidesoftware/cspell">CSpell</a>とを使用してスペルミスを検出します。
+誤検知のないエラーを検出することは難しいため、オプションのワークフローですが、スペルミスはできるだけ削除することが望ましいです。</p>
+<p>辞書に登録されていない単語を使用する場合は、以下の選択肢があります。</p>
 <ul>
-<li>If the word is only used in a few files, you can use <a href="https://cspell.org/configuration/document-settings/">inline document settings "cspell:ignore"</a> to suppress the check.</li>
-<li>If the word is widely used in the repository, you can create a local cspell json and pass it to the <a href="https://github.com/autowarefoundation/autoware-github-actions/tree/main/spell-check">spell-check action</a>.</li>
-<li>If the word is common and may be used in many repositories, you can submit pull requests to <a href="https://github.com/tier4/autoware-spell-check-dict">tier4/autoware-spell-check-dict</a> or <a href="https://github.com/tier4/cspell-dicts">tier4/cspell-dicts</a> to update the dictionary.</li>
+<li>その単語が少数のファイルでのみ使用されている場合は、<a href="https://cspell.org/configuration/document-settings/">インライン文書設定 "cspell:ignore"</a>を使用してチェックを抑制できます。</li>
+<li>その単語がリポジトリ内で広く使用されている場合は、ローカルのcspell jsonを作成し、それを<a href="https://github.com/autowarefoundation/autoware-github-actions/tree/main/spell-check">スペルチェックアクション</a>に渡すことができます。</li>
+<li>単語が一般的で、多くのリポジトリで使用される可能性がある場合は、<a href="https://github.com/tier4/autoware-spell-check-dict">tier4/autoware-spell-check-dict</a>または<a href="https://github.com/tier4/cspell-dicts">tier4/cspell-dicts</a>にプルリクエストを送信して、辞書を更新できます。</li>
 </ul>
-<h2 id="build-and-test-differential">build-and-test-differential<a class="headerlink" href="#build-and-test-differential" title="Permanent link">#</a></h2>
-<p>This workflow checks <code>colcon build</code> and <code>colcon test</code> for the pull request.<br>
-To make the CI faster, it doesn't check all packages but only modified packages and the dependencies.</p>
-<h2 id="build-and-test-differential-self-hosted">build-and-test-differential-self-hosted<a class="headerlink" href="#build-and-test-differential-self-hosted" title="Permanent link">#</a></h2>
-<p>This workflow is the <code>ARM64</code> version of <code>build-and-test-differential</code>.<br>
-You need to add the <code>ARM64</code> label to run this workflow.</p>
-<p>For reference information, since ARM machines are not supported by GitHub-hosted runners, we use self-hosted runners prepared by the <abbr title="Autoware Foundation">AWF</abbr>.<br>
-For the details about self-hosted runners, refer to <a href="https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners">GitHub Docs</a>.</p>
-<h2 id="deploy-docs">deploy-docs<a class="headerlink" href="#deploy-docs" title="Permanent link">#</a></h2>
-<p>This workflow deploys the preview documentation site for the pull request.<br>
-You need to add the <code>deploy-docs</code> label to run this workflow.</p>
+<h2 id="_4">ビルドとテストの差分<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<p>このワークフローは、プル リクエストの<code>colcon build</code>と<code>colcon test</code>をチェックします。<br>
+CIを高速化するために、すべてのパッケージをチェックするのではなく、変更されたパッケージと依存関係のみをチェックします。</p>
+<h2 id="_5">自己ホスト型のビルドとテストの差分<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<p>このワークフローは<code>build-and-test-differential</code>の<code>ARM64</code>バージョンです。<br>
+このワークフローを実行するには<code>ARM64</code>ラベルを追加する必要があります。</p>
+<p>参考までに、ARMマシンはGitHubホストランナーではサポートされていないため、AWFが用意したセルフホストランナーを使用します。 
+セルフホストランナーの詳細については<a href="https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners">GitHubドキュメント</a>を参照してください。</p>
+<h2 id="_6">デプロイドキュメント<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
+<p>このワークフローは、プルリクエストのプレビュードキュメントサイトをデプロイします。<br>
+このワークフローを実行するには、<code>deploy-docs</code>ラベルを追加する必要があります。</p>
 <!-- prettier-ignore --></div>
 
 
