@@ -21,7 +21,7 @@
     
     
       
-        <title>Pull request guidelines - Autoware Documentation</title>
+        <title>プルリクエストのガイドライン - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pull-request-guidelines" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Pull request guidelines
+              プルリクエストのガイドライン
             
           </span>
         </div>
@@ -6141,58 +6141,58 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#general-pull-request-workflow" class="md-nav__link">
-    General pull request workflow
+  <a href="#_2" class="md-nav__link">
+    一般的なプルリクエストのワークフロー
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#pull-request-rules" class="md-nav__link">
-    Pull request rules
+  <a href="#_3" class="md-nav__link">
+    プルリクエストのルール
   </a>
   
-    <nav class="md-nav" aria-label="Pull request rules">
+    <nav class="md-nav" aria-label="プルリクエストのルール">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#use-an-appropriate-pull-request-template-required-non-automated" class="md-nav__link">
-    Use an appropriate pull request template (required, non-automated)
+  <a href="#_4" class="md-nav__link">
+    適切なプルリクエストテンプレートを使用します (必須、非自動化)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#set-appropriate-reviewers-after-creating-a-pull-request-required-partially-automated" class="md-nav__link">
-    Set appropriate reviewers after creating a pull request (required, partially automated)
+  <a href="#_8" class="md-nav__link">
+    プルリクエストの作成後に適切なレビュー担当者を設定します(必須、部分的に自動化)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#apply-conventional-commits-to-the-pull-request-title-required-automated" class="md-nav__link">
-    Apply Conventional Commits to the pull request title (required, automated)
+  <a href="#_11" class="md-nav__link">
+    従来のコミットをプルリクエストタイトルに適用する(必須、自動)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#add-the-related-component-names-to-the-scope-of-conventional-commits-advisory-non-automated" class="md-nav__link">
-    Add the related component names to the scope of Conventional Commits (advisory, non-automated)
+  <a href="#_14" class="md-nav__link">
+    関連するコンポーネント名を従来のコミットの範囲に追加します(推奨、非自動化)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#keep-a-pull-request-small-advisory-non-automated" class="md-nav__link">
-    Keep a pull request small (advisory, non-automated)
+  <a href="#_17" class="md-nav__link">
+    プルリクエストは小さくしてください(推奨、非自動化)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#remind-reviewers-if-there-is-no-response-for-more-than-a-week-advisory-non-automated" class="md-nav__link">
-    Remind reviewers if there is no response for more than a week (advisory, non-automated)
+  <a href="#1" class="md-nav__link">
+    1週間以上応答がない場合はレビュー担当者に通知します(推奨、非自動)
   </a>
   
 </li>
@@ -6220,148 +6220,148 @@
   
 
 
-<div><h1 id="pull-request-guidelines">Pull request guidelines<a class="headerlink" href="#pull-request-guidelines" title="Permanent link">#</a></h1>
-<h2 id="general-pull-request-workflow">General pull request workflow<a class="headerlink" href="#general-pull-request-workflow" title="Permanent link">#</a></h2>
-<p>Autoware uses the fork-and-pull model.
-For more details about the model, refer to <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests">GitHub Docs</a>.</p>
-<p>The following is a general example of the pull request workflow based on the fork-and-pull model.
-Use this workflow as a reference when you contribute to Autoware.</p>
+<div><h1 id="_1">プルリクエストのガイドライン<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">一般的なプルリクエストのワークフロー<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>Autoware はフォークアンドプルモデルを使用します。
+モデルの詳細については<a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests">GitHubドキュメント</a>を参照してください。</p>
+<p>以下はフォークアンドプルモデルに基づくプルリクエストワークフローの一般的な例です。
+Autowareに貢献する場合は、このワークフローを参考として使用してください。</p>
 <ol>
-<li>Create an issue.<ul>
-<li>Discuss the approaches to the issue with maintainers.</li>
-<li>Confirm the <a href="../../support/support-guidelines/">support guidelines</a> before creating an issue.</li>
-<li>Follow the <a href="../discussion-guidelines/">discussion guidelines</a> when you discuss with other contributors.</li>
+<li>問題を作成します。<ul>
+<li>この問題へのアプローチについてメンテナーと話し合ってください。</li>
+<li>問題を作成する前に<a href="../../support/support-guidelines/">サポートガイドライン</a>を確認してください。</li>
+<li>他の寄稿者と議論するときは<a href="../discussion-guidelines/">ディスカッションガイドライン</a>に従ってください。</li>
 </ul>
 </li>
-<li>Create a fork repository. (for the first time only)</li>
-<li>Write code in your fork repository according to the approach agreed upon in the issue.<ul>
-<li>Write the tests and documentation as appropriate.</li>
-<li>Follow the <a href="../coding-guidelines/">coding guidelines</a> guidelines when you write code.</li>
-<li>Follow the <a href="../testing-guidelines/">Testing guidelines</a> guidelines when you write tests.</li>
-<li>Follow the <a href="../documentation-guidelines/">Documentation guidelines</a> guidelines when you write documentation.</li>
-<li>Follow the <a href="commit-guidelines/">commit guidelines</a> when you commit your changes.</li>
+<li>フォークリポジトリを作成します。 (初回のみ)</li>
+<li>問題で合意されたアプローチに従ってフォークリポジトリにコードを記述します。<ul>
+<li>必要に応じてテストとドキュメントを作成します。</li>
+<li>コードを記述するときは<a href="../coding-guidelines/">コーディングガイドライン</a>のガイドラインに従ってください。</li>
+<li>テストを作成するときは<a href="../testing-guidelines/">テストガイドライン</a>のガイドラインに従ってください。</li>
+<li>ドキュメントを作成するときは<a href="../documentation-guidelines/">ドキュメントガイドライン</a>のガイドラインに従ってください。</li>
+<li>変更をコミットするときは<a href="commit-guidelines/">コミットガイドライン</a>に従ってください。</li>
 </ul>
 </li>
-<li>Test the code.<ul>
-<li>It is recommended that you summarize the test results, because you will need to explain the test results in the later review process.</li>
-<li>If you are not sure what tests should be done, discuss them with maintainers.</li>
+<li>コードをテストします。<ul>
+<li>後のレビュープロセスでテスト結果を説明する必要があるため、テスト結果を要約することをお勧めします。</li>
+<li>どのようなテストを実行すべきかわからない場合は、メンテナーと話し合ってください。</li>
 </ul>
 </li>
-<li>Create a pull request.<ul>
-<li>Follow the <a href="#pull-request-rules">pull request rules</a> when you create a pull request.</li>
+<li>プルリクエストを作成します。<ul>
+<li>プルリクエストを作成するときは<a href="#pull-request-rules">プルリクエストのルール</a>に従ってください。</li>
 </ul>
 </li>
-<li>Wait for the pull request to be reviewed.<ul>
-<li>The reviewers will review your code following the <a href="review-guidelines/">review guidelines</a>.<ul>
-<li>Not only the reviewers, but also the author is encouraged to understand the review guidelines.</li>
+<li>プルリクエストがレビューされるまで待ちます。<ul>
+<li>レビュー担当者は<a href="review-guidelines/">レビューガイドライン</a>に従ってコードをレビューします。<ul>
+<li>査読者だけでなく著者も査読ガイドラインを理解することが推奨されます。</li>
 </ul>
 </li>
-<li>If <a href="ci-checks/">CI checks</a> have failed, fix the errors.</li>
+<li><a href="ci-checks/">CIチェック</a>が失敗した場合は、エラーを修正します。</li>
 </ul>
 </li>
-<li>Address the review comments pointed out by the reviewers.<ul>
-<li>If you don't understand the meaning of a review comment, ask the reviewers until you understand it.<ul>
-<li>Fixing without understanding the reason is not recommended because the author should be responsible for the final content of their own pull request.</li>
+<li>査読者によって指摘されたレビューコメントに対処します。<ul>
+<li>レビューコメントの意味がわからない場合は、理解できるまでレビュー担当者に質問してください。<ul>
+<li>作成者は自身のプル リクエストの最終的な内容に責任を負う必要があるため、理由を理解せずに修正することはお勧めできません。</li>
 </ul>
 </li>
-<li>If you don't agree with a review comment, ask the reviewers for a rational reason.<ul>
-<li>The reviewers are obligated to make the author understand the meanings of each comment.</li>
+<li>レビューのコメントに同意できない場合は、レビュー担当者に合理的な理由を尋ねてください。<ul>
+<li>査読者は、著者に各コメントの意味を理解させる義務があります。</li>
 </ul>
 </li>
-<li>After you have done with the review comments, re-request a review to the reviewers and back to 6.</li>
-<li>If there are no more new review comments, the reviewers will approve the pull request and proceed to 8.</li>
+<li>レビューコメントの作成が完了したらレビュー担当者にレビューを再リクエストし、6.に戻ります。</li>
+<li>新しいレビューコメントがなくなった場合、レビュー担当者はプルリクエストを承認し、8.に進みます。</li>
 </ul>
 </li>
-<li>Merge the pull request.<ul>
-<li>Anyone with write access can merge the pull request if there is no special request from maintainers.<ul>
-<li>The author is encouraged to merge the pull request to feel responsible for their own pull request.</li>
-<li>If the author does not have write access, ask the reviewers or maintainers.</li>
+<li>プルリクエストをマージします。<ul>
+<li>メンテナーからの特別なリクエストがない限り、書き込みアクセス権を持つ人は誰でもプルリクエストをマージできます。<ul>
+<li>作成者は自分のプルリクエストに対する責任を感じるためにプルリクエストをマージすることをお勧めします。</li>
+<li>作成者に書き込みアクセス権がない場合は、レビュー担当者またはメンテナーに問い合わせてください。</li>
 </ul>
 </li>
 </ul>
 </li>
 </ol>
-<h2 id="pull-request-rules">Pull request rules<a class="headerlink" href="#pull-request-rules" title="Permanent link">#</a></h2>
-<h3 id="use-an-appropriate-pull-request-template-required-non-automated">Use an appropriate pull request template (required, non-automated)<a class="headerlink" href="#use-an-appropriate-pull-request-template-required-non-automated" title="Permanent link">#</a></h3>
-<h4 id="rationale">Rationale<a class="headerlink" href="#rationale" title="Permanent link">#</a></h4>
+<h2 id="_3">プルリクエストのルール<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h3 id="_4">適切なプルリクエストテンプレートを使用します (必須、非自動化)<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<h4 id="_5">理論的根拠<a class="headerlink" href="#_5" title="Permanent link">#</a></h4>
 <ul>
-<li>The unified style of descriptions by templates can make reviews efficient.</li>
+<li>テンプレートによる記述スタイルの統一によりレビューを効率化できます。</li>
 </ul>
-<h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h4>
-<p>There are two types of templates. Select one based on the following condition.</p>
+<h4 id="_6">例<a class="headerlink" href="#_6" title="Permanent link">#</a></h4>
+<p>テンプレートは2種類あります。以下の条件に基づいて選択してください。</p>
 <ol>
-<li><a href="https://github.com/autowarefoundation/autoware/blob/main/.github/PULL_REQUEST_TEMPLATE/standard-change.md">Standard change</a>:<ul>
-<li>Complexity:<ul>
-<li>New features or significant updates.</li>
-<li>Requires deeper understanding of the codebase.</li>
+<li><a href="https://github.com/autowarefoundation/autoware/blob/main/.github/PULL_REQUEST_TEMPLATE/standard-change.md">標準的な変更</a>:<ul>
+<li>複雑さ:<ul>
+<li>新機能または重要なアップデート。</li>
+<li>コードベースについてのより深い理解が必要です。</li>
 </ul>
 </li>
-<li>Impact:<ul>
-<li>Affects multiple parts of the system.</li>
-<li>Basically includes minor features, bug fixes and performance improvement.</li>
-<li>Needs testing before merging.</li>
+<li>重大さ:<ul>
+<li>システムの複数の部分に影響します。</li>
+<li>基本的には、マイナーな機能、バグ修正、パフォーマンスの向上が含まれます。</li>
+<li>マージする前にテストが必要です。</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="https://github.com/autowarefoundation/autoware/blob/main/.github/PULL_REQUEST_TEMPLATE/small-change.md">Small change</a>:<ul>
-<li>Complexity:<ul>
-<li>Documentation, simple refactoring, or style adjustments.</li>
-<li>Easy to understand and review.</li>
+<li><a href="https://github.com/autowarefoundation/autoware/blob/main/.github/PULL_REQUEST_TEMPLATE/small-change.md">小さな変更</a>:<ul>
+<li>複雑さ:<ul>
+<li>ドキュメント、単純なリファクタリング、またはスタイルの調整。</li>
+<li>分かりやすく復習しやすい。</li>
 </ul>
 </li>
-<li>Impact:<ul>
-<li>Minimal effect on the system.</li>
-<li>Quicker merge with less testing needed.</li>
+<li>重大さ:<ul>
+<li>システムへの影響は最小限です。</li>
+<li>必要なテストが少なくなり、マージが迅速化されます。</li>
 </ul>
 </li>
 </ul>
 </li>
 </ol>
-<h5 id="steps-to-use-an-appropriate-pull-request-template">Steps to use an appropriate pull request template<a class="headerlink" href="#steps-to-use-an-appropriate-pull-request-template" title="Permanent link">#</a></h5>
+<h5 id="_7">適切なプルリクエストテンプレートを使用する手順<a class="headerlink" href="#_7" title="Permanent link">#</a></h5>
 <ol>
-<li>Select the appropriate template, as shown in <a href="https://user-images.githubusercontent.com/31987104/184344710-2adee239-799f-4fdf-bfab-be76345bfac1.mp4">this video</a>.</li>
-<li>Read the selected template carefully and fill the required content.</li>
-<li>Check the checkboxes during a review.<ul>
-<li>There are <a href="https://github.com/autowarefoundation/autoware/blob/44c70d33825617b56d8de5e6fe921000238238bd/.github/PULL_REQUEST_TEMPLATE/standard-change.md#pre-review-checklist-for-the-pr-author">pre-review checklist</a> and <a href="https://github.com/autowarefoundation/autoware/blob/44c70d33825617b56d8de5e6fe921000238238bd/.github/PULL_REQUEST_TEMPLATE/standard-change.md#post-review-checklist-for-the-pr-author">post-review checklist</a> for the author.</li>
+<li><a href="https://user-images.githubusercontent.com/31987104/184344710-2adee239-799f-4fdf-bfab-be76345bfac1.mp4">このビデオ</a>で示されているように、適切なテンプレートを選択します。</li>
+<li>選択したテンプレートをよく読み、必要な内容を入力します。</li>
+<li>レビュー中にチェックボックスをオンにします。<ul>
+<li>著者向けの<a href="https://github.com/autowarefoundation/autoware/blob/44c70d33825617b56d8de5e6fe921000238238bd/.github/PULL_REQUEST_TEMPLATE/standard-change.md#pre-review-checklist-for-the-pr-author">レビュー前チェックリスト</a>と<a href="https://github.com/autowarefoundation/autoware/blob/44c70d33825617b56d8de5e6fe921000238238bd/.github/PULL_REQUEST_TEMPLATE/standard-change.md#post-review-checklist-for-the-pr-author">レビュー後チェックリスト</a>があります。</li>
 </ul>
 </li>
 </ol>
-<h3 id="set-appropriate-reviewers-after-creating-a-pull-request-required-partially-automated">Set appropriate reviewers after creating a pull request (required, partially automated)<a class="headerlink" href="#set-appropriate-reviewers-after-creating-a-pull-request-required-partially-automated" title="Permanent link">#</a></h3>
-<h4 id="rationale_1">Rationale<a class="headerlink" href="#rationale_1" title="Permanent link">#</a></h4>
+<h3 id="_8">プルリクエストの作成後に適切なレビュー担当者を設定します(必須、部分的に自動化)<a class="headerlink" href="#_8" title="Permanent link">#</a></h3>
+<h4 id="_9">理論的根拠<a class="headerlink" href="#_9" title="Permanent link">#</a></h4>
 <ul>
-<li>Pull requests must be reviewed by appropriate reviewers to keep the quality of the codebase.</li>
+<li>コードベースの品質を維持するには、プルリクエストは適切なレビュー担当者によってレビューされる必要があります。</li>
 </ul>
-<h4 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">#</a></h4>
+<h4 id="_10">例<a class="headerlink" href="#_10" title="Permanent link">#</a></h4>
 <ul>
-<li>For most <abbr title="Robot Operating System">ROS</abbr> packages, reviewers will be automatically assigned based on the <code>maintainer</code> information in <code>package.xml</code>.</li>
-<li>If no reviewer is assigned automatically, assign reviewers manually following the instructions in <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/requesting-a-pull-request-review">GitHub Docs</a>.<ul>
-<li>You can find the reviewers by seeing the <code>.github/CODEOWNERS</code> file of the repository.</li>
+<li>ほとんどのROSパッケージでは、<code>package.xml</code>内の<code>maintainer</code>情報に基づいてレビュー担当者が自動的に割り当てられます。</li>
+<li>レビュー担当者が自動的に割り当てられない場合は<a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/requesting-a-pull-request-review">GitHubドキュメント</a>の指示に従ってレビュー担当者を手動で割り当てます。<ul>
+<li>リポジトリの<code>.github/CODEOWNERS</code>ファイルを参照すると、レビュー担当者を見つけることができます。</li>
 </ul>
 </li>
-<li>If you are not sure the appropriate reviewers, ask <code>@autoware-maintainers</code>.</li>
-<li>If you have no rights to assign reviewers, mention reviewers instead.</li>
+<li>適切なレビュー担当者がわからない場合は<code>@autoware-maintainers</code>に問い合わせてください。</li>
+<li>レビュー担当者を割り当てる権限がない場合は、代わりにレビュー担当者に言及してください。</li>
 </ul>
-<h3 id="apply-conventional-commits-to-the-pull-request-title-required-automated">Apply Conventional Commits to the pull request title (required, automated)<a class="headerlink" href="#apply-conventional-commits-to-the-pull-request-title-required-automated" title="Permanent link">#</a></h3>
-<h4 id="rationale_2">Rationale<a class="headerlink" href="#rationale_2" title="Permanent link">#</a></h4>
+<h3 id="_11">従来のコミットをプルリクエストタイトルに適用する(必須、自動)<a class="headerlink" href="#_11" title="Permanent link">#</a></h3>
+<h4 id="_12">理論的根拠<a class="headerlink" href="#_12" title="Permanent link">#</a></h4>
 <ul>
-<li><a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a> can generate categorized changelogs, for example using <a href="https://github.com/orhun/git-cliff">git-cliff</a>.</li>
+<li><a href="https://www.conventionalcommits.org/en/v1.0.0/">従来のコミット</a>では例えば<a href="https://github.com/orhun/git-cliff">git-cliff</a>を使用して、分類された変更ログを生成できます。</li>
 </ul>
-<h4 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">#</a></h4>
+<h4 id="_13">例<a class="headerlink" href="#_13" title="Permanent link">#</a></h4>
 <div class="highlight"><pre><span></span><code>feat(trajectory_follower): add an awesome feature
 </code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You have to start the description part (here <code>add an awesome feature</code>) with a lowercase.</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+<p>説明部分 (ここでは<code>add an awesome feature</code>) は小文字で始める必要があります。</p>
 </div>
-<p>If your change breaks some interfaces, use the <code>!</code> (breaking changes) mark as follows:</p>
+<p>変更により一部のインターフェースが壊れる場合は次のように<code>!</code> (破壊的な変更)とマークします:</p>
 <div class="highlight"><pre><span></span><code>feat(trajectory_follower)!: remove package
 feat(trajectory_follower)!: change parameter names
 feat(planning)!: change topic names
 feat(autoware_utils)!: change function names
 </code></pre></div>
-<p>For the repositories that contain code (most repositories), use the <a href="https://github.com/commitizen/conventional-commit-types/blob/c3a9be4c73e47f2e8197de775f41d981701407fb/index.json">definition of conventional-commit-types</a> for the type.</p>
-<p>For documentation repositories such as <a href="https://github.com/autowarefoundation/autoware-documentation">autoware-documentation</a>, use the following definition:</p>
+<p>コードを含むリポジトリ (ほとんどのリポジトリ) の場合は、タイプとして<a href="https://github.com/commitizen/conventional-commit-types/blob/c3a9be4c73e47f2e8197de775f41d981701407fb/index.json">conventional-commit-typesの定義</a>を使用します。</p>
+<p><a href="https://github.com/autowarefoundation/autoware-documentation">autoware-documentation</a>などのドキュメントリポジトリの場合は、以下の定義を使用します:</p>
 <ul>
 <li><code>feat</code><ul>
 <li>Add new pages.</li>
@@ -6390,40 +6390,40 @@ feat(autoware_utils)!: change function names
 </ul>
 </li>
 </ul>
-<p><code>perf</code> and <code>test</code> are generally unused.
-Other types have the same meaning as the code repositories.</p>
-<h3 id="add-the-related-component-names-to-the-scope-of-conventional-commits-advisory-non-automated">Add the related component names to the scope of Conventional Commits (advisory, non-automated)<a class="headerlink" href="#add-the-related-component-names-to-the-scope-of-conventional-commits-advisory-non-automated" title="Permanent link">#</a></h3>
-<h4 id="rationale_3">Rationale<a class="headerlink" href="#rationale_3" title="Permanent link">#</a></h4>
+<p><code>perf</code>と<code>test</code>は通常は使用されません。
+他のタイプはコードリポジトリと同じ意味を持ちます。</p>
+<h3 id="_14">関連するコンポーネント名を従来のコミットの範囲に追加します(推奨、非自動化)<a class="headerlink" href="#_14" title="Permanent link">#</a></h3>
+<h4 id="_15">理論的根拠<a class="headerlink" href="#_15" title="Permanent link">#</a></h4>
 <ul>
-<li>It helps contributors find pull requests that are relevant to them.</li>
-<li>It makes the changelog clearer.</li>
+<li>これは寄稿者が自分に関連するプルリクエストを見つけるのに役立ちます。</li>
+<li>変更ログがより明確になります。</li>
 </ul>
-<h4 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">#</a></h4>
-<p>For <abbr title="Robot Operating System">ROS</abbr> packages, adding the package name or component name is good.</p>
+<h4 id="_16">例<a class="headerlink" href="#_16" title="Permanent link">#</a></h4>
+<p>ROSパッケージの場合は、パッケージ名またはコンポーネント名を追加すると良いでしょう。</p>
 <div class="highlight"><pre><span></span><code>feat(trajectory_follower): add an awesome feature
 refactor(planning, control): use common utils
 </code></pre></div>
-<h3 id="keep-a-pull-request-small-advisory-non-automated">Keep a pull request small (advisory, non-automated)<a class="headerlink" href="#keep-a-pull-request-small-advisory-non-automated" title="Permanent link">#</a></h3>
-<h4 id="rationale_4">Rationale<a class="headerlink" href="#rationale_4" title="Permanent link">#</a></h4>
+<h3 id="_17">プルリクエストは小さくしてください(推奨、非自動化)<a class="headerlink" href="#_17" title="Permanent link">#</a></h3>
+<h4 id="_18">理論的根拠<a class="headerlink" href="#_18" title="Permanent link">#</a></h4>
 <ul>
-<li>Small pull requests are easy to understand for reviewers.</li>
-<li>Small pull requests are easy to revert for maintainers.</li>
+<li>小さなプルリクエストはレビュー担当者にとって理解しやすいです。</li>
+<li>小規模なプルリクエストは、メンテナにとって簡単に元に戻すことができます。</li>
 </ul>
-<h4 id="exception">Exception<a class="headerlink" href="#exception" title="Permanent link">#</a></h4>
-<p>It is acceptable if it is agreed with maintainers that there is no other way but to submit a big pull request.</p>
-<h4 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">#</a></h4>
+<h4 id="_19">例外<a class="headerlink" href="#_19" title="Permanent link">#</a></h4>
+<p>大きなプルリクエストを送信する以外に方法がないことがメンテナと合意されている場合は許容されます。</p>
+<h4 id="_20">例<a class="headerlink" href="#_20" title="Permanent link">#</a></h4>
 <ul>
-<li>Avoid developing two features in one pull request.</li>
-<li>Avoid mixing different types (<code>feat</code>, <code>fix</code>, <code>refactor</code>, etc.) of changes in the same commit.</li>
+<li>1つのプルリクエストで2つの機能を開発することは避けてください。</li>
+<li>同じコミット内に異なるタイプの変更 (<code>feat</code>, <code>fix</code>, <code>refactor</code>など) を混在させないでください。</li>
 </ul>
-<h3 id="remind-reviewers-if-there-is-no-response-for-more-than-a-week-advisory-non-automated">Remind reviewers if there is no response for more than a week (advisory, non-automated)<a class="headerlink" href="#remind-reviewers-if-there-is-no-response-for-more-than-a-week-advisory-non-automated" title="Permanent link">#</a></h3>
-<h4 id="rationale_5">Rationale<a class="headerlink" href="#rationale_5" title="Permanent link">#</a></h4>
+<h3 id="1">1週間以上応答がない場合はレビュー担当者に通知します(推奨、非自動)<a class="headerlink" href="#1" title="Permanent link">#</a></h3>
+<h4 id="_21">理論的根拠<a class="headerlink" href="#_21" title="Permanent link">#</a></h4>
 <ul>
-<li>It is the author's responsibility to care about their own pull request until it is merged.</li>
+<li>マージされるまで自分のプルリクエストを管理するのは作成者の責任です。</li>
 </ul>
-<h4 id="example_5">Example<a class="headerlink" href="#example_5" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@{some-of-developers} Would it be possible for you to review this PR?
-@autoware-maintainers friendly ping.
+<h4 id="_22">例<a class="headerlink" href="#_22" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@{some-of-developers} このPRを確認していただけますか?
+@autoware-maintainers 確認しました。
 </code></pre></div>
 <!-- prettier-ignore --></div>
 
