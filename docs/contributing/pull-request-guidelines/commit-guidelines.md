@@ -1,76 +1,76 @@
-# Commit guidelines
+# コミットガイドライン
 
-## Branch rules
+## ブランチのルール
 
-### Start branch names with the corresponding issue numbers (advisory, non-automated)
+### ブランチ名は対応する号番号で始まります (推奨、非自動)
 
-#### Rationale
+#### 理論的根拠
 
-- Developers can quickly find the corresponding issues.
-- It is helpful for tools.
-- It is consistent with GitHub's default behavior.
+- 開発者は、対応する問題をすぐに見つけることができます。
+- 道具として便利です。
+- これはGitHubのデフォルトの動作と一致しています。
 
-#### Exception
+#### 例外
 
-If there are no corresponding issues, you can ignore this rule.
+対応する問題がない場合は、このルールを無視してかまいません。
 
-#### Example
-
-```text
-123-add-feature
-```
-
-#### Reference
-
-- [GitHub Docs](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-a-branch-for-an-issue)
-
-### Use `dash-case` for the separator of branch names (advisory, non-automated)
-
-#### Rationale
-
-- It is consistent with GitHub's default behavior.
-
-#### Example
+#### 例
 
 ```text
 123-add-feature
 ```
 
-#### Reference
+#### 参考
 
-- [GitHub Docs](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-a-branch-for-an-issue)
+- [GitHubドキュメント](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-a-branch-for-an-issue)
 
-### Make branch names descriptive (advisory, non-automated)
+### ブランチ名の区切り文字にはダッシュ大文字を使用します (推奨、非自動)
 
-#### Rationale
+#### 理論的根拠
 
-- It can avoid conflicts of names.
-- Developers can understand the purpose of the branch.
+- これはGitHubのデフォルトの動作と一致しています。
 
-#### Exception
+#### 例
 
-If you have already submitted a pull request, you do not have to change the branch name because you need to re-create a pull request, which is noisy and a waste of time.  
-Be careful from the next time.
+```text
+123-add-feature
+```
 
-#### Example
+#### 参考
 
-Usually it is good to start with a verb.
+- [GitHubドキュメント](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-a-branch-for-an-issue)
+
+### ブランチ名をわかりやすいものにする (推奨、非自動化)
+
+#### 理論的根拠
+
+- 名前の競合を避けることができます。
+- 開発者はブランチの目的を理解できます。
+
+#### 例外
+
+すでにプルリクエストを送信している場合は、プルリクエストを再作成する必要があるためブランチ名を変更する必要はありませんが、煩雑で時間の無駄です。  
+次回からは気をつけてください。
+
+#### 例
+
+通常は動詞から始めるのが良いでしょう。
 
 ```text
 123-fix-memory-leak-of-trajectory-follower
 ```
 
-## Commit rules
+## コミットルール
 
-### Sign-off your commits (required, automated)
+### コミットのサインオフ(必須、自動)
 
-Developers must certify that they wrote or otherwise have the right to submit the code they are contributing to the project.
+開発者は、自分がプロジェクトに貢献しているコードを作成したか、またはそのコードを提出する権利を持っていることを証明する必要があります。
 
-#### Rationale
+#### 理論的根拠
 
-If not, it will lead to complex license problems.
+そうしないと、複雑なライセンス問題が発生する可能性があります。
 
-#### Example
+#### 例
 
 ```bash
 git commit -s
@@ -82,6 +82,6 @@ feat: add a feature
 Signed-off-by: Autoware <autoware@example.com>
 ```
 
-#### Reference
+#### 参考
 
 - [GitHub Apps - DCO](https://github.com/apps/dco)
