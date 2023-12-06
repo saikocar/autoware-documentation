@@ -1,32 +1,31 @@
-# Control component design
+# 制御コンポーネントの設計
 
-## Abstract
+## 概要
 
-This document presents the design concept of the Control Component. The content is as follows:
+このドキュメントでは制御コンポーネントの設計コンセプトを示します。内容は以下の通りです:
 
-- [Autoware Control Design](#autoware-control-design)
-  - Outlining the policy for Autoware's control, which deals with only general information for autonomous driving systems and provides generic control commands to the vehicle.
-- [Vehicle Adaptation Design](#vehicle-adaptation-design)
-  - Describing the policy for vehicle adaptation, which utilizes adapter mechanisms to standardize the characteristics of the vehicle's drive system and integrate it with Autoware.
-- [Control Feature Design](#control-feature-design)
-  - Demonstrating the features provided by Autoware's control.
-  - Presenting the approach towards the functions installed in the vehicle such as ABS.
+- [Autoware制御設計](#autoware-control-design)
+  - Autowareの制御ポリシーの概要を提示します。ここでは自動運転システムに関する一般的な情報のみを扱い、一般的な制御コマンドを車両に提供します。
+- [車両適応設計](#vehicle-adaptation-design)
+  - 適応メカニズムを利用して車両の駆動システムの特性を標準化し、Autowareと統合する車両適応のポリシーについて説明します。
+- [制御機能の設計](#control-feature-design)
+  - Autoware のコントロールによって提供される機能をデモンストレーションします。
+  - ABSなどの車両に搭載される機能へのアプローチをご紹介します。
 
-## Autoware Control Design
+## Autoware制御設計
 
-The Control Component generates the control signal to which the Vehicle Component subscribes. The generated control signals are computed based on the reference trajectories from the Planning Component.
-
+制御コンポーネントは車両コンポーネントが購読する制御信号を生成します。生成された制御信号は、計画コンポーネントからの基準軌道に基づいて計算されます。
 ![control-component](image/control-component.drawio.svg)
 
-The Control Component consists of two modules. The `trajectory_follower` module generates a vehicle control command to follow the reference trajectory received from the planning module. The command includes, for example, the desired steering angle and target speed. The `vehicle_command_gate` is responsible for filtering the control command to prevent abnormal values and then sending it to the vehicle. This gate also allows switching between multiple sources such as the MRM (minimal risk maneuver) module or some remote control module, in addition to the trajectory follower.
+コントロールコンポーネントは2つのモジュールで構成されます。`trajectory_follower`モジュールは、計画モジュールから受け取った基準軌道に従う車両制御コマンドを生成します。そのコマンドには例として目標操舵角や目標速度などが含まれます。`vehicle_command_gate`は制御コマンドをフィルタリングして異常値を防止し、車両に送信する役割を果たします。このゲートでは、軌道追従機能に加えて、MRM (最小限のリスク操作) モジュールやリモートコントロールモジュールなどの複数のソース間の切り替えも可能になります。
 
-The Autoware control system is designed as a platform for automated driving systems that can be compatible with a diverse range of vehicles.
+Autoware制御システムはさまざまな車両に対応できる自動運転システムのプラットフォームとして設計されています。
 
-The control process in Autoware uses general information (such as target acceleration and deceleration) and no vehicle-specific information (such as brake pressure) is used. Hence it can be adjusted independently of the vehicle's drive interface enabling easy integration or performance tuning.
+Autowareの制御プロセスでは一般的な情報(目標加速度や減速度など)が使用され、車両固有の情報(ブレーキ圧力など)は使用されません。したがって車両の駆動インターフェースとは独立して調整できるため統合やパフォーマンスの調整が容易になります。
 
-Furthermore, significant differences that affect vehicle motion constraints, such as two-wheel steering or four-wheel steering, are addressed by switching the control vehicle model, achieving control specialized for each characteristic.
+さらに二輪操舵か四輪操舵など車両の運動制約に影響を与える大きな違いについても制御車両モデルを切り替えることで対応しそれぞれの特性に特化した制御を実現します。
 
-Autoware's control module outputs the necessary information to control the vehicle as a substitute for a human driver. For example, the control command from the control module looks like the following:
+Autowareの制御モジュールは、人間のドライバーに代わって車両を制御するために必要な情報を出力します。たとえば、制御モジュールからの制御コマンドは次のようになります:
 
 ```msg
 - Target steering angle
@@ -35,68 +34,67 @@ Autoware's control module outputs the necessary information to control the vehic
 - Target acceleration
 ```
 
-Note that vehicle-specific values such as pedal positions and low-level information such as individual wheel rotation speeds are excluded from the command.
+ペダル位置などの車両固有の値や、個々の車輪の回転速度などの低レベルの情報はコマンドから除外されることに注意してください。
 
-## Vehicle Adaptation Design
+## 車両適応設計
 
-### Vehicle interface adapter
+### 車両インターフェース適応
 
-Autoware is designed to be an autonomous driving platform able to accommodate vehicles with various drivetrain types.
+Autowareは、さまざまなドライブトレインタイプの車両に対応できる自動運転プラットフォームとして設計されています。
 
-This is an explanation of how Autoware handles the standardization of systems with different vehicle drivetrain. The interfaces for vehicle drivetrain are diverse, including steering angle, steering angular velocity, steering torque, speed, accel/brake pedals, and brake pressure. To accommodate these differences, Autoware adds an adapter module between the control component and the vehicle interface. This module performs the conversion between the proprietary message types used by the vehicle (such as brake pressure) and the generic types used by Autoware (such as desired acceleration). By providing this conversion information, the differences in vehicle drivetrain can be accommodated.
+これは、Autowareがさまざまな車両ドライブトレインを備えたシステムの標準化をどのように処理するかについての説明です。車両のドライブトレインのインターフェースは、ステアリング角度、ステアリング角速度、ステアリングトルク、速度、アクセル/ブレーキペダル、ブレーキ圧力など多岐にわたります。これらの違いに対応するために、Autowareは制御コンポーネントと車両インターフェイスの間にアダプターモジュールを追加します。このモジュールは、車両で使用される独自のメッセージタイプ (ブレーキ圧力など)とAutowareで使用される汎用タイプ (要求する加速度など)の間の変換を実行します。この変換情報を提供することで、車両のドライブトレインの違いに対応できます。
 
-If the information is not known in advance, an automatic calibration tool can be used. Calibration will occur within limited degrees of freedom, generating the information necessary for the drivetrain conversion automatically.
+情報が事前にわからない場合は、自動キャリブレーションツールを使用できます。キャリブレーションは限られた自由度内で行われ、ドライブトレインの変換に必要な情報が自動的に生成されます。
 
-This configuration is summarized in the following diagram.
+この構成を次の図にまとめます。
 
 ![vehicle-abstraction](image/vehicle-interface-hw-abstraction.drawio.svg)
 
-### Examples of several vehicle interfaces
+### いくつかの車両インターフェースの例
 
-This is an example of the several drivetrain types in the vehicle interface.
+これは、車両インターフェースのいくつかのドライブトレイン タイプの一例です。
 
-| Vehicle      | Lateral interface    | Longitudinal interface                                            | Note                                                                                                                                               |
+| 車両      | ラテラルインターフェース    | 縦方向のインターフェース                                            | 注記                                                                                                                                               |
 | ------------ | -------------------- | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Lexus        | Steering angle       | Accel/brake pedal position                                        | Acceleration lookup table conversion for longitudinal                                                                                              |
-| JPN TAXI     | Steering angle       | Accel/brake pedal position                                        | Acceleration lookup table conversion for longitudinal                                                                                              |
-| GSM8         | Steering EPS voltage | Acceleration motor voltage, Deceleration brake hydraulic pressure | lookup table and PID conversion for lateral and longitudinal                                                                                       |
-| YMC Golfcart | Steering angle       | Velocity                                                          |                                                                                                                                                    |
-| Logiee       | yaw rate             | Velocity                                                          |                                                                                                                                                    |
-| F1 TENTH     | Steering angle       | Motor RPM                                                         | [interface code](https://gitlab.com/autowarefoundation/autoware.auto/AutowareAuto/-/blob/master/src/drivers/vesc_interface/src/vesc_interface.cpp) |
+| Lexus        | ステアリング角度       | アクセル/ブレーキペダルの位置                                        | 縦方向の加速度ルックアップテーブル変換                                                                                              |
+| JPN TAXI     | ステアリング角度       | アクセル/ブレーキペダルの位置                                        | 縦方向の加速度ルックアップテーブル変換                                                                                              |
+| GSM8         | ステアリングEPS電圧 | 加速モータ電圧、減速ブレーキ油圧 | l横方向と縦方向のルックアップテーブルとPID変換                                                                                       |
+| YMC Golfcart | ステアリング角度       | 速度                                                          |                                                                                                                                                    |
+| Logiee       | ヨーレート             | 速度                                                          |                                                                                                                                                    |
+| F1 TENTH     | ステアリング角度       | モーター回転数                                                         | [インターフェースコード](https://gitlab.com/autowarefoundation/autoware.auto/AutowareAuto/-/blob/master/src/drivers/vesc_interface/src/vesc_interface.cpp) |
 
-## Control Feature Design
+## 制御機能の設計
 
-The following lists the features provided by Autoware's Control/Vehicle component, as well as the conditions and assumptions required to utilize them effectively.
+以下にAutowareの制御/車両コンポーネントによって提供される機能と、それらを効果的に利用するために必要な条件および前提条件を示します。
 
-The proper operation of the ODD is limited by factors such as whether the functions are enabled, delay time, calibration accuracy and degradation rate, and sensor accuracy.
+ODDの適切な動作は、機能が有効かどうか、遅延時間、校正精度と劣化率、センサー精度などの要因によって制限されます。
 
-| Feature                                         | Description　                                                                                                                                                            | Requirements/Assumptions                                                          | Note                                                                                                                                                                                                                           | 　Limitation for now                                                                                                                                                       |
+| 特徴                                         | 説明　                                                                                                                                                            | 要件/前提条件                                                          | 注記                                                                                                                                                                                                                           | 　今のところの制限                                                                                                                                                       |
 | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Lateral Control                                 | Control the drivetrain system related to lateral vehicle motion                                                                                                          |                                                                                   | Trying to increase the number of vehicle types that can be supported in the future.                                                                                                                                            | Only front-steering type is supported.                                                                                                                                     |
-| Longitudinal Control                            | Control the drivetrain system related to longitudinal vehicle motion                                                                                                     |                                                                                   |                                                                                                                                                                                                                                |                                                                                                                                                                            |
-| Slope Compensation                              | Supports precise vehicle motion control on slopes                                                                                                                        | Gradient information can be obtained from maps or sensors attached to the chassis | If gradient information is not available, the gradient is estimated from the vehicle's pitch angle.                                                                                                                            |                                                                                                                                                                            |
-| Delay Compensation                              | Controls the drivetrain system appropriately in the presence of time delays                                                                                              | The drivetrain delay information is provided in advance                           | If there is no delay information, the drivetrain delay is estimated automatically (automatic calibration). However, the effect of delay cannot be completely eliminated, especially in scenarios with sudden changes in speed. | Only fixed delay times can be set for longitudinal and lateral drivetrain systems separately. It does not accommodate different delay times for the accelerator and brake. |
-| Drivetrain IF Conversion (Lateral Control)      | Converts the drivetrain-specific information of the vehicle into the drivetrain information used by Autoware (e.g., target steering angular velocity → steering torque)  | The conversion information is provided in advance                                 | If there is no conversion information, the conversion map is estimated automatically (automatic calibration).                                                                                                                  | The degree of freedom for conversion is limited (2D lookup table + PID FB).                                                                                                |
-| Drivetrain IF Conversion (Longitudinal Control) | Converts the drivetrain-specific information of the vehicle into the drivetrain information used by Autoware (e.g., target acceleration → accelerator/brake pedal value) | The conversion information is provided in advance                                 | If there is no conversion information, the conversion map is estimated automatically (automatic calibration).                                                                                                                  | The degree of freedom for conversion is limited (2D lookup table + PID FB).                                                                                                |
-| Automatic Calibration                           | Automatically estimates and applies values such as drivetrain IF conversion map and delay time.                                                                          | The drivetrain status can be obtained (must)                                      |                                                                                                                                                                                                                                |                                                                                                                                                                            |
-| Anomaly Detection                               | Notifies when there is a discrepancy in the calibration or unexpected drivetrain behavior                                                                                | The drivetrain status can be obtained (must)                                      |                                                                                                                                                                                                                                |                                                                                                                                                                            |
-| Steering Zero Point Correction                  | Corrects the midpoint of the steering to achieve appropriate steering control                                                                                            | The drivetrain status can be obtained (must)                                      |                                                                                                                                                                                                                                |                                                                                                                                                                            |
-| Steering Deadzone Correction                    | Corrects the deadzone of the steering to achieve appropriate steering control                                                                                            | The steering deadzone parameter is provided in advance                            | If the parameter is unknown, the deadzone parameter is estimated from driving information                                                                                                                                      | Not available now                                                                                                                                                          |
-| Steering Deadzone Estimation                    | Dynamically estimates the steering deadzone from driving data                                                                                                            |                                                                                   |                                                                                                                                                                                                                                | Not available now                                                                                                                                                          |
-| Weight Compensation                             | Performs appropriate vehicle control according to weight                                                                                                                 | Weight information can be obtained from sensors                                   | If there is no weight sensor, estimate the weight from driving information.                                                                                                                                                    | Currently not available                                                                                                                                                    |
-| Weight Estimation                               | Dynamically estimates weight from driving data                                                                                                                           |                                                                                   |                                                                                                                                                                                                                                | Currently not available                                                                                                                                                    |
+| ラテラルコントロール                                 | 車両の横方向の動きに関連するドライブトレイン システムを制御します。                                                                                                          |                                                                                   | 今後、対応車種を増やしていく予定です。                                                                                                                                            | フロントステアリングタイプのみ対応します。                                                                                                                                     |
+| 縦方向の制御                            | 車両の前後方向の動きに関連するドライブトレイン システムを制御します。                                                                                                     |                                                                                   |                                                                                                                                                                                                                                |                                                                                                                                                                            |
+| 傾斜補償                              | 坂道での正確な車両運動制御をサポート                                                                                                                        | 勾配情報は地図やシャーシに取り付けられたセンサーから取得可能 | 勾配情報が利用できない場合、勾配は車両のピッチ角から推定されます。                                                                                                                            |                                                                                                                                                                            |
+| 遅延補償                              | 遅れがある場合でもドライブトレインシステムを適切に制御します。                                                                                              | ドライブトレインの遅延情報を事前に提供                           | 遅延情報がない場合、ドライブトレインの遅延は自動的に推定されます (自動キャリブレーション)。ただし、特に速度が急激に変化するシナリオでは、遅延の影響を完全に排除することはできません。 | 縦方向および横方向のドライブトレイン システムに対して個別に設定できるのは、固定の遅延時間のみです。アクセルとブレーキの異なる遅延時間には対応しません。 |
+| ドライブトレインIF変換（ラテラルコントロール）      | 車両のドライブトレイン固有の情報をAutowareで使用するドライブトレイン情報に変換します（例：目標操舵角速度→操舵トルク）  | 変換情報は事前に提供されます                                 | 変換情報がない場合には、変換マップを自動的に推定します（自動キャリブレーション）。                                                                                                                  | 変換の自由度は限られています（2D ルックアップ テーブル + PID FB）。                                                                                                |
+| ドライブトレインIF変換（前後制御） | 車両のドライブトレイン固有の情報を Autoware で使用するドライブトレイン情報に変換します (例: 目標加速度 → アクセル/ブレーキ ペダル値) | 変換情報は事前に提供されます                                 | 変換情報がない場合には、変換マップを自動的に推定します（自動キャリブレーション）。                                                                                                                  | 変換の自由度は限られています（2D ルックアップ テーブル + PID FB）。                                                                                                |
+| 自動校正                           | 駆動系のIF変換マップや遅延時間などの値を自動推定して適用します。                                                                          | ドライブトレインのステータスを取得できる (必須)                                      |                                                                                                                                                                                                                                |                                                                                                                                                                            |
+| 異常検出                               | キャリブレーションに不一致がある場合、または予期しないドライブトレインの動作がある場合に通知します。                                                                                | ドライブトレインのステータスを取得できる (必須)                                      |                                                                                                                                                                                                                                |                                                                                                                                                                            |
+| ステアリングゼロ点補正                  | ステアリングの中点を補正し、適切なステアリング制御を実現します。                                                                                            | ドライブトレインのステータスを取得できる (必須)                                      |                                                                                                                                                                                                                                |                                                                                                                                                                            |
+| ステアリングデッドゾーン補正                    | ステアリングの不感帯を補正し、適切なステアリング制御を実現します。                                                                                            | ステアリングデッドゾーンパラメータは事前​​に提供されます                            | パラメータが不明な場合は、運転情報からデッドゾーンパラメータを推定します                                                                                                                                      | 現在は利用できません                                                                                                                                                          |
+| ステアリングデッドゾーンの推定                    | 走行データからステアリング不感帯を動的に推定                                                                                                            |                                                                                   |                                                                                                                                                                                                                                | 現在は利用できません                                                                                                                                                          |
+| 重量補償                             | 重量に応じた適切な車両制御を行う                                                                                                                 | センサーから重量情報を取得可能                                   | 重量センサーがない場合は、走行情報から重量を推定します。                                                                                                                                                    | 現在は利用できません                                                                                                                                                    |
+| 重量の推定                               | 走行データから重量を動的に推定                                                                                                                           |                                                                                   |                                                                                                                                                                                                                                | 現在は利用できません                                                                                                                                                    |
 
-The list above does not cover wheel control systems such as ABS commonly used in vehicles. Regarding these features, the following considerations are taken into account.
+上記のリストには、車両で一般的に使用されるABSなどのホイール制御システムは含まれていません。これらの特徴については、以下の点が考慮されています。
 
-### Integration with vehicle-side functions
+### 車両側機能との連携
 
-ABS (Anti-lock Brake System) and ESC (Electric Stability Control) are two functions that may be pre-installed on a vehicle, directly impacting its controllability.
-The control modules of Autoware assume that both ABS and ESC are installed on the vehicle and their absence may cause unreliable controls depending on the target ODD. For example, with low-velocity driving in a controlled environment, these functions are not necessary.
+ABS(アンチロックブレーキシステム)とESC(エレクトリックスタビリティコントロール) は、車両に事前に取り付けられる2つの機能で、車両の制御性に直接影響します。Autowareの制御モジュールは、ABSとESCの両方が車両に搭載されていることを前提としているため、それらが存在しないと、ターゲットODDによっては制御が信頼できなくなる可能性があります。たとえば、制御された環境での低速走行では、これらの機能は必要ありません。
 
-Also, note that this statement does not negate the development of ABS functionality in autonomous driving systems.
+またこの声明は自動運転システムにおける ABS 機能の開発を否定するものではないことに注意してください。
 
-### Autoware Capabilities and Vehicle Requirements
+### Autowareの機能と車両の要件
 
-As an alternative to human driving, autonomous driving systems essentially aim to handle tasks that humans can perform. This includes not only controlling the steering wheel, accel, and brake, but also automatically detecting issues such as poor brake response or a misaligned steering angle. However, this is a trade-off, as better vehicle performance will lead to superior system behavior, ultimately affecting the design of ODD.
+人間の運転に代わるものとして、自動運転システムは基本的に人間が実行できるタスクを処理することを目的としています。これには、ステアリングホイール、アクセル、ブレーキの制御だけでなく、ブレーキの反応不良やステアリング角度のズレなどの問題も自動的に検出します。ただし、車両のパフォーマンスが向上するとシステムの動作も向上し、最終的には ODD の設計に影響を与えるため、これはトレードオフです。
 
-On the other hand, for tasks that are not typically anticipated or cannot be handled by a human driver, processing in the vehicle ECU is expected. Examples of such scenarios include cases where the brake response is clearly delayed or when the vehicle rotates due to a single-side tire slipping. These tasks are typically handled by ABS or ESC.
+一方、通常は予期されないタスク、または人間のドライバーが処理できないタスクについては、車両ECUでの処理が期待されます。例としては、明らかにブレーキの反応が遅れている場合や、タイヤの片滑りにより車両が回転する場合などが挙げられます。これらのタスクは通常、ABSまたはESCによって処理されます。
