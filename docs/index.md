@@ -4,7 +4,7 @@
 
 Autowareは世界をリードする自動運転向けのオープンソースソフトウェアプロジェクトです。Autowareはロボットオペレーティングシステム(ROS)上に構築されており、幅広い車両やアプリケーションでの自動運転の商用展開を可能にします。
 
-詳細は[こちら](https://www.autoware.org/autoware)を確認してください。
+詳細は[こちら](https://autoware.org/autoware-overview)を確認してください。
 
 ## 関連ドキュメント
 

@@ -36,6 +36,11 @@ yabloc_pose_initializer
 ## 基本シミュレーション
 
 ### レーン走行シナリオ
+!!! info [Using Autoware Launch GUI](#using-autoware-launch-gui)
+
+    If you prefer a graphical user interface (GUI) over the command line for launching and managing your simulations, refer to the `Using Autoware Launch GUI` section at the end of this document for a step-by-step guide.
+
+### Lane driving scenario
 
 #### 1. Autowareの起動
 
@@ -203,3 +208,50 @@ c) `Map`チェックボックスを２回クリックしてトピックをリロ
 `TrafficLightPublishPanel`から信号機を削除するには`RESET`ボタンをクリックします。
 
 [ビデオチュートリアルを参照する](https://drive.google.com/file/d/1bs_dX1JJ76qHk-SGvS6YF9gmekkN8fz7/view?usp=sharing)
+
+## Using Autoware Launch GUI
+
+This section provides a step-by-step guide on using the Autoware Launch GUI for planning simulations, offering an alternative to the command-line instructions provided in the Basic simulations section.
+
+### Getting Started with Autoware Launch GUI
+
+1. **Installation:** Ensure you have installed the Autoware Launch GUI. [Installation instructions](https://github.com/autowarefoundation/autoware-launch-gui#installation).
+
+2. **Launching the GUI:** Open the Autoware Launch GUI from your applications menu.
+
+   ![GUI screenshot for launching the GUI](images/planning/launch-gui/launch_gui_main.png)
+
+### Launching a Planning Simulation
+
+#### Lane Driving Scenario
+
+1. **Set Autoware Path:** In the GUI, set the path to your Autoware installation.
+
+   ![GUI_screenshot_for_setting_Autoware_path](images/planning/launch-gui/launch_gui_setup.png)
+
+2. **Select Launch File:** Choose `planning_simulator.launch.xml` for the lane driving scenario.
+
+   ![GUI screenshot for selecting launch file](images/planning/launch-gui/selecting_launch_file.png)
+
+3. **Customize Parameters:** Adjust parameters such as `map_path`, `vehicle_model`, and `sensor_model` as needed.
+
+   ![GUI screenshot for customizing parameters](images/planning/launch-gui/customizing-parameters1.png)
+   ![GUI screenshot for customizing parameters](images/planning/launch-gui/customizing-parameters2.png)
+
+4. **Start Simulation:** Click the launch button to start the simulation.
+
+   ![GUI screenshot for starting simulation](images/planning/launch-gui/starting_simulation.png)
+
+5. **Any Scenario:** From here, you can follow the instructions in the
+
+- Lane driving scenario: [Lane Driving Scenario](#lane-driving-scenario)
+- Parking scenario: [Parking scenario](#parking-scenario)
+- Lane change scenario: [Lane change scenario](#lane-change-scenario)
+- Avoidance scenario: [Avoidance scenario](#avoidance-scenario)
+- Advanced Simulations: [Advanced Simulations](#advanced-simulations)
+
+### Monitoring and Managing the Simulation
+
+- **Real-Time Monitoring:** Use the GUI to monitor CPU/Memory usage and Autoware logs in real-time.
+- **Profile Management:** Save your simulation profiles for quick access in future simulations.
+- **Adjusting Parameters:** Easily modify simulation parameters on-the-fly through the GUI.
