@@ -1,5 +1,5 @@
-# Image pre-processing design
+# 画像前処理デザイン
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中
