@@ -6708,7 +6708,33 @@
   
 
 
-<div><h1 id="map">Map<a class="headerlink" href="#map" title="Permanent link">#</a></h1>
+<div><p>地図
+ノード図</p>
+<p>概要
+Autoware は、運転環境の高解像度点群マップとベクトル マップを利用してさまざまなタスクを実行します。Autoware を起動する前に、事前に作成されたマップ ファイルをロードする必要があります。</p>
+<p>入力
+点群マップ ( .pcd)
+Lanelet2 マップ ( .osm)
+マップの作成方法については、「マップの作成」を参照してください。</p>
+<p>出力
+点群マップ
+点群ファイルをロードし、さまざまな構成で他の Autoware ノードにマップを公開します。現在、次のタイプがサポートされています。</p>
+<p>生の点群マップ (sensor_msgs/msg/PointCloud2)
+ダウンサンプリングされた点群マップ (sensor_msgs/msg/PointCloud2)
+<abbr title="Robot Operating System">ROS</abbr> サービスを介した部分点群マップの読み込み (autoware_map_msgs/srv/GetPartialPointCloudMap)
+<abbr title="Robot Operating System">ROS</abbr> サービス経由の差分点群マップの読み込み (autoware_map_msgs/srv/GetDifferentialPointCloudMap)
+レーンレット2マップ
+Lanelet2 ファイルを読み込み、地図データをautoware_auto_mapping_msgs/msg/HADMapBinメッセージとして公開します。lan/lon 座標は MGRS 座標に投影されます。</p>
+<p>autoware_auto_mapping_msgs/msg/HADMapBin
+std_msgs/Header ヘッダー
+文字列 version_map_format
+文字列バージョンマップ
+文字列名_マップ
+uint8[] データ
+Lanelet2 マップの視覚化
+autoware_auto_mapping_msgs/HADMapBinのメッセージを視覚化しますRviz。</p>
+<p>視覚化_msgs/msg/MarkerArray</p>
+<h1 id="map">Map<a class="headerlink" href="#map" title="Permanent link">#</a></h1>
 <p><img alt="Node diagram" src="../images/Map-Bus-ODD-Architecture.drawio.svg"></p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
 <p>Autoware relies on high-definition point cloud maps and vector maps of the driving environment to perform various tasks. Before launching Autoware, you need to load the pre-created map files.</p>
