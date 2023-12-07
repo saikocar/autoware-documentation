@@ -21,7 +21,7 @@
     
     
       
-        <title>Intrinsic camera calibration - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Intrinsic camera calibration
+              Index
             
           </span>
         </div>
@@ -6592,7 +6592,41 @@
   
 
 
-<div><h1 id="intrinsic-camera-calibration">Intrinsic camera calibration<a class="headerlink" href="#intrinsic-camera-calibration" title="Permanent link">#</a></h1>
+<div><p>固有のカメラキャリブレーション
+概要
+固有のカメラ キャリブレーションは、3D 情報を画像に投影するときに使用されるカメラの内部パラメータを決定するプロセスです。これらのパラメータには、焦点距離、光学中心、レンズ歪み係数が含まれます。カメラの固有キャリブレーションを実行するには、TIER IV の固有カメラ キャリブレーターツールを使用します。まず第一に、ドット、チェス、またはエイプリルタグ グリッド ボードなどのキャリブレーション ボードが必要です。このチュートリアルでは、7 cm の正方形で構成されるこの 7x7 チェス盤を使用します。</p>
+<p><img alt="chess_board" src="images/chess-board-7x7.png" width="500"> このチュートリアル セクション用の 7x7 キャリブレーション チェス ボード。
+Intrinsic Camera Calibratorページのキャリブレーション ボードのサンプルをいくつか示します。</p>
+<p>チェス盤 ( 6x8 の例)
+サークルドットボード（6x8の例）
+Apriltag グリッドボード ( 3x4 の例)
+キャリブレーション プロセスにバッグ ファイルを使用する場合、バッグ ファイルにはimage_rawカメラ センサーのトピックが含まれている必要がありますが、リアルタイムでキャリブレーションを実行できます。（推奨）</p>
+<p>??? 注「固有のカメラ キャリブレーション プロセスの <abbr title="Robot Operating System">ROS</abbr> 2 Bag の例」</p>
+<p></p><div class="highlight"><pre><span></span><code>Files:<span class="w">             </span>rosbag2_2023_09_18-16_19_08_0.db3
+Bag<span class="w"> </span>size:<span class="w">          </span><span class="m">12</span>.0<span class="w"> </span>GiB
+Storage<span class="w"> </span>id:<span class="w">        </span>sqlite3
+Duration:<span class="w">          </span><span class="m">135</span>.968s
+Start:<span class="w">             </span>Sep<span class="w"> </span><span class="m">18</span><span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">16</span>:19:08.966<span class="w"> </span><span class="o">(</span><span class="m">1695043148</span>.966<span class="o">)</span>
+End:<span class="w">               </span>Sep<span class="w"> </span><span class="m">18</span><span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">16</span>:21:24.934<span class="w"> </span><span class="o">(</span><span class="m">1695043284</span>.934<span class="o">)</span>
+Messages:<span class="w">          </span><span class="m">4122</span>
+Topic<span class="w"> </span>information:<span class="w"> </span>Topic:<span class="w"> </span>/sensing/camera/camera0/image_raw<span class="w"> </span><span class="p">|</span><span class="w"> </span>Type:<span class="w"> </span>sensor_msgs/msg/Image<span class="w"> </span><span class="p">|</span><span class="w"> </span>Count:<span class="w"> </span><span class="m">2061</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Serialization<span class="w"> </span>Format:<span class="w"> </span>cdr
+</code></pre></div>
+固有のカメラキャリブレーション
+チュートリアルの他の調整パッケージとは異なり、このパッケージは初期化ファイルを作成する必要がありません。したがって、組み込みキャリブレーター パッケージの起動から始めることができます。
+<p>cd <your-own-autoware-directory>
+source install/setup.bash
+その後、固有キャリブレーターを起動します。</your-own-autoware-directory></p>
+<p>ros2 launch intrinsic_camera_calibrator calibrator.launch.xml
+次に、初期設定とカメラ固有のキャリブレーション パネルが表示されます。キャリブレーション用の初期構成を設定します。</p>
+<p><img alt="chess_board" src="images/intrinsic-initial-configuration.png" width="200"> 初期設定パネル
+ソース オプション セクションから画像ソース (「<abbr title="Robot Operating System">ROS</abbr> トピック」、「<abbr title="Robot Operating System">ROS</abbr> バッグ」、または「画像ファイル」にすることができます) を設定します。「<abbr title="Robot Operating System">ROS</abbr> トピック」ソースを使用してカメラを調整します。このパネルから画像ソースを選択した後、「ボード オプション」も設定する必要があります。キャリブレーションボードは次のとおりですChess board, Dot board or Apriltag。また、ボードパラメータを選択する必要があります。これを行うには、「ボードパラメータ」ボタンをクリックしてrow, column, and cellサイズを設定します。</p>
+<p>画像ソースとボードパラメータを設定したら、キャリブレーションプロセスの準備が整います。スタートボタンをクリックするとTopic configurationパネルが表示されます。キャリブレーション プロセスに適切な Camera Raw トピックを選択してください。</p>
+<p><img alt="chess_board" src="images/intrinsic-topic-information.png" width="200"> トピック構成パネル
+これで校正の準備が整いました。XY軸、サイズ、スキューが異なるデータを収集してください。「データ収集統計の表示」をクリックすると、収集されたデータ統計を確認できます。詳細については、「内蔵カメラ キャリブレータ」のページを参照してください。</p>
+<p><img align="center" alt="chess_board" src="images/intrinsic-data-collecting.png"> 組み込みキャリブレーター インターフェイス
+データ収集が完了したら、「調整」ボタンをクリックして調整プロセスを実行できます。キャリブレーションが完了すると、キャリブレーション結果の統計のデータが視覚化されます。「画像ビュータイプ「ソース未修正」を「ソース修正済み」に変更すると、キャリブレーション結果を確認できます。キャリブレーションが成功した場合（修正された画像に歪みがないはずです）、「保存」ボタンでキャリブレーション結果を保存できます。出力には という名前が付けられます<your-camera-name>_info.yaml。そのため、このファイルをカメラ ドライバーで直接使用します。</your-camera-name></p>
+<p>これは、tutorial_vehicle の固有のカメラ キャリブレーション プロセスをデモンストレーションするビデオです。 タイプ:ビデオ</p>
+<h1 id="intrinsic-camera-calibration">Intrinsic camera calibration<a class="headerlink" href="#intrinsic-camera-calibration" title="Permanent link">#</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
 <p>Intrinsic camera calibration is the process
 of determining the internal parameters of a camera
