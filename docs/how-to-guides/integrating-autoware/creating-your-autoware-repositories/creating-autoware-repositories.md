@@ -1,3 +1,99 @@
+Autoware リポジトリの作成
+メタリポジトリとは何ですか?
+メタリポジトリとは複数のリポジトリを管理するリポジトリのことで、Autowareもその 1 つです。これは、他のリポジトリの参照、構成、バージョン管理のための集中管理ポイントとして機能します。これを実現するために、Autoware メタ リポジトリには、autoware.repos複数のリポジトリを管理するためのファイルが含まれています。VCSツール (バージョン管理システム)を使用して.repos ファイルを処理します。VCS は、複数のリポジトリからインポート、エクスポート、プルする機能を提供します。VCS は、Autoware をワークスペースに構築するために必要なすべてのリポジトリをインポートするために使用されます。VCS および .repos ファイルの使用法についてはドキュメントを参照してください。
+
+Autoware メタリポジトリを作成およびカスタマイズする方法
+1. Autoware メタリポジトリを作成する
+Autoware を車両に統合する場合、最初のステップは Autoware メタ リポジトリを作成することです。
+
+簡単な方法の 1 つは、Autoware リポジトリをフォークしてクローンを作成することです。(リポジトリをフォークする方法については、GitHub Docsを参照してください)
+
+このガイドでは、Autoware は に統合されますtutorial_vehicle (注: 複数のタイプの車両を設定する場合は、autoware.vehicle_Aまたは のような接尾辞を追加することautoware.vehicle_Bをお勧めします)。最初のステップとして、autowareリポジトリにアクセスし、フォーク ボタンをクリックしてください。フォークプロセスは次のようになります。
+![forking-autoware_repository](images/forking-autoware_repository.png){ align=center }tutorial_vehicle のフォーク デモンストレーションのサンプル
+次に、「フォークの作成」ボタンをクリックして続行します。その後、ローカル システム上にフォーク リポジトリのクローンを作成できます。
+
+git clone https://github.com/YOUR_NAME/autoware.<YOUR-VEHICLE>.git
+たとえば、これはドキュメント用です。
+
+git clone https://github.com/leo-drive/autoware.tutorial_vehicle.git
+1.1 車両個別リポジトリの作成
+Autoware を個々の車両に統合するには、次のリポジトリもフォークして変更する必要があります。
+
+Sample_sensor_kit : このリポジトリは、起動ファイル、そのパイプライン構成、およびセンサーの説明を検出するために使用されます。フォークして autoware メタリポジトリとして名前を変更してください。この時点で、フォークされたリポジトリ名は になりますtutorial_vehicle_sensor_kit_launch。
+Sample_vehicle_launch : このリポジトリは、車両起動ファイル、vehicle_descriptions および vehicle_model に使用されます。このリポジトリもフォークして名前を変更してください。この時点で、フォークされたリポジトリ名は になりますtutorial_vehicle_launch。
+autoware_individual_params : このリポジトリには、各車両に応じて変化するパラメータ (つまり、センサーのキャリブレーション) が保存されます。このリポジトリもフォークして名前を変更してください。フォークされたリポジトリ名は になりますtutorial_vehicle_individual_params。
+autoware_launch : このリポジトリには、Autoware のノード構成とそのパラメータが含まれています。フォークして、以前にフォークしたリポジトリと同じ名前に変更してください。フォークされたリポジトリ名は になりますautoware_launch.tutorial_vehicle。
+2. 環境に合わせて autoware.repos をカスタマイズする
+フォークされたリポジトリをインポートするには、をカスタマイズする必要がありますautoware.repos。通常、このautoware.reposファイルには、必要なすべての Autoware リポジトリ (キャリブレーション リポジトリとシミュレータ リポジトリを除く) の情報が含まれています。したがって、フォークされたリポジトリもこのファイルに追加する必要があります。
+
+2.1 autoware.repos への個々のリポジトリの追加
+autoware.reposすべてのリポジトリをフォークした後、任意のテキスト エディタを使用してファイルを開き、独自の個別のリポジトリでsample_sensor_kit_launch、 sample_vehicle_launch、autoware_individual_params および を更新することで、Autoware メタ リポジトリへの追加を開始できます。autoware launchたとえば、このチュートリアルでは、フォークされたtutorial_vehicleリポジトリに必要な変更は次のようになります。
+
+センサーキット:
+
+- sensor_kit/sample_sensor_kit_launch:
+-   type: git
+-   url: https://github.com/autowarefoundation/sample_sensor_kit_launch.git
+-   version: main
++ sensor_kit/tutorial_vehicle_sensor_kit_launch:
++   type: git
++   url: https://github.com/leo-drive/tutorial_vehicle_sensor_kit_launch.git
++   version: main
+車両の打ち上げ:
+
+- vehicle/sample_vehicle_launch:
+-   type: git
+-   url: https://github.com/autowarefoundation/sample_vehicle_launch.git
+-   version: main
++ vehicle/tutorial_vehicle_launch:
++   type: git
++   url: https://github.com/leo-drive/tutorial_vehicle_launch.git
++   version: main
+個々のパラメータ:
+
+- param/autoware_individual_params:
+-   type: git
+-   url: https://github.com/autowarefoundation/autoware_individual_params.git
+-   version: main
++ param/tutorial_vehicle_individual_params:
++   type: git
++   url: https://github.com/leo-drive/tutorial_vehicle_individual_params.git
++   version: main
+オートウェアの起動:
+
+- launcher/autoware_launch:
+-   type: git
+-   url: https://github.com/autowarefoundation/autoware_launch.git
+-   version: main
++ launcher/autoware_launch.tutorial_vehicle:
++   type: git
++   url: https://github.com/leo-drive/autoware_launch.tutorial_vehicle.git
++   version: main
+独自の autoware.repos ファイルにも同様の変更を加えてください。これらの変更を加えた後、VCS を使用して必要なすべてのリポジトリを Autoware ワークスペースにインポートする準備が整います。
+
+まず、独自の Autoware メタリポジトリ ディレクトリの下に src ディレクトリを作成します。
+
+cd <YOUR-AUTOWARE-DIR>
+mkdir src
+次に、必要なすべてのリポジトリを vcs でインポートします。
+
+cd <YOUR-AUTOWARE-DIR>
+vcs import src < autoware.repos
+コマンドを実行すると、すべての Autoware リポジトリがAutoware ディレクトリの下のフォルダvcs importに複製されます。src
+
+これで、colcon build コマンドを使用して独自のリポジトリを構築できます。
+
+cd <YOUR-AUTOWARE-DIR>
+colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+車両の各パッケージを作成およびカスタマイズする方法については、次のドキュメントのリンクを参照してください。
+
+車両とセンサーのモデルの作成
+センサーモデルの作成
+個別のパラメータの作成
+車両モデルの作成
+車両インターフェースパッケージの作成
+ディファレンシャルドライブモデルのカスタマイズ
+autoware.reposパッケージが Autoware リポジトリ内で適切に含まれ、管理されていることを確認するために、インターフェイスや説明などのすべてのカスタム パッケージを忘れずに追加してください。
 # Creating Autoware repositories
 
 ## What is a Meta-repository?
