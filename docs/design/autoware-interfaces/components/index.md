@@ -1,7 +1,7 @@
-# Component interfaces
+# コンポーネントのインターフェース
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中
 
-See [here](../index.md) for an overview.
+概要は[こちら](../index.md)を参照してください。
