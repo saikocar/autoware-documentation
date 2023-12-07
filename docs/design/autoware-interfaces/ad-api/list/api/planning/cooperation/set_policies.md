@@ -1,3 +1,22 @@
+タイトル	状態	方法	タイプ
+/api/計画/協力/set_policies
+解放されていない
+関数呼び出し
+名前	要求	レス
+autoware_adapi_v1_msgs/srv/SetCooperationPolicies
+名前	文章
+ポリシー.動作
+ターゲットの動作のタイプ。
+名前	文章
+ポリシー.シーケンス
+ターゲットシーケンスのタイプ。
+名前	文章
+ポリシー.ポリシー
+協力ポリシーのタイプ。
+名前	文章
+状態
+対応状況
+{% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %} {% block description %} オペレータの決定が未定の場合に代わりに使用されるデフォルトの決定を設定します。詳細については、連携を参照してください。{% エンドブロック %}
 ---
 title: /api/planning/cooperation/set_policies
 status: not released
