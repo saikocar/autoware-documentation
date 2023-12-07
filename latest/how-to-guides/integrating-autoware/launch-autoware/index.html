@@ -21,7 +21,7 @@
     
     
       
-        <title>Launch Autoware - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Launch Autoware
+              Index
             
           </span>
         </div>
@@ -6660,7 +6660,137 @@
   
 
 
-<div><h1 id="launch-autoware">Launch Autoware<a class="headerlink" href="#launch-autoware" title="Permanent link">#</a></h1>
+<div><p>オートウェアを起動する
+このセクションでは、Autoware を使用して車両を実行する方法について説明します。これらのモジュールを使用して Autoware を実行および起動する方法を説明します。</p>
+<p>車両
+システム
+地図
+センシング
+ローカリゼーション
+感知
+企画
+コントロール
+実車で Autoware を起動するための前提条件
+Autoware を車両に統合するには、次の手順を完了してください。</p>
+<p>Autoware メタリポジトリを作成します。
+車両とセンサーのモデルを作成します。
+センサーを調整します。
+Autoware 互換の車両インターフェイスを作成します。
+環境マップを作成します。
+個々の車両に応じてこれらの手順を完了すると、Autoware を使用する準備が整います。</p>
+<p>autoware_launch パッケージ
+autoware_launchパッケージは、 Autoware ソフトウェア スタック起動ファイルの開始を開始します。autoware.launch.xml起動ファイルは、次の起動引数を有効にすることで、これらのモジュール起動の呼び出しを有効にします。</p>
+<p><arg name="launch_vehicle" default="true" description="launch vehicle"></arg>
+  <arg name="launch_system" default="true" description="launch system"></arg>
+  <arg name="launch_map" default="true" description="launch map"></arg>
+  <arg name="launch_sensing" default="true" description="launch sensing"></arg>
+  <arg name="launch_sensing_driver" default="true" description="launch sensing driver"></arg>
+  <arg name="launch_localization" default="true" description="launch localization"></arg>
+  <arg name="launch_perception" default="true" description="launch perception"></arg>
+  <arg name="launch_planning" default="true" description="launch planning"></arg>
+  <arg name="launch_control" default="true" description="launch control"></arg>
+たとえば、ローカリゼーション デバッグのために認識、計画、および制御を起動する必要がない場合は、次のようにこれらのモジュールを無効にすることができます。</p>
+<ul>
+<li><arg name="launch_perception" default="true" description="launch perception"></arg></li>
+<li><arg name="launch_perception" default="false" description="launch perception"></arg></li>
+<li><arg name="launch_planning" default="true" description="launch planning"></arg></li>
+<li><arg name="launch_planning" default="false" description="launch planning"></arg></li>
+<li><arg name="launch_control" default="true" description="launch control"></arg></li>
+<li><arg name="launch_control" default="false" description="launch control"></arg>
+また、コマンドライン引数を使用して起動するコンポーネントを指定することもできます。</li>
+</ul>
+<p>ros2 launch autoware_launch autoware.launch.xml vehicle_model:=YOUR_VEHICLE sensor_kit:=YOUR_SENSOR_KIT map_path:=/PATH/TO/YOUR/MAP \
+    launch_perception:=false \
+    launch_planning:=false \
+    launch_control:=false
+また、autoware_launch パッケージには、ディレクトリの下に autoware モジュールのパラメータ ファイルが含まれていますconfig。</p>
+<p><your-own-autoware-dir>/
+  └─ src/
+       └─ launcher/
+            └─ autoware_launch/
+                 ├─ config/
+                 ├─     ├─ control/
+                 ├─     ├─ localization/
+                 ├─     ├─ map/
+                 ├─     ├─ perception/
+                 ├─     ├─ planning/
+                 ├─     ├─ simulator/
+                 ├─     └─ system/
+                 ├─launch/
+                 └─ rviz/
+したがって、ディレクトリ内のパラメータを変更すると、パラメータ ファイルのパスがパラメータのロードに使用されるconfigため、元のパラメータ値が上書きされます。autoware_launch</your-own-autoware-dir></p>
+<p><img align="center" alt="autoware_launch" src="images/autoware_launch_overview.svg"> autoware_launch パッケージの起動とパラメータ移行の図
+構成、設定autoware.launch.xml
+上で述べたように、autoware.launch.xmlコマンドライン引数を変更または使用することで、Autoware モジュールの起動を有効または無効にすることができます。また、Autoware 構成を指定するための引数がいくつかあります。autoware.launch.xml 起動ファイルの基本構成をいくつか示します: (さらに、前述したように、これらをコマンドライン引数として使用することもできます)</p>
+<p>車両
+「車両」セクションでは、車両インターフェースを起動するかどうかを選択できます。たとえば、これを無効にすると、 はvehicle_interface.launch.xml呼び出されなくなります。</p>
+<ul>
+<li><arg name="launch_vehicle_interface" default="true" description="launch vehicle interface"></arg></li>
+<li><arg name="launch_vehicle_interface" default="false" description="launch vehicle interface"></arg>
+車両インターフェース ドライバーが に含まれていることを確認してくださいvehicle_interface.launch.xml。詳細については、 車両インターフェースの作成 ページを参照してください。</li>
+</ul>
+<p>地図
+点群および Lanlet2 マップ名が pointcloud_map.pcd および Lanlet2_map.osm と異なる場合は、これらのマップ ファイル名の引数を更新する必要があります。</p>
+<ul>
+<li><arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"></arg></li>
+<li><arg name="lanelet2_map_file" default="\&lt;YOUR-LANELET2-MAP-FILE-NAME&gt;" description="lanelet2 map file name"></arg></li>
+<li><arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"></arg></li>
+<li><arg name="pointcloud_map_file" default="\&lt;YOUR-POINTCLOUD-MAP-FILE-NAME&gt;" description="pointcloud map file name"></arg>
+感知
+ここでパスを定義できますautoware_data。Autoware は、yabloc_pose_initializer、image_projection_based_fusion、lidar_apollo_instance_segmentation などのモデル ファイルをautoware_dataパスとともに取得します。自動ウェアのインストールに ansible を使用する場合、必要なアーティファクトがディレクトリautoware_data上のフォルダーにダウンロードされます$HOME。アーティファクトを手動でダウンロードする場合は、Ansibleartifactsページで情報を確認してください。</li>
+</ul>
+<ul>
+<li><arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"></arg></li>
+<li><arg name="data_path" default="\&lt;YOUR-AUTOWARE-DATA-PATH&gt;" description="packages data and artifacts directory path"></arg>
+また、ここで認識方法を変更することもできます。Autoware はcamera-lidar-radar fusion、 camera-lidar fusion、lidar-radar fusion、 、lidar onlyおよびradar only知覚モードを提供します。デフォルトの認識方法はlidar onlyモードですが、使用したい場合はcamera-lidar fusion認識モードを変更する必要があります。</li>
+</ul>
+<ul>
+<li><arg name="perception_mode" default="lidar" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"></arg></li>
+<li><arg name="perception_mode" default="camera_lidar_fusion" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"></arg>
+信号認識と視覚化を使用する場合は、traffic_light_recognition/enable_fine_detectiontrue (デフォルト) に設定できます。 詳細については、traffic_light_fine_detectorページを確認してください 。信号分類器を使用したくない場合は、それを無効にすることができます。</li>
+</ul>
+<ul>
+<li><arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"></arg></li>
+<li><arg name="traffic_light_recognition/enable_fine_detection" default="false" description="enable traffic light fine detection"></arg>
+詳細については、「起動認識」ページをご覧ください。</li>
+</ul>
+<p>オートウェアを起動する
+次のコマンドで Autoware を起動します。</p>
+<p>ros2 launch autoware_launch autoware_launch.launch.xml map_path:=<your-map-path> vehicle_model:=<your-vehicle-model> sensor_model:=<your-sensor-model> vehicle_id:=<your-vehicle-id>
+コマンドライン引数を使用して、起動するコンポーネントを指定できます。たとえば、ローカリゼーション デバッグのために認識、計画、および制御を起動する必要がない場合は、次のものを起動できます。</your-vehicle-id></your-sensor-model></your-vehicle-model></your-map-path></p>
+<p>ros2 launch autoware_launch autoware_launch.launch.xml map_path:=<your-map-path> vehicle_model:=<your-vehicle-model> sensor_model:=<your-sensor-model> vehicle_id:=<your-vehicle-id> \
+    launch_perception:=false \
+    launch_planning:=false \
+    launch_control:=false
+Autoware を起動した後、マップ上で車両を初期化する必要があります。<abbr title="Global Navigation Satellite System">GNSS</abbr>/INS センサーのgnss_poser をに設定するとgnss.launch.xml、gnss_poser は初期化のためにポーズを送信します。<abbr title="Global Navigation Satellite System">GNSS</abbr> センサーがない場合は、初期ポーズを手動で設定する必要があります。</your-vehicle-id></your-sensor-model></your-vehicle-model></your-map-path></p>
+<p>初期ポーズを設定する
+そうでない場合、または自動初期化によって間違った位置が返された場合は、RViz GUI を使用して初期ポーズを設定する必要があります。</p>
+<p>ツールバーの 2D ポーズ推定ボタンをクリックするか、P キーを押します。
+<img align="center" alt="2D ポーズ推定" src="images/2d_pose_estimate.png"> RViz による 2D ポーズ推定
+[3D ビュー] パネルで、マウスの左ボタンをクリックしたままドラッグして、初期ポーズの方向を設定します。
+<img align="center" alt="2D ポーズの付与" src="images/give_2d_pose.png"> RViz で 2D ポーズ推定を設定する
+その後、車両の初期化が行われます。次に、車両と Autoware の出力の両方を観察します。
+<img align="center" alt="初期化" src="images/2d_pose_initialization.png"> 車両の初期化
+ゴールポーズを設定する
+自我車両のゴールポーズを設定します。</p>
+<p>ツールバーの「2D ナビゲーション目標」ボタンをクリックするか、G キーを押します。
+<img align="center" alt="初期化" src="images/2d_goal_pose.png"> 車両の初期化
+3D ビュー ペインで、マウスの左ボタンをクリックしたままドラッグして、ゴール ポーズの方向を設定します。
+<img align="center" alt="初期化" src="images/give_2d_goal_pose.png"> 車両の初期化
+成功すると、計算された計画パスが RViz 上に表示されます。
+<img align="center" alt="path-output" src="images/planning_path_output.png"> RViz 上の計画されたパス
+従事する
+エンゲージメントには 2 つのオプションがあります。</p>
+<p>まず、 を使用できますAutowareStatePanel。これは Autoware RViz 構成ファイルに含まれていますが、 にありますPanels &gt; Add New Panel &gt; tier4_state_rviz_plugin &gt; AutowareStatePanel。
+ルートが計算されると、「AUTO」ボタンがアクティブになります。AUTO ボタンを押すと自動運転モードになります。</p>
+<p><img align="center" alt="autoware-state-panel" src="images/autoware_state_panel_before.png"> Autoware 状態パネル (STOP 動作モード)
+次に、<abbr title="Robot Operating System">ROS</abbr> 2 のトピックに取り組むことができます。ターミナルで次のコマンドを実行します。
+source ~/<your-autoware-dir>/install/setup.bash
+ros2 topic pub /<your-autoware-dir>/engage autoware_auto_vehicle_msgs/msg/Engage "engage: true" -1
+これで、車両は計算された経路に沿って走行するはずです。</your-autoware-dir></your-autoware-dir></p>
+<p>自動運転中は、下の図に示すように StatePanel が表示されます。「STOP」ボタンを押すと車両を停止できます。</p>
+<p><img align="center" alt="autoware-state-panel" src="images/autoware_state_panel_after.png"> Autoware 状態パネル (AUTO 動作モード)</p>
+<h1 id="launch-autoware">Launch Autoware<a class="headerlink" href="#launch-autoware" title="Permanent link">#</a></h1>
 <p>This section explains how to run your vehicle with Autoware.
 We will explain how to run and launch autoware with these modules:</p>
 <ul>
