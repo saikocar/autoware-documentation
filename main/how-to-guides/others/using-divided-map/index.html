@@ -21,7 +21,7 @@
     
     
       
-        <title>Using divided pointcloud map - Autoware Documentation</title>
+        <title>Using divided map - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Using divided pointcloud map
+              Using divided map
             
           </span>
         </div>
@@ -3597,7 +3597,7 @@
   
     <li class="md-nav__item">
       <a href="../../training-machine-learning-models/training-models/" class="md-nav__link">
-        Training and Deploying Models
+        Training models
       </a>
     </li>
   
@@ -3822,12 +3822,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Using divided pointcloud map
+          Using divided map
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Using divided pointcloud map
+        Using divided map
       </a>
       
         
@@ -6640,7 +6640,23 @@
   
 
 
-<div><h1 id="using-divided-pointcloud-map">Using divided pointcloud map<a class="headerlink" href="#using-divided-pointcloud-map" title="Permanent link">#</a></h1>
+<div><p>分割された点群マップの使用
+大規模なポイントクラウド マップを処理する場合は、分割されたポイントクラウド マップが必要です。その場合、Autoware は <abbr title="Robot Operating System">ROS</abbr> 2 トピック経由でマップ全体を送信したり、マップ全体をメモリにロードしたりできない可能性があります。Autoware は、事前に分割されたマップを使用することで、車両の位置に応じてポイントクラウド マップを動的に読み込みます。</p>
+<p>チュートリアル
+Sample-map-rosbag_splitをダウンロードし、 の下にあるマップを見つけます$HOME/autoware_map/。</p>
+<p>gdown -O ~/autoware_map/ 'https://docs.google.com/uc?export=download&amp;id=11tLC9T4MS8fnZ9Wo0D8-Ext7hEDl2YJ4'
+unzip -d ~/autoware_map/ ~/autoware_map/sample-rosbag_split.zip
+次に、次のコマンドでlogging_simulatorを起動し、分割されたマップをロードします。map_path引数と を指定する必要があることに注意してくださいpointcloud_map_file。</p>
+<p>source ~/autoware/install/setup.bash
+ros2 launch autoware_launch logging_simulator.launch.xml \
+  map_path:=$HOME/autoware_map/sample-map-rosbag pointcloud_map_file:=pointcloud_map \
+  vehicle_model:=sample_vehicle_split sensor_model:=sample_sensor_kit
+rosbag を再生して Autoware をシミュレートするには、 rosbag リプレイ シミュレーションのチュートリアルの手順を参照してください。</p>
+<p>関連リンク
+分割地図の具体的なフォーマット定義については、地図コンポーネント設計ページを参照してください。
+map_loader の Readme は、マップを分割するための具体的な手順として役立つ可能性があります。
+独自のポイントクラウド マップを分割するときは、pointcloud_dividerを使用できます。これにより、マップを分割し、互換性のあるメタデータを生成できます。</p>
+<h1 id="using-divided-pointcloud-map">Using divided pointcloud map<a class="headerlink" href="#using-divided-pointcloud-map" title="Permanent link">#</a></h1>
 <p>Divided pointcloud map is necessary when handling large pointcloud map, in which case Autoware may not be capable of sending the whole map via <abbr title="Robot Operating System">ROS</abbr> 2 topic or loading the whole map into memory. By using the pre-divided map, Autoware will dynamically load the pointcloud map according to the vehicle's position.</p>
 <h2 id="tutorial">Tutorial<a class="headerlink" href="#tutorial" title="Permanent link">#</a></h2>
 <p>Download the <a href="https://docs.google.com/uc?export=download&amp;id=11tLC9T4MS8fnZ9Wo0D8-Ext7hEDl2YJ4">sample-map-rosbag_split</a> and locate the map under <code>$HOME/autoware_map/</code>.</p>
