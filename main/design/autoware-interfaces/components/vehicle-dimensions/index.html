@@ -6778,7 +6778,50 @@
   
 
 
-<div><h1 id="vehicle-dimensions">Vehicle dimensions<a class="headerlink" href="#vehicle-dimensions" title="Permanent link">#</a></h1>
+<div><p>車両寸法
+車両の軸とbase_link
+車両の軸{: style="幅:500px"}</p>
+<p>フレームbase_linkは Autoware スタック全体で非常に頻繁に使用され、リアアクスルの中心を地面に投影したものです。</p>
+<p>ローカリゼーション モジュールはmaptobase_link変換を出力します。
+base_link計画モジュールは、フレームが将来どこにあるべきかについてポーズを計画します。
+制御モジュールは、入力されたポーズに合わせようとしますbase_link。
+車両寸法
+車両寸法{: style="幅:550px"}</p>
+<p>ホイールベース
+前車軸と後車軸の間の距離。</p>
+<p>トラック幅
+左右の車輪間の距離。</p>
+<p>オーバーハング
+オーバーハングは、セーフティ ボックスの最小計算の一部です。</p>
+<p>オーバーハング、サイドミラー、突き出たセンサー、ホイールを測定する場合は考慮する必要があります。</p>
+<p>左オーバーハング
+左車輪の軸中心と車両の左端の点の間の距離。</p>
+<p>右オーバーハング
+右車輪の軸中心と車両の右端の点の間の距離。</p>
+<p>フロントオーバーハング
+フロントアクスルと車両の最前部の間の距離。</p>
+<p>リアオーバーハング
+後車軸と車両の最後部の間の距離。</p>
+<p>車両の長さ
+車両の全長。計算方法front_overhang + wheelbase + rear_overhang</p>
+<p>車幅_幅
+車両の全幅。計算方法left_overhang + track_width + right_overhang</p>
+<p>ホイールパラメータ
+ホイール寸法{: style="幅:350px"}</p>
+<p>ホイール幅
+タイヤの横幅。主に推測航法に使用されます。</p>
+<p>ホイール半径
+ホイールの半径。主に推測航法に使用されます。</p>
+<p>ポリゴン_フットプリント
+ホイール寸法{: style="幅:350px"}</p>
+<p>多角形は、車両の最小衝突エリアを定義します。</p>
+<p>点は、 を原点として時計回りに並べる必要がありますbase_link。</p>
+<p>ホイールの向き
+車両が前進している場合、車輪角度が正の場合、車両は左折します。</p>
+<p>Autoware は、後輪がz軸を中心に回転しないことを前提としています。</p>
+<p>知らせ
+イラストで使用されている車両は xvlblo22 によって作成され、https://www.turbosquid.com/3d-models/modular-sedan-3d-model-1590886からのものです。</p>
+<h1 id="vehicle-dimensions">Vehicle dimensions<a class="headerlink" href="#vehicle-dimensions" title="Permanent link">#</a></h1>
 <h2 id="vehicle-axes-and-base_link">Vehicle axes and base_link<a class="headerlink" href="#vehicle-axes-and-base_link" title="Permanent link">#</a></h2>
 <p><img alt="Vehicle Axes" src="../images/vehicle_axes.svg" style="width:500px"></p>
 <p>The <code>base_link</code> frame is used very frequently throughout the Autoware stack, and is a projection of the rear-axle center onto the ground surface.</p>
