@@ -1,3 +1,82 @@
+オートウェアのデバッグ
+このページでは、Autoware をデバッグするためのいくつかの方法を説明します。
+
+デバッグメッセージを出力する
+デバッグに不可欠なことは、プログラムの動作を迅速に判断し、問題を特定できるように、プログラム情報を明確に出力することです。Autoware は、ROS 2 ログ ツールを使用してデバッグ メッセージを出力します。コンソール ログの設計方法については、チュートリアル「コンソール ログ」を参照してください。
+
+ROS ツールを使用して Autoware をデバッグする
+コマンドラインツールの使用
+ROS 2 には、ROS 2 システムをイントロスペクトするための一連のコマンドライン ツールが含まれています。ツールの主なエントリ ポイントは command です。ros2このコマンド自体には、ノード、トピック、サービスなどをイントロスペクトして操作するためのさまざまなサブコマンドがあります。ROS 2 コマンド ライン ツールの使用方法については、チュートリアルCLI ツールを参照してください。
+
+rviz2 の使用
+Rviz2 は、Rviz を ROS 2 に移植したものです。ユーザーがロボット、センサー データ、マップなどを表示するためのグラフィカル インターフェイスを提供します。Rviz2 ツールは次の方法で簡単に実行できます。
+
+rviz2
+Autoware がシミュレーターを起動すると、デフォルトで Rviz2 ツールが開き、オートパイロットのグラフィック情報が視覚化されます。
+
+RQT ツールの使用
+RQt は、プラグインの形式でさまざまなツールやインターフェイスを実装するグラフィカル ユーザー インターフェイス フレームワークです。RQt ツール/プラグインは次の方法で簡単に実行できます。
+
+rqt
+この GUI を使用すると、システム上で利用可能なプラグインを選択できます。スタンドアロン ウィンドウでプラグインを実行することもできます。たとえば、RQt コンソール:
+
+ros2 run rqt_console rqt_console
+一般的な RQt ツール
+rqt_graph: ノードの相互作用を表示する
+
+複雑なアプリケーションでは、ROS ノードの相互作用を視覚的に表現すると役立つ場合があります。
+
+ros2 run rqt_graph rqt_graph
+rqt_console: メッセージの表示
+
+rqt_console は、ROS トピックを表示するための優れた GUI です。
+
+ros2 run rqt_console rqt_console
+rqt_plot: データプロットを表示する
+
+rqt_plot は、ROS データをリアルタイムでプロットする簡単な方法です。
+
+ros2 run rqt_plot rqt_plot
+ros2_graphの使用
+ros2_graphマークダウン ファイルに追加する ROS 2 グラフのマーメイド記述を生成するために使用できます。
+
+rqt_graph生成された人魚図をレンダリングするために何らかのツールが必要になる場合でも、カラフルな代替手段として使用することもできます。
+
+以下でインストールできます。
+
+pip install ros2-graph
+次に、次のようにしてグラフの人魚の説明を生成できます。
+
+ros2_graph your_node
+
+# or like with an output file
+ros2_graph /turtlesim -o turtle_diagram.md
+
+# or multiple nodes
+ros2_graph /turtlesim /teleop_turtle
+次に、これらのグラフを次のように視覚化できます。
+
+マーメイドライブエディター
+Visual Studio Code 拡張機能マーメイド プレビュー
+ネイティブサポートを備えたJetBrains IDE
+ros2doctorの使用
+ROS 2 セットアップが期待どおりに実行されない場合は、ros2doctorツールを使用してその設定を確認できます。
+
+ros2doctorプラットフォーム、バージョン、ネットワーク、環境、実行中のシステムなどを含む ROS 2 のあらゆる側面をチェックし、考えられるエラーや問題の理由について警告します。
+
+ros2 doctorターミナルで実行するだけで簡単です。
+
+システム内のすべてのトピックについて「パブリッシャーのないサブスクライバー」をリストする機能があります。
+
+この情報は、必要なノードが実行中でないかどうかを見つけるのに役立ちます。
+
+詳細については、「 ros2doctor を使用して問題を特定する 」に関する次の公式ドキュメントを参照してください。
+
+ブレークポイントを使用したデバッガの使用
+多くの IDE (Visual Studio Code、CLion など) は、Linux プラットフォーム上の GBD を使用した C/C++ 実行可能ファイルのデバッグをサポートしています。以下に、デバッガーの使用に関する参考資料をいくつか示します。
+
+https://code.visualstudio.com/docs/cpp/cpp-debug
+https://www.jetbrains.com/help/clion/debugging-code.html#useful-debugger-shortcuts
 # Debug Autoware
 
 This page provides some methods for debugging Autoware.
