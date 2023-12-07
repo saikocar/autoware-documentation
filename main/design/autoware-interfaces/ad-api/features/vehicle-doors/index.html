@@ -6682,7 +6682,25 @@
   
 
 
-<div><h1 id="vehicle-doors">Vehicle doors<a class="headerlink" href="#vehicle-doors" title="Permanent link">#</a></h1>
+<div><p>車両ドア
+関連するAPI
+<a href="../../list/api/vehicle/doors/layout">/api/vehicle/doors/layout</a>
+<a href="../../list/api/vehicle/doors/status">/api/vehicle/doors/status</a>
+<a href="../../list/api/vehicle/doors/command">/api/vehicle/doors/command</a>
+説明
+この機能は、車両がドア用のソフトウェア インターフェイスを提供している場合に利用できます。乗客用のユーザー インターフェイスを作成したり、バス停でのシーケンスを制御したりするために使用できます。</p>
+<p>レイアウト
+車両の各ドアには配列インデックスが割り当てられます。この割り当ては車両によって異なります。レイアウト API はこの情報を返します。description フィールドは、ユーザー インターフェイスなどに表示する文字列です。これは任意の文字列であり、アプリケーションでの処理に使用することは推奨されません。役割フィールドを使用して、乗降用のドアを確認します。以下は、レイアウト API によって返される情報の例です。</p>
+<p>索引  説明  役割
+0   右前  -
+1   前方左側    乗る
+2   右後  降りる
+3   左奥  GET_ON、GET_OFF
+状態
+ステータス API は、ドアのステータスの配列を提供します。この配列の順序はレイアウト API と一致しています。</p>
+<p>コントロール
+コマンド API を使用してドアを制御します。ステータス API やレイアウト API とは異なり、配列インデックスはドアに対応しません。このコマンドには、ターゲット ドア インデックスを指定するフィールドがあります。</p>
+<h1 id="vehicle-doors">Vehicle doors<a class="headerlink" href="#vehicle-doors" title="Permanent link">#</a></h1>
 <h2 id="related-api">Related API<a class="headerlink" href="#related-api" title="Permanent link">#</a></h2>
 <ul>
 <li><a href="../../list/api/vehicle/doors/layout">/api/vehicle/doors/layout</a></li>
