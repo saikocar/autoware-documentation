@@ -21,7 +21,7 @@
     
     
       
-        <title>Manual calibration for all sensors - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Manual calibration for all sensors
+              Index
             
           </span>
         </div>
@@ -6619,7 +6619,246 @@
   
 
 
-<div><h1 id="manual-calibration-for-all-sensors">Manual calibration for all sensors<a class="headerlink" href="#manual-calibration-for-all-sensors" title="Permanent link">#</a></h1>
+<div><p>すべてのセンサーの手動校正
+概要
+このセクションでは、センサーの外部キャリブレーションに外部手動キャリブレーションを使用します。このプロセスの後、最終的に使用するための正確なキャリブレーション結果は得られませんが、他のツールの初期キャリブレーションは行われます。たとえば、ライダーとライダーまたはカメラとライダーのキャリブレーション フェーズでは、正確で適切なキャリブレーション結果を得るために初期キャリブレーションが必要になります。</p>
+<p>キャリブレーション プロセスには、生の LIDAR トピックとカメラ トピックを含むサンプル バッグ ファイルが必要です。以下に、キャリブレーションに使用されるバッグ ファイルの例を示します。</p>
+<p>??? 注「<abbr title="Robot Operating System">ROS</abbr> 2 バッグの校正プロセスの例」</p>
+<p></p><div class="highlight"><pre><span></span><code>Files:<span class="w">             </span>rosbag2_2023_09_06-13_43_54_0.db3
+Bag<span class="w"> </span>size:<span class="w">          </span><span class="m">18</span>.3<span class="w"> </span>GiB
+Storage<span class="w"> </span>id:<span class="w">        </span>sqlite3
+Duration:<span class="w">          </span><span class="m">169</span>.12s
+Start:<span class="w">             </span>Sep<span class="w">  </span><span class="m">6</span><span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">13</span>:43:54.902<span class="w"> </span><span class="o">(</span><span class="m">1693997034</span>.902<span class="o">)</span>
+End:<span class="w">               </span>Sep<span class="w">  </span><span class="m">6</span><span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">13</span>:46:43.914<span class="w"> </span><span class="o">(</span><span class="m">1693997203</span>.914<span class="o">)</span>
+Messages:<span class="w">          </span><span class="m">8504</span>
+Topic<span class="w"> </span>information:<span class="w"> </span>Topic:<span class="w"> </span>/sensing/lidar/top/pointcloud_raw<span class="w"> </span><span class="p">|</span><span class="w"> </span>Type:<span class="w"> </span>sensor_msgs/msg/PointCloud2<span class="w"> </span><span class="p">|</span><span class="w"> </span>Count:<span class="w"> </span><span class="m">1691</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Serialization<span class="w"> </span>Format:<span class="w"> </span>cdr
+<span class="w">                   </span>Topic:<span class="w"> </span>/sensing/lidar/front/pointcloud_raw<span class="w"> </span><span class="p">|</span><span class="w"> </span>Type:<span class="w"> </span>sensor_msgs/msg/PointCloud2<span class="w"> </span><span class="p">|</span><span class="w"> </span>Count:<span class="w"> </span><span class="m">1691</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Serialization<span class="w"> </span>Format:<span class="w"> </span>cdr
+<span class="w">                   </span>Topic:<span class="w"> </span>/sensing/camera/camera0/image_rect<span class="w"> </span><span class="p">|</span><span class="w"> </span>Type:<span class="w"> </span>sensor_msgs/msg/Image<span class="w"> </span><span class="p">|</span><span class="w"> </span>Count:<span class="w"> </span><span class="m">2561</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Serialization<span class="w"> </span>Format:<span class="w"> </span>cdr
+<span class="w">                   </span>Topic:<span class="w"> </span>/sensing/camera/camera0/camera_info<span class="w"> </span><span class="p">|</span><span class="w"> </span>Type:<span class="w"> </span>sensor_msgs/msg/CameraInfo<span class="w"> </span><span class="p">|</span><span class="w"> </span>Count:<span class="w"> </span><span class="m">2561</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Serialization<span class="w"> </span>Format:<span class="w"> </span>cdr
+</code></pre></div>
+外部の手動ベースの校正
+起動ファイルの作成
+まず、extrinsic_calibration_managerパッケージの起動ファイルの作成から始めます。
+<p>cd <your-own-autoware-directory>/src/autoware/calibration_tools/sensor
+cd extrinsic_calibration_manager/launch
+mkdir <your-own-sensor-kit-name> # i.e. for our guide, it will ve mkdir tutorial_vehicle_sensor_kit
+cd <your-own-sensor-kit-name> # i.e. for our guide, it will ve cd tutorial_vehicle_sensor_kit
+touch manual.launch.xml manual_sensor_kit.launch.xml manual_sensors.launch.xml
+これらを変更し、manual.launch.xmlTIER IV のサンプル センサー キット aip_x1 を使用します。したがって、これら 3 つのファイルの内容をaip_x1から作成したファイルにコピーする必要があります。manual_sensors.launch.xmlmanual_sensor_kit.launch.xml</your-own-sensor-kit-name></your-own-sensor-kit-name></your-own-autoware-directory></p>
+<p>センサーキットに応じて起動ファイルを変更する
+それで、 の変更を開始できますmanual.launch.xml。お好みのテキスト エディター (コード、gedit など) でこのファイルを開いてください。</p>
+<p>(オプション) vehicle_id とセンサーのモデル名を追加することから始めましょう: (値は重要ではありません。これらのパラメーターは起動引数によってオーバーライドされます)</p>
+<p><arg name="vehicle_id" default="default"></arg></p>
+<p><let name="sensor_model" value="aip_x1"></let>
++ &lt;?xml version="1.0" encoding="UTF-8"?&gt;
++ <launch>
+-   <arg name="vehicle_id" default="default"></arg>
++   <arg name="vehicle_id" default="\&lt;YOUR_VEHICLE_ID&gt;"></arg>
++
+-   <arg name="sensor_model" default="aip_x1"></arg>
++   <let name="sensor_model" value="\&lt;YOUR_SENSOR_KIT_NAME&gt;"></let>
+tutorial_vehicle のファイル (manual.launch.xml) の最終バージョンは次のようになります。</launch></p>
+<p>??? 注「チュートリアル車両のサンプルマニュアル.launch.xml ファイル」</p>
+<p></p><div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;launch&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"vehicle_id"</span><span class="w"> </span><span class="na">default=</span><span class="s">"tutorial_vehicle"</span><span class="nt">/&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"sensor_model"</span><span class="w"> </span><span class="na">value=</span><span class="s">"tutorial_vehicle_sensor_kit"</span><span class="nt">/&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;group&gt;</span>
+<span class="w">        </span><span class="nt">&lt;push-ros-namespace</span><span class="w"> </span><span class="na">namespace=</span><span class="s">"sensor_kit"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;include</span><span class="w"> </span><span class="na">file=</span><span class="s">"$(find-pkg-share extrinsic_calibration_manager)/launch/$(var sensor_model)/manual_sensor_kit.launch.xml"</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"vehicle_id"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var vehicle_id)"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/include&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/group&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;group&gt;</span>
+<span class="w">        </span><span class="nt">&lt;push-ros-namespace</span><span class="w"> </span><span class="na">namespace=</span><span class="s">"sensors"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;include</span><span class="w"> </span><span class="na">file=</span><span class="s">"$(find-pkg-share extrinsic_calibration_manager)/launch/$(var sensor_model)/manual_sensors.launch.xml"</span><span class="nt">&gt;</span>
+<span class="w">          </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"vehicle_id"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var vehicle_id)"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/include&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/group&gt;</span>
+
+<span class="nt">&lt;/launch&gt;</span>
+</code></pre></div>
+Manual.launch.xml ファイルが完成したら、独自のセンサー モデルのsensor_kit_calibration.yamlに Manual_sensor_kit.launch.xml を実装する準備が整います。
+<p>オプションで、この XML スニペットに対して sensor_model と vehicle_id を変更することもできます。</p>
+<p>...
+  <arg name="vehicle_id" default="default"></arg></p>
+<p><let name="sensor_model" value="aip_x1"></let>
++ &lt;?xml version="1.0" encoding="UTF-8"?&gt;
++ <launch>
+-   <arg name="vehicle_id" default="default"></arg>
++   <arg name="vehicle_id" default="\&lt;YOUR_VEHICLE_ID&gt;"></arg>
++
+-   <arg name="sensor_model" default="aip_x1"></arg>
++   <let name="sensor_model" value="\&lt;YOUR_SENSOR_KIT_NAME&gt;"></let>
+...
+次に、すべてのセンサー フレームを子フレームとして extrinsic_calibration_manager に追加します。</launch></p>
+<!-- extrinsic_calibration_manager -->
+<ul>
+<li><node pkg="extrinsic_calibration_manager" exec="extrinsic_calibration_manager" name="extrinsic_calibration_manager" output="screen"></node></li>
+<li><param name="parent_frame" value="$(var parent_frame)"></li>
+<li>&lt;param name="child_frames" value="</li>
+<li>[velodyne_top_base_link,</li>
+<li>livox_front_left_base_link,</li>
+<li>livox_front_center_base_link,</li>
+<li>livox_front_right_base_link]"/&gt;</li>
+<li>
+<li><node pkg="extrinsic_calibration_manager" exec="extrinsic_calibration_manager" name="extrinsic_calibration_manager" output="screen"></node></li>
+<li><param name="parent_frame" value="$(var parent_frame)"></li>
+<li><!-- add your sensor frames here --></li>
+<li>&lt;param name="child_frames" value="</li>
+<li>[<youe_sensor_base_link>,</youe_sensor_base_link></li>
+<li>YOUE_SENSOR_BASE_LINK,</li>
+<li>YOUE_SENSOR_BASE_LINK,</li>
+<li>YOUE_SENSOR_BASE_LINK</li>
+<li>...]"/&gt;</li>
+<li>
+tutorial_vehicle には 4 つのセンサー (2 つの LIDAR、1 つのカメラ、1 つの <abbr title="Global Navigation Satellite System">GNSS</abbr>/INS) があるため、次のようになります。</li>
+</ul>
+<p>??? 注「つまり、tutorial_vehicle の extrinsic_calibration_manager child_frames」</p>
+<p></p><div class="highlight"><pre><span></span><code>+<span class="w">   </span><span class="cm">&lt;!-- extrinsic_calibration_manager --&gt;</span>
++<span class="w">   </span><span class="nt">&lt;node</span><span class="w"> </span><span class="na">pkg=</span><span class="s">"extrinsic_calibration_manager"</span><span class="w"> </span><span class="na">exec=</span><span class="s">"extrinsic_calibration_manager"</span><span class="w"> </span><span class="na">name=</span><span class="s">"extrinsic_calibration_manager"</span><span class="w"> </span><span class="na">output=</span><span class="s">"screen"</span><span class="nt">&gt;</span>
++<span class="w">     </span><span class="nt">&lt;param</span><span class="w"> </span><span class="na">name=</span><span class="s">"parent_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)"</span><span class="nt">/&gt;</span>
++<span class="w">     </span><span class="cm">&lt;!-- add your sensor frames here --&gt;</span>
++<span class="w">     </span><span class="nt">&lt;param</span><span class="w"> </span><span class="na">name=</span><span class="s">"child_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"</span>
+<span class="s">+     [rs_helios_top_base_link,</span>
+<span class="s">+     rs_bpearl_front_base_link,</span>
+<span class="s">+     camera0/camera_link,</span>
+<span class="s">+     gnss_link]"</span><span class="nt">/&gt;</span>
++<span class="w">   </span><span class="nt">&lt;/node&gt;</span>
+</code></pre></div>
+最後に、センサーのフレームごとに手動キャリブレーターを起動します。calibrator.launch.xml 起動ファイル引数の名前空間 (ns) と child_frame 引数を更新してください。
+<ul>
+<li><include file="$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml"></include></li>
+<li><arg name="ns" value="$(var parent_frame)/velodyne_top_base_link"></arg></li>
+<li><arg name="parent_frame" value="$(var parent_frame)"></arg></li>
+<li><arg name="child_frame" value="velodyne_top_base_link"></arg></li>
+<li>
+<li><!-- extrinsic_manual_calibrator --></li>
+<li><include file="$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml"></include></li>
+<li><arg name="ns" value="$(var parent_frame)/\&lt;YOUR_SENSOR_BASE_LINK&gt;"></arg></li>
+<li><arg name="parent_frame" value="$(var parent_frame)"></arg></li>
+<li><arg name="child_frame" value="\&lt;YOUR_SENSOR_BASE_LINK&gt;"></arg></li>
+<li>
++</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+<li>...
++
+??? 注「つまり、各tutorial_vehicleのセンサーキットのcalibrator.launch.xml」</li>
+</ul>
+<p></p><div class="highlight"><pre><span></span><code>+<span class="w">  </span><span class="cm">&lt;!-- extrinsic_manual_calibrator --&gt;</span>
++<span class="w">  </span><span class="nt">&lt;include</span><span class="w"> </span><span class="na">file=</span><span class="s">"$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml"</span><span class="nt">&gt;</span>
++<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"ns"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)/rs_helios_top_base_link"</span><span class="nt">/&gt;</span>
++<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"parent_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)"</span><span class="nt">/&gt;</span>
++<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"child_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"rs_helios_top_base_link"</span><span class="nt">/&gt;</span>
++<span class="w">  </span><span class="nt">&lt;/include&gt;</span>
++
++<span class="w">  </span><span class="nt">&lt;include</span><span class="w"> </span><span class="na">file=</span><span class="s">"$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml"</span><span class="nt">&gt;</span>
++<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"ns"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)/rs_bpearl_front_base_link"</span><span class="nt">/&gt;</span>
++<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"parent_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)"</span><span class="nt">/&gt;</span>
++<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"child_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"rs_bpearl_front_base_link"</span><span class="nt">/&gt;</span>
++<span class="w">  </span><span class="nt">&lt;/include&gt;</span>
++
++<span class="w">  </span><span class="nt">&lt;include</span><span class="w"> </span><span class="na">file=</span><span class="s">"$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml"</span><span class="nt">&gt;</span>
++<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"ns"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)/camera0/camera_link"</span><span class="nt">/&gt;</span>
++<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"parent_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)"</span><span class="nt">/&gt;</span>
++<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"child_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"camera0/camera_link"</span><span class="nt">/&gt;</span>
++<span class="w">  </span><span class="nt">&lt;/include&gt;</span>
++
++<span class="w">  </span><span class="nt">&lt;include</span><span class="w"> </span><span class="na">file=</span><span class="s">"$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml"</span><span class="nt">&gt;</span>
++<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"ns"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)/gnss_link"</span><span class="nt">/&gt;</span>
++<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"parent_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)"</span><span class="nt">/&gt;</span>
++<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"child_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"gnss_link"</span><span class="nt">/&gt;</span>
++<span class="w">  </span><span class="nt">&lt;/include&gt;</span>
++<span class="w"> </span><span class="nt">&lt;/launch&gt;</span>
+</code></pre></div>
+tutorial_vehicle の Manual_sensor_kit.launch.xml の最終バージョンは次のようになります。
+<p>??? 注「manual_sensor_kit.launch.xmltutorial_vehicle のサンプル」</p>
+<p></p><div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;launch&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"vehicle_id"</span><span class="w"> </span><span class="na">default=</span><span class="s">"tutorial_vehicle"</span><span class="nt">/&gt;</span><span class="w"> </span><span class="cm">&lt;!-- You can update with your own vehicle_id --&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"sensor_model"</span><span class="w"> </span><span class="na">value=</span><span class="s">"tutorial_vehicle_sensor_kit"</span><span class="nt">/&gt;</span><span class="w"> </span><span class="cm">&lt;!-- You can update with your own sensor model --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"parent_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"sensor_kit_base_link"</span><span class="nt">/&gt;</span>
+
+<span class="w">    </span><span class="cm">&lt;!-- extrinsic_calibration_client --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"src_yaml"</span><span class="w"> </span><span class="na">default=</span><span class="s">"$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(var sensor_model)/sensor_kit_calibration.yaml"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"dst_yaml"</span><span class="w"> </span><span class="na">default=</span><span class="s">"$(env HOME)/sensor_kit_calibration.yaml"</span><span class="nt">/&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;node</span><span class="w"> </span><span class="na">pkg=</span><span class="s">"extrinsic_calibration_client"</span><span class="w"> </span><span class="na">exec=</span><span class="s">"extrinsic_calibration_client"</span><span class="w"> </span><span class="na">name=</span><span class="s">"extrinsic_calibration_client"</span><span class="w"> </span><span class="na">output=</span><span class="s">"screen"</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;param</span><span class="w"> </span><span class="na">name=</span><span class="s">"src_path"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var src_yaml)"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;param</span><span class="w"> </span><span class="na">name=</span><span class="s">"dst_path"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var dst_yaml)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/node&gt;</span>
+
+<span class="w">    </span><span class="cm">&lt;!-- extrinsic_calibration_manager --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;node</span><span class="w"> </span><span class="na">pkg=</span><span class="s">"extrinsic_calibration_manager"</span><span class="w"> </span><span class="na">exec=</span><span class="s">"extrinsic_calibration_manager"</span><span class="w"> </span><span class="na">name=</span><span class="s">"extrinsic_calibration_manager"</span><span class="w"> </span><span class="na">output=</span><span class="s">"screen"</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;param</span><span class="w"> </span><span class="na">name=</span><span class="s">"parent_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="cm">&lt;!-- Please Update with your own sensor frames --&gt;</span>
+<span class="w">        </span><span class="nt">&lt;param</span><span class="w"> </span><span class="na">name=</span><span class="s">"child_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"</span>
+<span class="s">    [rs_helios_top_base_link,</span>
+<span class="s">    rs_bpearl_front_base_link,</span>
+<span class="s">    camera0/camera_link,</span>
+<span class="s">    gnss_link]"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/node&gt;</span>
+
+<span class="w">    </span><span class="cm">&lt;!-- extrinsic_manual_calibrator --&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!-- Please create a launch for all sensors that you used. --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;include</span><span class="w"> </span><span class="na">file=</span><span class="s">"$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml"</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"ns"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)/rs_helios_top_base_link"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"parent_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"child_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"rs_helios_top_base_link"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/include&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;include</span><span class="w"> </span><span class="na">file=</span><span class="s">"$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml"</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"ns"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)/rs_bpearl_front_base_link"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"parent_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"child_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"rs_bpearl_front_base_link"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/include&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;include</span><span class="w"> </span><span class="na">file=</span><span class="s">"$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml"</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"ns"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)/camera0/camera_link"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"parent_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"child_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"camera0/camera_link"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/include&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;include</span><span class="w"> </span><span class="na">file=</span><span class="s">"$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml"</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"ns"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)/gnss_link"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"parent_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var parent_frame)"</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"child_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"gnss_link"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/include&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</code></pre></div>
+変更したsensors_calibration.yamlmanual_sensors.launch.xmlファイルに従ってファイルを更新できます。センサーをtutorial_vehicleのbase_linkに関して直接調整するつもりはないので、このファイルは変更しません。
+<p>外部手動校正器によるセンサーの校正
+extrinsic_calibration_manager パッケージの Manual.launch.xml および Manual_sensor_kit.launch XML ファイルが完成したら、パッケージをビルドする必要があります。</p>
+<p>colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select extrinsic_calibration_manager
+これで、手動キャリブレーターを起動して使用する準備が整いました。</p>
+<p>ros2 launch extrinsic_calibration_manager calibration.launch.xml mode:=manual sensor_model:=<own-sensor-kit> vehicle_model:=<own-vehicle-model> vehicle_id:=<vehicle-id>
+チュートリアル車両の場合:</vehicle-id></own-vehicle-model></own-sensor-kit></p>
+<p>ros2 launch extrinsic_calibration_manager calibration.launch.xml mode:=manual sensor_model:=tutorial_vehicle_sensor_kit vehicle_model:=tutorial_vehicle vehicle_id:=tutorial_vehicle
+次に、<abbr title="Robot Operating System">ROS</abbr> 2 バッグ ファイルを再生します。</p>
+<p>ros2 bag play <rosbag_path> --clock -l -r 0.2 \
+--remap /tf:=/null/tf /tf_static:=/null/tf_static # if tf is recorded
+手動の rqt_reconfigure ウィンドウが表示され、センサーの rviz2 結果に従って手動でキャリブレーションを更新します。</rosbag_path></p>
+<p>ボタンを押してRefreshからExpand Allボタンを押します。tutorial_vehicle のフレームは次のようになります。
+フォーク-autoware_repository.png</p>
+<p>tf_x, tf_y, tf_z, tf_roll, tf_pitch and tf_yawFilter エリアにターゲット フレーム名 (つまり、front、helios など) を書き込み、tuneable_static_tf_broadcaster_node を選択すると、 RQT パネルで値を調整できます。
+手動調整が終了したら、次のコマンドを使用してキャリブレーション結果を保存できます。
+ros2 topic pub /done std_msgs/Bool "data: true"
+その後、$HOME/*.yaml で出力ファイルを確認できます。</p>
+<div class="admonition 警告">
+<p class="admonition-title">警告</p>
+</div>
+<p>The initial calibration process can be important before the using other calibrations. We will look into the lidar-lidar calibration
+and camera-lidar calibration. At this point, there is hard to calibrate two sensors with exactly same frame, so you should find
+approximately (it not must be perfect) calibration pairs between sensors.
+これは、tutorial_vehicle での手動調整プロセスをデモンストレーションするビデオです。 タイプ:ビデオ</p>
+<h1 id="manual-calibration-for-all-sensors">Manual calibration for all sensors<a class="headerlink" href="#manual-calibration-for-all-sensors" title="Permanent link">#</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
 <p>In this section, we will use <a href="https://github.com/tier4/CalibrationTools/blob/tier4/universe/sensor/docs/how_to_extrinsic_manual.md">Extrinsic Manual Calibration</a>
 for extrinsic calibration of our sensors.
