@@ -21,7 +21,7 @@
     
     
       
-        <title>Fail-safe - Autoware Documentation</title>
+        <title>Fail safe - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Fail-safe
+              Fail safe
             
           </span>
         </div>
@@ -4715,12 +4715,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Fail-safe
+          Fail safe
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Fail-safe
+        Fail safe
       </a>
       
         
@@ -6668,7 +6668,28 @@
   
 
 
-<div><h1 id="fail-safe">Fail-safe<a class="headerlink" href="#fail-safe" title="Permanent link">#</a></h1>
+<div><p>フェイルセーフ
+関連するAPI
+<a href="../../list/api/fail_safe/mrm_state">/api/fail_safe/mrm_state</a>
+説明
+車両の異常に関する挙動を管理するAPIです。これは、介入要求 (RTI)、最小リスク操作 (MRM)、および最小リスク条件 (MRC) の状態を提供します。Autoware には以下に示すように、通常動作時のコマンドと異常動作時のコマンドを切り替えるゲートがあります。安全のため、Autoware は異常を検出すると MRM に動作を切り替えます。状況に応じて求められる動作が異なるため、MRMは通常のモジュール内の特定のモード、または独立したモジュールとしてさまざまな場所に実装されます。フェールセーフモジュールは異常に応じてMRMの動作を選択し、ゲート出力をそのコマンドに切り替えます。</p>
+<p>フェイルセーフアーキテクチャ</p>
+<p>州
+MRM 状態は、MRM が動作しているかどうかを示します。この状態は成功または失敗も示します。通常、MRM は失敗すると別の動作に切り替わります。</p>
+<p>mrm-状態</p>
+<p>州   説明
+なし  MRM が動作していません。
+オペレーティング    異常を検知したためMRMが動作しています。
+成功しました  MRMは成功しました。車両は安全な状態にあります。
+失敗した    MRM が失敗しました。車両は依然として危険な状態にある。
+行動
+MRM の動作間には依存関係があります。たとえば、快適な停止から緊急停止に切り替わりますが、その逆は切り替わりません。これはサービスに依存します。Autoware は、デフォルトで次のトランジションをサポートします。</p>
+<p>mrm の動作</p>
+<p>州   説明
+なし  MRM が動作していないか、動作しているが特別な動作は必要ありません。
+快適_停止   心地よい減速でクルマはすぐに止まります。
+緊急停止    車両は可能な限り減速して直ちに停止します。</p>
+<h1 id="fail-safe">Fail-safe<a class="headerlink" href="#fail-safe" title="Permanent link">#</a></h1>
 <h2 id="related-api">Related API<a class="headerlink" href="#related-api" title="Permanent link">#</a></h2>
 <ul>
 <li><a href="../../list/api/fail_safe/mrm_state">/api/fail_safe/mrm_state</a></li>
