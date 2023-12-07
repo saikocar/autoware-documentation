@@ -1,3 +1,13 @@
+タイトル	状態	方法	タイプ
+/api/operation_mode/change_to_stop
+v1.0.0
+関数呼び出し
+名前	レス
+autoware_adapi_v1_msgs/srv/ChangeOperationMode
+名前	文章
+状態
+対応状況
+{% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %} {% block description %} 動作モードを停止に変更します。詳細は動作モードを参照してください。{% エンドブロック %}
 ---
 title: /api/operation_mode/change_to_stop
 status: v1.0.0
