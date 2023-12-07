@@ -1,3 +1,273 @@
+すべてのセンサーの手動校正
+概要
+このセクションでは、センサーの外部キャリブレーションに外部手動キャリブレーションを使用します。このプロセスの後、最終的に使用するための正確なキャリブレーション結果は得られませんが、他のツールの初期キャリブレーションは行われます。たとえば、ライダーとライダーまたはカメラとライダーのキャリブレーション フェーズでは、正確で適切なキャリブレーション結果を得るために初期キャリブレーションが必要になります。
+
+キャリブレーション プロセスには、生の LIDAR トピックとカメラ トピックを含むサンプル バッグ ファイルが必要です。以下に、キャリブレーションに使用されるバッグ ファイルの例を示します。
+
+??? 注「ROS 2 バッグの校正プロセスの例」
+
+```sh
+
+Files:             rosbag2_2023_09_06-13_43_54_0.db3
+Bag size:          18.3 GiB
+Storage id:        sqlite3
+Duration:          169.12s
+Start:             Sep  6 2023 13:43:54.902 (1693997034.902)
+End:               Sep  6 2023 13:46:43.914 (1693997203.914)
+Messages:          8504
+Topic information: Topic: /sensing/lidar/top/pointcloud_raw | Type: sensor_msgs/msg/PointCloud2 | Count: 1691 | Serialization Format: cdr
+                   Topic: /sensing/lidar/front/pointcloud_raw | Type: sensor_msgs/msg/PointCloud2 | Count: 1691 | Serialization Format: cdr
+                   Topic: /sensing/camera/camera0/image_rect | Type: sensor_msgs/msg/Image | Count: 2561 | Serialization Format: cdr
+                   Topic: /sensing/camera/camera0/camera_info | Type: sensor_msgs/msg/CameraInfo | Count: 2561 | Serialization Format: cdr
+```
+外部の手動ベースの校正
+起動ファイルの作成
+まず、extrinsic_calibration_managerパッケージの起動ファイルの作成から始めます。
+
+cd <YOUR-OWN-AUTOWARE-DIRECTORY>/src/autoware/calibration_tools/sensor
+cd extrinsic_calibration_manager/launch
+mkdir <YOUR-OWN-SENSOR-KIT-NAME> # i.e. for our guide, it will ve mkdir tutorial_vehicle_sensor_kit
+cd <YOUR-OWN-SENSOR-KIT-NAME> # i.e. for our guide, it will ve cd tutorial_vehicle_sensor_kit
+touch manual.launch.xml manual_sensor_kit.launch.xml manual_sensors.launch.xml
+これらを変更し、manual.launch.xmlTIER IV のサンプル センサー キット aip_x1 を使用します。したがって、これら 3 つのファイルの内容をaip_x1から作成したファイルにコピーする必要があります。manual_sensors.launch.xmlmanual_sensor_kit.launch.xml
+
+センサーキットに応じて起動ファイルを変更する
+それで、 の変更を開始できますmanual.launch.xml。お好みのテキスト エディター (コード、gedit など) でこのファイルを開いてください。
+
+(オプション) vehicle_id とセンサーのモデル名を追加することから始めましょう: (値は重要ではありません。これらのパラメーターは起動引数によってオーバーライドされます)
+
+  <arg name="vehicle_id" default="default"/>
+
+  <let name="sensor_model" value="aip_x1"/>
++ <?xml version="1.0" encoding="UTF-8"?>
++ <launch>
+-   <arg name="vehicle_id" default="default"/>
++   <arg name="vehicle_id" default="<YOUR_VEHICLE_ID>"/>
++
+-   <arg name="sensor_model" default="aip_x1"/>
++   <let name="sensor_model" value="<YOUR_SENSOR_KIT_NAME>"/>
+tutorial_vehicle のファイル (manual.launch.xml) の最終バージョンは次のようになります。
+
+??? 注「チュートリアル車両のサンプルマニュアル.launch.xml ファイル」
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <arg name="vehicle_id" default="tutorial_vehicle"/>
+
+    <let name="sensor_model" value="tutorial_vehicle_sensor_kit"/>
+
+    <group>
+        <push-ros-namespace namespace="sensor_kit"/>
+        <include file="$(find-pkg-share extrinsic_calibration_manager)/launch/$(var sensor_model)/manual_sensor_kit.launch.xml">
+            <arg name="vehicle_id" value="$(var vehicle_id)"/>
+        </include>
+    </group>
+
+    <group>
+        <push-ros-namespace namespace="sensors"/>
+        <include file="$(find-pkg-share extrinsic_calibration_manager)/launch/$(var sensor_model)/manual_sensors.launch.xml">
+          <arg name="vehicle_id" value="$(var vehicle_id)"/>
+        </include>
+    </group>
+
+</launch>
+
+```
+Manual.launch.xml ファイルが完成したら、独自のセンサー モデルのsensor_kit_calibration.yamlに Manual_sensor_kit.launch.xml を実装する準備が整います。
+
+オプションで、この XML スニペットに対して sensor_model と vehicle_id を変更することもできます。
+
+...
+  <arg name="vehicle_id" default="default"/>
+
+  <let name="sensor_model" value="aip_x1"/>
++ <?xml version="1.0" encoding="UTF-8"?>
++ <launch>
+-   <arg name="vehicle_id" default="default"/>
++   <arg name="vehicle_id" default="<YOUR_VEHICLE_ID>"/>
++
+-   <arg name="sensor_model" default="aip_x1"/>
++   <let name="sensor_model" value="<YOUR_SENSOR_KIT_NAME>"/>
+...
+次に、すべてのセンサー フレームを子フレームとして extrinsic_calibration_manager に追加します。
+
+   <!-- extrinsic_calibration_manager -->
+-  <node pkg="extrinsic_calibration_manager" exec="extrinsic_calibration_manager" name="extrinsic_calibration_manager" output="screen">
+-    <param name="parent_frame" value="$(var parent_frame)"/>
+-    <param name="child_frames" value="
+-    [velodyne_top_base_link,
+-    livox_front_left_base_link,
+-    livox_front_center_base_link,
+-    livox_front_right_base_link]"/>
+-  </node>
++   <node pkg="extrinsic_calibration_manager" exec="extrinsic_calibration_manager" name="extrinsic_calibration_manager" output="screen">
++     <param name="parent_frame" value="$(var parent_frame)"/>
++     <!-- add your sensor frames here -->
++     <param name="child_frames" value="
++     [<YOUE_SENSOR_BASE_LINK>,
++     YOUE_SENSOR_BASE_LINK,
++     YOUE_SENSOR_BASE_LINK,
++     YOUE_SENSOR_BASE_LINK
++     ...]"/>
++   </node>
+tutorial_vehicle には 4 つのセンサー (2 つの LIDAR、1 つのカメラ、1 つの GNSS/INS) があるため、次のようになります。
+
+??? 注「つまり、tutorial_vehicle の extrinsic_calibration_manager child_frames」
+
+```xml
++   <!-- extrinsic_calibration_manager -->
++   <node pkg="extrinsic_calibration_manager" exec="extrinsic_calibration_manager" name="extrinsic_calibration_manager" output="screen">
++     <param name="parent_frame" value="$(var parent_frame)"/>
++     <!-- add your sensor frames here -->
++     <param name="child_frames" value="
++     [rs_helios_top_base_link,
++     rs_bpearl_front_base_link,
++     camera0/camera_link,
++     gnss_link]"/>
++   </node>
+```
+最後に、センサーのフレームごとに手動キャリブレーターを起動します。calibrator.launch.xml 起動ファイル引数の名前空間 (ns) と child_frame 引数を更新してください。
+
+-  <include file="$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml">
+-    <arg name="ns" value="$(var parent_frame)/velodyne_top_base_link"/>
+-    <arg name="parent_frame" value="$(var parent_frame)"/>
+-    <arg name="child_frame" value="velodyne_top_base_link"/>
+-  </include>
++  <!-- extrinsic_manual_calibrator -->
++  <include file="$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml">
++    <arg name="ns" value="$(var parent_frame)/<YOUR_SENSOR_BASE_LINK>"/>
++    <arg name="parent_frame" value="$(var parent_frame)"/>
++    <arg name="child_frame" value="<YOUR_SENSOR_BASE_LINK>""/>
++  </include>
++
++  ...
++  ...
++  ...
++  ...
++  ...
++
+??? 注「つまり、各tutorial_vehicleのセンサーキットのcalibrator.launch.xml」
+
+```xml
++  <!-- extrinsic_manual_calibrator -->
++  <include file="$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml">
++    <arg name="ns" value="$(var parent_frame)/rs_helios_top_base_link"/>
++    <arg name="parent_frame" value="$(var parent_frame)"/>
++    <arg name="child_frame" value="rs_helios_top_base_link"/>
++  </include>
++
++  <include file="$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml">
++    <arg name="ns" value="$(var parent_frame)/rs_bpearl_front_base_link"/>
++    <arg name="parent_frame" value="$(var parent_frame)"/>
++    <arg name="child_frame" value="rs_bpearl_front_base_link"/>
++  </include>
++
++  <include file="$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml">
++    <arg name="ns" value="$(var parent_frame)/camera0/camera_link"/>
++    <arg name="parent_frame" value="$(var parent_frame)"/>
++    <arg name="child_frame" value="camera0/camera_link"/>
++  </include>
++
++  <include file="$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml">
++    <arg name="ns" value="$(var parent_frame)/gnss_link"/>
++    <arg name="parent_frame" value="$(var parent_frame)"/>
++    <arg name="child_frame" value="gnss_link"/>
++  </include>
++ </launch>
+```
+tutorial_vehicle の Manual_sensor_kit.launch.xml の最終バージョンは次のようになります。
+
+??? 注「manual_sensor_kit.launch.xmltutorial_vehicle のサンプル」
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <arg name="vehicle_id" default="tutorial_vehicle"/> <!-- You can update with your own vehicle_id -->
+
+    <let name="sensor_model" value="tutorial_vehicle_sensor_kit"/> <!-- You can update with your own sensor model -->
+    <let name="parent_frame" value="sensor_kit_base_link"/>
+
+    <!-- extrinsic_calibration_client -->
+    <arg name="src_yaml" default="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(var sensor_model)/sensor_kit_calibration.yaml"/>
+    <arg name="dst_yaml" default="$(env HOME)/sensor_kit_calibration.yaml"/>
+
+    <node pkg="extrinsic_calibration_client" exec="extrinsic_calibration_client" name="extrinsic_calibration_client" output="screen">
+        <param name="src_path" value="$(var src_yaml)"/>
+        <param name="dst_path" value="$(var dst_yaml)"/>
+    </node>
+
+    <!-- extrinsic_calibration_manager -->
+    <node pkg="extrinsic_calibration_manager" exec="extrinsic_calibration_manager" name="extrinsic_calibration_manager" output="screen">
+        <param name="parent_frame" value="$(var parent_frame)"/>
+        <!-- Please Update with your own sensor frames -->
+        <param name="child_frames" value="
+    [rs_helios_top_base_link,
+    rs_bpearl_front_base_link,
+    camera0/camera_link,
+    gnss_link]"/>
+    </node>
+
+    <!-- extrinsic_manual_calibrator -->
+    <!-- Please create a launch for all sensors that you used. -->
+    <include file="$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml">
+        <arg name="ns" value="$(var parent_frame)/rs_helios_top_base_link"/>
+        <arg name="parent_frame" value="$(var parent_frame)"/>
+        <arg name="child_frame" value="rs_helios_top_base_link"/>
+    </include>
+
+    <include file="$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml">
+        <arg name="ns" value="$(var parent_frame)/rs_bpearl_front_base_link"/>
+        <arg name="parent_frame" value="$(var parent_frame)"/>
+        <arg name="child_frame" value="rs_bpearl_front_base_link"/>
+    </include>
+
+    <include file="$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml">
+        <arg name="ns" value="$(var parent_frame)/camera0/camera_link"/>
+        <arg name="parent_frame" value="$(var parent_frame)"/>
+        <arg name="child_frame" value="camera0/camera_link"/>
+    </include>
+
+    <include file="$(find-pkg-share extrinsic_manual_calibrator)/launch/calibrator.launch.xml">
+        <arg name="ns" value="$(var parent_frame)/gnss_link"/>
+        <arg name="parent_frame" value="$(var parent_frame)"/>
+        <arg name="child_frame" value="gnss_link"/>
+    </include>
+</launch>
+```
+変更したsensors_calibration.yamlmanual_sensors.launch.xmlファイルに従ってファイルを更新できます。センサーをtutorial_vehicleのbase_linkに関して直接調整するつもりはないので、このファイルは変更しません。
+
+外部手動校正器によるセンサーの校正
+extrinsic_calibration_manager パッケージの Manual.launch.xml および Manual_sensor_kit.launch XML ファイルが完成したら、パッケージをビルドする必要があります。
+
+colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select extrinsic_calibration_manager
+これで、手動キャリブレーターを起動して使用する準備が整いました。
+
+ros2 launch extrinsic_calibration_manager calibration.launch.xml mode:=manual sensor_model:=<OWN-SENSOR-KIT> vehicle_model:=<OWN-VEHICLE-MODEL> vehicle_id:=<VEHICLE-ID>
+チュートリアル車両の場合:
+
+ros2 launch extrinsic_calibration_manager calibration.launch.xml mode:=manual sensor_model:=tutorial_vehicle_sensor_kit vehicle_model:=tutorial_vehicle vehicle_id:=tutorial_vehicle
+次に、ROS 2 バッグ ファイルを再生します。
+
+ros2 bag play <rosbag_path> --clock -l -r 0.2 \
+--remap /tf:=/null/tf /tf_static:=/null/tf_static # if tf is recorded
+手動の rqt_reconfigure ウィンドウが表示され、センサーの rviz2 結果に従って手動でキャリブレーションを更新します。
+
+ボタンを押してRefreshからExpand Allボタンを押します。tutorial_vehicle のフレームは次のようになります。
+フォーク-autoware_repository.png
+
+tf_x, tf_y, tf_z, tf_roll, tf_pitch and tf_yawFilter エリアにターゲット フレーム名 (つまり、front、helios など) を書き込み、tuneable_static_tf_broadcaster_node を選択すると、 RQT パネルで値を調整できます。
+手動調整が終了したら、次のコマンドを使用してキャリブレーション結果を保存できます。
+ros2 topic pub /done std_msgs/Bool "data: true"
+その後、$HOME/*.yaml で出力ファイルを確認できます。
+!!! 警告
+
+The initial calibration process can be important before the using other calibrations. We will look into the lidar-lidar calibration
+and camera-lidar calibration. At this point, there is hard to calibrate two sensors with exactly same frame, so you should find
+approximately (it not must be perfect) calibration pairs between sensors.
+これは、tutorial_vehicle での手動調整プロセスをデモンストレーションするビデオです。 タイプ:ビデオ
+
+
 # Manual calibration for all sensors
 
 ## Overview
