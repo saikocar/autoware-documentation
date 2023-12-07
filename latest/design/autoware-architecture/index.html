@@ -21,7 +21,7 @@
     
     
       
-        <title>Architecture overview - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Architecture overview
+              Index
             
           </span>
         </div>
@@ -6606,7 +6606,35 @@
   
 
 
-<div><h1 id="architecture-overview">Architecture overview<a class="headerlink" href="#architecture-overview" title="Permanent link">#</a></h1>
+<div><p>アーキテクチャの概要
+このページでは Autoware のアーキテクチャについて説明します。</p>
+<p>導入
+現在の Autoware は、各モジュールの役割を明確にし、それらの間のインターフェイスを簡素化する階層化アーキテクチャとして定義されています。そうすることによって：</p>
+<p>Autoware の内部処理がより透明になります。
+モジュール間の相互依存性が軽減されるため、共同開発が容易になります。
+ユーザーは、Autoware のインターフェイスに合うようにソフトウェアをラップするだけで、既存のモジュール (ローカリゼーションなど) を独自のソフトウェア コンポーネントに簡単に置き換えることができます。
+このアーキテクチャ設計の当初の焦点は駆動能力のみにあったため、次の機能は将来の作業として残されたことに注意してください。</p>
+<p>フェイルセーフ
+ヒューマン・マシン・インターフェース
+リアルタイム処理
+冗長化システム
+状態監視システム
+高レベルのアーキテクチャ設計
+概要</p>
+<p>Autoware のアーキテクチャは次の 6 つのスタックで構成されます。リンクされた各ページには、そのスタックに固有のより詳細な要件とユースケースのセットが含まれています。</p>
+<p>センシング設計
+地図デザイン
+ローカリゼーション設計
+知覚デザイン
+企画デザイン
+制御設計
+車両インターフェース設計
+ノード図
+デフォルト構成の Autoware ノードを示す図は、ノード図ページにあります。各ノードの詳細なドキュメントは、Autoware Universe のドキュメントで入手できます。</p>
+<p>Autoware 構成はスケーラブル/選択可能であり、環境と必要なユースケースによって異なることに注意してください。</p>
+<p>参考文献
+2020 年 3 月、<abbr title="Autoware Foundation">AWF</abbr> 技術運営委員会に対して行われたアーキテクチャのプレゼンテーション</p>
+<h1 id="architecture-overview">Architecture overview<a class="headerlink" href="#architecture-overview" title="Permanent link">#</a></h1>
 <p>This page describes the architecture of Autoware.</p>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h2>
 <p>The current Autoware is defined to be a layered architecture that clarifies each module's role and simplifies the interface between them. By doing so:</p>
