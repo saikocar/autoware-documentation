@@ -1,3 +1,72 @@
+FAST_LIO_SLAM
+FAST_LIO_SLAMとは何ですか?
+FAST_LIO_SLAM は、FAST_LIO と、スキャン コンテキスト ベースのループ検出および GTSAM ベースのポーズグラフ最適化である SC-PGO を統合したものです。
+リポジトリ情報
+元のリポジトリのリンク
+https://github.com/gisbi-kim/FAST_LIO_SLAM
+
+必要なセンサー
+LIDAR [Livox、Velodyne、Ouster]
+IMU [6軸、9軸]
+GPS [オプション]
+ROS の互換性
+ROS 1
+依存関係
+ROS
+PCL
+GTSAM
+wget -O ~/Downloads/gtsam.zip https://github.com/borglab/gtsam/archive/4.0.0-alpha2.zip
+cd ~/Downloads/ && unzip gtsam.zip -d ~/Downloads/
+cd ~/Downloads/gtsam-4.0.0-alpha2/
+mkdir build && cd build
+cmake ..
+sudo make install
+PCL >= 1.8、PCL のインストールに従ってください。
+Eigen >= 3.3.4、Eigen のインストールに従ってください。
+構築して実行
+1) ビルド
+    mkdir -p ~/catkin_fastlio_slam/src
+    cd ~/catkin_fastlio_slam/src
+    git clone https://github.com/gisbi-kim/FAST_LIO_SLAM.git
+    git clone https://github.com/Livox-SDK/livox_ros_driver
+    cd ..
+    catkin_make
+    source devel/setup.bash
+2) パラメータの設定
+imu と LIDAR トピックを設定しますFast_LIO/config/ouster64.yaml
+3) 走る
+    # terminal 1: run FAST-LIO2
+    roslaunch fast_lio mapping_ouster64.launch
+
+    # open the other terminal tab: run SC-PGO
+    cd ~/catkin_fastlio_slam
+    source devel/setup.bash
+    roslaunch aloam_velodyne fastlio_ouster64.launch
+
+    # play bag file in the other terminal
+    rosbag play xxx.bag -- clock --pause
+結果の例
+
+
+
+
+その他の例
+チュートリアルビデオ 1 ( MulRan データセットの KAIST 03 シーケンスを使用)
+
+結果キャプチャの例
+
+
+FAST-LIO-SLAM 製KAIST 03 PCD マップをダウンロード、500MB
+ビデオ例 2 ( MulRan データセットの Riverside 02 シーケンス)
+
+結果キャプチャの例
+
+
+FAST-LIO-SLAM 製Riverside 02 PCD マップをダウンロード、400MB
+謝辞
+FAST_LIO の作者に感謝します。
+yanliang-wangによって実装されたこのバージョンの FAST-LIO + ループ クロージャに興味があるかもしれません。
+管理者: ギソプ・キム ( paulgkim@kaist.ac.kr)
 # FAST_LIO_SLAM
 
 ## What is FAST_LIO_SLAM?
