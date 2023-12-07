@@ -1,3 +1,79 @@
+センシング
+
+入力
+超音波
+超音波レーダードライバーからの距離データ。
+
+センサーメッセージ/範囲
+カメラ画像
+カメラドライバーからの画像データ。
+
+センサーメッセージ/画像
+レーダー追跡
+レーダードライバーからの追跡。
+
+レーダー_msgs/レーダートラック
+レーダースキャン
+レーダードライバーからスキャンします。
+
+レーダー_msgs/レーダースキャン
+LIDAR 点群
+LIDAR ドライバーからのポイントクラウド。
+
+センサー_msgs/PointCloud2
+GNSS-INS位置
+GNSS ドライバーからの初期ポーズ。
+
+geometry_msgs/NavSatFix
+GNSS-INS の方向
+GNSS ドライバーからの初期方向。
+
+autoware_sensing_msgs/GnssInsOrientationStamped
+GNSS 速度
+GNSSドライバーからの初速度。
+
+geometry_msgs/TwistWithCovarianceStamped
+GNSS の加速
+GNSS ドライバーからの初期加速。
+
+geometry_msgs/AccelWithCovarianceStamped
+出力
+超音波
+超音波レーダーからの距離データ。知覚によって使用されます。
+
+センサーメッセージ/範囲
+カメラ画像
+カメラからの画像データ。知覚によって使用されます。
+
+センサーメッセージ/画像
+結合されたレーダー追跡
+レーダーからのレーダー追跡。知覚によって使用されます。
+
+レーダー_msgs/RadarTracks.msg
+レーダー点群
+レーダーからの点群。知覚によって使用されます。
+
+レーダー_msgs/レーダースキャン.msg
+結合された LIDAR 点群
+前処理後の LIDAR 点群。知覚とローカリゼーションによって使用されます。
+
+センサー_msgs/PointCloud2
+GNSS-INS ポーズ
+GNSS からの自我車両の初期ポーズ。ローカリゼーションによって使用されます。
+
+geometry_msgs/PoseWithCovarianceStamped
+GNSS-INS の方向
+GNSS からの方位情報。ローカリゼーションによって使用されます。
+
+sensor_msgs/Imu
+GNSS速度
+GNSS からの自車両の速度。ローカリゼーションによって使用されます。
+
+geometry_msgs/TwistWithCovarianceStamped
+GNSS の加速
+GNSS からの自車両の加速。ローカリゼーションによって使用されます。
+
+geometry_msgs/AccelWithCovarianceStamped
 # Sensing
 
 ```mermaid
