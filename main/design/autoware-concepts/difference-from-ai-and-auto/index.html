@@ -21,7 +21,7 @@
     
     
       
-        <title>How is Autoware Core/Universe different from Autoware.AI and Autoware.Auto? - Autoware Documentation</title>
+        <title>Difference from ai and auto - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              How is Autoware Core/Universe different from Autoware.AI and Autoware.Auto?
+              Difference from ai and auto
             
           </span>
         </div>
@@ -3949,12 +3949,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          How is Autoware Core/Universe different from Autoware.AI and Autoware.Auto?
+          Difference from ai and auto
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        How is Autoware Core/Universe different from Autoware.AI and Autoware.Auto?
+        Difference from ai and auto
       </a>
       
         
@@ -6654,7 +6654,35 @@
   
 
 
-<div><h1 id="how-is-autoware-coreuniverse-different-from-autowareai-and-autowareauto">How is Autoware Core/Universe different from Autoware.AI and Autoware.Auto?<a class="headerlink" href="#how-is-autoware-coreuniverse-different-from-autowareai-and-autowareauto" title="Permanent link">#</a></h1>
+<div><p>Autoware Core/Universe は Autoware.AI および Autoware.Auto とどのように異なりますか?
+Autoware は、世界初の自動運転車用の「オールインワン」オープンソース ソフトウェアです。2015 年に初めてリリースされて以来、異なる基本コンセプトで複数のリリースが作成され、それぞれがソフトウェアの改善を目的としていました。</p>
+<p>Autoware.AI
+Autoware.AI は、<abbr title="Robot Operating System">ROS</abbr> 1 に基づいてリリースされた Autoware の最初のディストリビューションです。リポジトリには、センシング、作動、位置特定、マッピング、認識、計画など、自動運転技術のさまざまな側面をカバーするさまざまなパッケージが含まれています。</p>
+<p>Autoware.AI は多くの開発者と貢献を引き付けることに成功しましたが、次のような理由により、Autoware.AI の機能を改善するのは困難でした。</p>
+<p>具体的なアーキテクチャ設計が欠如しているため、モジュール間の緊密な結合やモジュールの責任の不明確さなど、多くの技術的負債が蓄積されます。
+パッケージごとにコーディング標準が異なり、テストカバレッジが非常に低い。
+さらに、Autoware 対応の自動運転車が動作できる条件や、サポートされるユースケースや状況 (静止車両を追い越す機能など) についての明確な定義はありませんでした。</p>
+<p>Autoware.AI 開発から学んだ教訓から、Autoware.Auto では異なる開発プロセスが採用され、Autoware の <abbr title="Robot Operating System">ROS</abbr> 2 バージョンが開発されました。</p>
+<div class="admonition 警告">
+<p class="admonition-title">警告</p>
+</div>
+<p>Autoware.AI is currently in maintenance mode and will reach end-of-life at the end of 2022.
+Autoware.Auto
+Autoware.Auto は、<abbr title="Robot Operating System">ROS</abbr> 2 に基づいてリリースされた Autoware の 2 番目のディストリビューションです。<abbr title="Robot Operating System">ROS</abbr> 2 への移行の一環として、Autoware.AI を <abbr title="Robot Operating System">ROS</abbr> 1 から <abbr title="Robot Operating System">ROS</abbr> 2 に単純に移植することは避けることが決定されました。代わりに、コードベースは <abbr title="Robot Operating System">ROS</abbr> 2 から書き直されました。ターゲットのユースケースと <abbr title="Operational Design Domain">ODD</abbr> (例: 自動バレーパーキング [<abbr title="Autonomous Valet Parking">AVP</abbr>]、貨物配送など) の定義、適切なアーキテクチャの設計、設計ドキュメントとテスト コードの作成など、適切なエンジニアリング プラクティスを一から実行します。</p>
+<p>Autoware.Auto の開発は当初は問題なく機能しているように見えましたが、<abbr title="Autonomous Valet Parking">AVP</abbr> プロジェクトと Cargo Delivery <abbr title="Operational Design Domain">ODD</abbr> プロジェクトが完了した後、次の問題が発生し始めました。</p>
+<p>新人エンジニアへの障壁は高すぎました。
+新しい機能を Autoware.Auto にマージするには多くの作業が必要であったため、研究者や学生が開発に貢献するのは困難でした。
+その結果、ほとんどの Autoware.Auto 開発者は Autoware Foundation の企業の出身であったため、研究論文から最先端の機能を追加できる人はほとんどいませんでした。
+大規模なアーキテクチャ変更は非常に困難でした。
+実験的なアーキテクチャを試すには、メイン ブランチの安定性を維持しながら、すべての変更が継続的インテグレーションの要件を満たしていることを確認するために、非常に大きなオーバーヘッドが発生しました。
+Autoware コア/ユニバース
+Autoware.Auto 開発の問題に対処するために、Autoware Foundation は Autoware Core/Universe と呼ばれる新しいアーキテクチャを作成することを決定しました。</p>
+<p>Autoware Core は、Autoware.Auto の元のポリシーを引き継ぎ、安定した十分にテストされたコードベースになります。Autoware Core に加えて、Autoware Universe と呼ばれる新しい概念もあり、Autoware Core の拡張機能として機能し、次の利点があります。</p>
+<p>ユーザーは、新しいローカリゼーション アルゴリズムや知覚アルゴリズムなどのより高度な機能を使用するために、コア コンポーネントを同等のユニバースと簡単に置き換えることができます。
+Universe のコード品質要件は、新しい開発者、学生、研究者が貢献しやすくするためにより緩和されていますが、それでも Autoware.AI の要件よりは厳格です。
+Universe に追加された、より広範な Autoware コミュニティに役立つ高度な機能はすべてレビューされ、メインの Autoware Core コードベースに組み込む可能性が検討されます。
+このようにして、安定した安全な自動運転システムを実現するという主な要件を達成できると同時に、サードパーティの貢献者によって作成された最先端の機能へのアクセスが可能になります。Autoware Core/Universe の設計の詳細については、Autoware の概念ドキュメント ページを参照してください。</p>
+<h1 id="how-is-autoware-coreuniverse-different-from-autowareai-and-autowareauto">How is Autoware Core/Universe different from Autoware.AI and Autoware.Auto?<a class="headerlink" href="#how-is-autoware-coreuniverse-different-from-autowareai-and-autowareauto" title="Permanent link">#</a></h1>
 <p>Autoware is the world's first "all-in-one" open-source software for self-driving vehicles.
 Since it was first released in 2015, there have been multiple releases made with differing underlying concepts, each one aimed at improving the software.</p>
 <h2 id="autowareai">Autoware.AI<a class="headerlink" href="#autowareai" title="Permanent link">#</a></h2>
