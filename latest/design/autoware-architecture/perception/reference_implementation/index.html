@@ -21,7 +21,7 @@
     
     
       
-        <title>Perception Component Reference Implementation Design - Autoware Documentation</title>
+        <title>Reference implementation - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Perception Component Reference Implementation Design
+              Reference implementation
             
           </span>
         </div>
@@ -4338,12 +4338,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Perception Component Reference Implementation Design
+          Reference implementation
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Perception Component Reference Implementation Design
+        Reference implementation
       </a>
       
         
@@ -6666,7 +6666,30 @@
   
 
 
-<div><h1 id="perception-component-reference-implementation-design">Perception Component Reference Implementation Design<a class="headerlink" href="#perception-component-reference-implementation-design" title="Permanent link">#</a></h1>
+<div><p>知覚コンポーネントのリファレンス実装設計
+この文書の目的
+このドキュメントでは、リファレンス実装の詳細な設計の概要を説明します。これにより、開発者とユーザーは、Perception コンポーネントで現在何が利用できるのか、その機能を利用、拡張、または追加する方法を理解できるようになります。</p>
+<p>建築
+この図は、リファレンス実装のアーキテクチャを示しています。</p>
+<p>全体的な認識のアーキテクチャ</p>
+<p>Perception コンポーネントは次のサブコンポーネントで構成されます。</p>
+<p>障害物セグメンテーション: 自車両が回避すべき障害物 (動的オブジェクトだけでなく、静止障害物などの回避すべき静的障害物も含む) に由来する点群を識別します。たとえば、建設用コーンはこのモジュールを使用して認識されます。
+占有グリッド マップ: 死角 (情報が入手できず、動的オブジェクトが飛び出す可能性のある領域) を検出します。
+物体認識: 現在のフレーム内で自車両の周囲にある動的物体を認識し、それらの将来の軌道を予測します。
+検出: 車両や歩行者などの動的物体の姿勢と速度を検出します。
+Detector : オブジェクト検出処理をフレームごとにトリガーします。
+Interpolator : 安定した物体検出を維持します。Detector からの出力が突然利用できなくなった場合でも、Interpolator は Tracking モジュールからの出力を使用して、オブジェクトを見逃すことなく検出結果を維持します。
+追跡: 複数のフレームにわたる検出結果を関連付けます。
+予測: 動的オブジェクトの軌道を予測します。
+信号機認識: 信号機の色と矢印信号の方向を認識します。
+認識コンポーネントの内部インターフェイス
+障害物のセグメンテーションから物体認識へ
+点群: 現在のフレームで観察された点群で、地面と外れ値が削除されています。
+障害物セグメンテーションから占有グリッド マップへ
+地面フィルターされた点群: 現在のフレームで観察され、地面が削除された点群。
+障害物セグメンテーションへの占有グリッド マップ
+占有グリッド マップ: これは外れ値をフィルタリングするために使用されます。</p>
+<h1 id="perception-component-reference-implementation-design">Perception Component Reference Implementation Design<a class="headerlink" href="#perception-component-reference-implementation-design" title="Permanent link">#</a></h1>
 <h2 id="purpose-of-this-document">Purpose of this document<a class="headerlink" href="#purpose-of-this-document" title="Permanent link">#</a></h2>
 <p>This document outlines detailed design of the reference imprementations. This allows developers and users to understand what is currently available with the Perception Component, how to utilize, expand, or add to its features.</p>
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">#</a></h2>
