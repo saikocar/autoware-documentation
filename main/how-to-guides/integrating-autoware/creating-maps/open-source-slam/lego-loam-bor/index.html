@@ -21,7 +21,7 @@
     
     
       
-        <title>LeGO-LOAM-BOR - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              LeGO-LOAM-BOR
+              Index
             
           </span>
         </div>
@@ -6674,7 +6674,50 @@
   
 
 
-<div><h1 id="lego-loam-bor">LeGO-LOAM-BOR<a class="headerlink" href="#lego-loam-bor" title="Permanent link">#</a></h1>
+<div><p>レゴロームボール
+レゴロームボールとは何ですか?
+LeGO-LOAM-BOR は、コードの品質を改善し、読みやすく一貫性を高めた LeGO-LOAM の改良版です。また、プロセスをマルチスレッドアプローチに変換することでパフォーマンスが向上します。
+リポジトリ情報
+元のリポジトリのリンク
+https://github.com/facontidavide/LeGO-LOAM-BOR</p>
+<p>必要なセンサー
+ライダー[VLP-16]
+<abbr title="Inertial Measurement Unit">IMU</abbr> [9軸]
+<abbr title="Robot Operating System">ROS</abbr> の互換性
+<abbr title="Robot Operating System">ROS</abbr> 1
+依存関係
+<abbr title="Robot Operating System">ROS</abbr> Melodic <abbr title="Robot Operating System">ROS</abbr> のインストール
+PCL PCL のインストール
+Gtsam GTSAM のインストール
+wget -O ~/Downloads/gtsam.zip https://github.com/borglab/gtsam/archive/4.0.0-alpha2.zip
+cd ~/Downloads/ &amp;&amp; unzip gtsam.zip -d ~/Downloads/
+cd ~/Downloads/gtsam-4.0.0-alpha2/
+mkdir build &amp;&amp; cd build
+cmake ..
+sudo make install
+構築して実行
+1) ビルド
+cd ~/catkin_ws/src
+git clone https://github.com/facontidavide/LeGO-LOAM-BOR.git
+cd ..
+catkin_make
+2) パラメータの設定
+パラメータをオンに設定しますLeGo-LOAM/loam_config.yaml
+3) 走る
+source devel/setup.bash
+roslaunch lego_loam_bor run.launch rosbag:=/path/to/your/rosbag lidar_topic:=/velodyne_points
+結果の例</p>
+<p>レゴロームを引用
+このコードのいずれかを使用する場合は、LeGO-LOAM論文を引用していただきありがとうございます。</p>
+<p>@inproceedings{legoloam2018,
+  title={LeGO-LOAM: Lightweight and Ground-Optimized Lidar Odometry and Mapping on Variable Terrain},
+  author={Tixiao Shan and Brendan Englot},
+  booktitle={IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  pages={4758-4765},
+  year={2018},
+  organization={IEEE}
+}</p>
+<h1 id="lego-loam-bor">LeGO-LOAM-BOR<a class="headerlink" href="#lego-loam-bor" title="Permanent link">#</a></h1>
 <h2 id="what-is-lego-loam-bor">What is LeGO-LOAM-BOR?<a class="headerlink" href="#what-is-lego-loam-bor" title="Permanent link">#</a></h2>
 <ul>
 <li>LeGO-LOAM-BOR is improved version of the LeGO-LOAM by improving quality of the code, making it more readable and consistent. Also, performance is improved by converting processes to multi-threaded approach.</li>
