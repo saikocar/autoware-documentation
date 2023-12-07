@@ -1,3 +1,34 @@
+感知
+このページでは、Perception コンポーネントのインターフェイスに関する具体的な仕様を提供します。概念とデータ フローについては、認識アーキテクチャのリファレンス実装設計ドキュメントを参照してください。
+
+入力
+マップコンポーネントから
+名前	トピックス・サービス	タイプ	説明
+ベクトルマップ	/map/vector_map	autoware_auto_mapping_msgs/msg/HADMapBin	車線情報を含むHDマップ
+点群マップ	/service/get_differential_pcd_map	autoware_map_msgs/srv/GetDifferentialPointCloudMap	点群マップ
+ノート：
+
+点群マップ
+input はトピックまたはサービスの両方にすることができますが、このインターフェイスによりマップ ファイル サイズの制限に制約されずに処理できるため、サービスの使用を強くお勧めします。
+センシングコンポーネントから
+名前	トピック	タイプ	説明
+カメラ画像	/sensing/camera/camera*/image_rect_color	センサーメッセージ/画像	レンズ歪み補正 (LDC) で処理されたカメラ画像データ
+カメラ画像	/sensing/camera/camera*/image_raw	センサーメッセージ/画像	レンズ歪み補正 (LDC) 処理されていないカメラ画像データ
+点群	/sensing/lidar/concatenated/pointcloud	センサー_msgs/PointCloud2	複数の LiDAR ソースからの点群を連結
+レーダーオブジェクト	/sensing/radar/detected_objects	autoware_auto_perception_msgs/msg/DetectedObject	レーダーオブジェクト
+ローカリゼーションコンポーネントから
+名前	トピック	タイプ	説明
+車両オドメトリ	/localization/kinematic_state	nav_msgs/msg/オドメトリ	自家車両オドメトリ トピック
+APIから
+名前	トピック	タイプ	説明
+外部交通信号機	/external/traffic_signals	autoware_perception_msgs::msg::TrafficSignalArray	外部システムからの信号機
+出力
+企画へ
+名前	トピック	タイプ	説明
+動的オブジェクト	/perception/object_recognition/objects	autoware_auto_perception_msgs/msg/PredictedObjects	オブジェクト クラスやオブジェクトの形状などの情報を含む動的オブジェクトのセット
+障害物	/perception/obstacle_segmentation/pointcloud	センサー_msgs/PointCloud2	障害物 (動的オブジェクトと静的オブジェクトを含む)
+占有グリッドマップ	/perception/occupancy_grid_map/map	nav_msgs/msg/OccupancyGrid	障害物の存在や死角に関する情報を含む地図
+信号機	/perception/traffic_light_recognition/traffic_signals	autoware_perception_msgs::msg::TrafficSignalArray	色（緑、黄、読み）や矢印（右、左、直進）などの信号情報
 # Perception
 
 This page provides specific specifications about the Interface of the Perception Component. Please refer to [the perception architecture reference implementation design document](../../autoware-architecture/perception/reference_implementation.md) for concepts and data flow.
