@@ -21,7 +21,7 @@
     
     
       
-        <title>Sensing Launch Files - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Sensing Launch Files
+              Index
             
           </span>
         </div>
@@ -6585,7 +6585,30 @@
   
 
 
-<div><h1 id="sensing-launch-files">Sensing Launch Files<a class="headerlink" href="#sensing-launch-files" title="Permanent link">#</a></h1>
+<div><p>起動ファイルの検出
+概要
+「Autoware の起動」autoware_launch.xmlページで説明したように、Autoware センシング スタックは に起動を開始します。パッケージには、 からの起動ファイル呼び出しの検出を開始するためのものが含まれています。この図は、およびパッケージでの Autoware センシング起動ファイル フローの一部を説明しています。autoware_launchtier4_sensing_component.launch.xmlautoware_launch.xmlautoware_launchautoware.universe</p>
+<p><img align="center" alt="sensing-launch-flow" src="images/sensing_launch_flow.svg"> Autoware センシング起動フロー図</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+</div>
+<p>The Autoware project is a large project.
+Therefore, as we manage the Autoware project, we utilize specific
+arguments in the launch files.
+<abbr title="Robot Operating System">ROS</abbr> 2 offers an argument-overriding feature for these launch files.
+Please refer to <a href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html#parameter-overrides">the official <abbr title="Robot Operating System">ROS</abbr> 2 launch documentation</a> for further information.
+For instance,
+if we define an argument at the top-level launch,
+it will override the value on lower-level launches.
+センシングの起動はセンサー キットにより関連しているため、起動を変更する場合は、これらの変更をパッケージに適用することをお勧めします。詳細については、センサーと車両モデルのページの作成を参照してください。ただし、トップレベルの起動ファイルで実行できる変更がいくつかあります。</p>
+<p>たとえば、Autoware でセンサー ドライバーを起動したくない場合は、コマンド ライン引数を使用して無効にすることができます。</p>
+<p>ros2 launch autoware_launch autoware.launch.xml ... launch_sensing_driver:=false ...
+または、起動ファイルで変更することもできますautoware.launch.xml。</p>
+<ul>
+<li><arg name="launch_sensing_driver" default="true" description="launch sensing driver"></arg></li>
+<li><arg name="launch_sensing_driver" default="false" description="launch sensing driver"></arg></li>
+</ul>
+<h1 id="sensing-launch-files">Sensing Launch Files<a class="headerlink" href="#sensing-launch-files" title="Permanent link">#</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
 <p>The Autoware sensing stacks start
 launching at <code>autoware_launch.xml</code> as we mentioned at <a href="../">Launch Autoware</a> page.
