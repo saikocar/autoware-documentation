@@ -1,3 +1,65 @@
+利用可能なオープンソース SLAM
+このページには、点群 (.pcd) マップ ファイルの生成に使用できる、利用可能なオープン ソースの Simultaneous Localization And Mapping (SLAM) 実装のリストが表示されます。
+
+使用する実装の選択
+Lidar オドメトリは時間の経過とともに累積的にドリフトします。この問題を解決するには、グラフの最適化、ループ クロージャ、GPS センサーを使用して累積ドリフト エラーを減らすなどのソリューションがあります。そのため、SLAM アルゴリズムにはループ クロージャ機能、グラフ最適化が必要であり、GPS センサーを使用する必要があります。さらに、一部のアルゴリズムは IMU センサーを使用してグラフに別の要素を追加し、ドリフト誤差を減少させています。アルゴリズムの中には厳密に 9 軸 IMU センサーを必要とするものもありますが、6 軸 IMU センサーのみを必要とするものや、IMU センサーを使用しないものもあります。Autoware 用のマップを作成するアルゴリズムを選択する前に、センサーの設定や生成されるマップの期待される品質に応じてこれらの要素が異なることを考慮してください。
+
+チップ
+一般的に使用されるオープンソース SLAM 実装は、lidarslam-ros2 (LiDAR、IMU*) およびLIO-SAM (LiDAR、IMU、GNSS) です。各アルゴリズムに必要なセンサー データは括弧内に指定されており、アスタリスク (*) はそのようなセンサー データがオプションであることを示します。サポートされている LiDAR モデルについては、各アルゴリズムの GitHub リポジトリを確認してください。これらの ROS 2 ベースの SLAM 実装は、Autoware を実行する同じマシンに簡単にインストールして直接使用できますが、ROS 1 ベースの代替案ほど十分にテストされておらず、成熟していない可能性があることに注意することが重要です。
+
+ROS 1 に基づく注目すべきオープンソース SLAM 実装には、hdl-graph-slam (LiDAR、IMU*、GNSS*)、LeGO-LOAM (LiDAR、IMU*)、LeGO-LOAM-BOR (LiDAR)、LIOなどがあります。 -SAM (LiDAR、IMU、GNSS)。
+
+これらのアルゴリズムのほとんどには、ループ クロージャとポーズ グラフの最適化がすでに組み込まれています。ただし、組み込みの自動ループ終了が失敗するか正しく動作しない場合は、インタラクティブ SLAMを使用してポーズ グラフを手動で調整および最適化できます。
+
+サードパーティの SLAM 実装のリスト
+
+
+パッケージ名	説明	リポジトリリンク	ループの閉鎖	センサー	ROSのバージョン	依存関係
+ファスト-LIO-LC	ループ クロージャ モジュールとグラフ最適化を備えた、計算効率が高く堅牢な LiDAR 慣性オドメトリ パッケージ	https://github.com/yanliang-wang/FAST_LIO_LC	✓	Lidar
+IMU
+GPS [オプション]	ROS 1	ROS メロディック
+PCL >= 1.8
+固有 >= 3.3.4
+GTSAM >= 4.0.0
+FAST_LIO_SLAM	FAST_LIO_SLAM は、FAST_LIO と、スキャン コンテキスト ベースのループ検出および GTSAM ベースのポーズグラフ最適化である SC-PGO を統合したものです。	https://github.com/gisbi-kim/FAST_LIO_SLAM	✓	Lidar
+IMU
+GPS [オプション]	ROS 1	PCL >= 1.8
+固有 >= 3.3.4
+FD-SLAM	FD_SLAM は、Surface Representation Refinement に基づいた、Feature&Distribution ベースの 3D LiDAR SLAM メソッドです。このアルゴリズムでは、高速スキャン マッチングに新しい機能ベースの Lidar オドメトリが使用され、キーフレーム マッチングには提案された UGICP メソッドが使用されました。	https://github.com/SLAMWang/FD-SLAM	✓	Lidar
+IMU [オプション]
+GPS	ROS 1	PCL
+g2o
+スイートスパース
+hdl_graph_slam	3D LIDAR を使用したリアルタイム 6DOF SLAM 用のオープンソース ROS パッケージ。これは、NDT スキャン マッチング ベースのオドメトリ推定とループ検出を備えた 3D Graph SLAM に基づいています。また、GPS、IMU 加速度 (重力ベクトル)、IMU 方向 (磁気センサー)、床面 (点群で検出) など、いくつかのグラフ制約もサポートします。	https://github.com/koide3/hdl_graph_slam	✓	Lidar
+IMU [オプション]
+GPS [オプション]	ROS 1	PCL
+g2o
+OpenMP
+イア・リオ・サム	IA_LIO_SLAM は、非構造化環境でのデータ収集用に作成され、スムージングとマッピングを介した強度と周囲の強化されたライダー慣性走行距離測定のためのフレームワークであり、高精度のロボットの軌道とマッピングを実現します。	https://github.com/minwoo0611/IA_LIO_SAM	✓	ライダー
+IMU
+GPS	ROS 1	GTSAM
+イスクローム	ISCLOAM は、ジオメトリ情報と強度情報の両方を統合することにより、堅牢なループ閉鎖検出アプローチを提供します。	https://github.com/wh200720041/iscloam	✓	ライダー	ROS 1	Ubuntu 18.04
+ROS メロディック
+セレス
+PCL
+GTSAM
+OpenCV
+レゴロームボール	LeGO-LOAM-BOR は、コードの品質を改善し、読みやすく一貫性を高めた LeGO-LOAM の改良版です。また、プロセスをマルチスレッドアプローチに変換することでパフォーマンスが向上します。	https://github.com/facontidavide/LeGO-LOAM-BOR	✓	ライダー
+IMU	ROS 1	ROS メロディック
+PCL
+GTSAM
+LIO_SAM	高精度かつリアルタイムな移動ロボットの軌道推定と地図構築を実現するフレームワーク。ファクター グラフの上に LIDAR 慣性オドメトリを定式化し、ループ クロージャを含む多数の相対および絶対測定をさまざまなソースからファクターとしてシステムに組み込むことができます。	https://github.com/TixiaoShan/LIO-SAM	✓	Lidar
+IMU
+GPS [オプション]	ROS 1
+ROS 2	PCL
+GTSAM
+最適化されたSC-F-LOAM	F-LOAM の改良版であり、適応しきい値を使用してループ クロージャの検出結果をさらに判断し、誤ったループ クロージャの検出を減らします。また、特徴点ベースのマッチングを使用して、ループ クロージャ フレーム点群のペア間の制約を計算し、ループ フレーム制約の構築にかかる時間を削減します。	https://github.com/SlamCabbage/Optimized-SC-F-LOAM	✓	ライダー	ROS 1	PCL
+GTSAM
+セレス
+スカローム	A-LOAM と ScanContext を統合したリアルタイム LiDAR SLAM パッケージ。	https://github.com/gisbi-kim/SC-A-LOAM	✓	ライダー	ROS 1	GTSAM >= 4.0
+SC-レゴ-ローム	SC-LeGO-LOAM は、LIDAR オドメトリと 2 つの異なるループ クロージャ メソッド (ScanContext および Radius 検索ベースのループ クロージャ) 用に LeGO-LOAM を統合しました。ScanContext が大きなドリフトを修正している間、半径検索ベースの方法は細かいステッチングに適しています	https://github.com/irapkaist/SC-LeGO-LOAM	✓	ライダー
+IMU	ROS 1	PCL
+GTSAM
 # Available Open Source SLAM
 
 This page provides the list of available open source Simultaneous Localization And Mapping (SLAM) implementation that can be used to generate a point cloud (.pcd) map file.
