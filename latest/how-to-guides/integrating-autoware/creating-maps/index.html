@@ -21,7 +21,7 @@
     
     
       
-        <title>Creating maps - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Creating maps
+              Index
             
           </span>
         </div>
@@ -6599,7 +6599,32 @@
   
 
 
-<div><h1 id="creating-maps">Creating maps<a class="headerlink" href="#creating-maps" title="Permanent link">#</a></h1>
+<div><p>マップの作成
+Autoware には、車両の動作環境用の点群マップとベクトル マップが必要です。(詳細な仕様については、マップ設計ドキュメントのページを確認してください)。</p>
+<p>このページでは、ユーザーが Autoware で使用できるマップを作成する方法について説明します。</p>
+<p>点群マップの作成
+従来、高精度の大規模点群マップを作成するには、モバイル マッピング システム (<abbr title="Mobile Mapping System">MMS</abbr>) が使用されてきました。ただし、<abbr title="Mobile Mapping System">MMS</abbr> は正確な位置決めのためにハイエンドのセンサーを必要とするため、運用コストが非常に高価になる可能性があり、比較的小規模な運転環境には適さない可能性があります。あるいは、Simultaneous Localization And Mapping (<abbr title="Simultaneous Localization And Mapping">SLAM</abbr>) アルゴリズムを使用して、記録された LiDAR スキャンから点群マップを作成することもできます。有用なオープンソース <abbr title="Simultaneous Localization And Mapping">SLAM</abbr> 実装の一部がこのページにリストされています。</p>
+<p>使いやすい独自のソフトウェアをお好みの場合は、MAP IV, Inc.の完全自動マッピング ツール、MapIV Engineを試すことができます。現在、Autoware ユーザー向けに試用版ライセンスを無料で提供しています。</p>
+<p>ベクトルマップの作成
+Autoware 互換のベクター マップを作成する最も簡単な方法は、TIER IV, Inc.が提供する無料の Web ベース ツールであるVector Map Builderを使用することです。Vector Map Builder を使用すると、点群マップを参照として使用して車線を作成し、一時停止標識や信号機などの追加の規制要素を追加できます。</p>
+<p>オープンソース ソフトウェア オプションの場合、MapToolbox は、Autoware 用の Lanelet2 マップを作成するために特別に設計されたUnity用のプラグインです。JOSM はLanelet2 マップの作成に使用できるもう 1 つのオープンソース ツールですが、マップを Autoware と互換性を持たせるには、多くの変更を手動で行う必要があることに注意してください。このプロセスは面倒で時間がかかる可能性があるため、JOSM の使用はお勧めできません。</p>
+<p>Autoware 互換のマップ プロバイダー
+HD マップを自分で作成できない場合は、代わりに次の Autoware 互換マップ プロバイダーのマッピング サービスを使用できます。</p>
+<p>株式会社マップIV
+アイサンテクノロジー株式会社
+トムトム
+以下の表は、各社のマッピング テクノロジーとサポートされている HD マップの種類を示しています。</p>
+<p>会社  マッピング技術 利用可能なマップ
+株式会社マップIV   スラム 点群マップとベクトルマップ
+アイサンテクノロジー株式会社  <abbr title="Mobile Mapping System">MMS</abbr> 点群マップとベクトルマップ
+トムトム    <abbr title="Mobile Mapping System">MMS</abbr> ベクトルマップ*</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+</div>
+<p>Maps provided by TomTom use their proprietary AutoStream format, not Lanelet2.
+The open-source <a href="https://github.com/tomtom-international/AutoStreamForAutoware">AutoStreamForAutoware tool</a> can be used to convert an AutoStream map to a Lanelet2 map.
+However, the converter is still in its early stages and has some <a href="https://github.com/tomtom-international/AutoStreamForAutoware/blob/main/docs/known-issues.md">known limitations</a>.</p>
+<h1 id="creating-maps">Creating maps<a class="headerlink" href="#creating-maps" title="Permanent link">#</a></h1>
 <p>Autoware requires a pointcloud map and a vector map for the vehicle's operating environment. (Check the <a href="../../../design/autoware-architecture/map/">map design documentation page</a> for the detailed specification).</p>
 <p>This page explains how users can create maps that can be used for Autoware.</p>
 <h2 id="creating-a-point-cloud-map">Creating a point cloud map<a class="headerlink" href="#creating-a-point-cloud-map" title="Permanent link">#</a></h2>
