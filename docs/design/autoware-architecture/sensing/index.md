@@ -1,3 +1,30 @@
+センシングコンポーネントの設計
+概要
+センシング コンポーネントは、生のセンサー データにいくつかの原始的な前処理を適用するモジュールのコレクションです。
+
+センサーの入力形式はこのコンポーネントで定義されます。
+
+役割
+データ形式の抽象化により、さまざまなベンダーのセンサーを使用できるようになります。
+各コンポーネントに必要な共通/原始的なセンサー データ処理を実行します。
+入力
+入力の種類
+センサーデータ	メッセージの種類
+点群 (LIDAR、深度カメラなど)	センサー_msgs/msg/PointCloud2.msg
+画像（RGB、モノクロ、深度などのカメラ）	センサー_msgs/msg/Image.msg
+レーダースキャン	レーダー_msgs/msg/RadarScan.msg
+レーダー追跡	レーダー_msgs/msg/RadarTracks.msg
+GNSS-INS位置	sensor_msgs/msg/NavSatFix.msg
+GNSS-INS の方向	autoware_sensing_msgs/GnssInsOrientationStamped.msg
+GNSS-INS速度	geometry_msgs/msg/TwistWithCovarianceStamped.msg
+GNSS-INS加速	geometry_msgs/msg/AccelWithCovarianceStamped.msg
+超音波	センサー_msgs/msg/Range.msg
+データ型による設計
+GNSS/INSデータ前処理設計
+画像前処理設計
+点群前処理設計
+レーダーデータの前処理設計
+超音波データ前処理設計
 # Sensing component design
 
 ## Overview
