@@ -1,5 +1,5 @@
-# Radar data pre-processing design
+# Radarデータ前処理設計
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中の記事
