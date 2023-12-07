@@ -1,3 +1,129 @@
+ローカリゼーション
+ノード図
+
+入力
+点群マップ
+点群で作成され、マップ サーバーによって公開された環境マップ。
+
+センサー_msgs/msg/PointCloud2
+3D 点群マップは、Autoware での LiDAR ベースのローカリゼーションに使用されます。
+
+手動初期ポーズ
+ユーザー インターフェイスによって公開される自我の開始ポーズ。
+
+geometry_msgs/msg/PoseWithCovarianceStamped
+std_msgs/msg/Headerヘッダー
+geometry_msgs/msg/PoseWithCovariance ポーズ
+geometry_msgs/msg/Pose ポーズ
+geometry_msgs/msg/ポイント位置
+geometry_msg/msg/クォータニオンの向き
+double[36] 共分散
+3D-LiDARスキャン
+LiDAR センサーによって公開された、NDT マッチングのための LiDAR スキャン。
+
+センサー_msgs/msg/PointCloud2
+ローカリゼーションに使用する前に、生の 3D-LiDAR データを点群前処理モジュールで処理する必要があります。
+
+自動初期ポーズ
+INS(慣性航法センサー)のセンシングデータから計算した自我の開始姿勢。
+
+geometry_msgs/msg/PoseWithCovarianceStamped
+std_msgs/msg/Headerヘッダー
+geometry_msgs/msg/PoseWithCovariance ポーズ
+geometry_msgs/msg/Pose ポーズ
+geometry_msgs/msg/ポイント位置
+geometry_msg/msg/クォータニオンの向き
+double[36] 共分散
+初期ポーズが手動で設定されていない場合、メッセージを使用してポーズを自動初期化できます。
+
+GNSS センサーによって公開された、自我の現在の地理座標。
+
+センサー_msgs/msg/NavSatFix
+std_msgs/msg/Headerヘッダー
+sensor_msgs/msg/NavSatStatus ステータス
+二重緯度
+倍経度
+二重高度
+double[9] 位置共分散
+ユニット 8 の位置共分散タイプ
+GNSS-INS によって公開された自我の現在の方向。
+
+autoware_sensing_msgs/msg/GnssInsOrientationStamped
+std_msgs/Header ヘッダー
+autoware_sensing_msgs/msg/GnssInsOrientation の方向
+geometry_msgs/クォータニオンの向き
+float32 rmse_rotation_x
+float32 rmse_rotation_y
+float32 rmse_rotation_z
+IMUデータ
+IMU センシング データから計算された自我の現在の向き、角速度、直線加速度。
+
+センサー_msgs/msg/Imu
+std_msgs/msg/Headerヘッダー
+geometry_msgs/msg/クォータニオンの向き
+double[9] 方向共分散
+geometry_msgs/msg/Vector3 angular_velocity
+double[9] angular_velocity_covariance
+geometry_msgs/msg/Vector3 線形加速
+double[9] 線形加速度共分散
+車速ステータス
+自車両の現在の速度。車両インターフェースによって公開されます。
+
+autoware_auto_vehicle_msgs/msg/VelocityReport
+std_msgs/msg/Header ヘッダー。
+浮動小数点縦速度;
+float 横速度;
+浮動小数点見出し率;
+速度入力ローカリゼーション インターフェイスの前に、モジュールはvehicle_velocity_converterメッセージ タイプautoware_auto_vehicle_msgs/msg/VelocityReportを に変換しますgeometry_msgs/msg/TwistWithCovarianceStamped。
+
+出力
+乗り物のポーズ
+ローカリゼーション インターフェイスから計算された自我の現在の姿勢。
+
+geometry_msgs/msg/PoseWithCovarianceStamped
+std_msgs/msg/Headerヘッダー
+geometry_msg/PoseWithCovariance ポーズ
+geometry_msgs/msg/Pose ポーズ
+geometry_msgs/msg/ポイント位置
+geometry_msgs/msg/クォータニオンの向き
+double[36] 共分散
+車速
+自我の現在の速度。ローカリゼーション インターフェイスから計算されます。
+
+geometry_msgs/msg/TwistWithCovarianceStamped
+std_msgs/msg/Headerヘッダー
+geometry_msg/TwistWithCovarianceツイスト
+geometry_msgs/msg/ツイストツイスト
+geometry_msgs/msg/Vector3 線形
+geometry_msgs/msg/Vector3 角度
+double[36] 共分散
+車両の加速度
+自我の現在の加速度。ローカリゼーション インターフェイスから計算されます。
+
+geometry_msgs/msg/AccelWithCovarianceStamped
+std_msgs/msg/Headerヘッダー
+geometry_msg/AccelWithCovariance アクセル
+geometry_msgs/msg/Accel アクセル
+geometry_msgs/msg/Vector3 線形
+geometry_msgs/msg/Vector3 角度
+double[36] 共分散
+車両の運動学的状態
+自我の現在の姿勢、速度、加速度。ローカリゼーション インターフェイスから計算されます。
+
+注:運動学的状態には、姿勢、速度、加速度が含まれます。将来的には、ポーズ、速度、加速度はローカリゼーションの出力として使用されなくなります。
+
+autoware_msgs/autoware_localization_msgs/msg/KinematicState
+std_msgs/msg/Headerヘッダー
+文字列 child_frame_id
+geometry_msgs/PoseWithCovariancepose_with_covariance
+geometry_msgs/TwistWithCovariance ツイストウィズ共分散
+geometry_msgs/AccelWithCovariance accel_with_covariance
+メッセージは計画および制御モジュールによってサブスクライブされます。
+
+位置特定の精度
+ローカリゼーション モジュールが適切に動作しているかどうかを示す診断情報。
+
+未定。
 # Localization
 
 ![Node diagram](images/Localization-Bus-ODD-Architecture.drawio.svg)
