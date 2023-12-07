@@ -21,7 +21,7 @@
     
     
       
-        <title>Lidar-Lidar calibration - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Lidar-Lidar calibration
+              Index
             
           </span>
         </div>
@@ -6612,7 +6612,272 @@
   
 
 
-<div><h1 id="lidar-lidar-calibration">Lidar-Lidar calibration<a class="headerlink" href="#lidar-lidar-calibration" title="Permanent link">#</a></h1>
+<div><p>ライダー間校正
+概要
+このチュートリアルでは、TIER IV の CalibrationTools のマッピングベースの LIDAR-LIDAR キャリブレーション ツールを使用したLIDAR-LIDAR キャリブレーションについて説明します。</p>
+<div class="admonition 警告">
+<p class="admonition-title">警告</p>
+</div>
+<p>Please obtain the initial calibration results from the <a href="../extrinsic-manual-calibration">Manual Calibration</a> section.
+This is crucial for obtaining accurate results from this tool.
+We will utilize the initial calibration parameters that were calculated
+in the previous step of this tutorial.
+To apply these initial values in the calibration tools,
+please update your sensor calibration files within the individual parameter package.
+未加工の LIDAR トピックを含む LIDAR-LIDAR キャリブレーション プロセス用のサンプル バッグ ファイルが必要です。また、この点群にはトリミングされた車両点群が含まれるため、マッピングには外れ値でフィルターされた点群を使用することをお勧めします。したがって、車両ポイントはマップに含まれません。バッグの記録を開始するときは、マッピングのパフォーマンスを向上させるために、最初の 5 秒間は車両を動かさないでください。以下に、このキャリブレーションに使用されるバッグ ファイルの例を示します。</p>
+<p>??? 注「tutorial_vehicle のキャリブレーション プロセスの <abbr title="Robot Operating System">ROS</abbr> 2 Bag の例」</p>
+<p></p><div class="highlight"><pre><span></span><code>Files:<span class="w">             </span>rosbag2_2023_09_05-11_23_50_0.db3
+Bag<span class="w"> </span>size:<span class="w">          </span><span class="m">3</span>.8<span class="w"> </span>GiB
+Storage<span class="w"> </span>id:<span class="w">        </span>sqlite3
+Duration:<span class="w">          </span><span class="m">112</span>.702s
+Start:<span class="w">             </span>Sep<span class="w">  </span><span class="m">5</span><span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">11</span>:23:51.105<span class="w"> </span><span class="o">(</span><span class="m">1693902231</span>.105<span class="o">)</span>
+End:<span class="w">               </span>Sep<span class="w">  </span><span class="m">5</span><span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">11</span>:25:43.808<span class="w"> </span><span class="o">(</span><span class="m">1693902343</span>.808<span class="o">)</span>
+Messages:<span class="w">          </span><span class="m">2256</span>
+Topic<span class="w"> </span>information:<span class="w"> </span>Topic:<span class="w"> </span>/sensing/lidar/front/pointcloud_raw<span class="w"> </span><span class="p">|</span><span class="w"> </span>Type:<span class="w"> </span>sensor_msgs/msg/PointCloud2<span class="w"> </span><span class="p">|</span><span class="w"> </span>Count:<span class="w"> </span><span class="m">1128</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Serialization<span class="w"> </span>Format:<span class="w"> </span>cdr
+<span class="w">                   </span>Topic:<span class="w"> </span>/sensing/lidar/top/outlier_filtered/pointcloud<span class="w"> </span><span class="p">|</span><span class="w"> </span>Type:<span class="w"> </span>sensor_msgs/msg/PointCloud2<span class="w"> </span><span class="p">|</span><span class="w"> </span>Count:<span class="w"> </span><span class="m">1128</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Serialization<span class="w"> </span>Format:<span class="w"> </span>cdr
+</code></pre></div>
+マッピングベースの LIDAR 間キャリブレーション
+起動ファイルの作成
+まず、車両のようなExtrinsic Manual Calibration プロセスで起動ファイルを作成します。
+<p>cd <your-own-autoware-directory>/src/autoware/calibration_tools/sensor
+cd extrinsic_calibration_manager/launch
+cd <your-own-sensor-kit-name> # i.e. for our guide, it will ve cd tutorial_vehicle_sensor_kit which is created in manual calibration
+touch mapping_based.launch.xml mapping_based_sensor_kit.launch.xml
+これらを修正しmapping_based.launch.xml、mapping_based_sensor_kit.launch.xmlTIER IV のサンプル センサー キット aip_x1 を使用します。したがって、これら 2 つのファイルの内容をaip_x1から作成したファイルにコピーする必要があります。</your-own-sensor-kit-name></your-own-autoware-directory></p>
+<p>次に、 vehicle_id とセンサー モデル名を に追加しますmapping_based.launch.xml(オプションで、値は重要ではありません。これらのパラメーターは起動引数によってオーバーライドされます)。</p>
+<p><arg name="vehicle_id" default="default"></arg></p>
+<p><let name="sensor_model" value="aip_x1"></let>
++ &lt;?xml version="1.0" encoding="UTF-8"?&gt;
++ <launch>
+-   <arg name="vehicle_id" default="default"></arg>
++   <arg name="vehicle_id" default="\&lt;YOUR_VEHICLE_ID&gt;"></arg>
++
+-   <arg name="sensor_model" default="aip_x1"></arg>
++   <let name="sensor_model" value="\&lt;YOUR_SENSOR_KIT_NAME&gt;"></let>
+tutorial_vehicle のファイル (mapping_based.launch.xml) の最終バージョンは次のようになります。</launch></p>
+<p>??? 注「チュートリアル車両のサンプルmapping_based.launch.xmlファイル」</p>
+<p></p><div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;launch&gt;</span>
+<span class="w">  </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"vehicle_id"</span><span class="w"> </span><span class="na">default=</span><span class="s">"tutorial_vehicle"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"sensor_model"</span><span class="w"> </span><span class="na">value=</span><span class="s">"tutorial_vehicle_sensor_kit"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"rviz"</span><span class="w"> </span><span class="na">default=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;group&gt;</span>
+<span class="w">    </span><span class="nt">&lt;push-ros-namespace</span><span class="w"> </span><span class="na">namespace=</span><span class="s">"sensor_kit"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;include</span><span class="w"> </span><span class="na">file=</span><span class="s">"$(find-pkg-share extrinsic_calibration_manager)/launch/$(var sensor_model)/mapping_based_sensor_kit.launch.xml"</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"vehicle_id"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var vehicle_id)"</span><span class="nt">/&gt;</span>
+<span class="w">      </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"rviz"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var rviz)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/include&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/group&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</code></pre></div>
+mapping_based.launch.xml ファイルが完成したら、独自のセンサー モデルにmapping_based_sensor_kit.launch.xmlを実装する準備が整います。
+<p>オプションで、この XML スニペットのように sensor_kit と vehicle_id を変更できますmapping_based.launch.xml: (ページの最後に含まれる rviz 構成をビデオとして保存した後に rviz_profile パスを変更できます)</p>
+<p>各 LIDAR (マッピング LIDAR を除く) にセンサー キット フレームを追加します。チュートリアル車両のメイン LIDAR センサーとペアリングするための LIDAR が 1 つあり、次のようになります。</p>
+<p>注: マッピング LIDAR はマッピングの目的で使用されますが、キャリブレーションは行われません。この LIDAR は、ハードウェア アーキテクチャのメイン センサーと考えることができます。したがって、他の LIDAR はマッピング LIDAR (メイン センサー) を基準にして校正されます。</p>
+<ul>
+<li>&lt;let name="lidar_calibration_sensor_kit_frames" value="[</li>
+<li>sensor_kit_base_link,</li>
+<li>sensor_kit_base_link,</li>
+<li>sensor_kit_base_link</li>
+<li>...]"/&gt;
+LIDAR-LIDAR キャリブレーション プロセスのために前に rviz 構成ファイルを保存した場合:</li>
+</ul>
+<ul>
+<li><let name="rviz_profile" value="$(find-pkg-share extrinsic_mapping_based_calibrator)/rviz/x1.rviz"></let></li>
+<li><let name="rviz_profile" value="$(find-pkg-share extrinsic_mapping_based_calibrator)/rviz/\&lt;YOUR-RVIZ-CONFIG&gt;.rviz"></let>
+??? 注「つまり、マッピング用にメイン LIDAR が 1 つある場合、キャリブレーション用に 3 つの LIDAR がある場合」</li>
+</ul>
+<p></p><div class="highlight"><pre><span></span><code>+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"lidar_calibration_sensor_kit_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"[</span>
+<span class="s">+  sensor_kit_base_link,</span>
+<span class="s">+  sensor_kit_base_link,</span>
+<span class="s">+  sensor_kit_base_link]"</span><span class="nt">/&gt;</span>
+</code></pre></div>
+??? 注「つまり、tutorial_vehicle の場合 (マッピング用に 1 つの LIDAR メイン、キャリブレーション用に 1 つの LIDAR)」
+<p></p><div class="highlight"><pre><span></span><code>+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"lidar_calibration_sensor_kit_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"[sensor_kit_base_link]"</span><span class="nt">/&gt;</span>
+</code></pre></div>
+キャリブレーター用に lidar_calibration_service_names、calibration_lidar_base_frames、および calibration_lidar_frames を追加します。
+<ul>
+<li>&lt;let</li>
+<li>name="lidar_calibration_service_names"</li>
+<li>value="[</li>
+<li>/sensor_kit/sensor_kit_base_link/livox_front_left_base_link,</li>
+<li>/sensor_kit/sensor_kit_base_link/livox_front_center_base_link,</li>
+<li>/sensor_kit/sensor_kit_base_link/livox_front_right_base_link]"</li>
+<li>/&gt;</li>
+<li>&lt;let name="calibration_lidar_base_frames" value="[</li>
+<li>livox_front_left_base_link,</li>
+<li>livox_front_center_base_link,</li>
+<li>livox_front_right_base_link]"/&gt;</li>
+<li>&lt;let name="calibration_lidar_frames" value="[</li>
+<li>livox_front_left,</li>
+<li>livox_front_center,</li>
+<li>livox_front_right]"/&gt;</li>
+<li>&lt;let</li>
+<li>name="lidar_calibration_service_names"</li>
+<li>value="[/sensor_kit/sensor_kit_base_link/<your_sensor_base_link>,</your_sensor_base_link></li>
+<li>/sensor_kit/sensor_kit_base_link/&lt;YOUR_SENSOR_BASE_LINK</li>
+<li>...]"</li>
+<li>/&gt;
++</li>
+<li>&lt;let name="calibration_lidar_base_frames" value="[YOUR_SENSOR_BASE_LINK,</li>
+<li>YOUR_SENSOR_BASE_LINK</li>
+<li>...]"/&gt;</li>
+<li>&lt;let name="calibration_lidar_frames" value="[YOUR_SENSOR_LINK,</li>
+<li>YOUR_SENSOR_LINK</li>
+<li>...]"/&gt;
+??? 注「つまり、tutorial_vehicle では、このスニペットのようになります。」</li>
+</ul>
+<p></p><div class="highlight"><pre><span></span><code>+<span class="w">   </span><span class="nt">&lt;let</span>
+<span class="err">+</span><span class="w">           </span><span class="na">name=</span><span class="s">"lidar_calibration_service_names"</span>
+<span class="err">+</span><span class="w">           </span><span class="na">value=</span><span class="s">"[/sensor_kit/sensor_kit_base_link/rs_bpearl_front_base_link]"</span>
+<span class="err">+</span><span class="w">   </span><span class="nt">/&gt;</span>
+
++<span class="w">   </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_lidar_base_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"[rs_bpearl_front_base_link]"</span><span class="nt">/&gt;</span>
++<span class="w">   </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_lidar_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"[rs_bpearl_front]"</span><span class="nt">/&gt;</span>
+</code></pre></div>
+その後、これを行うためにセンサー トピックとセンサー フレームを追加し、引き続き入力していきますmapping_based_sensor_kit.launch.xml(車両雲が切り取られているため、マッピング ポイントクラウドとして /sensing/lidar/top/outlier_filtered/pointcloud トピックを使用することをお勧めします)このトピックでは pointcloud 前処理によって):
+<ul>
+<li><let name="mapping_lidar_frame" value="velodyne_top"></let></li>
+<li><let name="mapping_pointcloud" value="/sensing/lidar/top/outlier_filtered/pointcloud"></let></li>
+<li><let name="mapping_lidar_frame" value="\&lt;MAPPING_LIDAR_SENSOR_LINK&gt;"></let></li>
+<li><let name="mapping_pointcloud" value="\&lt;MAPPING_LIDAR_POINTCLOUD_TOPIC_NAME&gt;"></let></li>
+</ul>
+<ul>
+<li>&lt;let name="calibration_pointcloud_topics" value="[</li>
+<li>/sensing/lidar/front_left/livox/lidar,</li>
+<li>/sensing/lidar/front_center/livox/lidar,</li>
+<li>/sensing/lidar/front_right/livox/lidar]"/&gt;</li>
+<li>&lt;let name="calibration_pointcloud_topics" value="[</li>
+<li><your_lidar_topic_for_calibration>,</your_lidar_topic_for_calibration></li>
+<li><your_lidar_topic_for_calibration>,</your_lidar_topic_for_calibration></li>
+<li>...]"/&gt;
+??? note 「tutorial_vehicle では、このスニペットのようになります。」</li>
+</ul>
+<p></p><div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_lidar_base_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"[rs_bpearl_front_base_link]"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_lidar_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"[rs_bpearl_front]"</span><span class="nt">/&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"mapping_lidar_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"rs_helios_top"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"mapping_pointcloud"</span><span class="w"> </span><span class="na">value=</span><span class="s">"/sensing/lidar/top/pointcloud_raw"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"detected_objects"</span><span class="w"> </span><span class="na">value=</span><span class="s">"/perception/object_recognition/detection/objects"</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_pointcloud_topics"</span><span class="w"> </span><span class="na">value=</span><span class="s">"[</span>
+<span class="s">/sensing/lidar/right/pointcloud_raw]"</span><span class="nt">/&gt;</span>
+</code></pre></div>
+tutorial_vehicle の Mapping_based_sensor_kit.launch.xml 起動ファイルは次のようになります。
+<p>??? 注「つまり、mapping_based_sensor_kit.launch.xmltutorial_vehicle の場合」</p>
+<p></p><div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;launch&gt;</span>
+<span class="w">  </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"vehicle_id"</span><span class="w"> </span><span class="na">default=</span><span class="s">"tutorial_vehicle"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"sensor_model"</span><span class="w"> </span><span class="na">value=</span><span class="s">"tutorial_vehicle_sensor_kit"</span><span class="nt">/&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"rviz"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"rviz_profile"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(find-pkg-share extrinsic_mapping_based_calibrator)/rviz/x1.rviz"</span><span class="nt">/&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"src_yaml"</span><span class="w"> </span><span class="na">default=</span><span class="s">"$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(var sensor_model)/sensor_kit_calibration.yaml"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"dst_yaml"</span><span class="w"> </span><span class="na">default=</span><span class="s">"$(env HOME)/sensor_kit_calibration.yaml"</span><span class="nt">/&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"camera_calibration_service_names"</span><span class="w"> </span><span class="na">value=</span><span class="s">"['']"</span><span class="nt">/&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"camera_calibration_sensor_kit_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"['']"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_camera_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"['']"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_camera_optical_link_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"['']"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_camera_info_topics"</span><span class="w"> </span><span class="na">value=</span><span class="s">"['']"</span><span class="nt">/&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_image_topics"</span><span class="w"> </span><span class="na">value=</span><span class="s">"['']"</span><span class="nt">/&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"lidar_calibration_sensor_kit_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"[sensor_kit_base_link]"</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;let</span>
+<span class="na">name=</span><span class="s">"lidar_calibration_service_names"</span>
+<span class="na">value=</span><span class="s">"[/sensor_kit/sensor_kit_base_link/rs_bpearl_front_base_link]"</span>
+<span class="nt">/&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_lidar_base_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"[rs_bpearl_front_base_link]"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_lidar_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"[rs_bpearl_front]"</span><span class="nt">/&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"mapping_lidar_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"rs_helios_top"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"mapping_pointcloud"</span><span class="w"> </span><span class="na">value=</span><span class="s">"/sensing/lidar/top/pointcloud_raw"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"detected_objects"</span><span class="w"> </span><span class="na">value=</span><span class="s">"/perception/object_recognition/detection/objects"</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;let</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_pointcloud_topics"</span><span class="w"> </span><span class="na">value=</span><span class="s">"[</span>
+<span class="s">/sensing/lidar/right/pointcloud_raw]"</span><span class="nt">/&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;group&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!-- extrinsic_calibration_client --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;node</span><span class="w"> </span><span class="na">pkg=</span><span class="s">"extrinsic_calibration_client"</span><span class="w"> </span><span class="na">exec=</span><span class="s">"extrinsic_calibration_client"</span><span class="w"> </span><span class="na">name=</span><span class="s">"extrinsic_calibration_client"</span><span class="w"> </span><span class="na">output=</span><span class="s">"screen"</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;param</span><span class="w"> </span><span class="na">name=</span><span class="s">"src_path"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var src_yaml)"</span><span class="nt">/&gt;</span>
+<span class="w">      </span><span class="nt">&lt;param</span><span class="w"> </span><span class="na">name=</span><span class="s">"dst_path"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var dst_yaml)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/node&gt;</span>
+
+<span class="w">    </span><span class="cm">&lt;!-- extrinsic_calibration_manager --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;node</span><span class="w"> </span><span class="na">pkg=</span><span class="s">"extrinsic_calibration_manager"</span><span class="w"> </span><span class="na">exec=</span><span class="s">"extrinsic_calibration_manager"</span><span class="w"> </span><span class="na">name=</span><span class="s">"extrinsic_calibration_manager"</span><span class="w"> </span><span class="na">output=</span><span class="s">"screen"</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;param</span><span class="w"> </span><span class="na">name=</span><span class="s">"parent_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"sensor_kit_base_link"</span><span class="nt">/&gt;</span>
+<span class="w">      </span><span class="nt">&lt;param</span><span class="w"> </span><span class="na">name=</span><span class="s">"child_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"[rs_bpearl_front_base_link]"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/node&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/group&gt;</span>
+
+<span class="w">  </span><span class="cm">&lt;!-- mapping based calibrator --&gt;</span>
+<span class="w">  </span><span class="nt">&lt;include</span><span class="w"> </span><span class="na">file=</span><span class="s">"$(find-pkg-share extrinsic_mapping_based_calibrator)/launch/calibrator.launch.xml"</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"ns"</span><span class="w"> </span><span class="na">value=</span><span class="s">""</span><span class="nt">/&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"camera_calibration_service_names"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var camera_calibration_service_names)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"lidar_calibration_service_names"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var lidar_calibration_service_names)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"camera_calibration_sensor_kit_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var camera_calibration_sensor_kit_frames)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"lidar_calibration_sensor_kit_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var lidar_calibration_sensor_kit_frames)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_camera_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var calibration_camera_frames)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_camera_optical_link_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var calibration_camera_optical_link_frames)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_lidar_base_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var calibration_lidar_base_frames)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_lidar_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var calibration_lidar_frames)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"mapping_lidar_frame"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var mapping_lidar_frame)"</span><span class="nt">/&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"mapping_pointcloud"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var mapping_pointcloud)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"detected_objects"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var detected_objects)"</span><span class="nt">/&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_camera_info_topics"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var calibration_camera_info_topics)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_image_topics"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var calibration_image_topics)"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_pointcloud_topics"</span><span class="w"> </span><span class="na">value=</span><span class="s">"$(var calibration_pointcloud_topics)"</span><span class="nt">/&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"mapping_max_range"</span><span class="w"> </span><span class="na">value=</span><span class="s">"150.0"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"local_map_num_keyframes"</span><span class="w"> </span><span class="na">value=</span><span class="s">"30"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"dense_pointcloud_num_keyframes"</span><span class="w"> </span><span class="na">value=</span><span class="s">"20"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"ndt_resolution"</span><span class="w"> </span><span class="na">value=</span><span class="s">"0.5"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"ndt_max_iterations"</span><span class="w"> </span><span class="na">value=</span><span class="s">"100"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"ndt_epsilon"</span><span class="w"> </span><span class="na">value=</span><span class="s">"0.005"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"lost_frame_max_acceleration"</span><span class="w"> </span><span class="na">value=</span><span class="s">"15.0"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"lidar_calibration_max_frames"</span><span class="w"> </span><span class="na">value=</span><span class="s">"10"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_eval_max_corr_distance"</span><span class="w"> </span><span class="na">value=</span><span class="s">"0.2"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"solver_iterations"</span><span class="w"> </span><span class="na">value=</span><span class="s">"100"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;arg</span><span class="w"> </span><span class="na">name=</span><span class="s">"calibration_skip_keyframes"</span><span class="w"> </span><span class="na">value=</span><span class="s">"15"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/include&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;node</span><span class="w"> </span><span class="na">pkg=</span><span class="s">"rviz2"</span><span class="w"> </span><span class="na">exec=</span><span class="s">"rviz2"</span><span class="w"> </span><span class="na">name=</span><span class="s">"rviz2"</span><span class="w"> </span><span class="na">output=</span><span class="s">"screen"</span><span class="w"> </span><span class="na">args=</span><span class="s">"-d $(var rviz_profile)"</span><span class="w"> </span><span class="na">if=</span><span class="s">"$(var rviz)"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</code></pre></div>
+インタラクティブなマッピングベースのキャリブレーターを使用した Lidar-Lidar キャリブレーション プロセス
+mapping_based.launch.xml および Mapping_based_sensor_kit.launch.xml を完了したら、独自のセンサー キット用のファイルを起動します。これで、LIDAR を調整する準備が整いました。まず最初に、extrinsic_calibration_manager パッケージをビルドする必要があります。
+<p>colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select extrinsic_calibration_manager
+これで、マッピング ベースの LIDAR-LIDAR キャリブレーターを起動して使用する準備が整いました。</p>
+<p>ros2 launch extrinsic_calibration_manager calibration.launch.xml mode:=mapping_based sensor_model:=<own-sensor-kit> vehicle_model:=<own-vehicle-model> vehicle_id:=<vehicle-id>
+チュートリアル車両の場合:</vehicle-id></own-vehicle-model></own-sensor-kit></p>
+<p>ros2 launch extrinsic_calibration_manager calibration.launch.xml mode:=mapping_based sensor_model:=tutorial_vehicle_sensor_kit vehicle_model:=tutorial_vehicle vehicle_id:=tutorial_vehicle
+いくつかの設定を含む rviz2 画面を表示します。ビデオのようなセンサー情報のトピックで画面を更新する必要があります (ドキュメントの最後に含まれています)。また、rviz2 設定を rviz ディレクトリに保存できるため、後で を変更して使用できますmapping_based_sensor_kit.launch.xml。</p>
+<p>extrinsic_ground_plane_calibrator/
+   └─ rviz/
++        └─ tutorial_vehicle_sensor_kit.rviz
+次に、<abbr title="Robot Operating System">ROS</abbr> 2 バッグ ファイルを再生します。</p>
+<p>ros2 bag play <rosbag_path> --clock -r 0.2 \
+--remap /tf:=/null/tf /tf_static:=/null/tf_static # if tf is recorded
+キャリブレーション手順は、マッピングとキャリブレーションの 2 つのフェーズで構成されます。バッグの再生が開始され、マッピングが開始され、以下の rviz2 のスクリーンショットが表示されます。</rosbag_path></p>
+<p>マッピングベースのキャリブレーション</p>
+<p>したがって、赤い矢印マーカーはマッピング中のポーズを示し、緑の矢印マーカーは均一に取られた特別なポーズを示し、白い点は構築されたマップを示します。</p>
+<p>マッピングは、事前定義されたデータしきい値に達すると停止するか、このサービスを呼び出すことで途中で終了する可能性があります。</p>
+<p>ros2 service call /NAMESPACE/stop_mapping std_srvs/srv/Empty {}
+キャリブレーションのマッピング フェーズが完了すると、キャリブレーション プロセスが開始されます。キャリブレーションが完了すると、次の画像のような rviz2 画面が表示されます。</p>
+<p>マッピングベースのキャリブレーション結果</p>
+<p>赤い点は、前のセクションの初期キャリブレーション結果の点群を示します。緑色の点は位置合わせされた点 (キャリブレーション結果) を示します。dst_yamlこのチュートリアルでは、キャリブレーション結果が ($HOME/sensor_kit_calibration.yaml) に自動的に保存されます 。</p>
+<p>これは、tutorial_vehicle でのマッピングベースの LIDAR 間キャリブレーション プロセスをデモンストレーションするビデオです。 タイプ:ビデオ</p>
+<h1 id="lidar-lidar-calibration">Lidar-Lidar calibration<a class="headerlink" href="#lidar-lidar-calibration" title="Permanent link">#</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
 <p>In this tutorial,
 we will explain lidar-lidar calibration over <a href="https://github.com/tier4/CalibrationTools/blob/tier4/universe/sensor/docs/how_to_extrinsic_mapping_based.md">mapping-based lidar-lidar calibration tool</a> of TIER IV's
