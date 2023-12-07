@@ -1,5 +1,5 @@
-# Development process
+# 開発手順
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中
