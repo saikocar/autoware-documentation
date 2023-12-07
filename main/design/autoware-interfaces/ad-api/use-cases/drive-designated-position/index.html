@@ -21,7 +21,7 @@
     
     
       
-        <title>Drive to the designated position - Autoware Documentation</title>
+        <title>Drive designated position - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Drive to the designated position
+              Drive designated position
             
           </span>
         </div>
@@ -6592,7 +6592,40 @@
   
 
 
-<div><h1 id="drive-to-the-designated-position">Drive to the designated position<a class="headerlink" href="#drive-to-the-designated-position" title="Permanent link">#</a></h1>
+<div><p>指定された位置まで運転します
+関連するAPI
+運転
+ルート
+順序
+@startuml</p>
+<p>skinparam ParticipantPadding 25
+participant "User" as user
+participant "Application" as system
+participant "AD API (drive)" as api_drive
+participant "AD API (route)" as api_route</p>
+<p>api_drive --&gt; system: notify that the vehicle is not driving
+system --&gt; user --: show that the vehicle is not ready to start</p>
+<p>system -&gt; api_route ++: set the route
+return
+api_route --&gt; api_drive: notify that the route is set
+api_drive --&gt; system: notify that the vehicle is ready to start
+system --&gt; user: show that the vehicle is ready to start</p>
+<p>user -&gt; system ++: request to start
+system -&gt; api_drive ++: engage
+return
+return
+api_drive --&gt; system: notify that the vehicle is driving</p>
+<p>|||
+note over user, api_route: Driving
+|||</p>
+<p>api_route --&gt; api_drive: notify that the vehicle has arrived at the goal
+api_drive --&gt; system: notify that the vehicle is not driving
+system --&gt; user --: show that the vehicle is not ready to start</p>
+<p>system -&gt; api_route ++: clear the route
+return
+api_route --&gt; api_drive: notify that the route is not set</p>
+<p>@enduml</p>
+<h1 id="drive-to-the-designated-position">Drive to the designated position<a class="headerlink" href="#drive-to-the-designated-position" title="Permanent link">#</a></h1>
 <h2 id="related-api">Related API<a class="headerlink" href="#related-api" title="Permanent link">#</a></h2>
 <ul>
 <li>Driving</li>
