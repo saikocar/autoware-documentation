@@ -1,3 +1,74 @@
+SC-レゴ-ローム
+SC-レゴ-ロームとは何ですか?
+SC-LeGO-LOAM は、LIDAR オドメトリと 2 つの異なるループ クロージャ メソッド (ScanContext および Radius 検索ベースのループ クロージャ) 用に LeGO-LOAM を統合しました。ScanContext は大きなドリフトを修正していますが、半径検索ベースの方法は細かいステッチングに適しています。
+リポジトリ情報
+元のリポジトリのリンク
+https://github.com/irapkaist/SC-LeGO-LOAM
+
+必要なセンサー
+LIDAR [VLP-16、HDL-32E、VLS-128、オースター OS1-16、オースター OS1-64]
+IMU [9軸]
+ROS の互換性
+ROS 1
+依存関係
+ROS
+PCL
+GTSAM
+wget -O ~/Downloads/gtsam.zip https://github.com/borglab/gtsam/archive/4.0.0-alpha2.zip
+cd ~/Downloads/ && unzip gtsam.zip -d ~/Downloads/
+cd ~/Downloads/gtsam-4.0.0-alpha2/
+mkdir build && cd build
+cmake ..
+sudo make install
+構築して実行
+1) ビルド
+cd ~/catkin_ws/src
+git clone https://github.com/irapkaist/SC-LeGO-LOAM.git
+cd ..
+catkin_make
+2) パラメータの設定
+imu と LIDAR トピックを設定しますinclude/utility.h
+LIDAR プロパティをオンに設定しますinclude/utility.h
+スキャンコンテキスト設定をオンに設定しますinclude/Scancontext.h
+(パラメータ設定後は忘れずにリビルドを行ってください。)
+
+3) 走る
+source devel/setup.bash
+roslaunch lego_loam run.launch
+結果の例
+
+
+その他の例
+ビデオ 1: DCC (MulRan データセット)
+ビデオ 2: リバーサイド (MulRan データセット)
+ビデオ 3: KAIST (MulRan データセット)
+
+
+
+
+MulRan データセット
+上のビデオのような結果を再現したい場合は、MulRan データセットをダウンロードし、ROS トピック公開ツールを使用できます。
+SC-LeGO-LOAM を引用
+@INPROCEEDINGS { gkim-2018-iros,
+  author = {Kim, Giseop and Kim, Ayoung},
+  title = { Scan Context: Egocentric Spatial Descriptor for Place Recognition within {3D} Point Cloud Map },
+  booktitle = { Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems },
+  year = { 2018 },
+  month = { Oct. },
+  address = { Madrid }
+}
+そして
+
+@inproceedings{legoloam2018,
+  title={LeGO-LOAM: Lightweight and Ground-Optimized Lidar Odometry and Mapping on Variable Terrain},
+  author={Shan, Tixiao and Englot, Brendan},
+  booktitle={IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  pages={4758-4765},
+  year={2018},
+  organization={IEEE}
+}
+接触
+管理者: ギソプ・キム ( paulgkim@kaist.ac.kr)
 # SC-LeGO-LOAM
 
 ## What is SC-LeGO-LOAM?
