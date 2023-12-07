@@ -6580,7 +6580,10 @@
   
 
 
-<div><h1 id="fixing-dependent-package-versions">Fixing dependent package versions<a class="headerlink" href="#fixing-dependent-package-versions" title="Permanent link">#</a></h1>
+<div><p>依存パッケージのバージョンを修正する
+Autoware は、依存パッケージのバージョンを autoware.repos で管理します。たとえば、autoware.universe にブランチを作成し、新しい機能を追加するとします。vcs pullautoware.universe からブランチを切り取った後、他の依存関係を更新するとします。そうなると、開発している autoware.universe のバージョンとその他の依存関係が不整合になり、Autoware ビルド全体が失敗します。開発開始時に以下のコマンドを実行して、依存パッケージのバージョンを保存することをお勧めします。</p>
+<p>vcs export src --exact &gt; my_autoware.repos</p>
+<h1 id="fixing-dependent-package-versions">Fixing dependent package versions<a class="headerlink" href="#fixing-dependent-package-versions" title="Permanent link">#</a></h1>
 <p>Autoware manages dependent package versions in autoware.repos.
 For example, let's say you make a branch in autoware.universe and add new features.
 Suppose you update other dependencies with <code>vcs pull</code> after cutting a branch from autoware.universe. Then the version of autoware.universe you are developing and other dependencies will become inconsistent, and the entire Autoware build will fail.
