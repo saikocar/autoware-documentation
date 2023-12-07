@@ -21,7 +21,7 @@
     
     
       
-        <title>SC-A-LOAM - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              SC-A-LOAM
+              Index
             
           </span>
         </div>
@@ -6708,7 +6708,63 @@
   
 
 
-<div><h1 id="sc-a-loam">SC-A-LOAM<a class="headerlink" href="#sc-a-loam" title="Permanent link">#</a></h1>
+<div><p>スカローム
+SC-A-LOAMとは何ですか?
+A-LOAM と ScanContext を統合したリアルタイム LiDAR <abbr title="Simultaneous Localization And Mapping">SLAM</abbr> パッケージ。
+リポジトリ情報
+元のリポジトリのリンク
+https://github.com/gisbi-kim/SC-A-LOAM</p>
+<p>必要なセンサー
+LIDAR [VLP-16、HDL-32、HDL-64、オースター OS1-64]
+前提条件 (依存関係)
+<abbr title="Robot Operating System">ROS</abbr></p>
+<p>GTSAM バージョン 4.x。</p>
+<p>GTSAM がインストールされていない場合は、次の手順に従ってください。</p>
+<p>wget -O ~/Downloads/gtsam.zip https://github.com/borglab/gtsam/archive/4.0.2.zip
+  cd ~/Downloads/ &amp;&amp; unzip gtsam.zip -d ~/Downloads/
+  cd ~/Downloads/gtsam-4.0.2/
+  mkdir build &amp;&amp; cd build
+  cmake -DGTSAM_BUILD_WITH_MARCH_NATIVE=OFF ..
+  sudo make install -j8
+<abbr title="Robot Operating System">ROS</abbr> の互換性
+<abbr title="Robot Operating System">ROS</abbr> 1
+構築して実行
+1) ビルド
+まず、上記の依存関係をインストールし、以下の行に従います。</p>
+<p>mkdir -p ~/catkin_scaloam_ws/src
+ cd ~/catkin_scaloam_ws/src
+ git clone https://github.com/gisbi-kim/SC-A-LOAM.git
+ cd ../
+ catkin_make
+ source ~/catkin_scaloam_ws/devel/setup.bash
+2) パラメータの設定
+リポジトリをダウンロードした後、起動ファイルのトピックとセンサーの設定を変更します。
+スキャンコンテキストパラメータ
+ゴースティング エラーが発生した場合、またはループが閉じていない場合は、スキャン コンテキスト パラメーターを変更します。
+マークされた領域のパラメータを使用してスキャン コンテキスト設定を調整します。</p>
+<p>3) 走る
+roslaunch aloam_velodyne aloam_mulran.launch
+4) PCDファイルとして保存
+  rosrun pcl_ros pointcloud_to_pcd input:=/aft_pgo_map
+結果の例</p>
+<p>Riverside 01、MulRan データセット
+MulRan データセットは、LIDAR スキャン (Ouster OS1-64、水平設置、10Hz) および消費者レベルの GPS (u-blox EVK-7P、4Hz) データを提供します。</p>
+<p>データの利用方法（データ公開）についてはこちらhttps://github.com/irapkaist/file_player_mulran</p>
+<p>Riverside 01 シーケンスのサンプルビデオ。</p>
+<ol>
+<li>with consumer level GPS-based altitude stabilization: https://youtu.be/FwAVX5TVm04</li>
+<li>without the z stabilization: https://youtu.be/okML_zNadhY
+結果の例:</li>
+</ol>
+<p>キティ05
+KITTI (HDL-64 センサー) の場合は、次のコマンドを使用して実行します。</p>
+<p>roslaunch aloam_velodyne aloam_velodyne_HDL_64.launch # for KITTI dataset setting
+KITTI スキャンを公開するには、単純な Python スクリプトである mini-kitti Publisher を使用できます: https://github.com/gisbi-kim/mini-kitti-publisher</p>
+<p>ビデオの例 (ここでは GPS は使用されていません): https://youtu.be/hk3Xx8SKkv4</p>
+<p>結果の例:</p>
+<p>接触
+メンテナ: paulgkim@kaist.ac.kr</p>
+<h1 id="sc-a-loam">SC-A-LOAM<a class="headerlink" href="#sc-a-loam" title="Permanent link">#</a></h1>
 <h2 id="what-is-sc-a-loam">What is SC-A-LOAM?<a class="headerlink" href="#what-is-sc-a-loam" title="Permanent link">#</a></h2>
 <ul>
 <li>A real-time LiDAR <abbr title="Simultaneous Localization And Mapping">SLAM</abbr> package that integrates A-LOAM and ScanContext.</li>
