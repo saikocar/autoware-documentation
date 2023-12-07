@@ -21,7 +21,7 @@
     
     
       
-        <title>Vehicle Interface - Autoware Documentation</title>
+        <title>Vehicle interface - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Vehicle Interface
+              Vehicle interface
             
           </span>
         </div>
@@ -5104,12 +5104,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Vehicle Interface
+          Vehicle interface
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Vehicle Interface
+        Vehicle interface
       </a>
       
         
@@ -6790,7 +6790,47 @@
   
 
 
-<div><h1 id="vehicle-interface">Vehicle Interface<a class="headerlink" href="#vehicle-interface" title="Permanent link">#</a></h1>
+<div><p>車両インターフェース
+ノード図</p>
+<p>はと をVehicle Interface受信し、車両の状態を公開します。また、車両固有のプロトコルによって車両と通信します。Vehicle Signal CommandsVehicle Control Commands</p>
+<p>スイッチGateは複数ありますVehicle Control Commands。これらの信号には、自律ダイビングコマンド、ジョイスティック、リモコン、緊急操作などが含まれます。Adapter一般化された制御コマンド（目標ステアリング、ステアリング速度、速度、加速度、ジャーク）を車両固有の制御値（ステアリングトルク、ホイールトルク）に変換します。 、電圧、圧力、アクセルペダル位置など）。</p>
+<p>入力
+エラーステータス
+(計画の入力を参照してください。)</p>
+<p>車両制御コマンド
+(「コントロールの出力」を参照してください。)</p>
+<p>車両信号コマンド
+動きに関係のない車両のさまざまな要素に対するコマンド。計画モジュールによって発行されます。</p>
+<p>出力
+車両信号レポート
+動きに関係のない車両のさまざまな要素のレポート。ビークル・インターフェース発行。</p>
+<p>車両オドメトリ
+車両のオドメトリ。ローカリゼーション モジュールによって、マップ内の車両の姿勢を更新するために使用されます。</p>
+<p>geometry_msgs/TwistWithCovarianceスタンプ付きオドメトリ
+ステアリングステータス
+自我車両のステアリング。ビークル・インターフェース発行。</p>
+<p>ステアリングメッセージ ( github ディスカッション)。
+builtin_interfaces::msg::タイムスタンプ
+float32 ステアリング角度
+作動ステータス
+加速、ステアリング、ブレーキなどの自車両の作動状態。これは、車両のアクチュエーターによって加えられる報告された物理的労力を表します。ビークル・インターフェース発行。</p>
+<p>ActuationStatus ( github ディスカッション)。
+builtin_interfaces::msg::タイムスタンプ
+float32 加速
+float32ステアリング
+float32 ブレーキ
+メッセージの定義は検討中です。</p>
+<p>作動コマンド
+自我車両に送信される作動コマンド。これは、車両アクチュエータによって発揮される要求された物理的努力を表します。アダプターによって生成されたものとして、Vehicle Interface によって発行されます。</p>
+<p>ActuationCommand ( github ディスカッション)
+builtin_interfaces::msg::タイムスタンプ
+float32 加速
+float32ステアリング
+float32 ブレーキ
+メッセージの定義は検討中です。</p>
+<p>車両通信
+CAN (Controller Area Network) などの車両固有のメッセージ プロトコル。</p>
+<h1 id="vehicle-interface">Vehicle Interface<a class="headerlink" href="#vehicle-interface" title="Permanent link">#</a></h1>
 <p><img alt="Node diagram" src="../images/Vehicle-Interface-Bus-ODD-Architecture.drawio.svg"></p>
 <p>The <code>Vehicle Interface</code> receives the <code>Vehicle Signal Commands</code> and <code>Vehicle Control Commands</code> and publishes the vehicle status. It also communicates with vehicle by the vehicle-specific protocol.</p>
 <p>The <code>Gate</code> switches multiple <code>Vehicle Control Commands</code>. These signals include autonomous diving command, joystick, remote control, and emergency operation, etc.
