@@ -21,7 +21,7 @@
     
     
       
-        <title>/api/planning/cooperation/set_commands - Autoware Documentation</title>
+        <title>Set commands - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#apiplanningcooperationset_commands" class="md-skip">
+        <a href="#macro-syntax-error" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              /api/planning/cooperation/set_commands
+              Set commands
             
           </span>
         </div>
@@ -6554,42 +6554,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#status" class="md-nav__link">
-    Status
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#request" class="md-nav__link">
-    Request
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#response" class="md-nav__link">
-    Response
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -6606,55 +6570,11 @@
   
 
 
-<div><h1 id="apiplanningcooperationset_commands">/api/planning/cooperation/set_commands<a class="headerlink" href="#apiplanningcooperationset_commands" title="Permanent link">#</a></h1>
-<h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">#</a></h2>
-<ul>
-<li>Latest Version: not released</li>
-<li>Method: function call</li>
-<li>Data Type: <a href="../../../../../types/autoware_adapi_v1_msgs/srv/SetCooperationCommands">autoware_adapi_v1_msgs/srv/SetCooperationCommands</a></li>
-</ul>
-<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p>Set the operator's decision for cooperation.
-For details, see the <a href="../../../../../features/cooperation/">cooperation</a>.</p>
-<h2 id="request">Request<a class="headerlink" href="#request" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>commands.uuid</td>
-<td>unique_identifier_msgs/msg/UUID</td>
-<td>The ID in the cooperation status.</td>
-</tr>
-<tr>
-<td>commands.cooperator</td>
-<td>autoware_adapi_v1_msgs/msg/CooperationDecision</td>
-<td>The operator's decision.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="response">Response<a class="headerlink" href="#response" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>status</td>
-<td>autoware_adapi_v1_msgs/msg/ResponseStatus</td>
-<td>response status</td>
-</tr>
-</tbody>
-</table>
+<div><h1 id="macro-syntax-error"><em>Macro Syntax Error</em><a class="headerlink" href="#macro-syntax-error" title="Permanent link">#</a></h1>
+<p><em>File</em>: <code>design/autoware-interfaces/ad-api/list/api/planning/cooperation/set_commands.md</code></p>
+<p><em>Line 16 in Markdown file:</em> <strong>Encountered unknown tag 'エンドブロック'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.</strong>
+</p><div class="highlight"><pre><span></span><code>{% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %} {% block description %} 連携に関するオペレータの決定を設定します。詳細については、連携を参照してください。{% エンドブロック %}
+</code></pre></div>
 <!-- prettier-ignore --></div>
 
 
