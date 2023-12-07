@@ -1,5 +1,5 @@
-# GNSS/INS data pre-processing design
+# GNSS/INSデータ前処理デザイン
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中
