@@ -21,7 +21,7 @@
     
     
       
-        <title>Vehicle Launch Files - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Vehicle Launch Files
+              Index
             
           </span>
         </div>
@@ -6585,7 +6585,29 @@
   
 
 
-<div><h1 id="vehicle-launch-files">Vehicle Launch Files<a class="headerlink" href="#vehicle-launch-files" title="Permanent link">#</a></h1>
+<div><p>車両起動ファイル
+概要
+「Autoware の起動」ページで説明したように、Autoware 車両スタックは autoware_launch.xml で起動を開始し 、このコンテキストで tier4_vehicle.launch.xml が呼び出されます。autoware_launch次の図は、およびパッケージ内の Autoware 車両起動ファイル フローの一部を説明していますautoware.universe。</p>
+<p><img align="center" alt="vehicle-launch-flow" src="images/vehicle_launch_flow.svg" width="720"> Autoware 車両起動フロー図</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+</div>
+<p>The Autoware project is a large project.
+Therefore, as we manage the Autoware project, we utilize specific
+arguments in the launch files.
+<abbr title="Robot Operating System">ROS</abbr> 2 offers an argument-overriding feature for these launch files.
+Please refer to <a href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html#parameter-overrides">the official <abbr title="Robot Operating System">ROS</abbr> 2 launch documentation</a> for further information.
+For instance,
+if we define an argument at the top-level launch,
+it will override the value on lower-level launches.
+車両起動ファイルには多くの変更オプションはありませんが (パラメータは vehicle_launch リポジトリに含まれているため)、vehicle_interface 起動を無効にすることを選択できます。たとえば、robot_state_publisher は実行したいが、vehicle_interface は実行したくない場合は、次のコマンド ライン引数を使用して Autoware を起動できます。</p>
+<p>ros2 launch autoware_launch autoware.launch.xml ... launch_vehicle_interface:=false ...
+または、起動ファイルで変更することもできますautoware.launch.xml。</p>
+<ul>
+<li><arg name="launch_vehicle_interface" default="true" description="launch vehicle interface"></arg></li>
+<li><arg name="launch_vehicle_interface" default="false" description="launch vehicle interface"></arg></li>
+</ul>
+<h1 id="vehicle-launch-files">Vehicle Launch Files<a class="headerlink" href="#vehicle-launch-files" title="Permanent link">#</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
 <p>The Autoware vehicle stacks begin launching with autoware_launch.xml as mentioned on the
 <a href="../">Launch Autoware</a> page,
