@@ -1,5 +1,5 @@
-# Configuration management
+# 構成管理
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中
