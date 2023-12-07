@@ -21,7 +21,7 @@
     
     
       
-        <title>Planning Launch Files - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Planning Launch Files
+              Index
             
           </span>
         </div>
@@ -6592,7 +6592,51 @@
   
 
 
-<div><h1 id="planning-launch-files">Planning Launch Files<a class="headerlink" href="#planning-launch-files" title="Permanent link">#</a></h1>
+<div><p>起動ファイルの計画
+概要
+Autoware 計画スタックは、「Autoware の起動」autoware_launch.xmlページで説明されているように、起動を開始します。パッケージには、 からの計画起動ファイルの呼び出しを開始するためのものが含まれています。以下の図は、autoware_launch および autoware.universe パッケージ内の Autoware 計画起動ファイルのフローを示しています。autoware_launchtier4_planning_component.launch.xmlautoware_launch.xml</p>
+<p><img align="center" alt="planning-launch-flow" src="images/planning_launch_flow.svg"> Autoware の計画起動フロー図</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+</div>
+<p>The Autoware project is a large project.
+Therefore, as we manage the Autoware project, we utilize specific
+arguments in the launch files.
+<abbr title="Robot Operating System">ROS</abbr> 2 offers an argument-overriding feature for these launch files.
+Please refer to <a href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html#parameter-overrides">the official <abbr title="Robot Operating System">ROS</abbr> 2 launch documentation</a> for further information.
+For instance,
+if we define an argument at the top-level launch,
+it will override the value on lower-level launches.
+tier4_planning_component.launch.xml
+起動tier4_planning_component.launch.xmlファイルは、パッケージで起動される主要な計画コンポーネントですautoware_launch。この起動ファイルは、リポジトリからtier4_planning_launchパッケージplanning.launch.xmlを呼び出します。計画起動引数は、tier4_planning_component.launch.xml で変更できます。また、これは他の計画起動ファイルの最上位の起動ファイルであるため、変更したいその他の必要な引数を追加することもできます。事前定義された計画起動引数の一部を次に示します。autoware.universetier4_planning_component.launch.xml</p>
+<p>use_experimental_lane_change_function:この引数により enable_collision_check_at_prepare_phase、実験的なレーン変更のための Autoware のuse_predicted_path_outside_lanelet、 、およびuse_all_predicted_pathオプションが有効になります (詳細については、lane_change ドキュメントを参照してください)。デフォルト値は True です。これを False に設定するには、ファイルに次の変更を加えますtier4_planning_component.launch.xml。</p>
+<ul>
+<li><arg name="use_experimental_lane_change_function" default="true"></arg></li>
+<li><arg name="use_experimental_lane_change_function" default="false"></arg>
+cruise_planner_type:Autoware には、障害物停止プランナー と障害物クルーズプランナーという 2 種類のクルーズ プランナーがあります。これらのクルーズ プランナー タイプの仕様については、パッケージのドキュメントを参照してください。デフォルトのクルーズ プランナーは ですobstacle_stop_planner。これを障害物_クルーズ_プランナーに変更するには、ファイル内の引数の値を更新しますtier4_planning_component.launch.xml。</li>
+</ul>
+<ul>
+<li><arg name="cruise_planner_type" default="obstacle_stop_planner" description="options: obstacle_stop_planner, obstacle_cruise_planner, none"></arg></li>
+<li><arg name="cruise_planner_type" default="obstacle_cruise_planner" description="options: obstacle_stop_planner, obstacle_cruise_planner, none"></arg>
+use_surround_obstacle_check:この引数は、 Autoware のaround_obstacle_checkerを有効にします 。これを無効にしたい場合は、 tier4_planning_component.launch.xmlファイル内で次の操作を行うことができます。</li>
+</ul>
+<ul>
+<li><arg name="use_surround_obstacle_check" default="true"></arg></li>
+<li><arg name="use_surround_obstacle_check" default="false"></arg>
+velocity_smoother_type:この引数は、 motion_velocity_smootherパッケージのスムーサーのタイプを指定します。利用可能なスムーズなタイプの詳細については、ドキュメントを参照してください。たとえば、スムーズなタイプを JerkFiltered から L2 に変更したい場合は、tier4_planning_component.launch.xml ファイルで変更できます。</li>
+</ul>
+<ul>
+<li><arg name="velocity_smoother_type" default="JerkFiltered" description="options: JerkFiltered, L2, Analytical, Linf(Unstable)"></arg></li>
+<li><arg name="velocity_smoother_type" default="L2" description="options: JerkFiltered, L2, Analytical, Linf(Unstable)"></arg></li>
+</ul>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+</div>
+<p>You can also use this arguments as command line arguments:
+</p><div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>autoware.launch.xml<span class="w"> </span>...<span class="w"> </span>use_surround_obstacle_check:<span class="o">=</span><span class="nb">false</span><span class="w"> </span>velocity_smoother_type:<span class="o">=</span>L2<span class="w"> </span>...
+</code></pre></div>
+tier4_planning_component.launch.xml の事前定義引数については上で説明しました。ただし、autoware_launch 計画構成パラメータには、多数の計画引数が含まれています。
+<h1 id="planning-launch-files">Planning Launch Files<a class="headerlink" href="#planning-launch-files" title="Permanent link">#</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
 <p>The Autoware planning stacks start
 launching at <code>autoware_launch.xml</code> as mentioned on the <a href="../">Launch Autoware</a> page.
