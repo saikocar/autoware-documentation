@@ -1,5 +1,5 @@
-# Release process
+# 公開手順
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中
