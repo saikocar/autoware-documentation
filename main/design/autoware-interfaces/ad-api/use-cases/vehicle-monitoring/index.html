@@ -6599,7 +6599,15 @@
   
 
 
-<div><h1 id="vehicle-monitoring">Vehicle monitoring<a class="headerlink" href="#vehicle-monitoring" title="Permanent link">#</a></h1>
+<div><p>車両監視
+AD API は、遠隔監視や乗員の可視化などのために、車両の現在の状態を提供します。監視したいデータに応じて、以下の API を使用してください。</p>
+<p>車両状態
+車両のステータスは、運動学、インジケーター、寸法などの基本情報を提供します。これにより、遠隔操作者は車両の位置と速度を知ることができます。<abbr title="Fleet Management System">FMS</abbr> などのアプリケーションの場合、スタックした車両や急ブレーキがかかった車両など、支援が必要な車両を見つけるのに役立ちます。車両の寸法から物体までの実際の距離を求めることも可能です。</p>
+<p>計画要素
+計画要素は、車両の計画ステータスを提供します。HMIはこれを利用して車両の急な動きを警告したり、停止理由を同乗者と共有したりすることで快適な運転を実現します。</p>
+<p>検出されたオブジェクト
+知覚は、 Autoware によって検出されたオブジェクトを提供します。<abbr title="Human Machine Interface">HMI</abbr> はこれを使用して、車両の周囲のオブジェクトを視覚化できます。</p>
+<h1 id="vehicle-monitoring">Vehicle monitoring<a class="headerlink" href="#vehicle-monitoring" title="Permanent link">#</a></h1>
 <p>AD API provides current vehicle status for remote monitoring, visualization for passengers, etc.
 Use the API below depending on the data you want to monitor.</p>
 <h2 id="vehicle-status">Vehicle status<a class="headerlink" href="#vehicle-status" title="Permanent link">#</a></h2>
