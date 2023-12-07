@@ -1,9 +1,9 @@
-# Perception
+# 知覚
 
-## Related API
+## 関連するAPI
 
 - {{ link_ad_api('/api/perception/objects') }}
 
-## Description
+## 説明
 
-API for perception related topic.
+知覚に関連するトピックのAPIです。
