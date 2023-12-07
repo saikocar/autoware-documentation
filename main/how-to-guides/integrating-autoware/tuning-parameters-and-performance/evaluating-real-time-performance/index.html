@@ -21,7 +21,7 @@
     
     
       
-        <title>Evaluating real-time performance - Autoware Documentation</title>
+        <title>Evaluating real time performance - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#evaluating-real-time-performance" class="md-skip">
+        <a href="#enable-config_no_hz_full" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Evaluating real-time performance
+              Evaluating real time performance
             
           </span>
         </div>
@@ -3496,108 +3496,9 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Evaluating real-time performance
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
-        Evaluating real-time performance
+        Evaluating real time performance
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#performance-measurement" class="md-nav__link">
-    Performance measurement
-  </a>
-  
-    <nav class="md-nav" aria-label="Performance measurement">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#single-node-execution" class="md-nav__link">
-    Single node execution
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#prepare-separated-cores" class="md-nav__link">
-    Prepare separated cores
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#run-single-node-separately" class="md-nav__link">
-    Run single node separately
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#measurement-and-visualization" class="md-nav__link">
-    Measurement and visualization
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#case-studies" class="md-nav__link">
-    Case studies
-  </a>
-  
-    <nav class="md-nav" aria-label="Case studies">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sensing-component" class="md-nav__link">
-    Sensing component
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#planning-component" class="md-nav__link">
-    Planning component
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -6663,89 +6564,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#performance-measurement" class="md-nav__link">
-    Performance measurement
-  </a>
-  
-    <nav class="md-nav" aria-label="Performance measurement">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#single-node-execution" class="md-nav__link">
-    Single node execution
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#prepare-separated-cores" class="md-nav__link">
-    Prepare separated cores
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#run-single-node-separately" class="md-nav__link">
-    Run single node separately
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#measurement-and-visualization" class="md-nav__link">
-    Measurement and visualization
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#case-studies" class="md-nav__link">
-    Case studies
-  </a>
-  
-    <nav class="md-nav" aria-label="Case studies">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sensing-component" class="md-nav__link">
-    Sensing component
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#planning-component" class="md-nav__link">
-    Planning component
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -6762,7 +6580,104 @@
   
 
 
-<div><h1 id="evaluating-real-time-performance">Evaluating real-time performance<a class="headerlink" href="#evaluating-real-time-performance" title="Permanent link">#</a></h1>
+<div><p>リアルタイムパフォーマンスの評価
+導入
+Autoware は、サービスに統合された場合、リアルタイム システムである必要があります。したがって、各コールバックの応答時間は可能な限り短くする必要があります。Autoware が遅いと思われる場合は、パフォーマンス測定を実施し、分析に基づいて改善を実装することが不可欠です。ただし、Autoware は多数の <abbr title="Robot Operating System">ROS</abbr> 2 ノードで構成される複雑なソフトウェア システムであるため、ボトルネックを特定するプロセスが複雑になる可能性があります。この課題に対処するために、Autoware の詳細なパフォーマンス測定を実行する方法について説明し、ケース スタディを提供します。OS 層でのスケジューリングやメモリ割り当てなど、複数の要因がパフォーマンス低下の原因となる可能性があることは注目に値しますが、このページではユーザー コードのボトルネックに焦点を当てます。このセクションの概要は次のとおりです。</p>
+<p>性能測定
+単一ノードの実行
+分割コアの準備
+単一ノードを個別に実行する
+計測と可視化
+ケーススタディ
+センシングコンポーネント
+計画コンポーネント
+性能測定
+正確な測定がなければ改善は不可能です。アプリケーション コードのパフォーマンスを測定するには、外部の影響を排除することが不可欠です。このような影響には、オペレーティング システムからの干渉や CPU 周波数の変動が含まれます。スケジューリングの影響は、コア リソースが複数のスレッドで共有されている場合にも発生します。このセクションでは、特定のノードのアプリケーション コードのパフォーマンスを正確に測定する手法の概要を説明します。このセクションでは Intel CPU 上の Linux の場合についてのみ説明しますが、他の環境でも同様の考慮事項を行う必要があります。</p>
+<p>単一ノードの実行
+スケジューリングの影響を排除するには、Autoware システム全体が実行されているときと同じロジックを使用して、測定対象のノードが独立して動作する必要があります。これを実現するには、Autoware システム全体の実行中に、測定対象のノードのすべての入力トピックを記録します。この目的を達成するために、 というツールがros2_single_node_replayer用意されています。</p>
+<p>ツールの使用方法の詳細については、README を参照してください。このツールは、Autoware 操作全体を通じて特定のノードの入力トピックを記録し、同じロジックを使用して単一ノードで再生します。このツールはros2 bag recordコマンドに依存しており、<abbr title="Robot Operating System">ROS</abbr> 2 Humble の時点ではサービス/アクションの記録はサポートされていないため、サービス/アクションをメイン ロジックとして使用するノードは適切に動作しない可能性があります。</p>
+<p>分割コアの準備
+測定対象のノードを実行する分離コアは以下の条件を満たす必要があります。</p>
+<p>CPU周波数を修正し、ターボブーストを無効にする
+タイマーの中断を最小限に抑える
+オフロード RCU (読み取りコピー更新) コールバック
+ハイパースレッディングが有効な場合、ペアになったコアを分離します
+Linux でこれらの条件を満たすには、次のカーネル構成を使用したカスタム カーネル ビルドが必要です。カスタム Linux カーネル (このようなもの)を構築する方法を説明するリソースは数多くあります。フルティックレスが有効な場合でも、1 つのコアに 3 つ以上のタスクが存在する場合、スケジューリングのためにタイマー割り込みが生成されることに注意してください。</p>
+<h1 id="enable-config_no_hz_full">Enable CONFIG_NO_HZ_FULL<a class="headerlink" href="#enable-config_no_hz_full" title="Permanent link">#</a></h1>
+<p>-&gt; General setup
+-&gt; Timers subsystem
+-&gt; Timer tick handling (Full dynticks system (tickless))
+(X) Full dynticks system (tickless)</p>
+<h1 id="allows-rcu-callback-processing-to-be-offloaded-from-selected-cpus">Allows RCU callback processing to be offloaded from selected CPUs<a class="headerlink" href="#allows-rcu-callback-processing-to-be-offloaded-from-selected-cpus" title="Permanent link">#</a></h1>
+<h1 id="config_rcu_nocb_cpuy">(CONFIG_RCU_NOCB_CPU=y)<a class="headerlink" href="#config_rcu_nocb_cpuy" title="Permanent link">#</a></h1>
+<p>-&gt; General setup
+-&gt; RCU Subsystem
+-*- Offload RCU callback processing from boot-selected CPUs
+さらに、カーネルブートパラメータを次のように設定する必要があります。</p>
+<p>GRUB_CMDLINE_LINUX_DEFAULT=
+  "... isolcpus=2,8 rcu_nocbs=2,8 rcu_nocb_poll nohz_full=2,8 intel_pstate=disable”
+たとえば、上記の構成では、測定対象のノードはコア 2 で実行され、ハイパースレッディング ペアであるコア 8 も分離されていると仮定します。どのコアで測定対象を実行するか、どのノードを分離するかは、測定マシンのキャッシュとコアのレイアウトに基づいて適切に決定する必要があります。を実行すると、正しく構成されているかどうかを簡単に確認できますcat /proc/softirqs。intel_pstate=disableカーネルブートパラメータに指定されているため、userspaceスケーリングガバナーでも指定可能です。</p>
+<p>cat /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor // ondemand
+sudo sh -c "echo userspace &gt; /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor"
+これにより、定義された範囲内で希望の周波数を自由に設定できます。</p>
+<p>sudo sh -c "echo <freq> &gt; /sys/devices/system/cpu/cpu2/cpufreq/scaling_setspeed"
+Intel CPU ではターボ ブーストをオフにする必要がありますが、これは見落とされがちです。</freq></p>
+<p>sudo sh -c "echo 0 &gt; /sys/devices/system/cpu/cpufreq/boost"
+単一ノードを個別に実行する
+READMEの指示に従ってros2_single_node_replayer、ノードを起動し、ツールによって作成された専用の rosbag を再生します。rosbag を再生する前に、ノードが実行されるスレッドの CPU アフィニティを適切に設定し、用意された分離コアにノードが配置されるようにします。</p>
+<p>taskset --cpu-list -p <target cpu> <pid>
+最終レベルのキャッシュでの干渉を回避するには、測定中に実行する他のアプリケーションの数を最小限に抑えます。</pid></target></p>
+<p>計測と可視化
+測定ターゲットのパフォーマンスを視覚化するには、タイムスタンプとパフォーマンス カウンタ値をログに記録するコードをターゲットのソース コードに埋め込みます。この目的を達成するために、 というツールがpmu_analyzer用意されています。</p>
+<p>ツールの使用方法の詳細については、README を参照してください。このツールは、ソース コード内の任意のセクションの所要時間を測定できるだけでなく、さまざまなパフォーマンス カウンターも測定できます。</p>
+<p>ケーススタディ
+このセクションでは、パフォーマンスの向上を実証するいくつかのケーススタディを紹介します。これらの例は、システムの効率向上に対する当社の取り組みを示すだけでなく、独自のプロジェクトで同様の課題に直面する可能性のある開発者にとって貴重なリソースとしても役立ちます。ここで説明するパフォーマンスの向上は、センシング モジュールや計画モジュールなど、Autoware システムのさまざまなコンポーネントに及びます。どの点がボトルネックとなっているかは、コンポーネントごとに傾向があります。これらのケーススタディで使用されている方法、テクニック、ツールを検討することで、読者は Autoware のような複雑なソフトウェア システムを最適化する実践的な側面をより深く理解できるようになります。</p>
+<p>センシングコンポーネント
+ring_outlier_filterまずはノードを例に性能向上の手順を説明します。詳細については、プル リクエストを参照してください。</p>
+<p>次の図は、上記の「パフォーマンス測定」セクションで説明したように分析された、 の主要処理部分の所要時間を時系列にプロットしたものですring_outlier_filter。</p>
+<p>リング外れ値フィルターの所要時間</p>
+<p>横軸は呼び出されたコールバックの数 (つまり、コールバック インデックス) を示し、縦軸は所要時間を示します。</p>
+<p>センシングモジュールの性能をパフォーマンスカウンタの観点から分析する場合はinstructions、LLC-load-misses、LLC-store-misses、cache-misses、 、に注意してくださいminor-faults。</p>
+<p>パフォーマンス カウンタの分析によると、最大の変動はminor-faults(ソフト ページ フォールトなど)、2 番目に大きいのは およびLLC-store-misses(LLC-load-misses最終レベル キャッシュでのキャッシュ ミス)、最も遅い変動は命令 (つまり、メッセージ データ サイズ) によるものであることがわかります。変動）。たとえば、minor-faults横軸に納期、縦軸にプロットすると、次のような支配的な比例関係がわかります。</p>
+<p>リング外れ値フィルターの軽微な障害</p>
+<p>ソフト ページ フォールトをゼロにするには、事前に最初にアクセスされた領域からのみヒープ割り当てを行う必要があります。Autoware コールバックの実行中にソフト ページ フォールトを回避するために、 というライブラリを開発しましたheaphook。興味がある場合は、GitHub のディスカッションと問題を参照してください。</p>
+<p>LLC ミスを減らすには、ワーキング セットを減らし、キャッシュ効率の高いアクセス パターンを使用する必要があります。</p>
+<p>LiDAR 点群データなどの大規模なメッセージ データを扱うセンシング コンポーネントでは、コピーを最小限に抑えることが重要です。センサー データ メッセージ タイプを入力および出力として受け取るコールバックは、可能な限りインプレース アルゴリズムで作成する必要があります。これは、次の疑似コードでは、output_msgから生成するときにinput_msg、メモリ コピーの数を減らすためにバッファの使用をできるだけ避けることが重要であることを意味します。</p>
+<p>void callback(const PointCloudMsg &amp;input_msg) {
+  auto output_msg = allocate_msg<pointcloudmsg>(output_size);
+  fill(input_msg, output_msg);
+  publish(std::move(output_msg));
+}
+キャッシュ効率を向上させるには、散発的にメモリ領域にアクセスするのではなく、可能な限りインプレース スタイルを実装します。PCLを使ったROSアプリケーションでは、以下のようなコードがよく見られます。</pointcloudmsg></p>
+<p>void callback(const sensor_msgs::PointCloud2ConstPtr &amp;input_msg) {
+  pcl::PointCloud<pointt>::Ptr input_pcl(new pcl::PointCloud<pointt>);
+  pcl::fromROSMsg(<em>input_msg, </em>input_pcl);</pointt></pointt></p>
+<p>// Algorithm is described for point cloud type of pcl
+  pcl::PointCloud<pointt>::Ptr output_pcl(new pcl::PointCloud<pointt>);
+  fill_pcl(<em>input_pcl, </em>output_pcl);</pointt></pointt></p>
+<p>auto output_msg = allocate_msg<:pointcloud2>(output_size);
+  pcl::toROSMsg(<em>output_pcl, </em>output_msg);
+  publish(std::move(output_msg));
+}
+PCL ライブラリを使用するには、fromROSMsg()コールtoROSMsg()バックの開始時と終了時にメッセージ タイプ変換を実行するために使用されます。これは無駄なコピープロセスであるため、避けるべきです。PCL (例: autowarefoundation/awf_velodyne#39 )への依存関係を削除して、不要な型変換を排除する必要があります。マップ データなどの大きなメッセージ タイプの場合、物理メモリの観点から、システム全体にインスタンスが 1 つだけ存在する必要があります。</:pointcloud2></p>
+<p>計画コンポーネント
+まず、ターンアラウンドタイムが長くなりがちなノードdetection_area内のモジュールをピックアップします。behavior_velocity_planner上記のパフォーマンス分析手順に従って、次のグラフを取得しました。軸はセンシング事例のグラフと同じです。</p>
+<p>検知エリアの所要時間</p>
+<p>ツールを使用してpmu_analyzerボトルネックをさらに特定したところ、次の複数のループが多くの処理時間を費やしていることがわかりました。</p>
+<p>for ( area : detection_areas )
+  for ( point : point_clouds )
+    if ( boost::geometry::within(point, area) )
+      // do something with O(1)
+各点群が各検出領域に含まれるかどうかを確認します。をNのサイズpoint_clouds、 をMのサイズとするdetection_areasと、 の計算量は O(N) であるため、このプログラムの計算量は O(N^2 * M) になりますwithin。ここで、ほとんどの点群が特定の検出エリアから遠く離れた位置にあるとすると、特定の最適化を達成できます。まず、検出領域を完全に覆う最小の外接円を計算し、その円内に点が含まれるかどうかを確認します。ほとんどの点群はこの方法ですぐに除外できるため、withinほとんどの場合、関数を呼び出す必要はありません。以下は最適化後の擬似コードです。</p>
+<p>for ( area : detection_areas )
+  circle = calc_minimum_enclosing_circle(area)
+  for ( point : point_clouds )
+    if ( point is in circle )
+      if ( boost::geometry::within(point, area) )
+        // do something with O(1)
+最小外接円に O(N) アルゴリズムを使用することにより、このプログラムの計算量はほぼ O(N * (N + M)) に減少します (正確な計算量は実際には変化しないことに注意してください)。興味がある場合は、プル リクエストを参照してください。</p>
+<p>この例と同様に、計画コンポーネントでは、数千から数万の点群、自分のルートを表す経路上の数千の点、周囲の障害物や検知エリアを表すポリゴンを考慮して、経路の作成を繰り返します。それらに基づいて。したがって、for ループを使用して点群とパスの内容に複数回アクセスします。ほとんどの場合、ボトルネックはこれらの単純な for ループにあります。ここで、Big O 記法を理解し、計算の複雑さの次数を減らすことは、パフォーマンスの向上に直接つながります。</p>
+<h1 id="evaluating-real-time-performance">Evaluating real-time performance<a class="headerlink" href="#evaluating-real-time-performance" title="Permanent link">#</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h2>
 <p>Autoware should be real-time system when integrated to a service. Therefore, the response time of each callback should be as small as possible. If Autoware appears to be slow, it is imperative to conduct performance measurements and implement improvements based on the analysis. However, Autoware is a complex software system comprising numerous <abbr title="Robot Operating System">ROS</abbr> 2 nodes, potentially complicating the process of identifying bottlenecks. To address this challenge, we will discuss methods for conducting detailed performance measurements for Autoware and provide case studies. It is worth noting that multiple factors can contribute to poor performance, such as scheduling and memory allocation in the OS layer, but our focus in this page will be on user code bottlenecks. The outline of this section is as follows:</p>
 <ul>
