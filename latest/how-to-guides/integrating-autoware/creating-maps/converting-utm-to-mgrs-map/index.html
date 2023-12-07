@@ -21,7 +21,7 @@
     
     
       
-        <title>Converting UTM maps to MGRS map format - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Converting UTM maps to MGRS map format
+              Index
             
           </span>
         </div>
@@ -6619,7 +6619,80 @@
   
 
 
-<div><h1 id="converting-utm-maps-to-mgrs-map-format">Converting UTM maps to MGRS map format<a class="headerlink" href="#converting-utm-maps-to-mgrs-map-format" title="Permanent link">#</a></h1>
+<div><p>UTM マップを MGRS マップ形式に変換する
+概要
+Autoware で MGRS (Military Grid Reference System) 形式を使用する場合は、UTM (ユニバーサル横メルカトル) マップを MGRS 形式に変換する必要があります。これを行うには、Leo Drive が提供するUTM から MGRS ポイントクラウド コンバーターROS 2 パッケージを使用します。</p>
+<p>インストール
+依存関係
+ROS2
+PCL 変換
+地理ライブラリ
+依存関係をインストールするには:</p>
+<p>sudo apt install ros-humble-pcl-conversions \
+       geographiclib-tools
+建物
+    cd <path-to-your-ros-2-workspace>/src
+    git clone https://github.com/leo-drive/pc_utm_to_mgrs_converter.git
+    cd ..
+    colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+使用法
+コンバータ ツールのインストール後、ローカル UTM マップ原点の北距、東距、および楕円体の高さを で定義する必要がありますpc_utm_to_mgrs_converter.param.yaml。たとえば、<abbr title="Global Navigation Satellite System">GNSS</abbr>/INS センサーからの navsatfix メッセージで緯度、経度、高度の値を使用できます。</path-to-your-ros-2-workspace></p>
+<p>??? note 「navsatfix メッセージからのサンプル <abbr title="Robot Operating System">ROS</abbr> 2 トピック エコー」</p>
+<p></p><div class="highlight"><pre><span></span><code>header:
+stamp:
+sec:<span class="w"> </span><span class="m">1694612439</span>
+nanosec:<span class="w"> </span><span class="m">400000000</span>
+frame_id:<span class="w"> </span>GNSS_INS/gnss_ins_link
+status:
+status:<span class="w"> </span><span class="m">0</span>
+service:<span class="w"> </span><span class="m">1</span>
+latitude:<span class="w"> </span><span class="m">41</span>.0216110801253
+longitude:<span class="w"> </span><span class="m">28</span>.887096461148346
+altitude:<span class="w"> </span><span class="m">74</span>.28264078891529
+position_covariance:
+-<span class="w"> </span><span class="m">0</span>.0014575386885553598
+-<span class="w"> </span><span class="m">0</span>.0
+-<span class="w"> </span><span class="m">0</span>.0
+-<span class="w"> </span><span class="m">0</span>.0
+-<span class="w"> </span><span class="m">0</span>.004014162812381983
+-<span class="w"> </span><span class="m">0</span>.0
+-<span class="w"> </span><span class="m">0</span>.0
+-<span class="w"> </span><span class="m">0</span>.0
+-<span class="w"> </span><span class="m">0</span>.0039727711118757725
+position_covariance_type:<span class="w"> </span><span class="m">2</span>
+</code></pre></div>
+その後、緯度と経度の値を北緯と東経の値に変換する必要があります。緯度経度の値を UTM に変換するには、インターネット上の任意のコンバーターを使用できます。(つまり、UTMconverter )
+<p>pc_utm_to_mgrs_converter.param.yamlこれで、 navsatfix メッセージの例を更新する準備ができました。</p>
+<p>/**:
+  ros__parameters:
+      # Northing of local origin
+-     Northing: 4520550.0
++     Northing: 4542871.33</p>
+<div class="codehilite"><pre><span></span><code>  # Easting of local origin
+</code></pre></div>
+
+<ul>
+<li>Easting: 698891.0</li>
+<li>Easting: 658659.84<div class="codehilite"><pre><span></span><code># Elipsoid Height of local origin
+</code></pre></div>
+
+<ul>
+<li>ElipsoidHeight: 47.62</li>
+<li>ElipsoidHeight: 74.28
+最後に、入力とポイントクラウドのマップ パスを更新しますpc_utm_to_mgrs_converter.launch.xml。</li>
+</ul>
+</li>
+</ul>
+<p>...
+- <arg name="input_file_path" default="/home/melike/projects/autoware_data/gebze_pospac_map/pointcloud_map.pcd"></arg>
++ <arg name="input_file_path" default="\&lt;PATH-TO-YOUR-INPUT-PCD-MAP&gt;"></arg>
+- <arg name="output_file_path" default="/home/melike/projects/autoware_data/gebze_pospac_map/pointcloud_map_mgrs_orto.pcd"></arg>
++ <arg name="output_file_path" default="\&lt;PATH-TO-YOUR-OUTPUT-PCD-MAP&gt;"></arg>
+...
+パッケージの設定後、pc_utm_to_mgrs_converter を起動します。</p>
+<p>ros2 launch pc_utm_to_mgrs_converter pc_utm_to_mgrs_converter.launch.xml
+変換プロセスが開始され、Saved <your-map-points-size> data points saved to <your-output-map-path>端末にメッセージが表示されます。MGRS 形式の点群マップは、出力マップ ディレクトリに保存する必要があります。</your-output-map-path></your-map-points-size></p>
+<h1 id="converting-utm-maps-to-mgrs-map-format">Converting UTM maps to MGRS map format<a class="headerlink" href="#converting-utm-maps-to-mgrs-map-format" title="Permanent link">#</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
 <p>If you want to use MGRS (Military Grid Reference System) format in Autoware,
 you need to convert UTM (Universal Transverse Mercator) map to MGRS format.
