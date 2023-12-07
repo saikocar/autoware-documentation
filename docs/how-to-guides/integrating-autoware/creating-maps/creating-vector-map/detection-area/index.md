@@ -1,3 +1,50 @@
+検出エリア要素
+行動速度プランナの検知エリアは、地図上に定義された検知エリア内に点群が検知された場合に、所定の地点で停止計画を実行する際の速度を計画します。これを操作するために、lanelet2 マップに検出エリア要素を追加します。
+
+検出エリア要素の作成
+マップ上に検出エリアを作成するには、次の手順に従ってください。
+
+トップパネルの ボタンをクリックしますLanelet2Maps。
+Detection Areaパネルから選択します。
+追加する停止線を選択してください。
+Detection Area点群マップをクリックして挿入します。
+検出領域の隅にある点をクリックすると、検出領域の寸法を変更できます。詳細については、デモビデオをご覧ください。
+検出エリア作成のデモビデオでこれらの手順を確認できます。
+
+タイプ:ビデオ
+
+作成した検知エリアをプランニングシミュレーターでテスト
+マップの作成が完了したら、マップを保存する必要があります。File-->をクリックしExport Lanelet2Mapsてダウンロードしてください。
+
+ダウンロードが完了したら、lanelet2 マップと pointcloud マップを同じ場所に配置する必要があります。ディレクトリ構造は次のようになります。
+
++ <YOUR-MAP-DIRECTORY>/
++  ├─ pointcloud_map.pcd
++  └─ lanelet2_map.osm
+.osm または .pcd マップ ファイルの名前がこれらの名前と異なる場合は、autoware.launch.xml を更新する必要があります。
+
+  <!-- Map -->
+-  <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
++  <arg name="lanelet2_map_file" default="<YOUR-LANELET-MAP-NAME>.osm" description="lanelet2 map file name"/>
+-  <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
++  <arg name="pointcloud_map_file" default="<YOUR-POINTCLOUD-MAP-NAME>.pcd" description="pointcloud map file name"/>
+これで、計画シミュレーターを起動する準備が整いました。
+
+ros2 launch autoware_launch planning_simulator.launch.xml map_path:=<YOUR-MAP-FOLDER-DIR> vehicle_model:=<YOUR-VEHICLE-MODEL> sensor_model:=<YOUR-SENSOR-KIT>
+チュートリアル_車両の例:
+
+ros2 launch autoware_launch planning_simulator.launch.xml map_path:=$HOME/Files/autoware_map/tutorial_map/ vehicle_model:=tutorial_vehicle sensor_model:=tutorial_vehicle_sensor_kit vehicle_id:=tutorial_vehicle
+2D Pose Estimaterviz の ボタンをクリックするか、 を押してPポーズを与えると初期化されます。
+2D Goal Poserviz のボタンをクリックするか、 を押してGゴールポイントのポーズをとります。
+歩行者を検出エリアに追加する必要があるため、Tool Propertiesrviz のパネルからインタラクティブな歩行者を有効にします。
+その後、 を押しShift、右クリックボタンをクリックして歩行者を挿入してください。
+挿入された歩行者を右クリックでドラッグして制御できます。したがって、テストのために歩行者を検出エリアに置く必要があります。
+rviz 上の停止検出領域:
+
+![検出エリアテスト](images/検出エリアテスト.png){ align=center } 作成したマップ上の検出エリアテスト。
+次のデモ ビデオのように、計画シミュレーターで検出エリアの要素を確認できます。
+
+タイプ:ビデオ
 # Detection area element
 
 Behavior velocity planner's [detection area](https://autowarefoundation.github.io/autoware.universe/main/planning/behavior_velocity_detection_area_module/) plans velocity
