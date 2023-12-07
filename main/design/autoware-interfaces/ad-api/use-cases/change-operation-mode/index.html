@@ -21,7 +21,7 @@
     
     
       
-        <title>Change the operation mode - Autoware Documentation</title>
+        <title>Change operation mode - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Change the operation mode
+              Change operation mode
             
           </span>
         </div>
@@ -6592,7 +6592,41 @@
   
 
 
-<div><h1 id="change-the-operation-mode">Change the operation mode<a class="headerlink" href="#change-the-operation-mode" title="Permanent link">#</a></h1>
+<div><p>動作モードを変更する
+関連するAPI
+動作モード
+順序
+ソフトウェアスイッチでモードを切り替えます。</p>
+<p>@startuml</p>
+<p>skinparam ParticipantPadding 25
+participant "Operator" as operator
+participant "Application" as system
+participant "AD API" as api
+participant "Vehicle" as vehicle</p>
+<p>operator -&gt; system ++: change the operation mode
+system -&gt; api ++: change the operation mode
+api -&gt; vehicle ++: change the control mode
+return
+return
+return</p>
+<p>vehicle --&gt; api: notify the current control mode
+api --&gt; system: notify the current operation mode
+system --&gt; operator: show the current operation mode</p>
+<p>@enduml
+ハードウェアスイッチでモードを変更します。</p>
+<p>@startuml</p>
+<p>skinparam ParticipantPadding 25
+participant "Operator" as operator
+participant "Application" as system
+participant "AD API" as api
+participant "Vehicle" as vehicle</p>
+<p>operator -&gt; vehicle ++: change the control mode
+return</p>
+<p>vehicle --&gt; api: notify the current control mode
+api --&gt; system: notify the current operation mode
+system --&gt; operator: show the current operation mode</p>
+<p>@enduml</p>
+<h1 id="change-the-operation-mode">Change the operation mode<a class="headerlink" href="#change-the-operation-mode" title="Permanent link">#</a></h1>
 <h2 id="related-api">Related API<a class="headerlink" href="#related-api" title="Permanent link">#</a></h2>
 <ul>
 <li>Operation mode</li>
