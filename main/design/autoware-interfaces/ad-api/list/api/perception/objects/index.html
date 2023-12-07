@@ -21,7 +21,7 @@
     
     
       
-        <title>/api/perception/objects - Autoware Documentation</title>
+        <title>Objects - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#apiperceptionobjects" class="md-skip">
+        <a href="#macro-syntax-error" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              /api/perception/objects
+              Objects
             
           </span>
         </div>
@@ -6554,35 +6554,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#status" class="md-nav__link">
-    Status
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#message" class="md-nav__link">
-    Message
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -6599,53 +6570,11 @@
   
 
 
-<div><h1 id="apiperceptionobjects">/api/perception/objects<a class="headerlink" href="#apiperceptionobjects" title="Permanent link">#</a></h1>
-<h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">#</a></h2>
-<ul>
-<li>Latest Version: v1.0.0</li>
-<li>Method: realtime stream</li>
-<li>Data Type: <a href="../../../../types/autoware_adapi_v1_msgs/msg/DynamicObjectArray">autoware_adapi_v1_msgs/msg/DynamicObjectArray</a></li>
-</ul>
-<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p>Get the recognized objects array with label, shape, current position and predicted path
-For details, see the <a href="../../../../features/perception/">perception</a>.</p>
-<h2 id="message">Message<a class="headerlink" href="#message" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>objects.id</td>
-<td>unique_identifier_msgs/msg/UUID</td>
-<td>The UUID of each object</td>
-</tr>
-<tr>
-<td>objects.existence_probability</td>
-<td>float64</td>
-<td>The probability of the object exits</td>
-</tr>
-<tr>
-<td>objects.classification</td>
-<td>autoware_adapi_v1_msgs/msg/ObjectClassification[]</td>
-<td>The type of the object recognized and the confidence level</td>
-</tr>
-<tr>
-<td>objects.kinematics</td>
-<td>autoware_adapi_v1_msgs/msg/DynamicObjectKinematics</td>
-<td>Consist of the object pose, twist, acceleration and the predicted_paths</td>
-</tr>
-<tr>
-<td>objects.shape</td>
-<td>shape_msgs/msg/SolidPrimitive</td>
-<td>escribe the shape of the object with dimension, and polygon</td>
-</tr>
-</tbody>
-</table>
+<div><h1 id="macro-syntax-error"><em>Macro Syntax Error</em><a class="headerlink" href="#macro-syntax-error" title="Permanent link">#</a></h1>
+<p><em>File</em>: <code>design/autoware-interfaces/ad-api/list/api/perception/objects.md</code></p>
+<p><em>Line 22 in Markdown file:</em> <strong>Encountered unknown tag 'エンドブロック'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.</strong>
+</p><div class="highlight"><pre><span></span><code>{% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %} {% block description %} ラベル、形状、現在位置、予測されたパスを含む認識されたオブジェクトの配列を取得します 詳細については、認識 を参照してください。{% エンドブロック %}
+</code></pre></div>
 <!-- prettier-ignore --></div>
 
 
