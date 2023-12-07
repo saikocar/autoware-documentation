@@ -1,3 +1,3 @@
-# Contributing
+# 貢献
 
-See <https://autowarefoundation.github.io/autoware-documentation/main/contributing/>.
+<https://autowarefoundation.github.io/autoware-documentation/main/contributing/>を参照してください。
