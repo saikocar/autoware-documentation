@@ -21,7 +21,7 @@
     
     
       
-        <title>/api/vehicle/kinematics - Autoware Documentation</title>
+        <title>Kinematics - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#apivehiclekinematics" class="md-skip">
+        <a href="#macro-syntax-error" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              /api/vehicle/kinematics
+              Kinematics
             
           </span>
         </div>
@@ -6554,35 +6554,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#status" class="md-nav__link">
-    Status
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#message" class="md-nav__link">
-    Message
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -6599,47 +6570,11 @@
   
 
 
-<div><h1 id="apivehiclekinematics">/api/vehicle/kinematics<a class="headerlink" href="#apivehiclekinematics" title="Permanent link">#</a></h1>
-<h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">#</a></h2>
-<ul>
-<li>Latest Version: not released</li>
-<li>Method: realtime stream</li>
-<li>Data Type: <a href="../../../../types/autoware_adapi_v1_msgs/msg/VehicleKinematics">autoware_adapi_v1_msgs/msg/VehicleKinematics</a></li>
-</ul>
-<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p>Publish vehicle kinematics.</p>
-<h2 id="message">Message<a class="headerlink" href="#message" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>geographic_pose</td>
-<td>geographic_msgs/msg/GeoPointStamped</td>
-<td>The longitude and latitude of the vehicle. If the map uses local coordinates, it will not be available.</td>
-</tr>
-<tr>
-<td>pose</td>
-<td>geometry_msgs/msg/PoseWithCovarianceStamped</td>
-<td>The pose with covariance from the base link.</td>
-</tr>
-<tr>
-<td>twist</td>
-<td>geometry_msgs/msg/TwistWithCovarianceStamped</td>
-<td>Vehicle current twist with covariance.</td>
-</tr>
-<tr>
-<td>accel</td>
-<td>geometry_msgs/msg/AccelWithCovarianceStamped</td>
-<td>Vehicle current acceleration with covariance.</td>
-</tr>
-</tbody>
-</table>
+<div><h1 id="macro-syntax-error"><em>Macro Syntax Error</em><a class="headerlink" href="#macro-syntax-error" title="Permanent link">#</a></h1>
+<p><em>File</em>: <code>design/autoware-interfaces/ad-api/list/api/vehicle/kinematics.md</code></p>
+<p><em>Line 19 in Markdown file:</em> <strong>Encountered unknown tag 'ブロックの説明'.</strong>
+</p><div class="highlight"><pre><span></span><code>{% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %} {% ブロックの説明 %} 車両の運動学を公開します。{% エンドブロック %}
+</code></pre></div>
 <!-- prettier-ignore --></div>
 
 
