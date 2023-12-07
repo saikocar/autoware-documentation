@@ -21,7 +21,7 @@
     
     
       
-        <title>/api/planning/velocity_factors - Autoware Documentation</title>
+        <title>Velocity factors - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#apiplanningvelocity_factors" class="md-skip">
+        <a href="#macro-syntax-error" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              /api/planning/velocity_factors
+              Velocity factors
             
           </span>
         </div>
@@ -6554,35 +6554,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#status" class="md-nav__link">
-    Status
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#message" class="md-nav__link">
-    Message
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -6599,63 +6570,11 @@
   
 
 
-<div><h1 id="apiplanningvelocity_factors">/api/planning/velocity_factors<a class="headerlink" href="#apiplanningvelocity_factors" title="Permanent link">#</a></h1>
-<h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">#</a></h2>
-<ul>
-<li>Latest Version: not released</li>
-<li>Method: realtime stream</li>
-<li>Data Type: <a href="../../../../types/autoware_adapi_v1_msgs/msg/VelocityFactorArray">autoware_adapi_v1_msgs/msg/VelocityFactorArray</a></li>
-</ul>
-<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p>Get the velocity factors, sorted in ascending order of distance.
-For details, see the <a href="../../../../features/planning-factors/">planning factors</a>.</p>
-<h2 id="message">Message<a class="headerlink" href="#message" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>factors.pose</td>
-<td>geometry_msgs/msg/Pose</td>
-<td>The base link pose related to the velocity factor.</td>
-</tr>
-<tr>
-<td>factors.distance</td>
-<td>float32</td>
-<td>The distance from the base link to the above pose.</td>
-</tr>
-<tr>
-<td>factors.status</td>
-<td>uint16</td>
-<td>The status of the velocity factor.</td>
-</tr>
-<tr>
-<td>factors.behavior</td>
-<td>string</td>
-<td>The behavior type of the velocity factor.</td>
-</tr>
-<tr>
-<td>factors.sequence</td>
-<td>string</td>
-<td>The sequence type of the velocity factor.</td>
-</tr>
-<tr>
-<td>factors.detail</td>
-<td>string</td>
-<td>The additional information of the velocity factor.</td>
-</tr>
-<tr>
-<td>factors.cooperation</td>
-<td>autoware_adapi_v1_msgs/msg/CooperationStatus[&lt;=1]</td>
-<td>The cooperation status if the module supports.</td>
-</tr>
-</tbody>
-</table>
+<div><h1 id="macro-syntax-error"><em>Macro Syntax Error</em><a class="headerlink" href="#macro-syntax-error" title="Permanent link">#</a></h1>
+<p><em>File</em>: <code>design/autoware-interfaces/ad-api/list/api/planning/velocity_factors.md</code></p>
+<p><em>Line 28 in Markdown file:</em> <strong>Encountered unknown tag 'ブロックの説明'.</strong>
+</p><div class="highlight"><pre><span></span><code>{% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %} {% ブロックの説明 %} 距離の昇順に並べ替えられた速度係数を取得します。詳細については、計画要素を参照してください。{% エンドブロック %}
+</code></pre></div>
 <!-- prettier-ignore --></div>
 
 
