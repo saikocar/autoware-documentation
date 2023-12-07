@@ -1,3 +1,122 @@
+概要
+要件: 実車のハードウェアを準備する
+車両の前提条件:
+
+Autoware インストールの前提条件を満たすオンボード コンピューター
+以下のデバイスが接続されています
+ドライブバイワイヤインターフェース
+ライダー
+オプション：慣性計測ユニット
+オプション: カメラ
+オプション: GNSS
+1. Autoware メタリポジトリの作成
+Autoware メタ リポジトリを作成します。簡単な方法の 1 つは、autowarefoundation/autoware をフォークしてクローンを作成することです。リポジトリをフォークする方法については、GitHub Docsを参照してください。
+
+git clone https://github.com/YOUR_NAME/autoware.git
+複数の種類の車両を設定する場合は、「autoware.vehicle_A」または「autoware.vehicle_B」のようなサフィックスを追加することをお勧めします。
+
+2. 車両とセンサーの説明を作成する
+次に、車両と車両のセンサー構成を定義する記述パッケージを作成する必要があります。
+
+次の 2 つのパッケージを作成します。
+
+YOUR_VEHICLE_launch (例はここを参照)
+YOUR_SENSOR_KIT_launch (例はここを参照)
+autoware.repos作成したら、クローンされた Autoware リポジトリのファイルを更新して、これら 2 つの説明パッケージを参照する必要があります。
+
+-  # sensor_kit
+-  sensor_kit/sample_sensor_kit_launch:
+-    type: git
+-    url: https://github.com/autowarefoundation/sample_sensor_kit_launch.git
+-    version: main
+-  # vehicle
+-  vehicle/sample_vehicle_launch:
+-    type: git
+-    url: https://github.com/autowarefoundation/sample_vehicle_launch.git
+-    version: main
++  # sensor_kit
++  sensor_kit/YOUR_SENSOR_KIT_launch:
++    type: git
++    url: https://github.com/YOUR_NAME/YOUR_SENSOR_KIT_launch.git
++    version: main
++  # vehicle
++  vehicle/YOUR_VEHICLE_launch:
++    type: git
++    url: https://github.com/YOUR_NAME/YOUR_VEHICLE_launch.git
++    version: main
+YOUR_VEHICLE_launch を Autoware 起動システムに適応させる
+YOUR_VEHICLE_description で
+車両記述パッケージで URDF とパラメータを定義します (例については、サンプル車両記述パッケージを参照してください)。
+
+YOUR_VEHICLE_launch 時
+起動ファイルを作成します (たとえば、サンプル車両起動パッケージを参照してください)。同じハードウェア設定の車両が複数ある場合は、vehicle_idそれらを区別するために指定できます。
+
+YOUR_SENSOR_KIT_description を Autoware 起動システムに適合させる
+YOUR_SENSOR_KIT_description にあります
+ここですべてのセンサーの URDF および外部パラメーターを定義します (たとえば、サンプル センサー キットの説明パッケージを参照してください)。事前にすべてのセンサーの外部パラメーターを調整する必要があることに注意してください。
+
+YOUR_SENSOR_KIT_launch 時
+launch/sensing.launch.xml車両上のすべてのセンサーのインターフェイスを起動する作成。(たとえば、サンプル センサー キットの起動パッケージを参照してください)。
+
+!!! 注記
+
+At this point, you are now able to run Autoware's Planning Simulator to do a basic test of your vehicle and sensing packages.
+To do so, you need to build and install Autoware using your cloned repository. Follow the [steps for either Docker or source installation](../installation/) (starting from the dependency installation step) and then run the following command:
+
+```bash
+ros2 launch autoware_launch planning_simulator.launch.xml vehicle_model:=YOUR_VEHICLE sensor_kit:=YOUR_SENSOR_KIT map_path:=/PATH/TO/YOUR/MAP
+```
+3.vehicle_interfaceパッケージを作成する
+車両用のインターフェース パッケージを作成する必要があります。このパッケージでは以下の2つの機能を提供する予定です。
+
+からのコマンドメッセージを受信しvehicle_cmd_gate、それに応じて車両を運転します
+車両ステータス情報を Autoware に送信する
+パッケージの要件に関する詳細情報は、Vehicle Interface 設計ドキュメントvehicle_interfaceで見つけることができます。車両インターフェイス パッケージの例として、 TIER IV のpacmod_interface リポジトリを参照することもできます。
+
+4. マップの作成
+Autoware を使用するには、点群マップとベクトル マップの両方が必要です。マップデザインの詳細については、ここをクリックしてください。
+
+点群マップを作成する
+LiDAR ベースの SLAM (Simultaneous Localization And Mapping) パッケージなどのサードパーティ ツールを使用して、次の形式で点群マップを作成します.pcd。詳細については、ここをクリックしてください。
+
+ベクトルマップを作成する
+TIER IV の Vector Map Builderなどのサードパーティ ツールを使用して、Lanelet2 形式の.osmファイルを作成します。
+
+5. オートウェアを起動する
+このセクションでは、Autoware を使用して車両を実行する方法について簡単に説明します。
+
+オートウェアのインストール
+Autoware のインストール手順に従います。
+
+オートウェアを起動する
+次のコマンドで Autoware を起動します。
+
+ros2 launch autoware_launch autoware.launch.xml vehicle_model:=YOUR_VEHICLE sensor_kit:=YOUR_SENSOR_KIT map_path:=/PATH/TO/YOUR/MAP
+初期ポーズを設定する
+GNSS が利用可能な場合、Autoware は車両の姿勢を自動的に初期化します。
+
+そうでない場合は、RViz GUI を使用して初期ポーズを設定する必要があります。
+
+ツールバーの 2D ポーズ推定ボタンをクリックするか、P キーを押します。
+3D ビュー ペインで、マウスの左ボタンをクリックしたままドラッグして、初期ポーズの方向を設定します。
+ゴールポーズを設定する
+自我車両のゴールポーズを設定します。
+
+ツールバーの「2D ナビゲーション目標」ボタンをクリックするか、G キーを押します。
+3D ビュー ペインで、マウスの左ボタンをクリックしたままドラッグして、ゴール ポーズの方向を設定します。成功すると、計算された計画パスが RViz 上に表示されます。
+従事する
+ターミナルで次のコマンドを実行します。
+
+source ~/autoware.YOURS/install/setup.bash
+ros2 topic pub /autoware.YOURS/engage autoware_auto_vehicle_msgs/msg/Engage "engage: true" -1
+RViz 経由で「AutowareStatePanel」を使用することもできます。パネルは にありますPanels > Add New Panel > tier4_state_rviz_plugin > AutowareStatePanel。
+
+Autoware 状態パネル{: style="高さ:360px;幅:640px"}
+
+これで、車両は計算された経路に沿って走行するはずです。
+
+6. 車両と環境に合わせてパラメータを調整する
+車両を運用する領域に応じてパラメータを調整する必要がある場合があります。
 # Overview
 
 ## Requirement: prepare your real vehicle hardware
