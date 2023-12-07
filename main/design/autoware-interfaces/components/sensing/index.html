@@ -6916,7 +6916,64 @@
   
 
 
-<div><h1 id="sensing">Sensing<a class="headerlink" href="#sensing" title="Permanent link">#</a></h1>
+<div><p>センシング</p>
+<p>入力
+超音波
+超音波レーダードライバーからの距離データ。</p>
+<p>センサーメッセージ/範囲
+カメラ画像
+カメラドライバーからの画像データ。</p>
+<p>センサーメッセージ/画像
+レーダー追跡
+レーダードライバーからの追跡。</p>
+<p>レーダー_msgs/レーダートラック
+レーダースキャン
+レーダードライバーからスキャンします。</p>
+<p>レーダー_msgs/レーダースキャン
+LIDAR 点群
+LIDAR ドライバーからのポイントクラウド。</p>
+<p>センサー_msgs/PointCloud2
+<abbr title="Global Navigation Satellite System">GNSS</abbr>-INS位置
+<abbr title="Global Navigation Satellite System">GNSS</abbr> ドライバーからの初期ポーズ。</p>
+<p>geometry_msgs/NavSatFix
+<abbr title="Global Navigation Satellite System">GNSS</abbr>-INS の方向
+<abbr title="Global Navigation Satellite System">GNSS</abbr> ドライバーからの初期方向。</p>
+<p>autoware_sensing_msgs/GnssInsOrientationStamped
+<abbr title="Global Navigation Satellite System">GNSS</abbr> 速度
+GNSSドライバーからの初速度。</p>
+<p>geometry_msgs/TwistWithCovarianceStamped
+<abbr title="Global Navigation Satellite System">GNSS</abbr> の加速
+<abbr title="Global Navigation Satellite System">GNSS</abbr> ドライバーからの初期加速。</p>
+<p>geometry_msgs/AccelWithCovarianceStamped
+出力
+超音波
+超音波レーダーからの距離データ。知覚によって使用されます。</p>
+<p>センサーメッセージ/範囲
+カメラ画像
+カメラからの画像データ。知覚によって使用されます。</p>
+<p>センサーメッセージ/画像
+結合されたレーダー追跡
+レーダーからのレーダー追跡。知覚によって使用されます。</p>
+<p>レーダー_msgs/RadarTracks.msg
+レーダー点群
+レーダーからの点群。知覚によって使用されます。</p>
+<p>レーダー_msgs/レーダースキャン.msg
+結合された LIDAR 点群
+前処理後の LIDAR 点群。知覚とローカリゼーションによって使用されます。</p>
+<p>センサー_msgs/PointCloud2
+<abbr title="Global Navigation Satellite System">GNSS</abbr>-INS ポーズ
+<abbr title="Global Navigation Satellite System">GNSS</abbr> からの自我車両の初期ポーズ。ローカリゼーションによって使用されます。</p>
+<p>geometry_msgs/PoseWithCovarianceStamped
+<abbr title="Global Navigation Satellite System">GNSS</abbr>-INS の方向
+<abbr title="Global Navigation Satellite System">GNSS</abbr> からの方位情報。ローカリゼーションによって使用されます。</p>
+<p>sensor_msgs/Imu
+GNSS速度
+<abbr title="Global Navigation Satellite System">GNSS</abbr> からの自車両の速度。ローカリゼーションによって使用されます。</p>
+<p>geometry_msgs/TwistWithCovarianceStamped
+<abbr title="Global Navigation Satellite System">GNSS</abbr> の加速
+<abbr title="Global Navigation Satellite System">GNSS</abbr> からの自車両の加速。ローカリゼーションによって使用されます。</p>
+<p>geometry_msgs/AccelWithCovarianceStamped</p>
+<h1 id="sensing">Sensing<a class="headerlink" href="#sensing" title="Permanent link">#</a></h1>
 <pre class="mermaid"><code>graph TD
     cmp_drv("Drivers"):::cls_drv
     cmp_loc("Localization"):::cls_loc
