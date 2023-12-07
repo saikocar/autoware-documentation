@@ -1,3 +1,20 @@
+ベクトルマップの作成
+概要
+このセクションでは、TIER IV のVector Map Builder ツールを使用して Lanelet2 マップを作成する方法を説明します。
+
+Unity ベースのアプリMapToolboxや Java ベースのアプリJOSMなど、Lanelet2 マップの作成に使用できる代替ツールがあります。追加の依存関係アプリケーションをインストールしなくてもブラウザ上で動作するため、チュートリアルでは TIER IV の Vector Map Builder を使用します。
+
+ベクトル マップ ビルダー
+Vector Map Builder ツールを使用するには、TIER IV アカウントが必要です。このツールを初めて使用する場合は、 Vector Map Builder ツール を使用するためにTIER IV アカウントを作成します。このツールの詳細については、公式ガイドを確認してください。
+
+Lanelet2 マップを作成し、その規制要素を理解するには、次のページを参照してください。
+
+レーンレット2
+横断歩道
+停止線
+信号機
+スピードバンプ
+検知エリア
 # Creating a vector map
 
 ## Overview
