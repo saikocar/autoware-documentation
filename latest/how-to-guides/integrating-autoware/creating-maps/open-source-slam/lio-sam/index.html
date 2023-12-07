@@ -21,7 +21,7 @@
     
     
       
-        <title>LIO-SAM - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              LIO-SAM
+              Index
             
           </span>
         </div>
@@ -6681,7 +6681,164 @@
   
 
 
-<div><h1 id="lio-sam">LIO-SAM<a class="headerlink" href="#lio-sam" title="Permanent link">#</a></h1>
+<div><p>リオ・サム
+リオサムとは何ですか？
+高精度かつリアルタイムな移動ロボットの軌道推定と地図構築を実現するフレームワーク。ファクター グラフの上に LIDAR 慣性オドメトリを定式化し、ループ クロージャを含む多数の相対および絶対測定をさまざまなソースからファクターとしてシステムに組み込むことができます。
+リポジトリ情報
+元のリポジトリのリンク
+https://github.com/TixiaoShan/LIO-SAM</p>
+<p>必要なセンサー
+LIDAR [Livox、Velodyne、Ouster、Robosense<em>]
+<abbr title="Inertial Measurement Unit">IMU</abbr> [9軸]
+GPS [オプション]
+</em>Robosense ライダーは正式にはサポートされていませんが、Helios シリーズは Velodyne ライダーとして使用できます。</p>
+<p>LIO-SAM 方式のシステム アーキテクチャを次の図に示します。詳細については、公式リポジトリを参照してください。</p>
+<p><img align="center" alt="lio-sam-architecture" src="images/system.png" width="960"> LIO-SAM のシステム アーキテクチャ
+tutorial_vehicle ではRobosense Helios 5515とCLAP B7センサーを使用しているため、LIO-SAM の実行にはこれらのセンサーを使用します。</p>
+<p>さらに、LIO-SAM はApplanix POS LVXおよびHesa​​i Pandar XT32センサー設定でテストされました。センサーに応じた追加情報がこのページに提供されます。</p>
+<p><abbr title="Robot Operating System">ROS</abbr> の互換性
+Autoware は現在 <abbr title="Robot Operating System">ROS</abbr> 2 Humble を使用しているため、引き続き <abbr title="Robot Operating System">ROS</abbr> 2 バージョンの LIO-SAM を使用します。</p>
+<p><abbr title="Robot Operating System">ROS</abbr>
+<abbr title="Robot Operating System">ROS</abbr> 2 (Humble ディストリビューションとも互換性があります)
+依存関係
+<abbr title="Robot Operating System">ROS</abbr> 2 の依存関係:</p>
+<p>知覚-PCL
+PCL-メッセージ
+ビジョン-opencv
+ザクロ
+これらの依存関係をインストールするには、ターミナルで次の bash コマンドを使用できます。</p>
+<p>sudo apt install ros-humble-perception-pcl \
+       ros-humble-pcl-msgs \
+       ros-humble-vision-opencv \
+       ros-humble-xacro
+その他の依存関係:</p>
+<p>gtsam (ジョージア工科大学のスムージングおよびマッピング ライブラリ)
+gtsam をインストールするには、ターミナルで次の bash コマンドを使用します。</p>
+<p># Add GTSAM-PPA
+  sudo add-apt-repository ppa:borglab/gtsam-release-4.1
+  sudo apt install libgtsam-dev libgtsam-unstable-dev
+構築して実行
+1) インストール
+LIO-SAM を使用および構築するために、LIO-SAM 用のワークスペースを作成します。</p>
+<div class="codehilite"><pre><span></span><code>mkdir -p ~/lio-sam-ws/src
+cd ~/lio-sam-ws/src
+git clone -b ros2 https://github.com/TixiaoShan/LIO-SAM.git
+cd ..
+colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+</code></pre></div>
+
+<p>2) 設定
+LIO-SAMの構築後、LIO-SAMに必要なトピックを含めたROS 2 Bagファイルを記録する必要があります。必要なトピックは、 LIO-SAM の構成ファイルに記述されています。</p>
+<p>??? 注「Robosense Helios および CLAP B7 を使用した LIO-SAM の <abbr title="Robot Operating System">ROS</abbr> 2 バッグの例」</p>
+<p></p><div class="highlight"><pre><span></span><code>Files:<span class="w">             </span>map_bag_13_09_0.db3
+Bag<span class="w"> </span>size:<span class="w">          </span><span class="m">38</span>.4<span class="w"> </span>GiB
+Storage<span class="w"> </span>id:<span class="w">        </span>sqlite3
+Duration:<span class="w">          </span><span class="m">3295</span>.326s
+Start:<span class="w">             </span>Sep<span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">16</span>:40:23.165<span class="w"> </span><span class="o">(</span><span class="m">1694612423</span>.165<span class="o">)</span>
+End:<span class="w">               </span>Sep<span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">17</span>:35:18.492<span class="w"> </span><span class="o">(</span><span class="m">1694615718</span>.492<span class="o">)</span>
+Messages:<span class="w">          </span><span class="m">1627025</span>
+Topic<span class="w"> </span>information:<span class="w"> </span>Topic:<span class="w"> </span>/sensing/gnss/clap/ros/imu<span class="w"> </span><span class="p">|</span><span class="w"> </span>Type:<span class="w"> </span>sensor_msgs/msg/Imu<span class="w"> </span><span class="p">|</span><span class="w"> </span>Count:<span class="w"> </span><span class="m">329535</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Serialization<span class="w"> </span>Format:<span class="w"> </span>cdr
+Topic:<span class="w"> </span>/sensing/gnss/clap/ros/odometry<span class="w"> </span><span class="p">|</span><span class="w"> </span>Type:<span class="w"> </span>nav_msgs/msg/Odometry<span class="w"> </span><span class="p">|</span><span class="w"> </span>Count:<span class="w"> </span><span class="m">329533</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Serialization<span class="w"> </span>Format:<span class="w"> </span>cdr
+Topic:<span class="w"> </span>/sensing/lidar/top/pointcloud_raw<span class="w"> </span><span class="p">|</span><span class="w"> </span>Type:<span class="w"> </span>sensor_msgs/msg/PointCloud2<span class="w"> </span><span class="p">|</span><span class="w"> </span>Count:<span class="w"> </span><span class="m">32953</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Serialization<span class="w"> </span>Format:<span class="w"> </span>cdr
+</code></pre></div>
+注: navsatfix から GPS オドメトリ トピックを公開するには、clap_b7_driveruse_odometryで true を 使用します。
+<p>トピックとセンサーの設定を に設定してくださいlio_sam/config/params.yaml。ここでは、tutorial_vehicle の変更例をいくつか示します。</p>
+<p>トピック名:
+-   pointCloudTopic: "/points"
++   pointCloudTopic: "/sensing/lidar/top/pointcloud_raw"
+-   imuTopic: "/imu/data"
++   imuTopic: "/sensing/gnss/clap/ros/imu"
+    odomTopic: "odometry/imu"
+-   gpsTopic: "odometry/gpsz"
++   gpsTopic: "/sensing/gnss/clap/ros/odometry"
+AutowareでGPS情報を利用するのでuseImuHeadingInitializationパラメータを有効にする必要があります。</p>
+<p>GPS設定：
+-   useImuHeadingInitialization: false
++   useImuHeadingInitialization: true
+-   useGpsElevation: false
++   useGpsElevation: true
+センサー設定も更新します。Robosense Lidar は正式にサポートされていないため、32 チャンネル Robosense Helios 5515 Lidar を Velodyne として設定します。</p>
+<p>センサー設定:
+-   sensor: ouster
++   sensor: velodyne
+-   N_SCAN: 64
++   N_SCAN: 32
+-   Horizon_SCAN: 512
++   Horizon_SCAN: 1800
+その後、Robosense Lidar と CLAP B7 <abbr title="Global Navigation Satellite System">GNSS</abbr>/INS (<abbr title="Inertial Measurement Unit">IMU</abbr>) システム間の外部変換を更新します。</p>
+<p>外部変換:
+-   extrinsicTrans:  [ 0.0,  0.0,  0.0 ]
++   extrinsicTrans:  [-0.91, 0.0, -1.71]
+-   extrinsicRot:    [-1.0,  0.0,  0.0,
+-                      0.0,  1.0,  0.0,
+-                      0.0,  0.0, -1.0 ]
++   extrinsicRot:    [1.0,  0.0,  0.0,
++                     0.0,  1.0,  0.0,
++                     0.0,  0.0, 1.0 ]
+-   extrinsicRPY: [ 0.0,  1.0,  0.0,
+-                  -1.0,  0.0,  0.0,
+-                   0.0,  0.0,  1.0 ]
++   extrinsicRPY: [ 1.0,  0.0,  0.0,
++                   0.0,  1.0,  0.0,
++                   0.0,  0.0,  1.0 ]</p>
+<div class="admonition 警告">
+<p class="admonition-title">警告</p>
+</div>
+<p>The mapping direction is towards to the going direction in the real world.
+If LiDAR sensor is backwards, according to the direction you are moving,
+then you need to change the extrinsicRot too.
+Unless the <abbr title="Inertial Measurement Unit">IMU</abbr> tries to go in the wrong direction, and it may occur problems.
+たとえば、Applanix POS LVX と Hesa​​i Pandar XT32 のセットアップでは、<abbr title="Inertial Measurement Unit">IMU</abbr> の方向は進行方向に向いており、LiDAR の方向は <abbr title="Inertial Measurement Unit">IMU</abbr> の方向に応じて Z 軸に 180 度の違いがあります。つまり、お互いに背中を向いていたのです。そのためには、ツールの <abbr title="Inertial Measurement Unit">IMU</abbr> への変換が必要になる場合があります。</p>
+<p>その状況では、キャリブレーション パラメーターは次のように変更されました。
+-   extrinsicRot:    [-1.0,  0.0,  0.0,
+-                      0.0,  1.0,  0.0,
+-                      0.0,  0.0, -1.0 ]
++   extrinsicRot:    [-1.0,  0.0,  0.0,
++                     0.0,  -1.0,  0.0,
++                     0.0,   0.0,  1.0 ]
+-   extrinsicRPY: [ 0.0,  1.0,  0.0,
+-                  -1.0,  0.0,  0.0,
+-                   0.0,  0.0,  1.0 ]
++   extrinsicRPY: [ -1.0,  0.0,  0.0,
++                    0.0, -1.0,  0.0,
++                    0.0,  0.0,  1.0 ]
+最終的に、RViz でこの変換の視覚化が得られました。
+<img align="center" alt="lio-sam-imu-direction" src="images/LIO-SAM-imu-direction.png" width="512"> RViz での Applanix POS LVX および Hesa​​i Pander XT32 の変換視覚化
+これで、Autoware のマップを作成する準備が整いました。</p>
+<p>3) 用途
+構成を設定し、LIO-SAM のバッグ ファイルを作成した場合は、次のコマンドを使用して LIO-SAM を起動できます。</p>
+<p>ros2 launch lio_sam run.launch.py
+rviz2 画面が開き、bag ファイルを再生できます。</p>
+<p>ros2 bag play <your-bag-file>
+マッピング プロセスが完了したら、このサービスを呼び出してマップを保存できます。</your-bag-file></p>
+<p>ros2 service call /lio_sam/save_map lio_sam/srv/SaveMap "{resolution: 0.2, destination: <your-map-directory>}"
+これは、キャンパス環境での LIO-SAM マッピングのデモンストレーションのビデオです。</your-map-directory></p>
+<p>タイプ:ビデオ</p>
+<p>出力マップ形式はローカル UTM です。tutorial_vehicle では、ローカル UTM マップを MGRS 形式に変更します。また、Autoware 用に UTM を MGRS に変更したい場合は、convert-utm-to-mgrs-mapページに従ってください。</p>
+<p>結果の例
+<img align="center" alt="lio-sam-output" src="images/LIO-SAM-output.png" width="512"> キャンパス環境のサンプル マップ出力
+紙
+このコードを使用している場合は、LIO-SAM (IROS-2020) を引用していただきありがとうございます。</p>
+<p>@inproceedings{liosam2020shan,
+  title={LIO-SAM: Tightly-coupled Lidar Inertial Odometry via Smoothing and Mapping},
+  author={Shan, Tixiao and Englot, Brendan and Meyers, Drew and Wang, Wei and Ratti, Carlo and Rus Daniela},
+  booktitle={IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  pages={5135-5142},
+  year={2020},
+  organization={IEEE}
+}
+コードの一部はLeGO-LOAMから採用されています。</p>
+<p>@inproceedings{legoloam2018shan,
+  title={LeGO-LOAM: Lightweight and Ground-Optimized Lidar Odometry and Mapping on Variable Terrain},
+  author={Shan, Tixiao and Englot, Brendan},
+  booktitle={IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  pages={4758-4765},
+  year={2018},
+  organization={IEEE}
+}
+謝辞
+LIO-SAM は LOAM (J. Zhang および S. Singh. LOAM: Lidar Odometry and Mapping in Real-time) に基づいています。</p>
+<h1 id="lio-sam">LIO-SAM<a class="headerlink" href="#lio-sam" title="Permanent link">#</a></h1>
 <h2 id="what-is-lio-sam">What is LIO-SAM?<a class="headerlink" href="#what-is-lio-sam" title="Permanent link">#</a></h2>
 <ul>
 <li>A framework that achieves highly accurate, real-time mobile robot trajectory estimation and map-building. It formulates lidar-inertial odometry atop a factor graph, allowing a multitude of relative and absolute measurements, including loop closures, to be incorporated from different sources as factors into the system.</li>
