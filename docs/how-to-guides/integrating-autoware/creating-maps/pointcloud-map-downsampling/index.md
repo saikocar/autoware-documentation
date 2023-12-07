@@ -1,3 +1,27 @@
+点群マップのダウンサンプリング
+概要
+作成した点群マップが密すぎるか大きすぎる場合 (つまり、300 MB を超える場合)、計算効率とメモリ効率を向上させるためにダウンサンプリングすることができます。また、部分読み込みを伴う動的マップ読み込みの使用を検討することもできます。詳細については、map_loader パッケージを確認してください。
+
+tutorial_vehicle の実装ではマップ全体を使用するため、CloudCompare を使用してダウンサンプリングします。
+
+CloudCompareのインストール
+スナップでインストールできます。
+
+sudo snap install cloudcompare
+オプションの取り付けについては公式ページをご確認ください 。
+
+点群マップのダウンサンプリング
+CloudCompare には3 つのサブサンプリング メソッドがあり、ここではサブサンプリングのメソッドを使用していますSpaceが、必要に応じて他のメソッドを使用することもできます。
+
+CloudCompare を開いてポイントクラウドをここにドラッグすると、DB ツリー パネルでマップをクリックするだけでポイントクラウド マップを選択できます。
+subsample次に、トップパネルの ボタンをクリックします。
+![db-tree-panel](images/select-map.png){ align=center } CloudCompare
+サブサンプル方法を選択してください。tutorial_vehicle 用のスペースが使用されます。
+次に、オプションを選択できます。たとえば、点間の最小スペースを決定する必要があります。(このセクションでは注意してください。サブサンプリングはマップ サイズ、コンピューターのパフォーマンスなどに依存します。)tutorial_vehicle のマップにはこの値 0.2 を設定します。
+![space-subsampling](images/space-subsampling.png){ align=center width="512" } 点群のサブサンプリング
+サブサンプリング プロセスが完了したら、[DB ツリー] パネルでもポイントクラウドを選択する必要があります。
+![db-tree-panel](images/subsampled-map.png){ align=center width="360" } ダウンサンプリングされた点群を選択します
+これで、ダウンサンプリングされた点群を保存するctrl + s か、バーから保存ボタンをクリックすることができますFile。その後、この点群は Autoware で使用できるようになります。
 # Pointcloud map downsampling
 
 ## Overview
