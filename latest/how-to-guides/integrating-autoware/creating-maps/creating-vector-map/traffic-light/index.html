@@ -21,7 +21,7 @@
     
     
       
-        <title>Traffic light - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Traffic light
+              Index
             
           </span>
         </div>
@@ -6598,7 +6598,49 @@
   
 
 
-<div><h1 id="traffic-light">Traffic light<a class="headerlink" href="#traffic-light" title="Permanent link">#</a></h1>
+<div><p>信号機
+行動速度プランナーの信号機モジュールは、信号機の状態に従って速度を計画します。これを操作するために、lanelet2 マップに信号属性を追加します。</p>
+<p>信号機規制要素の作成
+ポイントクラウド マップ上に信号機を作成するには、次の手順に従ってください。</p>
+<p>どの信号機を追加するレーンレットを選択してください。
+トップパネルの ボタンをクリックしますAbstraction。
+Traffic Lightパネルから選択します。
+信号機を挿入する目的の領域をクリックします。
+これらの手順は、信号機作成のデモンストレーション ビデオで見ることができます。</p>
+<p>タイプ:ビデオ</p>
+<p>計画シミュレータを使用して信号機要素を作成したテスト
+マップの作成が完了したら、マップを保存する必要があります。File--&gt;をクリックしExport Lanelet2Mapsてダウンロードしてください。</p>
+<p>ダウンロードが完了したら、lanelet2 マップと pointcloud マップを同じ場所に配置する必要があります。ディレクトリ構造は次のようになります。</p>
+<ul>
+<li><your-map-directory>/</your-map-directory></li>
+<li>├─ pointcloud_map.pcd</li>
+<li>
+<p>└─ lanelet2_map.osm
+.osm または .pcd マップ ファイルの名前がこれらの名前と異なる場合は、autoware.launch.xml を更新する必要があります。</p>
+<!-- Map -->
+</li>
+</ul>
+<ul>
+<li><arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"></arg></li>
+<li><arg name="lanelet2_map_file" default="\&lt;YOUR-LANELET-MAP-NAME&gt;.osm" description="lanelet2 map file name"></arg></li>
+<li><arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"></arg></li>
+<li><arg name="pointcloud_map_file" default="\&lt;YOUR-POINTCLOUD-MAP-NAME&gt;.pcd" description="pointcloud map file name"></arg>
+これで、計画シミュレーターを起動する準備が整いました。</li>
+</ul>
+<p>ros2 launch autoware_launch planning_simulator.launch.xml map_path:=<your-map-folder-dir> vehicle_model:=<your-vehicle-model> sensor_model:=<your-sensor-kit>
+チュートリアル_車両の例:</your-sensor-kit></your-vehicle-model></your-map-folder-dir></p>
+<p>ros2 launch autoware_launch planning_simulator.launch.xml map_path:=$HOME/Files/autoware_map/tutorial_map/ vehicle_model:=tutorial_vehicle sensor_model:=tutorial_vehicle_sensor_kit vehicle_id:=tutorial_vehicle
+2D Pose Estimaterviz の ボタンをクリックするか、 を押してPポーズを与えると初期化されます。
+Panels-&gt;をクリックしAdd new panel、 を選択しTrafficLightPublishPanel、 を押しますOK。
+TrafficLightPublishPanel で、信号機の ID と色を設定します。
+次に、SETとPUBLISHボタンをクリックします。
+2D Goal Poserviz のボタンをクリックするか、 を押してGゴールポイントのポーズをとります。
+信号機の色を に設定すると、rviz 画面に信号機マーカーが表示されますRED。
+rviz の信号マーカー:</p>
+<p><img align="center" alt="traffic-light-test" src="images/traffic-light-test.png"> 作成した地図上の信号機テスト。
+次のデモビデオのように、計画シミュレーターで信号機の要素を確認できます。</p>
+<p>タイプ:ビデオ</p>
+<h1 id="traffic-light">Traffic light<a class="headerlink" href="#traffic-light" title="Permanent link">#</a></h1>
 <p>Behavior velocity planner's <a href="https://autowarefoundation.github.io/autoware.universe/main/planning/behavior_velocity_traffic_light_module/">traffic light module</a> plans velocity
 according to the traffic light status.
 In order to operate that, we will add traffic light attribute to our lanelet2 map.</p>
