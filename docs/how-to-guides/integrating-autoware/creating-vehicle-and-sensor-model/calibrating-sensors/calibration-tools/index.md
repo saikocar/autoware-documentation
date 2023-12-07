@@ -1,3 +1,45 @@
+TIER IV のキャリブレーションツールから始める
+概要
+Autoware は、知覚、位置特定、計画スタックへの入力として複数のセンサーが車両に取り付けられることを期待しています。これらのセンサーは正しく校正する必要があり、その位置はsensor_kit_descriptionとindividual_paramsパッケージで定義する必要があります。このチュートリアルでは、キャリブレーションにTIER IV のCalibrationToolsリポジトリを使用します。
+
+Base_linkに対するsensor_kit_base_linkの位置の設定
+前のセクション (車両とセンサー モデルの作成) で、 について説明しましたsensors_calibration.yaml。このファイルには、sensor_kit_base_link（親フレーム）に対する base_link（子フレーム）の位置と向きが保存されます。車両の CAD データを使用して、この相対位置 (ファイルの作成時にすべての値が最初にゼロに設定されています) を更新する必要があります。
+
+![ackermann_link](images/tutorial_vehicle_sensor_kit_base_link.png){ align=center }tutorial_vehicleのbase_linkからsensor_kit_base_linkへの変換。
+したがって、sensors_calibration.yamltutorial_vehicle のファイルは次のようになります。
+
+base_link:
+  sensor_kit_base_link:
+    x: 1.600000 # meter
+    y: 0.0
+    z: 1.421595 # 1.151595m + 0.270m
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+フレームに関してこの変換値を更新する必要がありますsensor_kit_base_link。ファイル内の GNSS/INS および IMU 位置の CAD 値を使用することもできますsensor_kit_calibration.yaml。(sensor_kit_launch パッケージと Individual_params パッケージの両方で sensor_kit_calibration.yaml ファイルを更新することを忘れないでください)
+
+TIER IV の CalibrationTools リポジトリを autoware にインストールする
+前の手順 (独自のオートウェアの作成、車両とセンサー モデルの作成など) を完了したら、センサー モデル セクションの作成でパイプラインを準備したセンサーを調整する準備が整いました。
+
+まず、独自のオートウェア内に CalibrationTools リポジトリのクローンを作成します。
+
+cd <YOUR-OWN-AUTOWARE-DIRECTORY> # for example: cd autoware.tutorial_vehicle
+wget https://raw.githubusercontent.com/tier4/CalibrationTools/tier4/universe/calibration_tools.repos
+vcs import src < calibration_tools.repos
+rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
+次に、センサー モデルと車両モデルに必要な変更をすべて加えた後、すべてのパッケージをビルドします。
+
+colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+キャリブレーションツールの使用法
+CalibrationTools リポジトリには、ライダーとライダー、カメラとライダー、地上とライダーなどのさまざまなセンサー ペアを校正するためのパッケージがいくつかあります。センサーを校正するには、extrinsic_calibration_packageセンサー キット用に変更を加えます。
+
+tutorial_vehicle の場合、チュートリアル セクションに続いて作成された完成した起動ファイルは、ここにあります。
+
+手動校正
+ライダー間キャリブレーション
+地表とライダーのキャリブレーション
+固有のカメラキャリブレーション
+LiDAR カメラのキャリブレーション
 # Starting with TIER IV's CalibrationTools
 
 ## Overview
