@@ -1,3 +1,50 @@
+コントロール
+ノード図
+
+入力
+車両の運動学的状態
+自我の現在の位置と方向。Localization モジュールによって発行されます。
+
+nav_msgs/オドメトリ
+std_msgs/Headerヘッダー
+文字列 child_frame_id
+geometry_msgs/PoseWithCovarianceポーズ
+geometry_msgs/TwistWithCovarianceツイスト
+軌跡
+コントローラーがたどる軌道。「計画の出力」を参照してください。
+
+ステアリングステータス
+自我車両の現在のステアリング。ビークル・インターフェース発行。
+
+ステアリングメッセージ ( github ディスカッション)。
+builtin_interfaces::msg::タイムスタンプ
+float32 ステアリング角度
+作動ステータス
+加速、ステアリング、ブレーキなどの自車両の作動状態。
+
+TODO これは、車両のアクチュエーターによって発揮される報告された物理的労力を表します。ビークル・インターフェース発行。
+
+ActuationStatus ( github ディスカッション)。
+builtin_interfaces::msg::タイムスタンプ
+float32 加速
+float32ステアリング
+出力
+車両制御コマンド
+車両を駆動するためのモーション信号。車両層の下位コントローラーによって実現されます。車両インターフェースによって使用されます。
+
+autoware_auto_control_msgs/AckermannControlCommand
+builtin_interfaces::msg::タイムスタンプ
+autoware_auto_control_msgs/AckermannLateralコマンド横方向
+builtin_interfaces::msg::タイムスタンプ
+フロートステアリングタイヤ角度
+float ステアリングタイヤ回転速度
+autoware_auto_control_msgs/LongitudinalCommand縦方向
+builtin_interfaces::msg::タイムスタンプ
+builtin_interfaces::msg::Duration 期間
+builtin_interfaces::msg::Duration time_step
+float[] の速度
+float[] 加速
+float[] ジャーク
 # Control
 
 ![Node diagram](images/Control-Bus-ODD-Architecture.drawio.svg)
