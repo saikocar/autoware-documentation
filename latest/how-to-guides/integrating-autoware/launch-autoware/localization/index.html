@@ -21,7 +21,7 @@
     
     
       
-        <title>Localization Launch Files - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Localization Launch Files
+              Index
             
           </span>
         </div>
@@ -6592,7 +6592,50 @@
   
 
 
-<div><h1 id="localization-launch-files">Localization Launch Files<a class="headerlink" href="#localization-launch-files" title="Permanent link">#</a></h1>
+<div><p>ローカリゼーション起動ファイル
+概要
+「Autoware の起動」autoware_launch.xmlページで説明したように、Autoware ローカリゼーション スタックは で起動を開始します。パッケージには、 ローカリゼーションを開始するための起動ファイルの呼び出しが含まれています。この図は、パッケージでの Autoware ローカリゼーション起動ファイル フローの一部を説明しています。autoware_launchtier4_localization_component.launch.xmlautoware_launch.xmlautoware_launchautoware.universe</p>
+<p><img align="center" alt="localization-launch-flow" src="images/localization_launch_flow.svg"> Autoware ローカリゼーション起動フロー図</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+</div>
+<p>The Autoware project is a large project.
+Therefore, as we manage the Autoware project, we utilize specific
+arguments in the launch files.
+<abbr title="Robot Operating System">ROS</abbr> 2 offers an argument-overriding feature for these launch files.
+Please refer to <a href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html#parameter-overrides">the official <abbr title="Robot Operating System">ROS</abbr> 2 launch documentation</a> for further information.
+For instance,
+if we define an argument at the top-level launch,
+it will override the value on lower-level launches.
+tier4_localization_component.launch.xml
+起動tier4_localization_component.launch.xmlファイルは、パッケージで起動されるメインのローカリゼーション コンポーネントですautoware_launch。この起動ファイルは、リポジトリからtier4_localization_launchパッケージlocalization.launch.xmlを呼び出します。tier4_localization_component.launch.xml でローカリゼーション起動引数を変更できます。autoware.universe</p>
+<p>TIER IV によって実装されている現在のローカライゼーション ランチャーは、複数のローカライゼーション方法 (姿勢推定器とねじれ推定器の両方) をサポートしています。 tier4_localization_component.launch.xmlには、起動する推定器を選択するための 2 つの引数があります。</p>
+<p>pose_source:ndtこの引数は、現在サポートしている(デフォルト)、yabloc、artagおよびローカライゼーション用のpass_estimator を指定しますeagleye。デフォルトでは、Autoware は姿勢推定器としてndt_scan_matcherを起動します。YabLoc をカメラベースの位置特定方法として使用できます。YabLoc の詳細については、 autoware.universe のYabLoc の READMEを参照してください。また、Eagleye を <abbr title="Global Navigation Satellite System">GNSS</abbr>、<abbr title="Inertial Measurement Unit">IMU</abbr>、ホイール オドメトリ ベースの位置特定方法として使用することもできます。Eagleye の詳細については、Eagleyeを参照してください。</p>
+<p>pose_sourceに引数を設定できますtier4_localization_component.launch.xml。たとえば、eagleye をポーズソースとして使用したい場合は、tier4_localization_component.launch.xml次のように更新する必要があります。</p>
+<ul>
+<li><arg name="pose_source" default="ndt" description="select pose_estimator: ndt, yabloc, eagleye"></arg></li>
+<li><arg name="pose_source" default="eagleye" description="select pose_estimator: ndt, yabloc, eagleye"></arg>
+また、コマンドラインを使用して起動引数をオーバーライドすることもできます。</li>
+</ul>
+<p>ros2 launch autoware_launch autoware.launch.xml ... pose_source:=eagleye
+twist_source:gyro_odomこの引数は、現在(デフォルト) およびをサポートしているTwist_estimator を指定しますeagleye。デフォルトでは、Autoware はねじれ推定器としてgyro_odometerを起動します。また、ツイストソースに eagleye を使用することもできます。Eagleyeを参照してください。ツイストソースを eaglee に変更したい場合は、tier4_localization_component.launch.xml次のように更新できます。</p>
+<ul>
+<li><arg name="twist_source" default="gyro_odom" description="select twist_estimator. gyro_odom, eagleye"></arg></li>
+<li><arg name="twist_source" default="eagleye" description="select twist_estimator. gyro_odom, eagleye"></arg>
+または、コマンドラインを使用して起動引数をオーバーライドすることもできます。</li>
+</ul>
+<p>ros2 launch autoware_launch autoware.launch.xml ... twist_source:=eagleye
+input_pointcloud:この引数は、ローカリゼーション ポイントクラウド パイプラインの入力ポイントクラウドを指定します。デフォルト値は、 センシングからのポイントクラウド前処理/sensing/lidar/top/outlier_filtered/pointcloudパイプラインの出力です。LiDAR トピック名に応じてこの値を変更することも、連結された点群の使用を選択することもできます。</p>
+<ul>
+<li><arg name="input_pointcloud" default="/sensing/lidar/top/outlier_filtered/pointcloud" description="The topic will be used in the localization util module"></arg></li>
+<li><arg name="input_pointcloud" default="/sensing/lidar/concatenated/pointcloud"></arg>
+これらの例のように、起動ファイルに必要なすべての引数を追加できますtier4_localization_component.launch.xml。ジャイロオドメーターのツイスト入力トピックを変更したい場合は、tier4_localization_component.launch.xml起動ファイルに次の引数を追加できます。</li>
+</ul>
+<ul>
+<li><arg name="input_vehicle_twist_with_covariance_topic" value="\&lt;YOUR-VEHICLE-TWIST-TOPIC-NAME&gt;"></arg>
+注:速度コンバーター パッケージから提供されるジャイロ走行距離計入力トピック。このパッケージは sensor_kit で起動されます。詳細については、速度コンバータ パッケージを確認してください。</li>
+</ul>
+<h1 id="localization-launch-files">Localization Launch Files<a class="headerlink" href="#localization-launch-files" title="Permanent link">#</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
 <p>The Autoware localization stacks start
 launching at <code>autoware_launch.xml</code> as we mentioned at <a href="../">Launch Autoware</a> page.
