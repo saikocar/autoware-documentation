@@ -1,5 +1,5 @@
-# Repository structure
+# リポジトリ構造
 
-!!! warning
+!!! 警告
 
-    Under Construction
+    構築中
