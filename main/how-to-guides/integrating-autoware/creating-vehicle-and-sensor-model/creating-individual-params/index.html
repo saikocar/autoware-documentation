@@ -21,7 +21,7 @@
     
     
       
-        <title>Creating individual params - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#creating-individual-params" class="md-skip">
+        <a href="#example1-do-not-set-vehicle_id" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Creating individual params
+              Index
             
           </span>
         </div>
@@ -6554,28 +6554,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#placing-your-individual_parameters-repository-inside-autoware" class="md-nav__link">
-    Placing your individual_parameters repository inside Autoware
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -6592,7 +6570,60 @@
   
 
 
-<div><h1 id="creating-individual-params">Creating individual params<a class="headerlink" href="#creating-individual-params" title="Permanent link">#</a></h1>
+<div><p>個別のパラメータの作成
+導入
+Individual_paramsパッケージは、さまざまな車両向けにカスタマイズされたセンサーのキャリブレーションを定義するために使用されます。同じセンサー モデルで同じ起動ファイルを使用しながら、さまざまな車両に合わせてカスタマイズされたセンサー キャリブレーションを定義できます。</p>
+<div class="admonition 警告">
+<p class="admonition-title">警告</p>
+</div>
+<p>The "individual_params" package contains the calibration
+results for your sensor kit and overrides the default calibration results found in
+VEHICLE-ID_sensor_kit_description/config/ directory.
+individual_parametersリポジトリを Autoware 内に配置する
+このガイドの前に、リポジトリをフォークして、ガイドのこのセクションの例として使用するtutorial_vehicle_individual_paramsautoware_individual_paramsリポジトリを作成しました。Individual_parameters リポジトリは、以下に示すものと同じフォルダー構造に従って、Autoware フォルダー内に配置する必要があります。</p>
+<p>??? 注「サンプルフォルダー構造tutorial_vehicle_individual_params」</p>
+<p></p><div class="highlight"><pre><span></span><code><span class="w"> </span> &lt;YOUR-OWN-AUTOWARE-DIR&gt;/
+<span class="w"> </span> └─ src/
+<span class="w"> </span> └─ param/
+<span class="w"> </span> └─ tutorial_vehicle_individual_params/
+<span class="w"> </span> └─ individual_params/
+<span class="w"> </span> └─ config/
+<span class="w"> </span> ├─ default/
+<span class="gi">+ └─ tutorial_vehicle/</span>
+<span class="gi">+     └─ tutorial_vehicle_sensor_kit_launch/</span>
+<span class="gi">+         ├─ imu_corrector.param.yaml</span>
+<span class="gi">+         ├─ sensor_kit_calibration.yaml</span>
+<span class="gi">+         └─ sensors_calibration.yaml</span>
+</code></pre></div>
+その後、individual_paramsパッケージをビルドする必要があります。
+<p>colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to individual_params
+これで、 vehicle_id を引数として Autoware を使用する準備が整いました。たとえば、異なるセンサー キャリブレーション要件を持つ複数の同様の車両の場合、autoware_individual_params 構造は次のようになります。</p>
+<p>individual_params/
+└─ config/
+     ├─ default/
+     │   └─ <your_sensor_kit>/                  # example1
+     │        ├─ imu_corrector.param.yaml
+     │        ├─ sensor_kit_calibration.yaml
+     │        └─ sensors_calibration.yaml
++    ├─ VEHICLE_1/
++    │   └─ <your_sensor_kit>/                  # example2
++    │        ├─ imu_corrector.param.yaml
++    │        ├─ sensor_kit_calibration.yaml
++    │        └─ sensors_calibration.yaml
++    └─ VEHICLE_2/
++         └─ <your_sensor_kit>/                  # example3
++              ├─ imu_corrector.param.yaml
++              ├─ sensor_kit_calibration.yaml
++              └─ sensors_calibration.yaml
+次に、次のように vehicle_id 引数を指定して autoware を使用できます。</your_sensor_kit></your_sensor_kit></your_sensor_kit></p>
+<p>を引数として追加し<vehicle_id>、起動時にオプションでパラメータを切り替えます。</vehicle_id></p>
+<h1 id="example1-do-not-set-vehicle_id">example1 (do not set vehicle_id)<a class="headerlink" href="#example1-do-not-set-vehicle_id" title="Permanent link">#</a></h1>
+<p>$ ros2 launch autoware_launch autoware.launch.xml sensor_model:=<your-vehicle-name>_sensor_kit vehicle_model:=<your-vehicle-name>_vehicle</your-vehicle-name></your-vehicle-name></p>
+<h1 id="example2-set-vehicle_id-as-vehicle_1">example2 (set vehicle_id as VEHICLE_1)<a class="headerlink" href="#example2-set-vehicle_id-as-vehicle_1" title="Permanent link">#</a></h1>
+<p>$ ros2 launch autoware_launch autoware.launch.xml sensor_model:=<your-vehicle-name>_sensor_kit vehicle_model:=<your-vehicle-name>_vehicle vehicle_id:=VEHICLE_1</your-vehicle-name></your-vehicle-name></p>
+<h1 id="example3-set-vehicle_id-as-vehicle_2">example3 (set vehicle_id as VEHICLE_2)<a class="headerlink" href="#example3-set-vehicle_id-as-vehicle_2" title="Permanent link">#</a></h1>
+<p>$ ros2 launch autoware_launch autoware.launch.xml sensor_model:=<your-vehicle-name>_sensor_kit vehicle_model:=<your-vehicle-name>_vehicle vehicle_id:=VEHICLE_2</your-vehicle-name></your-vehicle-name></p>
+<h1 id="creating-individual-params">Creating individual params<a class="headerlink" href="#creating-individual-params" title="Permanent link">#</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h2>
 <p>The <a href="https://github.com/autowarefoundation/autoware_individual_params">individual_params</a> package is used
 to define customized sensor calibrations for different vehicles.
