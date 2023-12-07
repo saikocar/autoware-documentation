@@ -1,3 +1,86 @@
+レーンレットの作成
+このページでは、点群マップ上に簡単なレーンレットを作成する方法を説明します。これまで点群マップを持っていなかった場合は、LIO-SAM マッピング ページの Autoware 用の点群マップの作成方法を確認して手順に従ってください。
+
+レーンレットの作成2
+まず、点群マップを Vector Map Builder ツールにインポートする必要があります。
+
+クリックしてくださいFile。
+次に、 をクリックしますImport PCD。
+Browse.pcd ファイルをクリックして選択します。
+アップロードが完了したら、Vector Map Builder ツールに点群を表示します。
+
+![pointcloud-map](images/pointcloud-map.png){ align=center } Vector Map Builder にアップロードされた pointcloud マップ ファイル
+これで、点群マップ上に LANELET2 マップを作成する準備が整いました。
+
+クリックしてくださいCreate。
+次に、 をクリックしますCreate Lanelet2Maps。
+マップ名を入力してください
+MGRS ゾーンを埋めてください。（tutorial_vehicleにて、MGRSグリッドゾーン：35T～MGRS10万メートル四方：PF）
+クリックCreate。
+簡単なレーンレットの作成
+マップ上に単純なレーンレットを作成するには、次の手順に従ってください。
+
+Lanelet2Mapsバーをクリックします
+を選択して Lanelet モードを有効にしますLanelet。
+次に、点群マップをクリックしてレーンレットを作成できます。
+レーンレットが終了した場合は、 を無効にすることができますLanelet。
+レーンレットの幅を変更したい場合は、lanelet-->をクリックしてChange Lanelet Width、レーンレットの幅を入力できます。
+ビデオデモンストレーション:
+
+タイプ:ビデオ
+
+2 つのレーンレットを結合する
+2 つのレーンレットを結合するには、次の手順に従ってください。
+
+2 つの異なるレーンレットを作成してください。
+レーンレットを選択し、 を押してShift他のレーンレットを選択します。
+ボタンが表示されるのでJoin Lanelets、それを押してください。
+これらのレーンレットは結合されます。
+ビデオデモンストレーション:
+
+タイプ:ビデオ
+
+複数のレーンレットに参加する
+2 つ以上のレーンレットを別のレーンレットに追加 (結合) するには、次の手順に従ってください。
+
+複数のレーンレットを作成します。
+前の手順と同様に、最初の 2 つのレーンレットを結合できます。
+最初のレーンレットのエンドポイント ID を確認してください。
+次に、これらの ID を 3 番目のレーンレットの開始点に変更する必要があります。(レーンレットの折れ線選択で変更してください)
+最初のレーンレットの次の 2 つのレーンが表示されることがわかります。
+ビデオデモンストレーション:
+
+タイプ:ビデオ
+
+レーンレットの制限速度を変更する
+レーンレットの制限速度を変更するには、次の手順に従ってください。
+
+制限速度を変更するレーンレットを選択してください
+speed limit右パネルで設定します。
+計画シミュレーターを使用してレーンレットをテストする
+レーンレットの作成が完了したら、保存する必要があります。File-->をクリックしExport Lanelet2Mapsてダウンロードしてください。
+
+ダウンロードが完了したら、lanelet2 マップと pointcloud マップを同じ場所に配置する必要があります。ディレクトリ構造は次のようになります。
+
+<YOUR-MAP-DIRECTORY>/
+ ├─ pointcloud_map.pcd
+ └─ lanelet2_map.osm
+.osm または .pcd マップ ファイルの名前がこれらの名前と異なる場合は、autoware.launch.xml を更新する必要があります。
+
+  <!-- Map -->
+-  <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
++  <arg name="lanelet2_map_file" default="<YOUR-LANELET-MAP-NAME>.osm" description="lanelet2 map file name"/>
+-  <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
++  <arg name="pointcloud_map_file" default="<YOUR-POINTCLOUD-MAP-NAME>.pcd" description="pointcloud map file name"/>
+これで、計画シミュレーターを起動する準備が整いました。
+
+ros2 launch autoware_launch planning_simulator.launch.xml map_path:=<YOUR-MAP-FOLDER-DIR> vehicle_model:=<YOUR-VEHICLE-MODEL> sensor_model:=<YOUR-SENSOR-KIT>
+チュートリアル_車両の例:
+
+ros2 launch autoware_launch planning_simulator.launch.xml map_path:=$HOME/Files/autoware_map/tutorial_map/ vehicle_model:=tutorial_vehicle sensor_model:=tutorial_vehicle_sensor_kit vehicle_id:=tutorial_vehicle
+2D Pose Estimaterviz の ボタンをクリックするか、 を押してPポーズを与えると初期化されます。
+2D Goal Poserviz のボタンをクリックするか、 を押してGゴールポイントのポーズをとります。
+![planning-simulator-test](images/planning-simulator-map-test.png){ align=center } 作成したベクトル マップを計画シミュレーターでテストする
 # Creating a Lanelet
 
 At this page, we will explain how to create a simple lanelet on your point cloud map.
