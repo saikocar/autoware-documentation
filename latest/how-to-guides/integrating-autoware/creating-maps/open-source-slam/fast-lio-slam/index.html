@@ -21,7 +21,7 @@
     
     
       
-        <title>FAST_LIO_SLAM - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              FAST_LIO_SLAM
+              Index
             
           </span>
         </div>
@@ -6681,7 +6681,66 @@
   
 
 
-<div><h1 id="fast_lio_slam">FAST_LIO_SLAM<a class="headerlink" href="#fast_lio_slam" title="Permanent link">#</a></h1>
+<div><p>FAST_LIO_SLAM
+FAST_LIO_SLAMとは何ですか?
+FAST_LIO_SLAM は、FAST_LIO と、スキャン コンテキスト ベースのループ検出および GTSAM ベースのポーズグラフ最適化である SC-PGO を統合したものです。
+リポジトリ情報
+元のリポジトリのリンク
+https://github.com/gisbi-kim/FAST_LIO_SLAM</p>
+<p>必要なセンサー
+LIDAR [Livox、Velodyne、Ouster]
+<abbr title="Inertial Measurement Unit">IMU</abbr> [6軸、9軸]
+GPS [オプション]
+<abbr title="Robot Operating System">ROS</abbr> の互換性
+<abbr title="Robot Operating System">ROS</abbr> 1
+依存関係
+<abbr title="Robot Operating System">ROS</abbr>
+PCL
+GTSAM
+wget -O ~/Downloads/gtsam.zip https://github.com/borglab/gtsam/archive/4.0.0-alpha2.zip
+cd ~/Downloads/ &amp;&amp; unzip gtsam.zip -d ~/Downloads/
+cd ~/Downloads/gtsam-4.0.0-alpha2/
+mkdir build &amp;&amp; cd build
+cmake ..
+sudo make install
+PCL &gt;= 1.8、PCL のインストールに従ってください。
+Eigen &gt;= 3.3.4、Eigen のインストールに従ってください。
+構築して実行
+1) ビルド
+    mkdir -p ~/catkin_fastlio_slam/src
+    cd ~/catkin_fastlio_slam/src
+    git clone https://github.com/gisbi-kim/FAST_LIO_SLAM.git
+    git clone https://github.com/Livox-SDK/livox_ros_driver
+    cd ..
+    catkin_make
+    source devel/setup.bash
+2) パラメータの設定
+imu と LIDAR トピックを設定しますFast_LIO/config/ouster64.yaml
+3) 走る
+    # terminal 1: run FAST-LIO2
+    roslaunch fast_lio mapping_ouster64.launch</p>
+<div class="codehilite"><pre><span></span><code># open the other terminal tab: run SC-PGO
+cd ~/catkin_fastlio_slam
+source devel/setup.bash
+roslaunch aloam_velodyne fastlio_ouster64.launch
+
+# play bag file in the other terminal
+rosbag play xxx.bag -- clock --pause
+</code></pre></div>
+
+<p>結果の例</p>
+<p>その他の例
+チュートリアルビデオ 1 ( MulRan データセットの KAIST 03 シーケンスを使用)</p>
+<p>結果キャプチャの例</p>
+<p>FAST-LIO-<abbr title="Simultaneous Localization And Mapping">SLAM</abbr> 製KAIST 03 <abbr title="Point Cloud Data">PCD</abbr> マップをダウンロード、500MB
+ビデオ例 2 ( MulRan データセットの Riverside 02 シーケンス)</p>
+<p>結果キャプチャの例</p>
+<p>FAST-LIO-<abbr title="Simultaneous Localization And Mapping">SLAM</abbr> 製Riverside 02 <abbr title="Point Cloud Data">PCD</abbr> マップをダウンロード、400MB
+謝辞
+FAST_LIO の作者に感謝します。
+yanliang-wangによって実装されたこのバージョンの FAST-LIO + ループ クロージャに興味があるかもしれません。
+管理者: ギソプ・キム ( paulgkim@kaist.ac.kr)</p>
+<h1 id="fast_lio_slam">FAST_LIO_SLAM<a class="headerlink" href="#fast_lio_slam" title="Permanent link">#</a></h1>
 <h2 id="what-is-fast_lio_slam">What is FAST_LIO_SLAM?<a class="headerlink" href="#what-is-fast_lio_slam" title="Permanent link">#</a></h2>
 <ul>
 <li>FAST_LIO_SLAM is the integration of FAST_LIO and SC-PGO which is scan context based loop detection and GTSAM based pose-graph optimization.</li>
