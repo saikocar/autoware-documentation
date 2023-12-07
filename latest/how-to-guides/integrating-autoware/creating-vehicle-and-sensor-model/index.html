@@ -21,7 +21,7 @@
     
     
       
-        <title>Creating vehicle and sensor models - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Creating vehicle and sensor models
+              Index
             
           </span>
         </div>
@@ -6605,7 +6605,35 @@
   
 
 
-<div><h1 id="creating-vehicle-and-sensor-models">Creating vehicle and sensor models<a class="headerlink" href="#creating-vehicle-and-sensor-models" title="Permanent link">#</a></h1>
+<div><p>車両とセンサーのモデルの作成
+概要
+センサーモデル
+目的:センサー モデルには、自動運転車で使用されるセンサーの校正 (変換) ファイルと起動ファイルが含まれています。これには、LiDAR、カメラ、レーダー、<abbr title="Inertial Measurement Unit">IMU</abbr> (慣性測定ユニット)、GPS ユニットなどのさまざまなセンサーが含まれます。</p>
+<p>重要:正確なセンサー モデリングは知覚タスクに不可欠です。正確なキャリブレーション値は、物体の検出、距離の推定、周囲の 3D 表現の作成などのセンサー データを処理することにより、環境を理解するのに役立ちます。</p>
+<p>使用法:センサー モデルは、センサーの起動、パイプラインの構成、およびキャリブレーション値の記述のために Autoware で利用されます。</p>
+<p>センサーモデル（センサーキット）は以下の3つのパッケージで構成されています。</p>
+<p>common_sensor_launch
+<your_vehicle_name>_sensor_kit_description
+<your_vehicle_name>_sensor_kit_launch
+個別のセンサー モデルの作成については、センサー モデルの作成ページを参照してください。</your_vehicle_name></your_vehicle_name></p>
+<p>参考として、 Autoware のsample_sensor_kit_launchパッケージのフォルダー構造を次に示します。</p>
+<p>sample_sensor_kit_launch/
+├─ common_sensor_launch/
+├─ sample_sensor_kit_description/
+└─ sample_sensor_kit_launch/
+車両型式
+目的:車両モデルには、寸法を含む個々の車両仕様、車両の 3D モデル (.fbx または .dae 形式) などが含まれます。</p>
+<p>重要:正確な車両モデルは、動作計画と制御にとって非常に重要です。</p>
+<p>使用法:車両モデルは、車両の 3D モデルを含む Autoware の車両情報を提供するために Autoware で使用されます。</p>
+<p>車両モデルは次の 2 つのパッケージで構成されます。</p>
+<p><your_vehicle_name>_vehicle_description
+<your_vehicle_name>_vehicle_launch
+個別の車両モデルの作成については、車両モデルの作成ページを参照してください。</your_vehicle_name></your_vehicle_name></p>
+<p>参考として、Autoware のsample_vehicle_launchパッケージのフォルダー構造を次に示します。</p>
+<p>sample_vehicle_launch/
+├─ sample_vehicle_description/
+└─ sample_vehicle_launch/</p>
+<h1 id="creating-vehicle-and-sensor-models">Creating vehicle and sensor models<a class="headerlink" href="#creating-vehicle-and-sensor-models" title="Permanent link">#</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
 <h3 id="sensor-model">Sensor Model<a class="headerlink" href="#sensor-model" title="Permanent link">#</a></h3>
 <ul>
