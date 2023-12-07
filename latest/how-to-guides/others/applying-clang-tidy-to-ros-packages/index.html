@@ -21,7 +21,7 @@
     
     
       
-        <title>Applying Clang-Tidy to ROS packages - Autoware Documentation</title>
+        <title>Applying clang tidy to ros packages - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Applying Clang-Tidy to ROS packages
+              Applying clang tidy to ros packages
             
           </span>
         </div>
@@ -3724,12 +3724,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Applying Clang-Tidy to ROS packages
+          Applying clang tidy to ros packages
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Applying Clang-Tidy to ROS packages
+        Applying clang tidy to ros packages
       </a>
       
         
@@ -6708,7 +6708,26 @@
   
 
 
-<div><h1 id="applying-clang-tidy-to-ros-packages">Applying Clang-Tidy to <abbr title="Robot Operating System">ROS</abbr> packages<a class="headerlink" href="#applying-clang-tidy-to-ros-packages" title="Permanent link">#</a></h1>
+<div><p><abbr title="Robot Operating System">ROS</abbr> パッケージへの Clang-Tidy の適用
+Clang-Tidyは強力な C++ リンターです。</p>
+<p>準備
+Clang-Tidy を使用する前に生成する必要がありますbuild/compile_commands.json。</p>
+<p>colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+使用法
+clang-tidy -p build/ path/to/file1 path/to/file2 ...
+パッケージ内のすべてのファイルに Clang-Tidy を適用したい場合は、fdコマンドを使用すると便利です。インストールするにはfd、インストールマニュアルを参照してください。</p>
+<p>clang-tidy -p build/ $(fd -e cpp -e hpp --full-path "/autoware_utils/")
+IDEの統合
+クライオン
+CLion のドキュメントを参照してください。</p>
+<p>Visual Studioコード
+次の拡張子のいずれかを使用します。</p>
+<p>C/C++
+カランカラン
+トラブルシューティング
+が発生した場合はclang-diagnostic-error、 をインストールしてみてくださいlibomp-dev。</p>
+<p>関連: autowarefoundation/autoware-github-actions#172</p>
+<h1 id="applying-clang-tidy-to-ros-packages">Applying Clang-Tidy to <abbr title="Robot Operating System">ROS</abbr> packages<a class="headerlink" href="#applying-clang-tidy-to-ros-packages" title="Permanent link">#</a></h1>
 <p><a href="https://clang.llvm.org/extra/clang-tidy/">Clang-Tidy</a> is a powerful C++ linter.</p>
 <h2 id="preparation">Preparation<a class="headerlink" href="#preparation" title="Permanent link">#</a></h2>
 <p>You need to generate <code>build/compile_commands.json</code> before using Clang-Tidy.</p>
