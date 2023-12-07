@@ -1,3 +1,70 @@
+スクローム
+イスクロアムとは何ですか？
+ISCLOAM は、ジオメトリ情報と強度情報の両方を統合することにより、堅牢なループ閉鎖検出アプローチを提供します。
+リポジトリ情報
+元のリポジトリのリンク
+https://github.com/wh200720041/iscloam
+
+必要なセンサー
+LIDAR [ベロダイン]
+ROS の互換性
+ROS 1
+依存関係
+Ubuntu 64 ビット 18.04
+ROS Melodic ROS のインストール
+Ceres ソルバーCeres のインストール
+PCL PCL のインストール
+Gtsam GTSAM のインストール
+OpenCV OPENCV のインストール
+軌跡の可視化
+視覚化の目的で、このパッケージは hector trajectory サーバーを使用します。次の方法でパッケージをインストールできます。
+
+sudo apt-get install ros-melodic-hector-trajectory-server
+構築して実行する
+1. リポジトリのクローンを作成する
+cd ~/catkin_ws/src
+git clone https://github.com/wh200720041/iscloam.git
+cd ..
+catkin_make -j1
+source ~/catkin_ws/devel/setup.bash
+2. パラメータの設定
+起動ファイルのバッグの位置とセンサーのパラメーターを変更します。
+
+
+
+3. 起動
+roslaunch iscloam iscloam.launch
+同時に環境のマップを生成したい場合は、次を実行できます。
+
+roslaunch iscloam iscloam_mapping.launch
+グローバル マップは非常に大きくなる可能性があるため、グローバル最適化の実行に時間がかかる場合があることに注意してください。軌道とマップは別のスレッドで実行されるため、両者の間に多少の遅れが予想されます。ループの終了が特定されると、より多くの CPU 使用率が発生します。
+
+結果の例
+ビデオリンクでデモビデオをご覧ください
+
+グラウンドトゥルースの比較
+緑：イスクローム 赤：グラウンドトゥルース
+
+ 
+
+                  KITTI sequence 00                                  KITTI sequence 05
+引用
+この作品を研究に使用する場合は、以下の論文を引用してください。引用していただければ幸いです。
+
+@inproceedings{wang2020intensity,
+  author={H. {Wang} and C. {Wang} and L. {Xie}},
+  booktitle={2020 IEEE International Conference on Robotics and Automation (ICRA)},
+  title={Intensity Scan Context: Coding Intensity and Geometry Relations for Loop Closure Detection},
+  year={2020},
+  volume={},
+  number={},
+  pages={2095-2101},
+  doi={10.1109/ICRA40945.2020.9196764}
+}
+謝辞
+A-LOAMと LOAM(J. Zhang と S. Singh. LOAM: Lidar Odometry and Mapping in Real-time) とLOAM_NOTEDに感謝します。
+
+著者: Wang Han、南洋理工大学、シンガポール
 # ISCLOAM
 
 ## What is ISCLOAM?
