@@ -21,7 +21,7 @@
     
     
       
-        <title>FD-SLAM - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              FD-SLAM
+              Index
             
           </span>
         </div>
@@ -6667,7 +6667,48 @@
   
 
 
-<div><h1 id="fd-slam">FD-<abbr title="Simultaneous Localization And Mapping">SLAM</abbr><a class="headerlink" href="#fd-slam" title="Permanent link">#</a></h1>
+<div><p>FD-<abbr title="Simultaneous Localization And Mapping">SLAM</abbr>
+FD-SLAMとは何ですか?
+FD_SLAM は、Surface Representation Refinement に基づいた、Feature&amp;Distribution ベースの 3D LiDAR <abbr title="Simultaneous Localization And Mapping">SLAM</abbr> メソッドです。このアルゴリズムでは、高速スキャン マッチングに新しいフィーチャベースの Lidar オドメトリが使用され、キーフレーム マッチングには提案された UGICP メソッドが使用されました。
+リポジトリ情報
+これは、3D LIDAR を使用したリアルタイム 6DOF <abbr title="Simultaneous Localization And Mapping">SLAM</abbr> 用のオープンソース <abbr title="Robot Operating System">ROS</abbr> パッケージです。</p>
+<p>これは hd​​l_graph_slam に基づいており、システムを実行する手順は hdl-graph-slam と同じです。</p>
+<p>元のリポジトリのリンク
+https://github.com/SLAMWang/FD-<abbr title="Simultaneous Localization And Mapping">SLAM</abbr></p>
+<p>必要なセンサー
+LIDAR[VLP-16、HDL-32、HDL-64、OS1-64]
+GPS
+<abbr title="Inertial Measurement Unit">IMU</abbr> [オプション]
+<abbr title="Robot Operating System">ROS</abbr> の互換性
+<abbr title="Robot Operating System">ROS</abbr> 1
+依存関係
+<abbr title="Robot Operating System">ROS</abbr>
+PCL
+g2o
+スイートスパース
+次の <abbr title="Robot Operating System">ROS</abbr> パッケージが必要です。</p>
+<p>測地学
+nmea_msgs
+pcl_ros
+ndt_omp
+U_gicp fast_gicpをベースに弊社で修正したものです。キーフレームマッチングにはUGICPを使用します。
+構築して実行
+1) ビルド
+cd ~/catkin_ws/src
+git clone https://github.com/SLAMWang/FD-<abbr title="Simultaneous Localization And Mapping">SLAM</abbr>.git
+cd ..
+catkin_make
+2) サービス
+/hdl_graph_slam/dump  (hdl_graph_slam/DumpGraph)
+  - save all the internal data (point clouds, floor coeffs, odoms, and pose graph) to a directory.</p>
+<p>/hdl_graph_slam/save_map (hdl_graph_slam/SaveMap)
+  - save the generated map as a <abbr title="Point Cloud Data">PCD</abbr> file.
+3) パラメータを設定する
+構成可能なパラメータはすべて、launch/****.launchにros params としてリストされます。
+4) 走る
+source devel/setup.bash
+roslaunch hdl_graph_slam hdl_graph_slam_400_ours.launch</p>
+<h1 id="fd-slam">FD-<abbr title="Simultaneous Localization And Mapping">SLAM</abbr><a class="headerlink" href="#fd-slam" title="Permanent link">#</a></h1>
 <h2 id="what-is-fd-slam">What is FD-<abbr title="Simultaneous Localization And Mapping">SLAM</abbr>?<a class="headerlink" href="#what-is-fd-slam" title="Permanent link">#</a></h2>
 <!-- cspell: ignore UGICP Suitesparse -->
 
