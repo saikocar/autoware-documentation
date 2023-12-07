@@ -21,7 +21,7 @@
     
     
       
-        <title>Sensing component design - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Sensing component design
+              Index
             
           </span>
         </div>
@@ -6619,7 +6619,32 @@
   
 
 
-<div><h1 id="sensing-component-design">Sensing component design<a class="headerlink" href="#sensing-component-design" title="Permanent link">#</a></h1>
+<div><p>センシングコンポーネントの設計
+概要
+センシング コンポーネントは、生のセンサー データにいくつかの原始的な前処理を適用するモジュールのコレクションです。</p>
+<p>センサーの入力形式はこのコンポーネントで定義されます。</p>
+<p>役割
+データ形式の抽象化により、さまざまなベンダーのセンサーを使用できるようになります。
+各コンポーネントに必要な共通/原始的なセンサー データ処理を実行します。
+入力
+入力の種類
+センサーデータ メッセージの種類
+点群 (LIDAR、深度カメラなど)  センサー_msgs/msg/PointCloud2.msg
+画像（RGB、モノクロ、深度などのカメラ）   センサー_msgs/msg/Image.msg
+レーダースキャン    レーダー_msgs/msg/RadarScan.msg
+レーダー追跡  レーダー_msgs/msg/RadarTracks.msg
+<abbr title="Global Navigation Satellite System">GNSS</abbr>-INS位置  sensor_msgs/msg/NavSatFix.msg
+<abbr title="Global Navigation Satellite System">GNSS</abbr>-INS の方向    autoware_sensing_msgs/GnssInsOrientationStamped.msg
+<abbr title="Global Navigation Satellite System">GNSS</abbr>-INS速度  geometry_msgs/msg/TwistWithCovarianceStamped.msg
+<abbr title="Global Navigation Satellite System">GNSS</abbr>-INS加速  geometry_msgs/msg/AccelWithCovarianceStamped.msg
+超音波 センサー_msgs/msg/Range.msg
+データ型による設計
+<abbr title="Global Navigation Satellite System">GNSS</abbr>/INSデータ前処理設計
+画像前処理設計
+点群前処理設計
+レーダーデータの前処理設計
+超音波データ前処理設計</p>
+<h1 id="sensing-component-design">Sensing component design<a class="headerlink" href="#sensing-component-design" title="Permanent link">#</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
 <p>Sensing component is a collection of modules that apply some primitive pre-processing to the raw sensor data.</p>
 <p>The sensor input formats are defined in this component.</p>
