@@ -1,3 +1,100 @@
+カスタム ROS メッセージを追加する
+概要
+Autoware の開発中は、おそらく独自のメッセージを定義する必要があります。カスタム メッセージを追加する前に、次の手順をお読みください。
+
+autoware_msgsのメッセージはのインターフェイスを定義しますAutoware Core。
+
+寄稿者が に変更を加えたり、新しいメッセージを追加したい場合は、まず、 「デザイン」カテゴリautoware_msgsの下に新しいディスカッション投稿を作成する必要があります。
+コンポーネント内の内部通信 (計画など) に使用されるその他のマイナー メッセージや提案メッセージは、別のリポジトリで定義する必要があります。
+
+tier4_autoware_msgsはその一例です。
+以下は、メッセージ パッケージを に追加する簡単なチュートリアルですautoware_msgs。一般的な ROS 2 チュートリアルについては、「カスタム msg および srv ファイルの作成」を参照してください。
+
+カスタムメッセージの作成方法
+Autoware ワークスペースにいることを確認し、次のコマンドを実行して新しいパッケージを作成します。例として、センサー メッセージを定義するパッケージを作成してみましょう。
+
+パッケージを作成する
+
+cd ./src/core/autoware_msgs
+ros2 pkg create --build-type ament_cmake autoware_sensing_msgs
+カスタムメッセージを作成する
+
+.msgファイルを作成してディレクトリに配置する必要がありますmsg。
+
+注.msg:およびファイルの頭文字は.srv大文字にする必要があります。
+
+例として、.msgファイルを作成しGnssInsOrientation.msgてGnssInsOrientationStamped.msgGNSS/INS 方向メッセージを定義してみましょう。
+
+mkdir msg
+cd msg
+touch GnssInsOrientation.msg
+touch GnssInsOrientationStamped.msg
+GnssInsOrientation.msgエディタを使用して次の内容になるように編集します。
+
+geometry_msgs/Quaternion orientation
+float32 rmse_rotation_x
+float32 rmse_rotation_y
+float32 rmse_rotation_z
+この場合、カスタム メッセージは別のメッセージ パッケージのメッセージを使用しますgeometry_msgs/Quaternion。
+
+GnssInsOrientationStamped.msgエディタを使用して次の内容になるように編集します。
+
+std_msgs/Header header
+GnssInsOrientation orientation
+この場合、カスタム メッセージは別のメッセージ パッケージのメッセージを使用しますstd_msgs/Header。
+
+CMakeLists.txt を編集する
+
+C++このカスタム メッセージをまたは言語で使用するにはPython、次の行を に追加する必要がありますCMakeList.txt。
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/GnssInsOrientation.msg"
+  "msg/GnssInsOrientationStamped.msg"
+  DEPENDENCIES
+    geometry_msgs
+    std_msgs
+  ADD_LINTER_TESTS
+)
+💬 このament_cmake_autoツールは非常に便利で、Autoware でより広く使用されているため、ament_cmake_autoの代わりに使用することをお勧めしますament_cmake。
+
+交換する必要があります
+
+find_package(ament_cmake REQUIRED)
+
+ament_package()
+と
+
+find_package(ament_cmake_auto REQUIRED)
+
+ament_auto_package()
+package.xmlを編集する
+
+関連する依存関係を で宣言する必要がありますpackage.xml。上記の例では、次のコンテンツを追加する必要があります。
+
+<buildtool_depend>rosidl_default_generators</buildtool_depend>
+
+<exec_depend>rosidl_default_runtime</exec_depend>
+
+<depend>geometry_msgs</depend>
+<depend>std_msgs</depend>
+
+<member_of_group>rosidl_interface_packages</member_of_group>
+ファイル内の<buildtool_depend>ament_cmake</buildtool_depend>を に置き換える必要があります。<buildtool_depend>ament_cmake_auto</buildtool_depend>package.xml
+
+カスタムメッセージパッケージを構築する
+
+たとえば次のコマンドを実行することで、ワークスペースのルートにパッケージをビルドできます。
+
+colcon build --packages-select autoware_sensing_msgs
+これで、GnssInsOrientationStampedメッセージは Autoware の他のパッケージで検出できるようになります。
+
+Autoware でカスタム メッセージを使用する方法
+次の手順に従って、Autoware でカスタム メッセージを使用できます。
+
+に依存関係を追加しますpackage.xml。
+例えば、<depend>autoware_sensing_msgs</depend>。
+.hpp関連するメッセージのファイルをコードに 含めます。
+例えば、#include <autoware_sensing_msgs/msg/gnss_ins_orientation_stamped.hpp>。
 # Add a custom ROS message
 
 ## Overview
