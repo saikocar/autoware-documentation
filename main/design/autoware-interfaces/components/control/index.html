@@ -6734,7 +6734,47 @@
   
 
 
-<div><h1 id="control">Control<a class="headerlink" href="#control" title="Permanent link">#</a></h1>
+<div><p>コントロール
+ノード図</p>
+<p>入力
+車両の運動学的状態
+自我の現在の位置と方向。Localization モジュールによって発行されます。</p>
+<p>nav_msgs/オドメトリ
+std_msgs/Headerヘッダー
+文字列 child_frame_id
+geometry_msgs/PoseWithCovarianceポーズ
+geometry_msgs/TwistWithCovarianceツイスト
+軌跡
+コントローラーがたどる軌道。「計画の出力」を参照してください。</p>
+<p>ステアリングステータス
+自我車両の現在のステアリング。ビークル・インターフェース発行。</p>
+<p>ステアリングメッセージ ( github ディスカッション)。
+builtin_interfaces::msg::タイムスタンプ
+float32 ステアリング角度
+作動ステータス
+加速、ステアリング、ブレーキなどの自車両の作動状態。</p>
+<p>TODO これは、車両のアクチュエーターによって発揮される報告された物理的労力を表します。ビークル・インターフェース発行。</p>
+<p>ActuationStatus ( github ディスカッション)。
+builtin_interfaces::msg::タイムスタンプ
+float32 加速
+float32ステアリング
+出力
+車両制御コマンド
+車両を駆動するためのモーション信号。車両層の下位コントローラーによって実現されます。車両インターフェースによって使用されます。</p>
+<p>autoware_auto_control_msgs/AckermannControlCommand
+builtin_interfaces::msg::タイムスタンプ
+autoware_auto_control_msgs/AckermannLateralコマンド横方向
+builtin_interfaces::msg::タイムスタンプ
+フロートステアリングタイヤ角度
+float ステアリングタイヤ回転速度
+autoware_auto_control_msgs/LongitudinalCommand縦方向
+builtin_interfaces::msg::タイムスタンプ
+builtin_interfaces::msg::Duration 期間
+builtin_interfaces::msg::Duration time_step
+float[] の速度
+float[] 加速
+float[] ジャーク</p>
+<h1 id="control">Control<a class="headerlink" href="#control" title="Permanent link">#</a></h1>
 <p><img alt="Node diagram" src="../images/Control-Bus-ODD-Architecture.drawio.svg"></p>
 <h2 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">#</a></h2>
 <h3 id="vehicle-kinematic-state">Vehicle kinematic state<a class="headerlink" href="#vehicle-kinematic-state" title="Permanent link">#</a></h3>
