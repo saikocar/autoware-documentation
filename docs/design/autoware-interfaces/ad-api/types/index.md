@@ -1,4 +1,4 @@
-# Types of Autoware AD API
+# Autoware AD APIの型
 
 - [autoware_adapi_v1_msgs/msg/CooperationCommand](./autoware_adapi_v1_msgs/msg/CooperationCommand.md)
 - [autoware_adapi_v1_msgs/msg/CooperationDecision](./autoware_adapi_v1_msgs/msg/CooperationDecision.md)
