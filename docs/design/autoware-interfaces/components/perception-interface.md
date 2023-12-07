@@ -1,3 +1,72 @@
+感知
+
+入力
+ポイントクラウド
+Lidar によって公開された PointCloud データ。
+
+センサー_msgs/msg/PointCloud2
+画像
+カメラで捉えた画像フレーム。
+
+センサー_msgs/msg/画像
+車両の運動学的状態
+信号認識に使用される自我の現在位置。Localization の出力を参照してください。
+
+レーンレット2の地図
+環境の地図。Map の出力を参照してください。
+
+出力
+3D オブジェクトの予測
+3D オブジェクトはセンサー フュージングによって検出、追跡、予測されます。
+
+autoware_auto_perception_msgs/msg/PredictedObjects
+std_msgs/Headerヘッダー
+sequence< autoware_auto_perception_msgs::msg::PredictedObject > オブジェクト
+unique_identifier_msgs::msg::UUID uuid
+浮動小数点数の存在確率
+シーケンス< autoware_auto_perception_msgs::msg::ObjectClassification > 分類
+uint8 分類
+浮動確率
+autoware_auto_perception_msgs::msg::PredictedObjectKinematicsキネマティクス
+geometry_msgs::msg:: PoseWithCovarianceinitial_pose
+geometry_msgs::msg::TwistWithCovariance
+geometry_msgs::msg:: AccelWithCovarianceinitial_acceleration
+シーケンス< autoware_auto_perception_msgs::msg::PredictedPath , 10> 予測パス
+シーケンス< geometry_msgs::msg::Pose , 100> パス
+builtin_interfaces::msg::Duration time_step
+フロート自信
+sequence< autoware_auto_perception_msgs::msg::Shape , 5> 形状
+geometry_msgs::msg::Polygonポリゴン
+フロートの高さ
+信号機
+物体検出モデルにより認識される信号機。
+
+autoware_perception_msgs::msg::TrafficSignalArray
+autoware_perception_msgs::msg::TrafficSignal信号
+autoware_perception_msgs::msg::TrafficSignalElement要素
+uint8 不明 = 0
+uint8 赤 = 1
+uint8 アンバー = 2
+uint8 ホワイト = 4
+uint8 サークル = 1
+uint8 LEFT_ARROW = 2
+uint8 右矢印 = 3
+uint8 UP_ARROW = 4
+uint8 UP_LEFT_ARROW=5
+uint8 UP_RIGHT_ARROW=6
+uint8 下矢印 = 7
+uint8 下向き矢印 = 8
+uint8 下向き矢印 = 9
+uint8 クロス = 10
+uint8 SOLID_OFF = 1
+uint8 SOLID_ON = 2
+uint8 フラッシュ = 3
+uint8 色
+uint8 形状
+uint8 ステータス
+float32 の信頼度
+int64 トラフィック信号 ID
+builtin_interfaces::msg::タイムスタンプ
 # Perception
 
 ```mermaid
