@@ -21,7 +21,7 @@
     
     
       
-        <title>Optimized-SC-F-LOAM - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Optimized-SC-F-LOAM
+              Index
             
           </span>
         </div>
@@ -6708,7 +6708,63 @@
   
 
 
-<div><h1 id="optimized-sc-f-loam">Optimized-SC-F-LOAM<a class="headerlink" href="#optimized-sc-f-loam" title="Permanent link">#</a></h1>
+<div><p>最適化されたSC-F-LOAM
+最適化された SC-F-LOAM とは何ですか?
+F-LOAM の改良版であり、適応しきい値を使用してループ クロージャの検出結果をさらに判断し、誤ったループ クロージャの検出を減らします。また、特徴点ベースのマッチングを使用して、ループ クロージャー フレーム点群のペア間の制約を計算し、ループ フレーム制約の構築にかかる時間を削減します。
+リポジトリ情報
+元のリポジトリのリンク
+https://github.com/SlamCabbage/Optimized-SC-F-LOAM</p>
+<p>必要なセンサー
+LIDAR [VLP-16、HDL-32、HDL-64]
+<abbr title="Robot Operating System">ROS</abbr> の互換性
+<abbr title="Robot Operating System">ROS</abbr> 1
+依存関係
+<abbr title="Robot Operating System">ROS</abbr>
+PCL
+GTSAM
+セレスソルバー
+視覚化の目的で、このパッケージは hector trajectory サーバーを使用します。次の方法でパッケージをインストールできます。
+sudo apt-get install ros-noetic-hector-trajectory-server
+構築して実行
+1) ビルド
+cd ~/catkin_ws/src
+git clone https://github.com/SlamCabbage/Optimized-SC-F-LOAM.git
+cd ..
+catkin_make
+2) メッセージファイルの作成
+このフォルダには、Ground Truth情報、最適化されたポーズ情報、F-LOAMのポーズ情報、時間情報が格納されます。</p>
+<p>mkdir -p ~/message/Scans</p>
+<p>Change line 383 in the laserLoopOptimizationNode.cpp to your own "message" folder path
+(パッケージを再構築することを忘れないでください)</p>
+<p>3) パラメータを設定する
+「sc_f_loam_mapping.launch」で LIDAR トピックと LIDAR プロパティを設定します
+4) 走る
+source devel/setup.bash
+roslaunch optimized_sc_f_loam optimized_sc_f_loam_mapping.launch
+結果の例
+画像</p>
+<p>KITTI シーケンス 00 およびシーケンス 05 の結果
+画像</p>
+<p>KITTI データセット上の軌跡の比較
+画像</p>
+<p>KITTI シーケンスでのテスト シーケンス 00 および 05 データセットを KITTI 公式 Web サイトからダウンロードし、kitti2bag オープン ソース メソッドを使用してバッグ ファイルに変換できます。</p>
+<p>00: 2011_10_03_ドライブ_0027 000000 004540</p>
+<p>05: 2011_09_30_drive_0018 000000 002760</p>
+<p>リンクを参照してください: https://github.com/ethz-asl/kitti_to_rosbag</p>
+<p>謝辞
+SC-A-LOAM (スキャンコンテキスト: 3D 点群マップ内の場所認識のための自己中心的空間記述子) と F-LOAM (F-LOAM : Fast LiDAR Odometry and Mapping) に感謝します。</p>
+<p>引用
+@misc{https://doi.org/10.48550/arxiv.2204.04932,
+  doi = {10.48550/ARXIV.2204.04932},</p>
+<p>url = {https://arxiv.org/abs/2204.04932},</p>
+<p>author = {Liao, Lizhou and Fu, Chunyun and Feng, Binbin and Su, Tian},</p>
+<p>keywords = {Robotics (cs.RO), FOS: Computer and information sciences, FOS: Computer and information sciences},</p>
+<p>title = {Optimized SC-F-LOAM: Optimized Fast LiDAR Odometry and Mapping Using Scan Context},</p>
+<p>publisher = {arXiv},</p>
+<p>year = {2022},</p>
+<p>copyright = {arXiv.org perpetual, non-exclusive license}
+}</p>
+<h1 id="optimized-sc-f-loam">Optimized-SC-F-LOAM<a class="headerlink" href="#optimized-sc-f-loam" title="Permanent link">#</a></h1>
 <h2 id="what-is-optimized-sc-f-loam">What is Optimized-SC-F-LOAM?<a class="headerlink" href="#what-is-optimized-sc-f-loam" title="Permanent link">#</a></h2>
 <ul>
 <li>An improved version of F-LOAM and uses an adaptive threshold to further judge the loop closure detection results and reducing false loop closure detections. Also it uses feature point-based matching to calculate the constraints between a pair of loop closure frame point clouds and decreases time consumption of constructing loop frame constraints.</li>
