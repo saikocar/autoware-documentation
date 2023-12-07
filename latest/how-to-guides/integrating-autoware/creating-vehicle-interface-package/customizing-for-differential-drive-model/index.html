@@ -21,7 +21,7 @@
     
     
       
-        <title>Customizing for differential drive vehicle - Autoware Documentation</title>
+        <title>Customizing for differential drive model - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Customizing for differential drive vehicle
+              Customizing for differential drive model
             
           </span>
         </div>
@@ -1875,12 +1875,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Customizing for differential drive vehicle
+          Customizing for differential drive model
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Customizing for differential drive vehicle
+        Customizing for differential drive model
       </a>
       
         
@@ -6720,7 +6720,57 @@
   
 
 
-<div><h1 id="customizing-for-differential-drive-vehicle">Customizing for differential drive vehicle<a class="headerlink" href="#customizing-for-differential-drive-vehicle" title="Permanent link">#</a></h1>
+<div><p>デフ車のカスタマイズ
+1. はじめに
+現在、Autoware は、車両がアッカーマン ステアリングを備えたアッカーマン運動学モデルを使用していることを前提としています。したがって、Autoware は、Control モジュールの出力に Ackermann コマンド形式を採用します ( Ackermann コマンドの概要についてはAckermannDrive <abbr title="Robot Operating System">ROS</abbr> メッセージ定義を、 詳細については Autoware で使用されるAckermannControlCommands 構造体を参照してください)。</p>
+<p>ただし、小型移動ロボットで一般的に使用される差動駆動運動学モデルに従う車両と Autoware を統合することは可能です。以下の図に示すように、ディファレンシャル車両は 4 輪または 2 輪のいずれかになります。</p>
+<p><img align="center" alt="Difference_vehicle" src="images/Difference_vehicle.svg"> 4 輪モデルと 2 輪モデルの差動車両のサンプル。
+2. 手順
+Autoware を差動駆動車両で使用する簡単な方法の 1 つは、vehicle_interfaceアッカーマン コマンドを差動駆動コマンドに変換するパッケージを作成することです。考慮する必要がある点は次の 2 つです。</p>
+<p>vehicle_interfaceデフ車用パッケージの作成
+適切な値を設定しますwheel_base
+2.1vehicle_interfaceデフ車用パッケージの作成
+Autoware の Ackermann コマンドは、次の 2 つの主要な制御入力で構成されます。</p>
+<p>ステアリング角度 (
+）
+速度 (
+）
+逆に、一般的な差動駆動コマンドは次の入力で構成されます。</p>
+<p>左車輪速度 (
+）
+右輪速度 (
+）
+したがって、アッカーマン コマンドを差動ドライブ コマンドに変換する 1 つの方法は、次の方程式を使用することです。</p>
+<p>どこ
+車輪の踏面を指します。</p>
+<p>以下は、.cppアッカーマン モデルの運動学を差分モデルに変換するためのスニペットの例です。</p>
+<p>...
+void convert_ackermann_to_differential(
+  autoware_auto_control_msgs::msg::AckermannControlCommand &amp; ackermann_msg
+  my_vehicle_msgs::msg::DifferentialCommand &amp; differential_command)
+{
+    differential_command.left_wheel.velocity =
+      ackermann_msg.longitudinal.speed - (ackermann_msg.lateral.steering_tire_angle * my_wheel_tread) / 2;
+    differential_command.right_wheel.velocity =
+      ackermann_msg.longitudinal.speed + (ackermann_msg.lateral.steering_tire_angle * my_wheel_tread) / 2;
+}
+...
+パッケージを作成するときに考慮する必要があるその他の要素については、 「作成ページ」vehicle_interfaceを参照してください。vehicle_interface</p>
+<p>2.2 適切な設定wheel_base
+差動駆動ロボットには必ずしも前輪と後輪があるわけではないため、ホイールベース（前輪と後輪の車軸間の水平距離）を定義することができません。ただし、Autoware は何らかの値がwheel_base設定されることを期待しています。vehicle_info.param.yamlしたがって、 に疑似値を設定する必要がありますwheel_base。</p>
+<p>の適切な疑似値は、wheel_base車両のサイズによって異なります。考えられる選択肢の 1 つは、 と同じ値に設定することですwheel_tread。</p>
+<div class="admonition 警告">
+<p class="admonition-title">警告</p>
+</div>
+<ul>
+<li>If the <code>wheel_base</code> value is set too small then the vehicle may behave unexpectedly. For example, the vehicle may drive beyond the bounds of a calculated path.</li>
+<li>Conversely, if <code>wheel_base</code> is set too large, the vehicle's range of motion will be restricted. The reason being that Autoware's Planning module will calculate an overly conservative trajectory based on the assumed vehicle length.
+3. 既知の問題
+モーションモデルの非互換性
+Autoware は車両がステアリング システムを使用することを前提としているため、差動駆動システムの運動モデルの柔軟性を利用することはできません。</li>
+</ul>
+<p>たとえば、freespace_plannerモジュールを使用して駐車操作を計画する場合、純粋な回転運動を使用する単純な軌道で車両を駐車できる場合でも、Autoware は差動駆動車両を前後に駆動する場合があります。</p>
+<h1 id="customizing-for-differential-drive-vehicle">Customizing for differential drive vehicle<a class="headerlink" href="#customizing-for-differential-drive-vehicle" title="Permanent link">#</a></h1>
 <h2 id="1-introduction">1. Introduction<a class="headerlink" href="#1-introduction" title="Permanent link">#</a></h2>
 <p>Currently, Autoware assumes that vehicles use an Ackermann kinematic model with Ackermann steering.
 Thus, Autoware adopts the Ackermann command format for the Control module's output
