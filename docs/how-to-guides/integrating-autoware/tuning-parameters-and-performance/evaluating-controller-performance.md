@@ -1,3 +1,47 @@
+コントローラーの性能を評価する
+control_performance_analysisこのページでは、パッケージを使用してコントローラーを評価する方法を説明します。
+
+control_performance_analysis制御モジュールの追従性能を解析し、車両の走行状態を監視するパッケージです。
+
+パッケージの詳細情報が必要な場合は、control_performance_analysisを参照してください。
+
+使い方
+運転する前に
+1. まず、Autoware を起動する必要があります。このツールは実際の車両の運転でも使用できます
+2.車両を初期化し、ゴール位置を送信してルートを作成する
+Autoware の起動に問題がある場合は、チュートリアルページを参照してください。
+3. control_パフォーマンス_分析パッケージを起動します
+ros2 launch control_performance_analysis controller_performance_analysis.launch.xml
+このコマンドを実行すると、トピックに駆動モニターとエラー変数が表示されるようになります。
+4. ソースターミナルで PlotJuggler を実行します
+source ~/autoware/install/setup.bash
+ros2 run plotjuggler plotjuggler
+お使いのコンピュータに PlotJuggler がインストールされていない場合は、こちらのインストール ガイドラインを参照してください。
+5. バッファ サイズを増やし (最大は 100)、レイアウトを次からインポートします。/autoware.universe/control/control_performance_analysis/config/controller_monitor.xml
+レイアウトをインポートした後、以下にリストされているトピックを指定してください。
+/localization/kinematic_state
+/車両/ステータス/ステアリング_ステータス
+/コントロールパフォーマンス/運転ステータス
+/control_パフォーマンス/パフォーマンス_vars
+ボックスにチェックを入れてIf present, use the timestamp in the field [header.stamp]、[OK] を選択してください。
+PlotJuggler を開始する
+
+6. これで、運転を開始できます。PlotJuggler ですべてのパフォーマンス変数と駆動変数が表示されるはずです。
+コントローラーモニター
+
+運転後
+1. 統計出力とすべてのデータをエクスポートして比較したり、後で使用したりできます
+統計データを使用すると、(最小、最大、平均) などのすべての統計値をエクスポートして、コントローラーを比較できます。
+CVS エクスポート
+
+すべてのデータをエクスポートして後で使用することもできます。再度調査するには、PlotJuggler を起動した後、.cvsデータ セクションからファイルをインポートします。
+データのインポート
+
+チップ
+車両位置をプロットできます。2 つの曲線を選択し (CTRL キーを押したまま)、マウスの右ボタンを使用してドラッグ アンド ドロップします。Help -> Cheatsheet詳細なヒントについては、PlotJuggler の にアクセスしてください。
+XY 曲線のプロット
+
+プロット内にノイズのある曲線が多すぎる場合は、ここからodom_intervalと を調整して、ノイズのあるデータを避けることができます。low_pass_filter_gain
 # Evaluating the controller performance
 
 This page shows how to use `control_performance_analysis` package to evaluate the controllers.
