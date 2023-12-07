@@ -21,7 +21,7 @@
     
     
       
-        <title>Debug Autoware - Autoware Documentation</title>
+        <title>Debug autoware - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#debug-autoware" class="md-skip">
+        <a href="#or-like-with-an-output-file" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Debug Autoware
+              Debug autoware
             
           </span>
         </div>
@@ -3737,95 +3737,9 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Debug Autoware
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
-        Debug Autoware
+        Debug autoware
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#print-debug-messages" class="md-nav__link">
-    Print debug messages
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-ros-tools-debug-autoware" class="md-nav__link">
-    Using ROS tools debug Autoware
-  </a>
-  
-    <nav class="md-nav" aria-label="Using ROS tools debug Autoware">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#using-command-line-tools" class="md-nav__link">
-    Using command line tools
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-rviz2" class="md-nav__link">
-    Using rviz2
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-rqt-tools" class="md-nav__link">
-    Using rqt tools
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-ros2_graph" class="md-nav__link">
-    Using ros2_graph
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-ros2doctor" class="md-nav__link">
-    Using ros2doctor
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-a-debugger-with-breakpoints" class="md-nav__link">
-    Using a debugger with breakpoints
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -6650,76 +6564,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#print-debug-messages" class="md-nav__link">
-    Print debug messages
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-ros-tools-debug-autoware" class="md-nav__link">
-    Using ROS tools debug Autoware
-  </a>
-  
-    <nav class="md-nav" aria-label="Using ROS tools debug Autoware">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#using-command-line-tools" class="md-nav__link">
-    Using command line tools
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-rviz2" class="md-nav__link">
-    Using rviz2
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-rqt-tools" class="md-nav__link">
-    Using rqt tools
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-ros2_graph" class="md-nav__link">
-    Using ros2_graph
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-ros2doctor" class="md-nav__link">
-    Using ros2doctor
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-a-debugger-with-breakpoints" class="md-nav__link">
-    Using a debugger with breakpoints
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -6736,7 +6580,59 @@
   
 
 
-<div><h1 id="debug-autoware">Debug Autoware<a class="headerlink" href="#debug-autoware" title="Permanent link">#</a></h1>
+<div><p>オートウェアのデバッグ
+このページでは、Autoware をデバッグするためのいくつかの方法を説明します。</p>
+<p>デバッグメッセージを出力する
+デバッグに不可欠なことは、プログラムの動作を迅速に判断し、問題を特定できるように、プログラム情報を明確に出力することです。Autoware は、<abbr title="Robot Operating System">ROS</abbr> 2 ログ ツールを使用してデバッグ メッセージを出力します。コンソール ログの設計方法については、チュートリアル「コンソール ログ」を参照してください。</p>
+<p><abbr title="Robot Operating System">ROS</abbr> ツールを使用して Autoware をデバッグする
+コマンドラインツールの使用
+<abbr title="Robot Operating System">ROS</abbr> 2 には、<abbr title="Robot Operating System">ROS</abbr> 2 システムをイントロスペクトするための一連のコマンドライン ツールが含まれています。ツールの主なエントリ ポイントは command です。ros2このコマンド自体には、ノード、トピック、サービスなどをイントロスペクトして操作するためのさまざまなサブコマンドがあります。<abbr title="Robot Operating System">ROS</abbr> 2 コマンド ライン ツールの使用方法については、チュートリアルCLI ツールを参照してください。</p>
+<p>rviz2 の使用
+Rviz2 は、Rviz を <abbr title="Robot Operating System">ROS</abbr> 2 に移植したものです。ユーザーがロボット、センサー データ、マップなどを表示するためのグラフィカル インターフェイスを提供します。Rviz2 ツールは次の方法で簡単に実行できます。</p>
+<p>rviz2
+Autoware がシミュレーターを起動すると、デフォルトで Rviz2 ツールが開き、オートパイロットのグラフィック情報が視覚化されます。</p>
+<p>RQT ツールの使用
+RQt は、プラグインの形式でさまざまなツールやインターフェイスを実装するグラフィカル ユーザー インターフェイス フレームワークです。RQt ツール/プラグインは次の方法で簡単に実行できます。</p>
+<p>rqt
+この GUI を使用すると、システム上で利用可能なプラグインを選択できます。スタンドアロン ウィンドウでプラグインを実行することもできます。たとえば、RQt コンソール:</p>
+<p>ros2 run rqt_console rqt_console
+一般的な RQt ツール
+rqt_graph: ノードの相互作用を表示する</p>
+<p>複雑なアプリケーションでは、<abbr title="Robot Operating System">ROS</abbr> ノードの相互作用を視覚的に表現すると役立つ場合があります。</p>
+<p>ros2 run rqt_graph rqt_graph
+rqt_console: メッセージの表示</p>
+<p>rqt_console は、<abbr title="Robot Operating System">ROS</abbr> トピックを表示するための優れた GUI です。</p>
+<p>ros2 run rqt_console rqt_console
+rqt_plot: データプロットを表示する</p>
+<p>rqt_plot は、<abbr title="Robot Operating System">ROS</abbr> データをリアルタイムでプロットする簡単な方法です。</p>
+<p>ros2 run rqt_plot rqt_plot
+ros2_graphの使用
+ros2_graphマークダウン ファイルに追加する <abbr title="Robot Operating System">ROS</abbr> 2 グラフのマーメイド記述を生成するために使用できます。</p>
+<p>rqt_graph生成された人魚図をレンダリングするために何らかのツールが必要になる場合でも、カラフルな代替手段として使用することもできます。</p>
+<p>以下でインストールできます。</p>
+<p>pip install ros2-graph
+次に、次のようにしてグラフの人魚の説明を生成できます。</p>
+<p>ros2_graph your_node</p>
+<h1 id="or-like-with-an-output-file">or like with an output file<a class="headerlink" href="#or-like-with-an-output-file" title="Permanent link">#</a></h1>
+<p>ros2_graph /turtlesim -o turtle_diagram.md</p>
+<h1 id="or-multiple-nodes">or multiple nodes<a class="headerlink" href="#or-multiple-nodes" title="Permanent link">#</a></h1>
+<p>ros2_graph /turtlesim /teleop_turtle
+次に、これらのグラフを次のように視覚化できます。</p>
+<p>マーメイドライブエディター
+Visual Studio Code 拡張機能マーメイド プレビュー
+ネイティブサポートを備えたJetBrains IDE
+ros2doctorの使用
+<abbr title="Robot Operating System">ROS</abbr> 2 セットアップが期待どおりに実行されない場合は、ros2doctorツールを使用してその設定を確認できます。</p>
+<p>ros2doctorプラットフォーム、バージョン、ネットワーク、環境、実行中のシステムなどを含む <abbr title="Robot Operating System">ROS</abbr> 2 のあらゆる側面をチェックし、考えられるエラーや問題の理由について警告します。</p>
+<p>ros2 doctorターミナルで実行するだけで簡単です。</p>
+<p>システム内のすべてのトピックについて「パブリッシャーのないサブスクライバー」をリストする機能があります。</p>
+<p>この情報は、必要なノードが実行中でないかどうかを見つけるのに役立ちます。</p>
+<p>詳細については、「 ros2doctor を使用して問題を特定する 」に関する次の公式ドキュメントを参照してください。</p>
+<p>ブレークポイントを使用したデバッガの使用
+多くの IDE (Visual Studio Code、CLion など) は、Linux プラットフォーム上の GBD を使用した C/C++ 実行可能ファイルのデバッグをサポートしています。以下に、デバッガーの使用に関する参考資料をいくつか示します。</p>
+<p>https://code.visualstudio.com/docs/cpp/cpp-debug
+https://www.jetbrains.com/help/clion/debugging-code.html#useful-debugger-shortcuts</p>
+<h1 id="debug-autoware">Debug Autoware<a class="headerlink" href="#debug-autoware" title="Permanent link">#</a></h1>
 <p>This page provides some methods for debugging Autoware.</p>
 <h2 id="print-debug-messages">Print debug messages<a class="headerlink" href="#print-debug-messages" title="Permanent link">#</a></h2>
 <p>The essential thing for debug is to print the program information clearly, which can quickly judge the program operation and locate the problem. Autoware uses <abbr title="Robot Operating System">ROS</abbr> 2 logging tool to print debug messages, how to design console logging refer to tutorial <a href="../../../contributing/coding-guidelines/ros-nodes/console-logging/">Console logging</a>.</p>
