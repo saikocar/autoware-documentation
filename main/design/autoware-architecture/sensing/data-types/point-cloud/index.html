@@ -21,7 +21,7 @@
     
     
       
-        <title>Point cloud pre-processing design - Autoware Documentation</title>
+        <title>Point cloud - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Point cloud pre-processing design
+              Point cloud
             
           </span>
         </div>
@@ -4145,12 +4145,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Point cloud pre-processing design
+          Point cloud
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Point cloud pre-processing design
+        Point cloud
       </a>
       
         
@@ -6736,7 +6736,117 @@
   
 
 
-<div><h1 id="point-cloud-pre-processing-design">Point cloud pre-processing design<a class="headerlink" href="#point-cloud-pre-processing-design" title="Permanent link">#</a></h1>
+<div><p>点群前処理設計
+概要
+点群前処理は、生のセンサー データにいくつかの原始的な前処理を適用するモジュールのコレクションです。</p>
+<p>このパイプラインは、ドライバーから認識スタックまでのデータの流れをカバーします。</p>
+<p>推奨される処理パイプライン</p>
+<p>モジュールのリスト
+ここで使用されるモジュールは、pointcloud_preprocessor パッケージからのものです。</p>
+<p>モジュールの詳細については、次の表を参照してください。</p>
+<p>これらのモジュールは、単一のコンテナーでコンポーネントとして使用することをお勧めします。詳細については、「<abbr title="Robot Operating System">ROS</abbr> 2 構成」を参照してください。</p>
+<p>点群フィールド
+理想的なケースでは、ドライバーはポイントPointXYZIRCADTタイプを使用して点群を出力することが期待されます。</p>
+<p>名前  データ・タイプ 派生  説明
+X   FLOAT32 false   X位置
+Y   FLOAT32 false   Y位置
+Z   FLOAT32 false   Z位置
+I（強度）   FLOAT32 false   測定された反射率、点の強度
+R(戻り値の型)    UINT8   false   デュアルリターンライダー用レーザーリターンタイプ
+C（チャネル） UINT16  false   ポイントを測定したレーザーの垂直チャネル ID
+A(方位角)  FLOAT32 true    atan2(Y, X), LIDAR の正面からポイントまでの水平角
+D（距離）   FLOAT32 true    hypot(X, Y, Z)、ポイントから LIDAR までのユークリッド距離
+T(タイムスタンプ)  FLOAT64 false   このポイントが測定されたヘッダーの時刻からの経過秒数</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+</div>
+<p><code>A (azimuth)</code> and <code>D (distance)</code> fields are derived fields.
+They are provided by the driver to reduce the computational load on some parts of the perception stack.</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+</div>
+<p>If the <code>Motion Distortion Corrector Filter</code> won't be used, the <code>T (time)</code> field can be omitted, <code>PointXYZIRCAD</code> point type can be used.</p>
+<div class="admonition 警告">
+<p class="admonition-title">警告</p>
+</div>
+<p>Autoware will support conversion from <code>PointXYZI</code> to <code>PointXYZIRC</code> or <code>PointXYZIRCAD</code> (with channel and return is set to 0) for prototyping purposes.
+However, this conversion is not recommended for production use since it's not efficient.
+強度
+VLP16 ユーザーマニュアルと互換性のある次の強度範囲を使用します。</p>
+<p>VLP-16 ユーザーマニュアルからの引用:</p>
+<p>レーザー測定ごとに、距離に加えて反射率バイトが返されます。反射率バイト値は 2 つの範囲に分割され、ソフトウェアが低範囲の拡散反射体 (木の幹、衣服など) と高範囲の再帰反射体 (道路標識、ナンバー プレートなど) を区別できるようにします。再帰反射体は、散乱を最小限に抑えながら光を光源に反射します。VLP-16 は独自の光を提供し、送信レーザーと受信検出器間の分離が無視できるほど小さいため、反射エネルギーを散乱させる傾向がある拡散反射板と比較して、再帰反射面は反射した IR 光で飛び立ちます。</p>
+<p>拡散反射体は、0% ～ 100% の反射率に対して 0 ～ 100 の値を報告します。
+再帰反射器は 101 ～ 255 の値を報告します。255 は理想的な反射を表します。
+再帰反射体のない一般的な点群では、すべての強度点は 0 ～ 100 になります。</p>
+<p>再帰反射勾配道路標識、画像ソース</p>
+<p>ただし、再帰反射体を備えた点群では、強度ポイントは 0 ～ 255 になります。</p>
+<p>他の LIDAR ブランドの強度マッピング
+ヘサイ パンダルXT16
+Hesai Pandar XT16 ユーザーマニュアル</p>
+<p>この LIDAR には、反射率を報告するための 2 つのモードがあります。</p>
+<p>線形マッピング
+非線形マッピング
+線形マッピング モードを使用している場合は、点群を作成するときに [0, 255] から [0, 100] にマッピングする必要があります。</p>
+<p>非線形マッピング モードを使用している場合は、(hesai から autoware) にマッピングする必要があります。</p>
+<p>[0, 251] ～ [0, 100] および
+[252、254] ～ [101、255]
+点群を構築するとき。</p>
+<p>Livox ミッド 70
+Livox Mid-70 ユーザーマニュアル</p>
+<p>この LIDAR には、Velodyne VLP-16 と同様に反射率を報告するための 2 つのモードがありますが、範囲のみがわずかに異なります。</p>
+<p>(livox から autoware に) マッピングする必要があります。</p>
+<p>[0, 150] ～ [0, 100] および
+[151、255] ～ [101、255]
+点群を構築するとき。</p>
+<p>ロボセンス RS-LiDAR-16
+RoboSense RS-LiDAR-16 ユーザーマニュアル</p>
+<p>Velodyne VLP-16 と同様にマッピングは必要ありません。</p>
+<p>オースター OS-1-64
+すべての Ouster センサー用ソフトウェア ユーザー マニュアル v2.0.0</p>
+<p>マニュアルには次のように記載されています。</p>
+<p>反射率 [16 ビット unsigned int] - センサーのシグナル フォトンの測定値は、測定範囲とその範囲でのセンサー感度に基づいてスケールされ、ターゲットの反射率を示します。この測定の校正は現在厳密に実装されていませんが、将来のファームウェア リリースで更新される予定です。</p>
+<p>したがって、16 ビットの反射率を [0, 100] の範囲にマッピングすることをお勧めします。</p>
+<p>レーシェン CH64W
+英語のユーザーマニュアル、ウェブサイトのリンクが入手できませんでした</p>
+<p>ユーザーマニュアルには次のように書かれているのを見つけることができました。</p>
+<p>バイト 7 はエコー強度を表し、値の範囲は 0 ～ 255 です。（エコー強度は、実際の測定環境における測定対象物のエネルギー反射特性を反映することができるため、反射特性の異なる対象物を区別するために使用できます。）</p>
+<p>したがって、[0, 255] から [0, 100] の範囲をマップすることをお勧めします。</p>
+<p>戻り値の型
+さまざまな LIDAR が複数のリターン モードをサポートしています。Velodyne LIDAR は、最強および最後のリターン モードをサポートしています。</p>
+<p>PointXYZIRCTおよび のタイプではPointXYZIRC、Rフィールドはリターン モードを で表しますUINT8。</p>
+<p>R（戻り値の型）    説明
+0   不明 / マークなし
+1   最強
+2   最後
+チャネル
+チャネル フィールドは、ポイントを測定したレーザーの垂直チャネルを識別するために使用されます。さまざまな LIDAR マニュアルや文献では、レーザー ID、リング、レーザー ラインと呼ばれることもあります。</p>
+<p>Velodyne VLP-16 の場合、16 チャンネルがあります。ドライバー内のチャネルのデフォルトの順序は、通常、起動順です。</p>
+<p>PointXYZIRCTおよびタイプではPointXYZIRC、Cフィールドは垂直チャネル ID を . で表しますUINT16。</p>
+<p>ソリッドステートライダーと花びらパターンライダー</p>
+<div class="admonition 警告">
+<p class="admonition-title">警告</p>
+</div>
+<p>This section is subject to change. Following are suggestions and open for discussion.
+ラインを持つソリッド ステート LIDAR の場合、行番号をチャネル ID として割り当てます。</p>
+<p>花びらパターン LIDAR の場合は、チャネル 0 を維持できます。</p>
+<p>タイムスタンプ
+LIDAR 点群では、各点の測定値に個別のタイムスタンプを付けることができます。この情報は、スキャン中の LIDAR の動きによって生じるモーション ブラーを除去するために使用できます。</p>
+<p>点群ヘッダー時間
+ヘッダーにはTime フィールドが含まれます。時間フィールドには 2 つのコンポーネントがあります。</p>
+<p>分野  タイプ 説明
+sec int32   Unix 時間 (1970 年 1 月 1 日からの経過秒数)
+nanosec uint32  secフィールドからの経過時間 (ナノ秒)
+点群メッセージのヘッダーには、その点が持つ最も古い点の時間が含まれることが期待されます。</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+</div>
+<p>The <code>sec</code> field is <code>int32</code> in <abbr title="Robot Operating System">ROS</abbr> 2 humble. The largest value it can represent is 2^31 seconds, it is subject to
+year 2038 problems. We will wait for actions on <abbr title="Robot Operating System">ROS</abbr> 2 community side.</p>
+<p><strong>More info at:</strong> https://github.com/ros2/rcl_interfaces/issues/85
+個別ポイントのタイムスタンプ
+各PointXYZIRCTポイント タイプには、T点群の最初のショット ポイントから経過した秒数を表すフィールドがあります。</p>
+<p>各ポイントがシュートされた正確な時間を計算するには、そのT秒数がヘッダー時間に追加されます。</p>
+<h1 id="point-cloud-pre-processing-design">Point cloud pre-processing design<a class="headerlink" href="#point-cloud-pre-processing-design" title="Permanent link">#</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
 <p>Point cloud pre-processing is a collection of modules that apply some primitive pre-processing to the raw sensor data.</p>
 <p>This pipeline covers the flow of data from drivers to the perception stack.</p>
