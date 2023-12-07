@@ -21,7 +21,7 @@
     
     
       
-        <title>FAST_LIO_LC - Autoware Documentation</title>
+        <title>Index - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#fast_lio_lc" class="md-skip">
+        <a href="#open-new-terminal-run-fast-lio" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              FAST_LIO_LC
+              Index
             
           </span>
         </div>
@@ -6554,131 +6554,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-fast_lio_lc" class="md-nav__link">
-    What is FAST_LIO_LC?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#repository-information" class="md-nav__link">
-    Repository Information
-  </a>
-  
-    <nav class="md-nav" aria-label="Repository Information">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#original-repository-link" class="md-nav__link">
-    Original Repository link
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#required-sensors" class="md-nav__link">
-    Required Sensors
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ros-compatibility" class="md-nav__link">
-    ROS Compatibility
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dependencies" class="md-nav__link">
-    Dependencies
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#build-run" class="md-nav__link">
-    Build &amp; Run
-  </a>
-  
-    <nav class="md-nav" aria-label="Build & Run">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-build" class="md-nav__link">
-    1) Build
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-set-parameters" class="md-nav__link">
-    2) Set parameters
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-run" class="md-nav__link">
-    3) Run
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example-result" class="md-nav__link">
-    Example Result
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#other-examples" class="md-nav__link">
-    Other Examples
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example-dataset" class="md-nav__link">
-    Example dataset
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contact" class="md-nav__link">
-    Contact
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#acknowledgements" class="md-nav__link">
-    Acknowledgements
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -6695,7 +6570,64 @@
   
 
 
-<div><h1 id="fast_lio_lc">FAST_LIO_LC<a class="headerlink" href="#fast_lio_lc" title="Permanent link">#</a></h1>
+<div><p>FAST_LIO_LC
+FAST_LIO_LCとは何ですか?
+ループ クロージャ モジュールとグラフ最適化を備えた、計算効率が高く堅牢な LiDAR 慣性オドメトリ パッケージ。
+リポジトリ情報
+元のリポジトリのリンク
+https://github.com/yanliang-wang/FAST_LIO_LC</p>
+<p>必要なセンサー
+LIDAR [ベロダイン、オースター、リボックス]
+<abbr title="Inertial Measurement Unit">IMU</abbr> [6軸、9軸]
+GPS [オプション]
+<abbr title="Robot Operating System">ROS</abbr> の互換性
+<abbr title="Robot Operating System">ROS</abbr> 1
+依存関係
+Ubuntu 18.04
+ROSメロディック
+PCL &gt;= 1.8、PCL のインストールに従ってください。
+Eigen &gt;= 3.3.4、Eigen のインストールに従ってください。
+GTSAM &gt;= 4.0.0、GTSAM のインストールに従ってください。
+  wget -O ~/Downloads/gtsam.zip https://github.com/borglab/gtsam/archive/4.0.0-alpha2.zip
+  cd ~/Downloads/ &amp;&amp; unzip gtsam.zip -d ~/Downloads/
+  cd ~/Downloads/gtsam-4.0.0-alpha2/
+  mkdir build &amp;&amp; cd build
+  cmake ..
+  sudo make install
+構築して実行
+1) ビルド
+    mkdir -p ~/ws_fastlio_lc/src
+    cd ~/ws_fastlio_lc/src
+    git clone https://github.com/gisbi-kim/FAST_LIO_SLAM.git
+    git clone https://github.com/Livox-SDK/livox_ros_driver
+    cd ..
+    catkin_make
+2) パラメータの設定
+リポジトリをダウンロードした後、workspace/src/FAST_LIO_LC/FAST_LIO/config/ouster64_mulran.yamlbag ファイル内の LIDAR トピック名を使用して、構成ファイル ( ) のトピックとセンサーの設定を変更します。</p>
+<p>imu-lidar との互換性を確保するには、キャリブレーションの外部行列を変更する必要があります。
+外部行列</p>
+<p>自動保存を有効にするには、起動ファイル ( ) からpcd_save_enable保存する必要があります。1workspace/src/FAST_LIO_LC/FAST_LIO/launch/mapping_ouster64_mulran.launch
+3) 走る
+オースターOS1-64用</p>
+<h1 id="open-new-terminal-run-fast-lio">open new terminal: run FAST-LIO<a class="headerlink" href="#open-new-terminal-run-fast-lio" title="Permanent link">#</a></h1>
+<p>roslaunch fast_lio mapping_ouster64.launch</p>
+<h1 id="open-the-other-terminal-tab-run-sc-pgo">open the other terminal tab: run SC-PGO<a class="headerlink" href="#open-the-other-terminal-tab-run-sc-pgo" title="Permanent link">#</a></h1>
+<p>roslaunch aloam_velodyne fastlio_ouster64.launch</p>
+<h1 id="play-bag-file-in-the-other-terminal">play bag file in the other terminal<a class="headerlink" href="#play-bag-file-in-the-other-terminal" title="Permanent link">#</a></h1>
+<p>rosbag play RECORDED_BAG.bag --clock
+打ち上げ</p>
+<p>結果の例
+例_結果1</p>
+<p>例_結果2</p>
+<p>その他の例
+例_結果</p>
+<p>データセットの例
+サンプル データセットの元のリポジトリ リンクを確認してください。</p>
+<p>接触
+管理者: 王燕良 ( wyl410922@qq.com)
+謝辞
+FAST_LIO の作者に感謝します。</p>
+<h1 id="fast_lio_lc">FAST_LIO_LC<a class="headerlink" href="#fast_lio_lc" title="Permanent link">#</a></h1>
 <h2 id="what-is-fast_lio_lc">What is FAST_LIO_LC?<a class="headerlink" href="#what-is-fast_lio_lc" title="Permanent link">#</a></h2>
 <ul>
 <li>A computationally efficient and robust LiDAR-inertial odometry package with loop closure module and graph optimization.</li>
