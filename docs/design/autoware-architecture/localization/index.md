@@ -1,493 +1,293 @@
-ローカリゼーションコンポーネントの設計ドキュメント
+## 概要
 
-抽象的な
-1. 要件
-位置特定の目的は、車両の姿勢、速度、加速度を推定することです。
+## 1. 要件
+
+位置推定の目的は、車両の姿勢、速度、加速度を推定することです。
 
 目標:
 
-車両の姿勢、速度、加速度を可能な限り長く推定できるシステムを提案します。
-推定の安定性を診断し、推定結果が信頼できない場合にはエラー監視システムに警告メッセージを送信できるシステムを提案します。
-さまざまなセンサー構成と連携できる車両位置特定機能を設計します。
-目標以外:
+- 車両の姿勢、速度、加速度を可能な限り長く推定できるシステムを提案します。
+- 推定の安定性を診断し、推定結果が信頼できない場合にはエラー監視システムに警告メッセージを送信できるシステムを提案します。
+- さまざまなセンサー構成と連携できる車両位置推定機能を設計します。
 
-この設計文書は、次のようなローカリゼーション システムを開発することを目的としたものではありません。
-あらゆる環境において確実である
-事前に定義された ODD (運用設計ドメイン) の外側で機能する
-自動運転に必要な性能より優れている
-2. センサー構成例
-このセクションでは、センサー構成の例とその予想されるパフォーマンスを示します。各センサーには独自の長所と短所がありますが、複数のセンサーを融合することで全体的なパフォーマンスを向上させることができます。
+目標ではない:
 
-3D-LiDAR + 点群マップ
-予想される状況
-車両が都市部などの構造物が多い環境に設置されている
-システムが不安定になる可能性がある状況
-車両が田園風景、高速道路、トンネルなどの構造物のない環境に置かれている
-マップ作成時と比べて、積雪や建物の建設・破壊などの環境変化が発生しています。
-周囲のオブジェクトが遮られる
-車の周囲が、ガラス窓、反射、吸収（暗い物体）など、LiDAR で検出できない物体に囲まれている
-環境には、車の LiDAR センサーと同じ周波数のレーザー ビームが含まれています。
-機能性
-このシステムは、点群マップ上の車両の位置を最大 10 cm の誤差で推定できます。
-システムは夜間でも動作可能です。
-3D-LiDAR またはカメラ + ベクトルマップ
-予想される状況
-高速道路や一般道路など、白線がはっきりしていて曲率が緩やかな道路。
-システムが不安定になる可能性がある状況
-白い線が擦れたり、雨や雪で隠れたりする
-交差点などの急な曲率
-雨や塗装による路面の反射変化が大きい
-機能
-横方向の車両位置を修正します。
-経度方向に沿った姿勢補正は不正確になる可能性がありますが、GNSS と融合することで解決できます。
-GNSS
-予想される状況
-車両は、田園風景など、周囲に物がほとんど、またはまったくないオープンな環境に配置されます。
-システムが不安定になる可能性がある状況
-GNSS 信号は、トンネルや建物などの周囲の物体によってブロックされます。
-機能性
-このシステムは、世界座標における車両の位置を最大 10 メートルの誤差以内で推定できます。
-RKT-GNSS (リアルタイム運動学全地球航法衛星システム) を取り付けると、精度は最大 10cm まで向上します。
-この構成のシステムは、環境マップ (点群マップとベクトル マップ タイプの両方) なしで動作できます。
-カメラ（ビジュアルオドメトリ、ビジュアルSLAM）
-予想される状況
-車両は市街地などの視覚的特徴が豊かな環境に設置されます。
-システムが不安定になる可能性がある状況
-車両はテクスチャのない環境に置かれます。
-車両は他の物体に囲まれています。
-カメラは、太陽光、他の車両のヘッドライト、またはトンネルの出口に近づいたときなどに生じる重大な照明の変化を観察します。
-車両は暗い環境に置かれます。
-機能性
-このシステムは、視覚的特徴を追跡することでオドメトリを推定できます。
-車輪速センサー
-予想される状況
-車両は平坦で滑らかな道路を走行しています。
-システムが不安定になる可能性がある状況
-車両が滑りやすい路面やでこぼこした路面を走行しているため、車輪速度が不正確に測定される可能性があります。
-機能性
-車速を取得し、走行距離を推定することができます。
-IMU
-想定される環境
-平らで滑らかな道路
-システムが不安定になる可能性がある状況
-IMU には周囲の温度に依存するバイアス1があり、不正確なセンサー観測やオドメトリ ドリフトを引き起こす可能性があります。
-機能性
-このシステムは加速度と角速度を観測できます。
-これらの観測を統合することで、システムは局所的な姿勢変化を推定し、推測航法を実現できます。
-地磁気センサー
-予想される状況
-車両が磁気ノイズの少ない環境に置かれている
-システムが不安定になる可能性がある状況
-車両が、電磁波を発生する鉄筋やその他の材料を使用した建物や構造物など、磁気ノイズの高い環境に置かれている。
-機能性
-このシステムは、世界座標系で車両の方向を推定できます。
-磁気マーカー
-予想される状況
-自動車は磁気マーカーが設置された環境に置かれます。
-システムが不安定になる状況
-マーカーは維持されません。
-機能性
-磁気マーカを検出することで、世界座標上での車両位置を取得できます。
-道路が雪で覆われている場合でもシステムは機能します。
-3. 要件
-さまざまなモジュールを実装することで、さまざまなセンサー構成とアルゴリズムを使用できます。
-位置特定システムは、あいまいな初期位置から姿勢推定を開始できます。
-このシステムは、信頼性の高い初期位置推定を生成できます。
-システムは、初期位置推定の状態 (初期化されていない、初期化可能、または初期化不可能) を管理し、エラー モニターに報告できます。
-4. アーキテクチャ
-抽象的な
-「必須」と「推奨」の 2 つのアーキテクチャが定義されています。ただし、「必須」アーキテクチャには、さまざまなローカリゼーション アルゴリズムを受け入れるために必要な入力と出力のみが含まれています。各モジュールの再利用性を向上させるために、必要なコンポーネントは、より詳細な説明とともに「推奨」アーキテクチャのセクションで定義されています。
+- この設計文書は以下のような位置推定システムを開発することを目的としたものではありません。
+  - あらゆる環境において確実である
+  - 事前に定義されたODD(運用設計領域)の外側で機能する
+  - 自動運転に必要な性能より優れている
 
-必要なアーキテクチャ
-必要なアーキテクチャ
+## 2. センサー構成例
 
-入力
-センサーメッセージ
-例: LiDAR、カメラ、GNSS、IMU、CAN バスなど。
-再利用可能にするために、データ型は ROS プリミティブである必要があります
-地図データ
-例: 点群マップ、lanlet2 マップ、フィーチャ マップなど。
-マップ形式はユースケースとセンサー構成に基づいて選択する必要があります
-一部の特定のケース (GNSS のみの位置特定など) では地図データが必要ないことに注意してください。
-tf、static_tf
-マップフレーム
-ベースリンクフレーム
-出力
-共分散スタンプ付きのポーズ
-マップ座標上の車両の姿勢、共分散、およびタイムスタンプ
-50Hz~ 周波数 (計画および制御コンポーネントの要件による)
-共分散スタンプ付きツイスト
-Base_link 座標の車両速度、共分散、およびタイムスタンプ
-50Hz～周波数
-共分散スタンプ付きのアクセル
-Base_link 座標の加速度、共分散、およびタイムスタンプ
-50Hz～周波数
-診断
-ローカリゼーション モジュールが適切に動作しているかどうかを示す診断情報
-TF
-Base_link へのマップの tf
-推奨されるアーキテクチャ
-推奨アーキテクチャ
+このセクションではセンサー構成の例とその予想されるパフォーマンスを示します。
+各センサーには独自の長所と短所がありますが、複数のセンサーを融合することで全体的なパフォーマンスを向上させることができます。
 
-姿勢推定器
-外部センサーの観測値と地図を照合することで、地図座標上の車両の姿勢を推定します
-取得したポーズとその共分散を提供します。PoseTwistFusionFilter
-ツイスト-アクセル推定器
-車両速度、角速度、加速度、角加速度、およびそれらの共分散を生成します。
-ツイストとアクセラレーションの両方に対して 1 つのモジュールを作成することも、2 つの別個のモジュールを作成することも可能です。アーキテクチャの選択は開発者次第です。
-ねじれ推定器は、内部センサーの観察から速度と角速度を生成します。
-加速度推定器は、内部センサーの観測値から加速度と角加速度を生成します。
-キネマティクス フュージョン フィルター
-2 種類の情報を融合して計算された、最も可能性の高い姿勢、速度、加速度、およびそれらの共分散を生成します。
-姿勢推定器から取得された姿勢。
-ツイスト加速推定器から得られる速度と加速度
-姿勢推定結果に従ってbase_linkへのマップのtfを生成します
-ローカリゼーション診断
-複数の位置推定モジュールから取得した情報を融合することにより、姿勢推定の安定性と信頼性を監視および保証します
-エラーステータスをエラーモニターに報告します
-TFツリー
-TFツリー
+### 3D-LiDAR + 点群地図
 
-フレーム	意味
-地球	ECEF（地球中心固定）
-地図	地図座標の原点（例：MGRS原点）
-ビューア	rviz のユーザー定義フレーム
-ベースリンク	自車両の基準姿勢（後軸中心の地面への投影）
-センサー	各センサーの基準姿勢
-開発者は、上記の tf 構造が維持されている限り、オプションで odom やbase_footprint などの他のフレームを追加できます。
+#### 想定される状況
 
-ローカリゼーションモジュールの理想的な機能
-位置特定モジュールは、制御、計画、知覚のために姿勢、速度、加速度を提供する必要があります。
-レイテンシーとスタガーは、推定値を ODD (運用設計ドメイン) 内の制御に使用できるように、十分に小さいか調整できる必要があります。
-位置特定モジュールは、固定座標フレーム上にポーズを生成する必要があります。
-センサーは簡単に交換できるように、互いに独立している必要があります。
-位置特定モジュールは、自律走行車が自己完結型機能または地図情報で動作できるかどうかを示すステータスを提供する必要があります。
-ツールまたはマニュアルには、ローカリゼーション モジュールの適切なパラメータを設定する方法が記載されている必要があります。
-さまざまなフレームまたはポーズの座標とセンサーのタイムスタンプを調整するには、有効なキャリブレーション パラメーターを指定する必要があります。
-KPI
-安全な操作のために十分な姿勢推定パフォーマンスを維持するには、次の指標が考慮されます。
+- 車両が都市部などの構造物が多い環境に設置されている
 
-安全性
-姿勢推定が必要な精度を満たした ODD 内での移動距離を、ODD 内で移動した全体の距離で割った値 (パーセンテージ)。
-位置特定モジュールが ODD 内の姿勢を推定できない状況の異常検出率
-車両が ODD の外側に出たときの検出精度 (パーセンテージ)。
-計算負荷
-レイテンシ
-5. インターフェースとデータ構造
-6. 懸念事項、仮定、制限事項
-センサーと入力の前提条件
-センサーの前提条件
-入力データに異常はありません。
-IMUなどの内部センサー観測により適切な周波数を継続的に維持します。
-入力データには正確なタイムスタンプが付いています。
-タイムスタンプが正確でない場合、推定されたポーズが不正確になったり、不安定になる可能性があります。
-センサーは正確な位置に正しく取り付けられており、TF からアクセスできます。
-センサーの位置が不正確な場合、推定結果が正しくなかったり、不安定になる可能性があります。
-センサーの位置を適切に取得するには、センサー キャリブレーション フレームワークが必要です。
-マップの前提条件
-地図内には十分な情報が含まれています。
-マップ内の情報が不十分な場合、姿勢推定が不安定になる可能性があります。
-マップに姿勢推定に十分な情報があるかどうかを確認するには、テスト フレームワークが必要です。
-マップは実際の環境と大きく変わりません。
-実際の環境にマップとは異なるオブジェクトがある場合、姿勢推定が不安定になる可能性があります。
-地図は、新しいオブジェクトや季節の変化に応じて更新する必要があります。
-マップは均一の座標に揃える必要があります。そうでない場合は、調整フレームワークが導入されている必要があります。
-異なる座標系を持つ複数のマップが使用される場合、それらの間の位置ずれが位置特定のパフォーマンスに影響を与える可能性があります。
-計算リソース
-精度と計算速度を維持するには、十分な計算リソースを提供する必要があります。
-脚注
-バイアスの詳細については、VectorNav IMU 仕様ページを参照してください。↩
-LOCALIZATION COMPONENT DESIGN DOC
+#### システムが不安定になる可能性がある状況
 
-## Abstract
+- 車両が田園風景、高速道路、トンネルなどの構造物のない環境に置かれている
+- マップ作成時から積雪や建物の建設・破壊などの環境変化が発生している
+- 周囲のオブジェクトが遮られる
+- 車の周囲が、ガラス窓、反射、吸収（暗い物体）などLiDARで検出できない物体に囲まれている
+- 環境には車のLiDARセンサーと同じ周波数のレーザービームが含まれている
 
-## 1. Requirements
+#### 機能性
 
-Localization aims to estimate vehicle pose, velocity, and acceleration.
+- このシステムは、点群マップ上の車両の位置を最大10cmの誤差で推定できます。
+- システムは夜間でも動作可能です。
 
-Goals:
+### 3D-LiDARまたはカメラ + ベクトルマップ
 
-- Propose a system that can estimate vehicle pose, velocity, and acceleration for as long as possible.
-- Propose a system that can diagnose the stability of estimation and send a warning message to the error-monitoring system if the estimation result is unreliable.
-- Design a vehicle localization function that can work with various sensor configurations.
+#### 想定される状況
 
-Non-goals:
+- 高速道路や一般道路など、白線がはっきりしていて曲率が緩やかな道路。
 
-- This design document does not aim to develop a localization system that
-  - is infallible in all environments
-  - works outside of the pre-defined ODD (Operational Design Domain)
-  - has better performance than is required for autonomous driving
+#### システムが不安定になる可能性がある状況
 
-## 2. Sensor Configuration Examples
+- 白い線が擦れたり、雨や雪で隠れたりする
+- 交差点などの急な曲率
+- 雨や塗装による路面の反射変化が大きい
 
-This section shows example sensor configurations and their expected performances.
-Each sensor has its own advantages and disadvantages, but overall performance can be improved by fusing multiple sensors.
+#### 機能性
 
-### 3D-LiDAR + PointCloud Map
-
-#### Expected situation
-
-- The vehicle is located in a structure-rich environment, such as an urban area
-
-#### Situations that can make the system unstable
-
-- The vehicle is placed in a structure-less environment, such as a rural landscape, highway, or tunnel
-- Environmental changes have occurred since the map was created, such as snow cover or the construction/destruction of buildings.
-- Surrounding objects are occluded
-- The car is surrounded by objects undetectable by LiDAR, e.g., glass windows, reflections, or absorption (dark objects)
-- The environment contains laser beams at the same frequency as the car's LiDAR sensor(s)
-
-#### Functionality
-
-- The system can estimate the vehicle location on the point cloud map with the error of ~10cm.
-- The system is operable at night.
-
-### 3D-LiDAR or Camera + Vector Map
-
-#### Expected situation
-
-- Road with clear white lines and loose curvatures, such as a highway or an ordinary local road.
-
-#### Situations that can make the system unstable
-
-- White lines are scratchy or covered by rain or snow
-- Tight curvature such as intersections
-- Large reflection change of the road surface caused by rain or paint
-
-#### Functionalities
-
-- Correct vehicle positions along the lateral direction.
-- Pose correction along the longitudinal can be inaccurate, but can be resolved by fusing with GNSS.
+- 横方向の車両位置を修正します。
+- 縦方向に沿った姿勢補正は不正確になる可能性がありますがGNSSと融合することで解決できます。
 
 ### GNSS
 
-#### Expected situation
+#### 想定される状況
 
-- The vehicle is placed in an open environment with few to no surrounding objects, such as a rural landscape.
+- 車両は田園風景など周囲に物がほとんど、またはまったくないひらけた環境に配置されます。
 
-#### Situation that can make the system unstable
+#### システムが不安定になる可能性がある状況
 
-- GNSS signals are blocked by surrounding objects, e.g., tunnels or buildings.
+- GNSS信号はトンネルや建物などの周囲の物体によってブロックされます。
 
-#### Functionality
+#### 機能性
 
-- The system can estimate vehicle position in the world coordinate within an error of ~10m.
-- With a RKT-GNSS (Real Time Kinematic Global Navigation Satellite System) attached, the accuracy can be improved to ~10cm.
-- A system with this configuration can work without environment maps (both point cloud and vector map types).
+- このシステムは、世界座標における車両の位置を最大10メートルの誤差以内で推定できます。
+- RKT-GNSS(動的干渉測位汎地球測位航法衛星システム)を取り付けると精度は最大10cmまで向上します。
+- この構成のシステムは環境マップ(点群地図とベクターマップタイプの両方)なしで動作できます。
 
-### Camera (Visual Odometry, Visual SLAM)
+### カメラ（ビジュアルオドメトリ、ビジュアルSLAM）
 
-#### Expected situation
+#### 想定される状況
 
-- The vehicle is placed in an environment with rich visual features, such as an urban area.
+- 車両は市街地などの視覚的特徴が豊かな環境に設置されます。
 
-#### Situations that can make the system unstable
+#### システムが不安定になる可能性がある状況
 
-- The vehicle is placed in a texture-less environment.
-- The vehicle is surrounded by other objects.
-- The camera observes significant illumination changes, such as those caused by sunshine, headlights from other vehicles or when approaching the exit of a tunnel.
-- The vehicle is placed in a dark environment.
+- 車両はテクスチャのない環境に置かれます。
+- 車両は他の物体に囲まれています。
+- カメラは、太陽光、他の車両のヘッドライト、またはトンネルの出口に近づいたときなどに生じる重大な照明の変化を観察します。
+- 車両は暗い環境に置かれます。
 
-#### Functionality
+#### 機能性
 
-- The system can estimate odometry by tracking visual features.
+- このシステムは、視覚的特徴を追跡することでオドメトリを推定できます。
 
-### Wheel speed sensor
+### 車輪速センサー
 
-#### Expected situation
+#### 想定される状況
 
-- The vehicle is running on a flat and smooth road.
+- 車両は平坦で滑らかな道路を走行しています。
 
-#### Situations that can make the system unstable
+#### システムが不安定になる可能性がある状況
 
-- The vehicle is running on a slippery or bumpy road, which can cause incorrect observations of wheel speed.
+- 車両が滑りやすい路面やでこぼこした路面を走行しているときは、車輪速度が不正確に測定される可能性があります。
 
-#### Functionality
+#### 機能性
 
-- The system can acquire the vehicle velocity and estimate distance traveled.
+- 車速を取得し、走行距離を推定することができます。
 
 ### IMU
 
-#### Expected environments
+#### 想定される状況
 
-- Flat, smooth roads
+- 平らで滑らかな道路
 
-#### Situations that can make the system unstable
+#### システムが不安定になる可能性がある状況
 
-- IMUs have a bias[^1] that is dependent on the surrounding temperature, and can cause incorrect sensor observation or odometry drift.
+- IMUには周囲の温度に依存するバイアス[^1]があり、不正確なセンサー観測やオドメトリ ドリフトを引き起こす可能性があります。
 
-[^1]: For more details about bias, refer to the [VectorNav IMU specifications page](https://www.vectornav.com/resources/inertial-navigation-primer/specifications--and--error-budgets/specs-imuspecs).
+[^1]: バイアスの詳細については[VectorNav IMU specifications page](https://www.vectornav.com/resources/inertial-navigation-primer/specifications--and--error-budgets/specs-imuspecs)を参照してください。
 
-#### Functionality
+#### 機能性
 
-- The system can observe acceleration and angular velocity.
-- By integrating these observations, the system can estimate the local pose change and realize dead-reckoning
+- このシステムは加速度と角速度を観測できます。
+- これらの観測を統合することで、システムは局所的な姿勢変化を推定し、推測航法を実現できます。
 
-### Geomagnetic sensor
+### 地磁気センサー
 
-#### Expected situation
+#### 想定される状況
 
-- The vehicle is placed in an environment with low magnetic noise
+- 車両が磁気ノイズの少ない環境に置かれている
 
-#### Situations that can make the system unstable
+#### システムが不安定になる可能性がある状況
 
-- The vehicle is placed in an environment with high magnetic noise, such as one containing buildings or structures with reinforced steel or other materials that generate electromagnetic waves.
+- 車両が、電磁波を発生する鉄筋やその他の材料を使用した建物や構造物など、磁気ノイズの高い環境に置かれている。
 
-#### Functionality
+#### 機能性
 
-- The system can estimate the vehicle's direction in the world coordinate system.
+- このシステムは、世界座標系で車両の方向を推定できます。
 
-### Magnetic markers
+### 磁気マーカー
 
-#### Expected situation
+#### 想定される状況
 
-- The car is placed in an environment with magnetic markers installed.
+- 自動車は磁気マーカーが設置された環境に置かれます。
 
-#### Situations where the system becomes unstable
+#### システムが不安定になる可能性がある状況
 
-- The markers are not maintained.
+- マーカーは保守点検されません。
 
-#### Functionality
+#### 機能性
 
-- Vehicle location can be obtained on the world coordinate by detecting the magnetic markers.
-- The system can work even if the road is covered with snow.
+- 磁気マーカを検出することで、世界座標上での車両位置を取得できます。
+- 道路が雪で覆われている場合でもシステムは機能します。
 
-## 3. Requirements
+## 3. 要件
 
-- By implementing different modules, various sensor configurations and algorithms can be used.
-- The localization system can start pose estimation from an ambiguous initial location.
-- The system can produce a reliable initial location estimation.
-- The system can manage the state of the initial location estimation (uninitialized, initializable, or non-initializable) and can report to the error monitor.
+推奨アーキテクチャ
+- さまざまなモジュールを実装することで、さまざまなセンサー構成とアルゴリズムを使用できます。
+- 位置特定システムは、あいまいな初期位置から姿勢推定を開始できます。
+- このシステムは、信頼性の高い初期位置推定を生成できます。
+- システムは、初期位置推定の状態(初期化されていない、初期化可能、または初期化不可能)を管理し、エラーモニターに報告できます。
 
-## 4. Architecture
+## 4. アーキテクチャ
 
-### Abstract
+### 概要
 
-Two architectures are defined, "Required" and "Recommended". However, the "Required" architecture only contains the inputs and outputs necessary to accept various localization algorithms. To improve the reusability of each module, the required components are defined in the "Recommended" architecture section along with a more detailed explanation.
+"Required"と"Recommended"の2つのアーキテクチャが定義されています。ただし"Required"アーキテクチャには、さまざまな位置推定アルゴリズムを受け入れるために必要な入力と出力のみが含まれています。各モジュールの再利用性を向上させるために、必要なコンポーネントは、より詳細な説明とともに"Recommended"アーキテクチャのセクションで定義されています。
 
-### Required Architecture
+### 必須アーキテクチャ
 
 ![required-architecture](../image/localization/required-architecture.png)
 
-#### Input
+#### 入力
 
-- Sensor message
-  - e.g., LiDAR, camera, GNSS, IMU, CAN Bus, etc.
-  - Data types should be ROS primitives for reusability
-- Map data
-  - e.g., point cloud map, lanelet2 map, feature map, etc.
-  - The map format should be chosen based on use case and sensor configuration
-  - Note that map data is not required for some specific cases (e.g., GNSS-only localization)
+- センサーメッセージ
+  - 例えばLiDAR、カメラ、GNSS、IMU、CANバスなど。
+  - 再利用可能にするために、データ型はROSでプリミティブなものである必要があります
+- 地図データ
+  - 例えば点群マップ、lanlet2マップ、特徴量マップなど。
+  - マップ形式はユースケースとセンサー構成に基づいて選択する必要があります。
+  - 一部の特定のケース(GNSSのみの位置特定など)では地図データが必要ないことに注意してください。
 - tf, static_tf
-  - map frame
-  - base_link frame
+  - mapフレーム
+  - base_linkフレーム
 
-#### Output
+#### 出力
 
-- Pose with covariance stamped
-  - Vehicle pose, covariance, and timestamp on the map coordinate
-  - 50Hz~ frequency (depending on the requirements of the Planning and Control components)
-- Twist with covariance stamped
-  - Vehicle velocity, covariance, and timestamp on the base_link coordinate
-  - 50Hz~ frequency
-- Accel with covariance stamped
-  - Acceleration, covariance, and timestamp on the base_link coordinate
-  - 50Hz~ frequency
-- Diagnostics
-  - Diagnostics information that indicates if the localization module works properly
+- スタンプ付き姿勢と共分散
+  - マップ座標上の車両の姿勢、共分散、およびタイムスタンプ
+  - 50Hz以上の周波数(計画および制御コンポーネントの要件による)
+- スタンプ付きツイストと共分散
+  - base_link座標系における車両速度、共分散、およびタイムスタンプ
+  - 50Hz以上の周波数
+- スタンプ付き加速度と共分散
+  - base_link座標系における加速度、共分散、およびタイムスタンプ
+  - 50Hz以上の周波数
+- 診断
+  - 位置推定モジュールが適切に動作しているかどうかを示す診断情報
 - tf
-  - tf of map to base_link
+  - mapからbase_linkへのtf
 
-### Recommended Architecture
+### 推奨アーキテクチャ
 
 ![recommended-architecture](../image/localization/recommended-architecture.png)
 
-#### Pose Estimator
+#### 姿勢推定器
 
-- Estimates the vehicle pose on the map coordinate by matching external sensor observation to the map
-- Provides the obtained pose and its covariance to `PoseTwistFusionFilter`
+- 外部センサーの観測値と地図を照合することで、地図座標上の車両の姿勢を推定します
+- `PoseTwistFusionFilter`に取得したポーズとその共分散を提供します。
 
-#### Twist-Accel Estimator
+#### ツイスト-加速度推定器
 
-- Produces the vehicle velocity, angular velocity, acceleration, angular acceleration, and their covariances
-  - It is possible to create a single module for both twist and acceleration or to create two separate modules - the choice of architecture is up to the developer
-- The twist estimator produces velocity and angular velocity from internal sensor observation
-- The accel estimator produces acceleration and angular acceleration from internal sensor observations
+- 車両速度、角速度、加速度、角加速度、およびそれらの共分散を生成します。
+  - ツイストとアクセラレーションの両方に対して1つのモジュールを作成することも、2つの別個のモジュールを作成することも可能です。アーキテクチャの選択は開発者次第です。
+- ツイスト推定器は、内部センサーの観察から速度と角速度を生成します。
+- 加速度推定器は、内部センサーの観測値から加速度と角加速度を生成します。
 
-#### Kinematics Fusion Filter
+#### キネマティクスフュージョンフィルター
 
-- Produces the likeliest pose, velocity, acceleration, and their covariances, computed by fusing two kinds of information:
-  - The pose obtained from the pose estimator.
-  - The velocity and acceleration obtained from the twist-accel estimator
-- Produces tf of map to base_link according to the pose estimation result
+- 2種類の情報を融合して計算された、最も可能性の高い姿勢、速度、加速度、およびそれらの共分散を生成します:
+  - 姿勢推定器から取得された姿勢
+  - ツイスト加速推定器から得られる速度と加速度
+- 姿勢推定結果に従ってbase_linkへのマップのtfを生成します
 
-#### Localization Diagnostics
+#### 位置推定診断
 
-- Monitors and guarantees the stability and reliability of pose estimation by fusing information obtained from multiple localization modules
-- Reports error status to the error monitor
+- 複数の位置推定モジュールから取得した情報を融合することにより、姿勢推定の安定性と信頼性を監視および保証します
+- エラーステータスをエラーモニターに報告します
 
-#### TF tree
+#### TFツリー
 
-![tf-tree](../image/localization/tf-tree.png)
+![tfツリー](../image/localization/tf-tree.png)
 
-|   frame   | meaning                                                                                        |
+|   フレーム   | 意味                                                                                        |
 | :-------: | :--------------------------------------------------------------------------------------------- |
-|   earth   | ECEF (Earth Centered Earth Fixed）                                                             |
-|    map    | Origin of the map coordinate (ex. MGRS origin)                                                 |
-|  viewer   | User-defined frame for rviz                                                                    |
-| base_link | Reference pose of the ego-vehicle (projection of the rear-axle center onto the ground surface) |
-|  sensor   | Reference pose of each sensor                                                                  |
+|   earth   | ECEF（地球中心固定）                                                             |
+|    map    | 地図座標の原点（例：MGRS原点）                                                 |
+|  viewer   | rvizのユーザー定義フレーム                                                                    |
+| base_link | 自車両の基準姿勢（後軸中心の地面への投影） |
+|  sensor   | 各センサーの基準姿勢                                                                  |
 
-Developers can optionally add other frames such as odom or base_footprint as long as the tf structure above is maintained.
+開発者は上記のtf構造が維持されている限り、オプションでodomやbase_footprintなどの他のフレームを追加できます。
 
-### The localization module's ideal functionality
+### 位置推定モジュールの理想的な機能
 
-- The localization module should provide pose, velocity, and acceleration for control, planning, and perception.
-- Latency and stagger should be sufficiently small or adjustable such that the estimated values can be used for control within the ODD (Operational Design Domain).
-- The localization module should produce the pose on a fixed coordinate frame.
-- Sensors should be independent of each other so that they can be easily replaced.
-- The localization module should provide a status indicating whether or not the autonomous vehicle can operate with the self-contained function or map information.
-- Tools or manuals should describe how to set proper parameters for the localization module
-- Valid calibration parameters should be provided to align different frame or pose coordinates and sensor timestamps.
+- 位置推定モジュールは、制御、計画、知覚のために姿勢、速度、加速度を提供する必要があります。
+- 遅延時間とばらつきは、推定値をODD(運用設計領域) 内の制御に使用できるように、十分に小さいか調整できる必要があります。
+- 位置推定モジュールは、固定座標フレーム上にポーズを生成する必要があります。
+- センサーは簡単に交換できるように互いに独立している必要があります。
+- 位置推定モジュールは、自律走行車が自己完結型機能または地図情報で動作できるかどうかを示すステータスを提供する必要があります。
+- ツールまたはマニュアルには、位置推定モジュールの適切なパラメータを設定する方法が記載されている必要があります。
+- さまざまなフレームまたはポーズの座標とセンサーのタイムスタンプを調整するには、有効なキャリブレーションパラメーターを指定する必要があります。
 
 ### KPI
 
-To maintain sufficient pose estimation performance for safe operation, the following metrics are considered:
+安全な操作のために十分な姿勢推定パフォーマンスを維持するには、以下の指標が考慮されます:
 
-- Safety
-  - The distance traveled within the ODD where pose estimation met the required accuracy, divided by the overall distance traveled within the ODD, as a percentage.
-  - The anomaly detection rate for situations where the localization module cannot estimate pose within the ODD
-  - The accuracy of detecting when the vehicle goes outside of the ODD, as a percentage.
-- Computational load
-- Latency
+- 安全性
+  - 姿勢推定が必要な精度を満たしたODD内での移動距離を、ODD内で移動した全体の距離で割った値(パーセンテージ)。
+  - 位置特定モジュールがODD内の姿勢を推定できない状況の異常検出率
+  - 車両がODDの外側に出たときの検出精度(パーセンテージ)。
+- 計算負荷
+- 遅延時間
 
-## 5. Interface and Data Structure
+## 5. インターフェースとデータ構造
 
-## 6. Concerns, Assumptions, and Limitations
+## 6. 懸念事項、仮定、制限事項
 
-### Prerequisites of sensors and inputs
+### センサーと入力の前提条件
 
-#### Sensor prerequisites
+#### センサーの前提条件
 
-- Input data is not defective.
-  - Internal sensor observation such as IMU continuously keeps the proper frequency.
-- Input data has correct and exact time stamps.
-  - Estimated poses can be inaccurate or unstable if the timestamps are not exact.
-- Sensors are correctly mounted with exact positioning and accessible from TF.
-  - If the sensor positions are inaccurate, estimation results may be incorrect or unstable.
-  - A sensor calibration framework is required to properly obtain the sensor positions.
+- 入力データに異常はありません。
+  - IMUなどの内部センサー観測により適切な周波数を継続的に維持します。
+- 入力データには正確なタイムスタンプが付いています。
+  - タイムスタンプが正確でない場合、推定されたポーズが不正確になったり、不安定になる可能性があります。
+- センサーは正確な位置に正しく取り付けられており、TFからアクセスできます。
+  - センサーの位置が不正確な場合、推定結果が正しくなかったり、不安定になる可能性があります。
+  - センサーの位置を適切に取得するには、センサーキャリブレーションフレームワークが必要です。
 
-#### Map prerequisites
+#### 地図の前提条件
 
-- Sufficient information is contained within the map.
-  - Pose estimation might be unstable if there is insufficient information in the map.
-  - A testing framework is necessary to check if the map has adequate information for pose estimation.
-- Map does not differ greatly from the actual environment.
-  - Pose estimation might be unstable if the actual environment has different objects from the map.
-  - Maps need updates according to new objects and seasonal changes.
-- Maps must be aligned to a uniform coordinate, or an alignment framework is in place.
-  - If multiple maps with different coordinate systems are used, the misalignment between them can affect the localization performance.
+- 地図内に十分な情報が含まれています。
+  - マップ内の情報が不十分な場合、姿勢推定が不安定になる可能性があります。
+  - マップに姿勢推定に適切な情報が含まれているかどうかを確認するには、テストフレームワークが必要です。
+- マップは実際の環境と大きく変わりません。
+  - 実際の環境にマップと異なるオブジェクトがある場合、姿勢推定が不安定になる可能性があります。
+  - 新しいオブジェクトや季節の変化に応じてマップを更新する必要があります。
+- マップは均一の座標に合わせて配置する必要があります。そうでない場合は、配置フレームワークが設置されている必要があります。
+  - 異なる座標系を持つ複数のマップが使用される場合、それらの間の位置ずれが位置推定のパフォーマンスに影響を与える可能性があります。
 
-#### Computational resources
+#### 計算資源
 
-- Sufficient computational resources should be provided to maintain accuracy and computation speed.
+- 精度と計算速度を維持するには、十分な計算資源が提供される必要があります。
