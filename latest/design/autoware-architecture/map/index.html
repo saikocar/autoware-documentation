@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>地図コンポーネントの設計 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#map-component-design" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              地図コンポーネントの設計
             
           </span>
         </div>
@@ -6561,44 +6561,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-overview" class="md-nav__link">
-    1. Overview
+  <a href="#1" class="md-nav__link">
+    1. 概要
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-requirements" class="md-nav__link">
-    2. Requirements
+  <a href="#2" class="md-nav__link">
+    2. 要件
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-architecture" class="md-nav__link">
-    3. Architecture
+  <a href="#3" class="md-nav__link">
+    3. アーキテクチャ
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-component-interface" class="md-nav__link">
-    4. Component interface
+  <a href="#4" class="md-nav__link">
+    4. コンポーネントインターフェース
   </a>
   
-    <nav class="md-nav" aria-label="4. Component interface">
+    <nav class="md-nav" aria-label="4. コンポーネントインターフェース">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#input-to-the-map-component" class="md-nav__link">
-    Input to the map component
+  <a href="#_2" class="md-nav__link">
+    地図コンポーネントへの入力
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#output-from-the-map-component" class="md-nav__link">
-    Output from the map component
+  <a href="#_3" class="md-nav__link">
+    地図コンポーネントからの出力
   </a>
   
 </li>
@@ -6609,30 +6609,30 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-map-specification" class="md-nav__link">
-    5. Map Specification
+  <a href="#5" class="md-nav__link">
+    5. 地図仕様
   </a>
   
-    <nav class="md-nav" aria-label="5. Map Specification">
+    <nav class="md-nav" aria-label="5. 地図仕様">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#point-cloud-map" class="md-nav__link">
-    Point Cloud Map
+  <a href="#_4" class="md-nav__link">
+    点群地図
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#vector-map" class="md-nav__link">
-    Vector Map
+  <a href="#_5" class="md-nav__link">
+    ベクターマップ
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#projection-information" class="md-nav__link">
-    Projection Information
+  <a href="#_6" class="md-nav__link">
+    投影情報
   </a>
   
 </li>
@@ -6660,182 +6660,110 @@
   
 
 
-<div><p>地図コンポーネントの設計
-1。概要
-Autoware は、運転環境の高解像度の点群マップとベクトル マップを利用して、位置特定、ルート計画、信号機の検出、歩行者や他の車両の軌跡の予測などのさまざまなタスクを実行します。</p>
-<p>このドキュメントでは、Autoware の地図コンポーネントの設計について説明します。これには、要件、アーキテクチャ設計、機能、データ形式、地図情報を残りの自動運転スタックに配信するためのインターフェイスが含まれます。</p>
-<ol>
-<li>要件
-マップはスタックの残りの部分に 2 種類の情報を提供する必要があります。</li>
-</ol>
-<p>ベクトル地図としての道路に関する意味情報
-点群マップとしての環境に関する幾何学的情報 (オプション)
-ベクター マップには、道路網、車線の形状、信号機に関する高精度の情報が含まれています。ルート計画、信号機の検出、他の車両や歩行者の軌跡の予測に必要です。</p>
-<p>3D 点群マップは、主に LiDAR ベースの位置特定と Autoware の認識の一部に使用されます。車両の現在の位置と方向を決定するために、1 つ以上の LiDAR ユニットからキャプチャされたライブ スキャンが、事前に生成された 3D 点群マップと照合されます。したがって、良好なローカリゼーション結果を得るには、正確な点群マップが不可欠です。ただし、車両に十分な精度を備えた代替ローカリゼーション方法 (たとえば、カメラベースのローカリゼーションを使用する場合) がある場合は、Autoware を使用するために点群マップが必要ない場合があります。</p>
+<div><h1 id="_1">地図コンポーネントの設計<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="1">1. 概要<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
+<p>Autowareは、運転環境の高解像度の点群マップとベクターマップを利用して、位置推定、経路計画、信号機の検出、歩行者や他の車両の軌跡の予測などのさまざまなタスクを実行します。</p>
+<p>このドキュメントでは、Autowareの地図コンポーネントの設計について説明します。これには要件、アーキテクチャ設計、機能、データ形式、地図情報を残りの自動運転スタックに配信するためのインターフェイスが含まれます。</p>
+<h2 id="2">2. 要件<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
+<p>地図はスタックの残りの部分に 2種類の情報を提供する必要があります:</p>
+<ul>
+<li>ベクターマップとしての道路に関する意味情報</li>
+<li>点群マップとしての環境に関する幾何学的情報(オプション)</li>
+</ul>
+<p>ベクターマップには、道路網、車線の形状、信号機に関する高精度の情報が含まれています。ルート計画、信号機の検出、他の車両や歩行者の軌跡の予測に必要です。</p>
+<p>3D点群マップは、主にLiDARベースの位置特定とAutowareの認識の一部に使用されます。車両の現在の位置と方向を決定するために、1つ以上のLiDAR ユニットからキャプチャされたライブ スキャンが、事前に生成された 3D 点群マップと照合されます。したがって、良好なローカリゼーション結果を得るには、正確な点群マップが不可欠です。ただし、車両に十分な精度を備えた代替位置推定方法 (たとえば、カメラベースの位置推定を使用する場合) がある場合は、Autoware を使用するために点群マップが必要ない場合があります。</p>
 <p>上記の 2 種類のマップに加えて、Autoware ではマップの座標系を測地系で指定するための補足ファイルも必要です。</p>
-<ol>
-<li>アーキテクチャ
-この図は、Autoware の Map コンポーネントの高レベルのアーキテクチャを示しています。</li>
-</ol>
-<p>マップコンポーネントのアーキテクチャ{幅="800"}</p>
-<p>Map コンポーネントは次のサブコンポーネントで構成されます。</p>
+<h2 id="3">3. アーキテクチャ<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
 <p>点群マップの読み込み: 点群マップを読み込み、公開します。
 ベクター マップの読み込み: ベクター マップを読み込み、公開します。
-投影読み込み: ローカル座標 (x、y、z) と測地座標 (緯度、経度、高度) の間の変換のための投影情報を読み込み、公開します。
-4. コンポーネントインターフェース
-マップコンポーネントへの入力
-ファイルシステムから
-点群マップとそのメタデータ ファイル
-ベクトルマップ
-投影情報
-マップコンポーネントからの出力
-センシングへ
-投影情報: <abbr title="Global Navigation Satellite System">GNSS</abbr> データを測地座標系からローカル座標系に変換するために使用されます。
-ローカリゼーションへ
-点群マップ: LiDAR ベースの位置特定に使用されます。
-ベクトルマップ: 道路標示などに基づく位置特定方法に使用されます。
-知覚へ
-点群マップ: LiDAR と点群マップを比較することで障害物のセグメンテーションに使用されます。
-ベクトルマップ：車両軌道予測に使用
-企画へ
-ベクトル マップ: 行動計画に使用されます。
-API層へ
-投影情報: 位置特定結果をローカル座標系から測地座標系に変換するために使用されます。
-5. マップ仕様
-点群マップ
-点群マップは、次の要件を満たすファイルとして提供する必要があります。</p>
-<p>点群マップは、map_projection_loaderlananelet2 マップおよびローカル座標と測地座標の間で変換する他のパッケージとの一貫性を保つために、 で定義された同じ座標に投影する必要があります。詳細については、の Readmemap_projection_loaderを参照してください。
-<abbr title="Point Cloud Data">PCD</abbr> (点群データ) ファイル形式である必要がありますが、単一の <abbr title="Point Cloud Data">PCD</abbr> ファイルまたは複数の <abbr title="Point Cloud Data">PCD</abbr> ファイルに分割することができます。
-マップ内の各ポイントには、X、Y、Z 座標が含まれている必要があります。
-各ポイントの強度または RGB 値をオプションで含めることができます。
-車両の動作領域全体をカバーする必要があります。また、車両に取り付けられたセンサーの検出範囲に応じて、追加の緩衝ゾーンを含めることをお勧めします。
-信頼性の高い位置特定結果を得るには、解像度が少なくとも 0.2 m である必要があります。
-ローカル座標でもグローバル座標でも構いませんが、位置特定に <abbr title="Global Navigation Satellite System">GNSS</abbr> データを使用するにはグローバル座標 (地理参照) である必要があります。
-分割マップ形式の詳細については、Autoware Universeの Readmemap_loaderを参照してください。</p>
+投影読み込み: ローカル座標 (x、y、z) と測地座標 (緯度、経度、高度) の間の変換のための投影情報を読み込み、公開します。</p>
+<p>この図はAutowareの地図コンポーネントの高レベルのアーキテクチャを示しています。</p>
+<p><img alt="map component architecture" src="image/high-level-map-diagram.drawio.svg" width="800"></p>
+<p>Map コンポーネントは次のサブコンポーネントで構成されます:</p>
+<ul>
+<li><strong>Point Cloud Map Loading</strong>: 点群地図を読み込み、配信します。</li>
+<li><strong>Vector Map Loading</strong>: ベクターマップを読み込み、配信します。</li>
+<li><strong>Projection Loading</strong>: ローカル座標(x, y, z)と測地座標 (緯度、経度、高度) の間の変換のための投影情報を読み込み、配信します。</li>
+</ul>
+<h2 id="4">4. コンポーネントインターフェース<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
+<h3 id="_2">地図コンポーネントへの入力<a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>ファイルシステムから</strong><ul>
+<li>点群マップとそのメタデータファイル</li>
+<li>ベクターマップ</li>
+<li>投影情報</li>
+</ul>
+</li>
+</ul>
+<h3 id="_3">地図コンポーネントからの出力<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>計測へ</strong><ul>
+<li>投影情報: GNSSデータを測地座標系からローカル座標系に変換するために使用されます。</li>
+</ul>
+</li>
+<li><strong>位置推定へ</strong><ul>
+<li>点群地図: LiDARベースの位置推定に使用されます。</li>
+<li>ベクターマップ: 道路標示などに基づく位置特定方法に使用されます。</li>
+</ul>
+</li>
+<li><strong>知覚へ</strong><ul>
+<li>点群地図: LiDARと点群マップを比較することで障害物の検出に使用されます。</li>
+<li>ベクターマップ: 車両軌道予測に使用</li>
+</ul>
+</li>
+<li><strong>計画へ</strong><ul>
+<li>ベクターマップ: 行動計画に使用されます。</li>
+</ul>
+</li>
+<li><strong>APIレイヤーへ</strong><ul>
+<li>投影情報: 位置特定結果をローカル座標系から測地座標系に変換するために使用されます。</li>
+</ul>
+</li>
+</ul>
+<h2 id="5">5. 地図仕様<a class="headerlink" href="#5" title="Permanent link">#</a></h2>
+<h3 id="_4">点群地図<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<p>点群地図は、次の要件を満たすファイルとして提供する必要があります:</p>
+<ul>
+<li>点群マップは、lanelet2マップおよびローカル座標と測地座標の間で変換する他のパッケージとの一貫性を保つために、<code>map_projection_loader</code>で定義された同じ座標に投影する必要があります。詳細については<a href="https://github.com/autowarefoundation/autoware.universe/tree/main/map/map_projection_loader/README.md"><code>map_projection_loader</code>のreadme</a>を参照してください。</li>
+<li><a href="https://pointclouds.org/documentation/tutorials/pcd_file_format.html"><abbr title="Point Cloud Data">PCD</abbr> (点群データ)ファイル形式</a>ファイル形式である必要がありますが、単一のPCDファイルまたは複数の <abbr title="Point Cloud Data">PCD</abbr> ファイルに分割することができます。</li>
+<li>マップ内の各ポイントには、X、Y、Z 座標が含まれている必要があります。</li>
+<li>各ポイントの強度またはRGB値をオプションで含めることができます。</li>
+<li>車両の動作領域全体をカバーする必要があります。また、車両に取り付けられたセンサーの検出範囲に応じて、追加の緩衝ゾーンを含めることをお勧めします。</li>
+<li>信頼性の高い位置特定結果を得るには、解像度が少なくとも0.2mである必要があります。</li>
+<li>ローカル座標でもグローバル座標でも構いませんが、位置特定にGNSSデータを使用するにはグローバル座標(地理参照)である必要があります。</li>
+</ul>
+<p>分割マップ形式の詳細については<a href="https://github.com/autowarefoundation/autoware.universe/blob/main/map/map_loader/README.md"><code>map_loader</code> in Autoware Universeの<code>map_loader</code>のreadme</a>を参照してください</p>
 <div class="admonition 注記">
 <p class="admonition-title">注記</p>
+<p>Autowareでは現在<a href="https://en.wikipedia.org/wiki/Military_Grid_Reference_System">Military Grid Reference System (MGRS)</a>, <a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">Universal Transverse Mercator (UTM)</a>および<a href="https://ja.wikipedia.org/wiki/%E5%B9%B3%E9%9D%A2%E7%9B%B4%E8%A7%92%E5%BA%A7%E6%A8%99%E7%B3%BB">Japan Rectangular Coordinate System</a>の3つのグローバル座標系がサポートされています。
+ただし、MGRSは地理参照マップに推奨される座標系です。
+MGRS座標系のマップでは、各ポイントのX座標とY座標は100,000メートル四方内のポイントの位置を表し、Z座標はポイントの標高を表します。</p>
 </div>
-<p>Three global coordinate systems are currently supported by Autoware, including <a href="https://en.wikipedia.org/wiki/Military_Grid_Reference_System">Military Grid Reference System (MGRS)</a>, <a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">Universal Transverse Mercator (UTM)</a>, and <a href="https://ja.wikipedia.org/wiki/%E5%B9%B3%E9%9D%A2%E7%9B%B4%E8%A7%92%E5%BA%A7%E6%A8%99%E7%B3%BB">Japan Rectangular Coordinate System</a>.
-However, MGRS is a preferred coordinate system for georeferenced maps.
-In a map with MGRS coordinate system, the X and Y coordinates of each point represent the point's location within the 100,000-meter square, while the Z coordinate represents the point's elevation.
-ベクトルマップ
-ベクトル クラウド マップは、次の要件を満たすファイルとして提供する必要があります。</p>
-<p>これはLanelet2形式である必要があり、Autoware による追加の変更が必要です。
-車線、信号機、停止線、横断歩道、駐車スペース、駐車場の形状と位置情報が含まれている必要があります。
-道路の始点または終点を除き、マップ内の各小道は、その前、後続、左隣、および右隣に正しく接続されている必要があります。
-地図内の各レーンレットには、制限速度、通行権、交通方向、関連する信号機、停止線、交通標識などの交通ルール情報が含まれている必要があります。
-車両の動作領域全体をカバーする必要があります。</p>
+<h3 id="_5">ベクターマップ<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
+<p>ベクター点群マップは以下の要件を満たすファイルとして提供する必要があります:</p>
+<ul>
+<li>これは<a href="https://github.com/fzi-forschungszentrum-informatik/Lanelet2">Lanelet2</a>形式である必要があり、<a href="https://github.com/autowarefoundation/autoware_common/blob/main/tmp/lanelet2_extension/docs/lanelet2_format_extension.md">additional modifications required by Autowareによる追加の変更が必要です</a>。</li>
+<li>車線、信号機、停止線、横断歩道、駐車スペース、駐車場の形状と位置情報が含まれている必要があります。</li>
+<li>道路の始点または終点を除き、マップ内の各小道は、その前、後続、左隣、および右隣に正しく接続されている必要があります。</li>
+<li>地図内の各レーンレットには、制限速度、通行権、交通方向、関連する信号機、停止線、交通標識などの交通ルール情報が含まれている必要があります。</li>
+<li>車両の動作領域全体をカバーする必要があります。</li>
+</ul>
 <div class="admonition 警告">
 <p class="admonition-title">警告</p>
+<p>構築中</p>
 </div>
-<p>Under Construction
-投影情報
-投影情報は、次の要件を満たすファイルとして提供する必要があります。</p>
-<p>現在の Autoware Universe 実装で提供される YAML 形式である必要がありますmap_projection_loader。
-ファイルには次の情報が含まれている必要があります。
-ローカル座標とグローバル座標の間の変換に使用される投影法の名前
-投影法のパラメータ（投影法に応じて）
-詳細については、Autoware Universeの Readmemap_projection_loaderを参照してください。</p>
-<h1 id="map-component-design">Map component design<a class="headerlink" href="#map-component-design" title="Permanent link">#</a></h1>
-<h2 id="1-overview">1. Overview<a class="headerlink" href="#1-overview" title="Permanent link">#</a></h2>
-<p>Autoware relies on high-definition point cloud maps and vector maps of the driving environment to perform various tasks such as localization, route planning, traffic light detection, and predicting the trajectories of pedestrians and other vehicles.</p>
-<p>This document describes the design of map component of Autoware, including its requirements, architecture design, features, data formats, and interface to distribute map information to the rest of autonomous driving stack.</p>
-<h2 id="2-requirements">2. Requirements<a class="headerlink" href="#2-requirements" title="Permanent link">#</a></h2>
-<p>Map should provide two types of information to the rest of the stack:</p>
+<h3 id="_6">投影情報<a class="headerlink" href="#_6" title="Permanent link">#</a></h3>
+<p>詳細については、Autoware Universeの Readmemap_projection_loaderを参照してください。</p>
+<p>投影情報は、次の要件を満たすファイルとして提供する必要があります:</p>
 <ul>
-<li>Semantic information about roads as a vector map</li>
-<li>Geometric information about the environment as a point cloud map (optional)</li>
-</ul>
-<p>A vector map contains highly accurate information about a road network, lane geometry, and traffic lights. It is required for route planning, traffic light detection, and predicting the trajectories of other vehicles and pedestrians.</p>
-<p>A 3D point cloud map is primarily used for LiDAR-based localization and part of perception in Autoware. In order to determine the current position and orientation of the vehicle, a live scan captured from one or more LiDAR units is matched against a pre-generated 3D point cloud map. Therefore, an accurate point cloud map is crucial for good localization results. However, if the vehicle has an alternate localization method with enough accuracy, for example using camera-based localization, point cloud map may not be required to use Autoware.</p>
-<p>In addition to above two types of maps, Autoware also requires a supplemental file for specifying the coordinate system of the map in geodetic system.</p>
-<h2 id="3-architecture">3. Architecture<a class="headerlink" href="#3-architecture" title="Permanent link">#</a></h2>
-<p>This diagram describes the high-level architecture of Map component in Autoware.</p>
-<p><img alt="map component architecture" src="image/high-level-map-diagram.drawio.svg" width="800"></p>
-<p>The Map component consists of the following sub-components:</p>
-<ul>
-<li><strong>Point Cloud Map Loading</strong>: Load and publish point cloud map</li>
-<li><strong>Vector Map Loading</strong>: Load and publish vector map</li>
-<li><strong>Projection Loading</strong>: Load and publish projection information for conversion between local coordinate (x, y, z) and geodetic coordinate (latitude, longitude, altitude)</li>
-</ul>
-<h2 id="4-component-interface">4. Component interface<a class="headerlink" href="#4-component-interface" title="Permanent link">#</a></h2>
-<h3 id="input-to-the-map-component">Input to the map component<a class="headerlink" href="#input-to-the-map-component" title="Permanent link">#</a></h3>
-<ul>
-<li><strong>From file system</strong><ul>
-<li>Point cloud map and its metadata file</li>
-<li>Vector map</li>
-<li>Projection information</li>
+<li>現在のAutoware Universeの実装で提供される<code>map_projection_loader</code>へはYAML形式である必要があります。</li>
+<li>ファイルには次の情報が含まれている必要があります:<ul>
+<li>ローカル座標とグローバル座標の間の変換に使用される投影法の名前</li>
+<li>投影法のパラメータ（投影法に応じて）</li>
 </ul>
 </li>
 </ul>
-<h3 id="output-from-the-map-component">Output from the map component<a class="headerlink" href="#output-from-the-map-component" title="Permanent link">#</a></h3>
-<ul>
-<li><strong>To Sensing</strong><ul>
-<li>Projection information: Used to convert <abbr title="Global Navigation Satellite System">GNSS</abbr> data from geodetic coordinate system to local coordinate system</li>
-</ul>
-</li>
-<li><strong>To Localization</strong><ul>
-<li>Point cloud map: Used for LiDAR-based localization</li>
-<li>Vector map: Used for localization methods based on road markings, etc</li>
-</ul>
-</li>
-<li><strong>To Perception</strong><ul>
-<li>Point cloud map: Used for obstacle segmentation by comparing LiDAR and point cloud map</li>
-<li>Vector map: Used for vehicle trajectory prediction</li>
-</ul>
-</li>
-<li><strong>To Planning</strong><ul>
-<li>Vector map: Used for behavior planning</li>
-</ul>
-</li>
-<li><strong>To API layer</strong><ul>
-<li>Projection information: Used to convert localization results from local coordinate system to geodetic coordinate system</li>
-</ul>
-</li>
-</ul>
-<h2 id="5-map-specification">5. Map Specification<a class="headerlink" href="#5-map-specification" title="Permanent link">#</a></h2>
-<h3 id="point-cloud-map">Point Cloud Map<a class="headerlink" href="#point-cloud-map" title="Permanent link">#</a></h3>
-<p>The point cloud map must be supplied as a file with the following requirements:</p>
-<ul>
-<li>The point cloud map must be projected on the same coordinate defined in <code>map_projection_loader</code> in order to be consistent with the lanelet2 map and other packages that converts between local and geodetic coordinates. For more information, please refer to <a href="https://github.com/autowarefoundation/autoware.universe/tree/main/map/map_projection_loader/README.md">the readme of <code>map_projection_loader</code></a>.</li>
-<li>It must be in the <a href="https://pointclouds.org/documentation/tutorials/pcd_file_format.html"><abbr title="Point Cloud Data">PCD</abbr> (Point Cloud Data) file format</a>, but can be a single <abbr title="Point Cloud Data">PCD</abbr> file or divided into multiple <abbr title="Point Cloud Data">PCD</abbr> files.</li>
-<li>Each point in the map must contain X, Y, and Z coordinates.</li>
-<li>An intensity or RGB value for each point may be optionally included.</li>
-<li>It must cover the entire operational area of the vehicle. It is also recommended to include an additional buffer zone according to the detection range of sensors attached to the vehicle.</li>
-<li>Its resolution should be at least 0.2 m to yield reliable localization results.</li>
-<li>It can be in either local or global coordinates, but must be in global coordinates (georeferenced) to use <abbr title="Global Navigation Satellite System">GNSS</abbr> data for localization.</li>
-</ul>
-<p>For more details on divided map format, please refer to <a href="https://github.com/autowarefoundation/autoware.universe/blob/main/map/map_loader/README.md">the readme of <code>map_loader</code> in Autoware Universe</a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Three global coordinate systems are currently supported by Autoware, including <a href="https://en.wikipedia.org/wiki/Military_Grid_Reference_System">Military Grid Reference System (MGRS)</a>, <a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">Universal Transverse Mercator (UTM)</a>, and <a href="https://ja.wikipedia.org/wiki/%E5%B9%B3%E9%9D%A2%E7%9B%B4%E8%A7%92%E5%BA%A7%E6%A8%99%E7%B3%BB">Japan Rectangular Coordinate System</a>.
-However, MGRS is a preferred coordinate system for georeferenced maps.
-In a map with MGRS coordinate system, the X and Y coordinates of each point represent the point's location within the 100,000-meter square, while the Z coordinate represents the point's elevation.</p>
-</div>
-<h3 id="vector-map">Vector Map<a class="headerlink" href="#vector-map" title="Permanent link">#</a></h3>
-<p>The vector cloud map must be supplied as a file with the following requirements:</p>
-<ul>
-<li>It must be in <a href="https://github.com/fzi-forschungszentrum-informatik/Lanelet2">Lanelet2</a> format, with <a href="https://github.com/autowarefoundation/autoware_common/blob/main/tmp/lanelet2_extension/docs/lanelet2_format_extension.md">additional modifications required by Autoware</a>.</li>
-<li>It must contain the shape and position information of lanes, traffic lights, stop lines, crosswalks, parking spaces, and parking lots.</li>
-<li>Except at the beginning or end of a road, each lanelet in the map must be correctly connected to its predecessor, successors, left neighbor, and right neighbor.</li>
-<li>Each lanelet in the map must contain traffic rule information including its speed limit, right of way, traffic direction, associated traffic lights, stop lines, and traffic signs.</li>
-<li>It must cover the entire operational area of the vehicle.</li>
-</ul>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Under Construction</p>
-</div>
-<h3 id="projection-information">Projection Information<a class="headerlink" href="#projection-information" title="Permanent link">#</a></h3>
-<p>The projection information must be supplied as a file with the following requirements:</p>
-<ul>
-<li>It must be in YAML format, provided into <code>map_projection_loader</code> in current Autoware Universe implementation.</li>
-<li>The file must contain the following information:<ul>
-<li>The name of the projection method used to convert between local and global coordinates</li>
-<li>The parameters of the projection method (depending on the projection method)</li>
-</ul>
-</li>
-</ul>
-<p>For further information, please refer to <a href="https://github.com/autowarefoundation/autoware.universe/tree/main/map/map_projection_loader/README.md">the readme of <code>map_projection_loader</code> in Autoware Universe</a>.</p>
+<p>詳細については<a href="https://github.com/autowarefoundation/autoware.universe/tree/main/map/map_projection_loader/README.md"><code>map_projection_loader</code> in Autoware Universeの<code>map_projection_loader</code>のreadme</a>を参照してください。</p>
 <!-- prettier-ignore --></div>
 
 
