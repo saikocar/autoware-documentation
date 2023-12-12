@@ -21,7 +21,7 @@
     
     
       
-        <title>Reference implementation - Autoware Documentation</title>
+        <title>知覚コンポーネントのリファレンス実装設計 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#perception-component-reference-implementation-design" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Reference implementation
+              知覚コンポーネントのリファレンス実装設計
             
           </span>
         </div>
@@ -4338,12 +4338,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Reference implementation
+          知覚コンポーネントのリファレンス実装設計
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Reference implementation
+        知覚コンポーネントのリファレンス実装設計
       </a>
       
         
@@ -4362,23 +4362,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#purpose-of-this-document" class="md-nav__link">
-    Purpose of this document
+  <a href="#_2" class="md-nav__link">
+    この文書の目的
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
-    Architecture
+  <a href="#_3" class="md-nav__link">
+    アーキテクチャ
   </a>
   
-    <nav class="md-nav" aria-label="Architecture">
+    <nav class="md-nav" aria-label="アーキテクチャ">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#internal-interface-in-the-perception-component" class="md-nav__link">
-    Internal interface in the perception component
+  <a href="#_4" class="md-nav__link">
+    認識コンポーネントの内部インターフェイス
   </a>
   
 </li>
@@ -6622,23 +6622,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#purpose-of-this-document" class="md-nav__link">
-    Purpose of this document
+  <a href="#_2" class="md-nav__link">
+    この文書の目的
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
-    Architecture
+  <a href="#_3" class="md-nav__link">
+    アーキテクチャ
   </a>
   
-    <nav class="md-nav" aria-label="Architecture">
+    <nav class="md-nav" aria-label="アーキテクチャ">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#internal-interface-in-the-perception-component" class="md-nav__link">
-    Internal interface in the perception component
+  <a href="#_4" class="md-nav__link">
+    認識コンポーネントの内部インターフェイス
   </a>
   
 </li>
@@ -6666,63 +6666,40 @@
   
 
 
-<div><p>知覚コンポーネントのリファレンス実装設計
-この文書の目的
-このドキュメントでは、リファレンス実装の詳細な設計の概要を説明します。これにより、開発者とユーザーは、Perception コンポーネントで現在何が利用できるのか、その機能を利用、拡張、または追加する方法を理解できるようになります。</p>
-<p>建築
-この図は、リファレンス実装のアーキテクチャを示しています。</p>
-<p>全体的な認識のアーキテクチャ</p>
-<p>Perception コンポーネントは次のサブコンポーネントで構成されます。</p>
-<p>障害物セグメンテーション: 自車両が回避すべき障害物 (動的オブジェクトだけでなく、静止障害物などの回避すべき静的障害物も含む) に由来する点群を識別します。たとえば、建設用コーンはこのモジュールを使用して認識されます。
-占有グリッド マップ: 死角 (情報が入手できず、動的オブジェクトが飛び出す可能性のある領域) を検出します。
-物体認識: 現在のフレーム内で自車両の周囲にある動的物体を認識し、それらの将来の軌道を予測します。
-検出: 車両や歩行者などの動的物体の姿勢と速度を検出します。
-Detector : オブジェクト検出処理をフレームごとにトリガーします。
-Interpolator : 安定した物体検出を維持します。Detector からの出力が突然利用できなくなった場合でも、Interpolator は Tracking モジュールからの出力を使用して、オブジェクトを見逃すことなく検出結果を維持します。
-追跡: 複数のフレームにわたる検出結果を関連付けます。
-予測: 動的オブジェクトの軌道を予測します。
-信号機認識: 信号機の色と矢印信号の方向を認識します。
-認識コンポーネントの内部インターフェイス
-障害物のセグメンテーションから物体認識へ
-点群: 現在のフレームで観察された点群で、地面と外れ値が削除されています。
-障害物セグメンテーションから占有グリッド マップへ
-地面フィルターされた点群: 現在のフレームで観察され、地面が削除された点群。
-障害物セグメンテーションへの占有グリッド マップ
-占有グリッド マップ: これは外れ値をフィルタリングするために使用されます。</p>
-<h1 id="perception-component-reference-implementation-design">Perception Component Reference Implementation Design<a class="headerlink" href="#perception-component-reference-implementation-design" title="Permanent link">#</a></h1>
-<h2 id="purpose-of-this-document">Purpose of this document<a class="headerlink" href="#purpose-of-this-document" title="Permanent link">#</a></h2>
-<p>This document outlines detailed design of the reference imprementations. This allows developers and users to understand what is currently available with the Perception Component, how to utilize, expand, or add to its features.</p>
-<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">#</a></h2>
-<p>This diagram describes the architecture of the reference implementation.</p>
+<div><h1 id="_1">知覚コンポーネントのリファレンス実装設計<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">この文書の目的<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>このドキュメントでは、リファレンス実装の詳細な設計の概要を説明します。これにより、開発者とユーザーは、Perception コンポーネントで現在何が利用できるのか、その機能を利用、拡張、または追加する方法を理解できるようになります。</p>
+<h2 id="_3">アーキテクチャ<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>この図は、リファレンス実装のアーキテクチャを示しています。</p>
 <p><img alt="overall-perception-architecture" src="../image/reference-implementaion-perception-diagram.drawio.svg"></p>
-<p>The Perception component consists of the following sub-components:</p>
+<p>知覚コンポーネントは次のサブコンポーネントで構成されます:</p>
 <ul>
-<li><strong>Obstacle Segmentation</strong>: Identifies point clouds originating from obstacles(not only dynamic objects but also static obstacles that should be avoided, such as stationary obstacles) that the ego vehicle should avoid. For example, construction cones are recognized using this module.</li>
-<li><strong>Occupancy Grid Map</strong>: Detects blind spots (areas where no information is available and where dynamic objects may jump out).</li>
-<li><strong>Object Recognition</strong>: Recognizes dynamic objects surrounding the ego vehicle in the current frame and predicts their future trajectories.<ul>
-<li><strong>Detection</strong>: Detects the pose and velocity of dynamic objects such as vehicles and pedestrians.<ul>
-<li><strong>Detector</strong>: Triggers object detection processing frame by frame.</li>
-<li><strong>Interpolator</strong>: Maintains stable object detection. Even if the output from Detector suddenly becomes unavailable, Interpolator uses the output from the Tracking module to maintain the detection results without missing any objects.</li>
+<li><strong>障害物セグメンテーション</strong>: I自車両が回避すべき障害物 (動的オブジェクトだけでなく、静止障害物などの回避すべき静的障害物も含む) に由来する点群を識別します。たとえば、建設用コーンはこのモジュールを使用して認識されます。</li>
+<li><strong>占有グリッドマップ</strong>: 死角 (情報が入手できず、動的オブジェクトが飛び出す可能性のある領域) を検出します。</li>
+<li><strong>物体認識</strong>: 現在のフレーム内で自車両の周囲にある動的物体を認識し、それらの将来の軌道を予測します。<ul>
+<li><strong>検出</strong>: 車両や歩行者などの動的物体の姿勢と速度を検出します。<ul>
+<li><strong>検出器</strong>: オブジェクト検出処理をフレームごとにトリガーします。</li>
+<li><strong>補間器</strong>: 安定した物体検出を維持します。検出器からの出力が突然利用できなくなった場合でも、補間器は追跡モジュールからの出力を使用して、オブジェクトを見逃すことなく検出結果を維持します。</li>
 </ul>
 </li>
-<li><strong>Tracking</strong>: Associates detected results across multiple frames.</li>
-<li><strong>Prediction</strong>: Predicts trajectories of dynamic objects.</li>
+<li><strong>追跡</strong>: 複数のフレームにわたる検出結果を関連付けます。</li>
+<li><strong>予測</strong>: 動的オブジェクトの軌道を予測します。</li>
 </ul>
 </li>
-<li><strong>Traffic Light Recognition</strong>: Recognizes the colors of traffic lights and the directions of arrow signals.</li>
+<li><strong>信号機認識</strong>: 信号機の色と矢印信号の方向を認識します。</li>
 </ul>
-<h3 id="internal-interface-in-the-perception-component">Internal interface in the perception component<a class="headerlink" href="#internal-interface-in-the-perception-component" title="Permanent link">#</a></h3>
+<h3 id="_4">認識コンポーネントの内部インターフェイス<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
 <ul>
-<li><strong>Obstacle Segmentation to Object Recognition</strong><ul>
-<li>Point Cloud: A Point Cloud observed in the current frame, where the ground and outliers are removed.</li>
+<li><strong>障害物のセグメンテーションから物体認識へ</strong><ul>
+<li>点群: 在のフレームで観察された点群で、地面と外れ値が削除されています。</li>
 </ul>
 </li>
-<li><strong>Obstacle Segmentation to Occupancy Grid Map</strong><ul>
-<li>Ground filtered Point Cloud: A Point Cloud observed in the current frame, where the ground is removed.</li>
+<li><strong>障害物セグメンテーションから占有グリッドマップへ</strong><ul>
+<li>地面フィルターされた点群: 現在のフレームで観察され、地面が削除された点群。</li>
 </ul>
 </li>
-<li><strong>Occupancy Grid Map to Obstacle Segmentation</strong><ul>
-<li>Occupancy Grid Map: This is used for filtering outlier.</li>
+<li><strong>障害物セグメンテーションへの占有グリッドマップ</strong><ul>
+<li>占有グリッドマップ: これは外れ値をフィルタリングするために使用されます。</li>
 </ul>
 </li>
 </ul>
