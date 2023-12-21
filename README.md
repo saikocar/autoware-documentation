@@ -6,4 +6,4 @@
 
 ## 貢献
 
-このリポジトリ(訳注:オリジナルのリポジトリ)に貢献するには[ドキュメントのガイドライン](https://autowarefoundation.github.io/autoware-documentation/main/contributing/documentation-guidelines/)[(翻訳版はこちら)](https://github.com/saikocar/autoware-documentation/blob/main/docs/contributing/documentation-guidelines/)を参照してください。
+このリポジトリ(訳注:オリジナルのリポジトリ)に貢献するには[ドキュメントのガイドライン](https://autowarefoundation.github.io/autoware-documentation/main/contributing/documentation-guidelines/)[(翻訳版はこちら)](https://github.com/saikocar/autoware-documentation/blob/main/docs/contributing/documentation-guidelines/index.md)を参照してください。
