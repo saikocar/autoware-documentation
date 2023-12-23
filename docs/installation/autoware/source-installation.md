@@ -141,36 +141,36 @@ sudo apt-get -y install git
    colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
    ```
 
-## Using Autoware Build GUI
+## Autoware Build GUIの使用
 
-In addition to the traditional command-line methods of building Autoware packages, developers and users can leverage the Autoware Build GUI for a more streamlined and user-friendly experience. This GUI application simplifies the process of building and managing Autoware packages.
+Autowareパッケージを構築する従来のコマンドライン方法に加えて、開発者とユーザーはAutoware Build GUIを活用して、より合理化されたユーザーフレンドリーなエクスペリエンスを実現できます。このGUIアプリケーションは、Autowareパッケージの構築および管理のプロセスを簡素化します。
 
-### Integration with Autoware Source Installation
+### Autowareソースインストールとの統合
 
-When using the Autoware Build GUI in conjunction with the traditional source installation process:
+Autoware Build GUIを従来のソースインストールプロセスと組み合わせて使用​​する場合:
 
-- **Initial Setup**: Follow the standard Autoware source installation guide to set up your environment and workspace.
-- **Using the GUI**: Once the initial setup is complete, you can use the Autoware Build GUI to manage subsequent builds and package updates.
+- **初期セットアップ**: 標準のAutowareソースインストールガイドに従って環境とワークスペースをセットアップします。
+- **GUIの使用**: 初期セットアップが完了するとAutoware Build GUIを使用して後続のビルドとパッケージの更新を管理できます。
 
-This integration offers a more accessible approach to building and managing Autoware packages, catering to both new users and experienced developers.
+この統合により、Autowareパッケージを構築および管理するためのよりアクセスしやすいアプローチが提供され、新規ユーザーと経験豊富な開発者の両方に対応します。
 
-### Getting Started with Autoware Build GUI
+### Autoware Build GUI の使用を開始する
 
-1. **Installation:** Ensure you have installed the Autoware Build GUI. [Installation instructions](https://github.com/autowarefoundation/autoware-build-gui#installation).
-2. **Launching the App**: Once installed, launch the Autoware Build GUI.
+1. **インストール:** Autoware Build GUIがインストールされていることを確認してください。 [インストール手順](https://github.com/autowarefoundation/autoware-build-gui#installation).
+2. **アプリの起動**: インストールしたら、Autoware Build GUIを起動します。
    ![Build_GUI_Main](images/build-gui/build_gui_main.png)
-3. **Setting Up**: Set the path to your Autoware folder within the GUI.
+3. **セットアップ**: GUI内でAutowareフォルダーへのパスを設定します。
    ![Build_GUI_Setup](images/build-gui/build_gui_setup.png)
-4. **Building Packages**: Select the Autoware packages you wish to build and manage the build process through the GUI.
+4. **パッケージの構築**: 構築するAutowareパッケージを選択し、GUIを通じて構築プロセスを管理します。
    ![Build_GUI_Build](images/build-gui/build_gui_build.png)
 
-   4.1. **Build Configuration**: Choose from a list of default build configurations, or select the packages you wish to build manually.
+   4.1. **ビルド構成**: デフォルトのビルド構成のリストから選択するか手動でビルドするパッケージを選択します。
    ![Build_GUI_Build_Configuration](images/build-gui/build_gui_build_configuration.png)
 
-   4.2. **Build Options**: Choose which build type you wish to use, with ability to specify additional build options.
+   4.2. **ビルドオプション**: 追加のビルドオプションを指定する機能を使用して使用するビルドタイプを選択します。
    ![Build_GUI_Build_Options](images/build-gui/build_gui_build_options.png)
 
-5. **Save and Load**: Save your build configurations for future use, or load a previously saved configuration if you don't wish to build all packages or use one of the default configurations provided.
+5. **保存と読み込み**: 将来使用するためにビルド構成を保存します。すべてのパッケージをビルドしたくない場合や、提供されているデフォルト構成の1つを使用したくない場合は、以前に保存した構成をロードします。
    ![Build_GUI_Save](images/build-gui/build_gui_save.png)
-6. **Updating Workspace**: Update your Autoware workspace's packages to the latest version using the GUI or adding Calibration tools to the workspace.
+6. **ワークスペースの更新**: GUIを使用するか、ワークスペースにキャリブレーションツールを追加して、Autowareワークスペースのパッケージを最新バージョンに更新します。
    ![Build_GUI_Update](images/build-gui/build_gui_update.png)
