@@ -6,8 +6,8 @@
 
 DockerでAutowareをインストールする2つの方法は以下のとおりです:
 
-- 1番目の方法は事前に構築されたイメージを使用してAutowareを起動するクイックスタートです。この方法ではAutowareシミュレータの実行のみが可能でAutowareの開発はできない初心者向けです。
-- 2番目の方法は開発イメージを使用してAutowareを起動することです。これはDockerを使用したAutowareの開発と実行をサポートします。
+- 1つ目の方法は事前に構築されたイメージを使用してAutowareを起動するクイックスタートです。この方法ではAutowareシミュレータの実行のみが可能でAutowareの開発はできない初心者向けです。
+- 2つ目の方法は開発イメージを使用してAutowareを起動することです。これはDockerを使用したAutowareの開発と実行をサポートします。
 
 ## クイックスタート
 
@@ -26,7 +26,7 @@ DockerでAutowareをインストールする2つの方法は以下のとおり�
 特定のエラーに対する解決策は次のとおりです:
 
 ### cuda error: forward compatibility was attempted on non supported hw
-### 翻訳：cudaエラー: サポートされていないハードウェア番号で上位互換性が試行されました
+### （メッセージ翻訳）cudaエラー: サポートされていないハードウェア番号で上位互換性が試行されました
 
 NVIDIAグラフィックスのGPUサポートを有効にしてDockerを起動すると次のエラーが発生する場合があります:
 
@@ -64,7 +64,7 @@ Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-install-
 
 このエラーを修正するにはrockerのソースコードを一時的に変更する必要がありますがお勧めできません。
 
-現段階ではarm64デバイスに対してNVIDIA GPUを有効にせずにdockerを実行することをお勧めします:
+現段階ではarm64デバイスではNVIDIA GPUを有効にせずにdockerを実行することをお勧めします:
 
 ```bash
 rocker -e LIBGL_ALWAYS_SOFTWARE=1 --x11 --user --volume $HOME/autoware -- ghcr.io/autowarefoundation/autoware-universe:latest-cuda
