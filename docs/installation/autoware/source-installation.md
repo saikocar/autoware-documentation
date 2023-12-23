@@ -20,11 +20,11 @@ sudo apt-get -y update
 sudo apt-get -y install git
 ```
 
-> 注意:Ubuntu 20.04でROS2 Galacticを使用したい場合は、[galactic](https://autowarefoundation.github.io/autoware-documentation/galactic/installation/autoware/source-installation/) ブランチのインストール手順を参照してください。ただしGalactic版には最新の機能が含まれていない可能性があることに注意してください。
+> 注意:Ubuntu 20.04でROS2 Galacticを使用したい場合は[galactic](https://autowarefoundation.github.io/autoware-documentation/galactic/installation/autoware/source-installation/)ブランチのインストール手順を参照してください。ただしGalactic版には最新の機能が含まれていない可能性があることに注意してください。
 
 ## 開発環境のセットアップ
 
-1. `autowarefoundation/autoware`のクローンを作成し、ディレクトリに移動します。
+1. `autowarefoundation/autoware`のクローンを作成しディレクトリに移動します。
 
    ```bash
    git clone https://github.com/autowarefoundation/autoware.git
@@ -37,7 +37,7 @@ sudo apt-get -y install git
    ./setup-dev-env.sh
    ```
 
-   ビルドの問題が発生した場合は[トラブルシューティング](../../support/troubleshooting/index.md#build-issues)セクションを参照してサポートを求めてください。
+   ビルドで問題が発生した場合は[トラブルシューティング](../../support/troubleshooting/index.md#build-issues)を参照してサポートを求めてください。
 
 !!! 注意
 
@@ -49,7 +49,7 @@ sudo apt-get -y install git
 
 !!! 注記
 
-    以下の項目が自動的にインストールされます。ansibleスクリプトが機能しない場合、または別のバージョンの依存ライブラリがすでにインストールされている場合は、以下のアイテムを手動でインストールしてください。
+    以下の項目が自動的にインストールされます。Ansibleスクリプトが機能しない場合、または別のバージョンの依存ライブラリがすでにインストールされている場合は、以下のアイテムを手動でインストールしてください。
 
     - [ROS2のインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/ros2#manual-installation)
     - [ROS2 Dev Toolsのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/ros2_dev_tools#manual-installation)
@@ -61,13 +61,13 @@ sudo apt-get -y install git
     - [Nvidia CUDAのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/cuda#manual-installation)
     - [Nvidia cuDNNとTensorRTのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/tensorrt#manual-installation)
 
-    ansibleスクリプトを使用しなかった場合は[アーティファクトの手動ロードマニュアル](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/artifacts)で説明されているように、いくつかのパッケージアーティファクトをダウンロードする必要があります。そうしないと推論にこれらのアーティファクトが必要なため、一部のパッケージ (主に認識に関連するもの) が実行できなくなります。
+    Ansibleスクリプトを使用しなかった場合は[アーティファクトの手動ロードマニュアル](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/artifacts)で説明されているようにいくつかのアーティファクトパッケージをダウンロードする必要があります。そうしないと推論にこれらのアーティファクトが必要なため一部のパッケージ(主に認識に関連するもの)が実行できなくなります。
 
 ## ワークスペースの設定方法
 
-!!! info [Using Autoware Build GUI](#using-autoware-build-gui)
+!!! [Using Autoware Build GUI](#using-autoware-build-gui)[Autoware Build GUIの使用]に関する情報
 
-    If you prefer a graphical user interface (GUI) over the command line for launching and managing your simulations, refer to the `Using Autoware Build GUI` section at the end of this document for a step-by-step guide.
+    シミュレーションの起動と管理にコマンドラインよりもグラフィカルユーザーインターフェイス(GUI)を使用したい場合は、このドキュメントの最後にある`Autoware Build GUI の使用`セクションのステップ・バイ・ステップガイドを参照してください。
 
 1. `src`ディレクトリを作成し、その中にリポジトリのクローンします。
 
