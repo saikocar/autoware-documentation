@@ -602,7 +602,7 @@
         
           <li class="md-nav__item">
   <a href="#cuda" class="md-nav__link">
-    翻訳：cudaエラー: サポートされていないハードウェア番号で上位互換性が試行されました
+    （メッセージ翻訳）cudaエラー: サポートされていないハードウェア番号で上位互換性が試行されました
   </a>
   
 </li>
@@ -6693,7 +6693,7 @@
         
           <li class="md-nav__item">
   <a href="#cuda" class="md-nav__link">
-    翻訳：cudaエラー: サポートされていないハードウェア番号で上位互換性が試行されました
+    （メッセージ翻訳）cudaエラー: サポートされていないハードウェア番号で上位互換性が試行されました
   </a>
   
 </li>
@@ -6755,8 +6755,8 @@
 </div>
 <p>DockerでAutowareをインストールする2つの方法は以下のとおりです:</p>
 <ul>
-<li>1番目の方法は事前に構築されたイメージを使用してAutowareを起動するクイックスタートです。この方法ではAutowareシミュレータの実行のみが可能でAutowareの開発はできない初心者向けです。</li>
-<li>2番目の方法は開発イメージを使用してAutowareを起動することです。これはDockerを使用したAutowareの開発と実行をサポートします。</li>
+<li>1つ目の方法は事前に構築されたイメージを使用してAutowareを起動するクイックスタートです。この方法ではAutowareシミュレータの実行のみが可能でAutowareの開発はできない初心者向けです。</li>
+<li>2つ目の方法は開発イメージを使用してAutowareを起動することです。これはDockerを使用したAutowareの開発と実行をサポートします。</li>
 </ul>
 <h2 id="_1">クイックスタート<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a href="../docker-installation-prebuilt/">クイックスタート</a></p>
@@ -6767,7 +6767,7 @@
 <h2 id="_2">トラブルシューティング<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <p>特定のエラーに対する解決策は次のとおりです:</p>
 <h3 id="cuda-error-forward-compatibility-was-attempted-on-non-supported-hw">cuda error: forward compatibility was attempted on non supported hw<a class="headerlink" href="#cuda-error-forward-compatibility-was-attempted-on-non-supported-hw" title="Permanent link">#</a></h3>
-<h3 id="cuda">翻訳：cudaエラー: サポートされていないハードウェア番号で上位互換性が試行されました<a class="headerlink" href="#cuda" title="Permanent link">#</a></h3>
+<h3 id="cuda">（メッセージ翻訳）cudaエラー: サポートされていないハードウェア番号で上位互換性が試行されました<a class="headerlink" href="#cuda" title="Permanent link">#</a></h3>
 <p>NVIDIAグラフィックスのGPUサポートを有効にしてDockerを起動すると次のエラーが発生する場合があります:</p>
 <div class="highlight"><pre><span></span><code>docker:<span class="w"> </span>Error<span class="w"> </span>response<span class="w"> </span>from<span class="w"> </span>daemon:<span class="w"> </span>OCI<span class="w"> </span>runtime<span class="w"> </span>create<span class="w"> </span>failed:<span class="w"> </span>container_linux.go:349:<span class="w"> </span>starting<span class="w"> </span>container<span class="w"> </span>process<span class="w"> </span>caused<span class="w"> </span><span class="s2">"process_linux.go:449: container init caused \"process_linux.go:432: running prestart hook 0 caused \\\"error running hook: exit status 1, stdout: , stderr: nvidia-container-cli: initialization error: cuda error: forward compatibility was attempted on non supported hw\\\\n\\\"\""</span>:<span class="w"> </span>unknown.
 ERROR:<span class="w"> </span>Command<span class="w"> </span><span class="k">return</span><span class="w"> </span>non-zero<span class="w"> </span><span class="nb">exit</span><span class="w"> </span>code<span class="w"> </span><span class="o">(</span>see<span class="w"> </span>above<span class="o">)</span>:<span class="w"> </span><span class="m">125</span>
@@ -6793,7 +6793,7 @@ Command<span class="w"> </span><span class="s2">"python setup.py egg_info"</span
 </code></pre></div>
 <p>このエラーはrockerツールの現在のバージョンに存在し、rockerのos_detection関数に関連しています。</p>
 <p>このエラーを修正するにはrockerのソースコードを一時的に変更する必要がありますがお勧めできません。</p>
-<p>現段階ではarm64デバイスに対してNVIDIA GPUを有効にせずにdockerを実行することをお勧めします:</p>
+<p>現段階ではarm64デバイスではNVIDIA GPUを有効にせずにdockerを実行することをお勧めします:</p>
 <div class="highlight"><pre><span></span><code>rocker<span class="w"> </span>-e<span class="w"> </span><span class="nv">LIBGL_ALWAYS_SOFTWARE</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>--x11<span class="w"> </span>--user<span class="w"> </span>--volume<span class="w"> </span><span class="nv">$HOME</span>/autoware<span class="w"> </span>--<span class="w"> </span>ghcr.io/autowarefoundation/autoware-universe:latest-cuda
 </code></pre></div>
 <p>このチュートリアルはrockerの公式修正後に更新されます。</p>
