@@ -1,35 +1,35 @@
-# Docker installation for quick start
+# Dockerを利用したインストールのクイックスタート
 
-## How to set up a development environment
+## 開発環境のセットアップ
 
-1. Installing dependencies manually
+1. 依存関係の手動インストール
 
-   - [Install Docker Engine](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/docker_engine#manual-installation)
+   - [Docker Engineのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/docker_engine#manual-installation)
 
-   - [Install NVIDIA Container Toolkit](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/nvidia_docker#manual-installation)
+   - [NVIDIA Container Toolkitのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/nvidia_docker#manual-installation)
 
-   - [Install rocker](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/rocker#manual-installation)
+   - [rockerのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/rocker#manual-installation)
 
-## How to set up a workspace
+## ワークスペースのセットアップ
 
-1. Create the `autoware_map` directory for map data later.
+1. `autoware_map`ディレクトリを後の地図データのために作成します。
 
    ```bash
    mkdir ~/autoware_map
    ```
 
-2. Launch a Docker container.
+2. Dockerコンテナを起動します。
 
    ```bash
    rocker --nvidia --x11 --user --volume $HOME/autoware_map -- ghcr.io/autowarefoundation/autoware-universe:humble-latest-prebuilt
    ```
 
-   For more advanced usage, see [here](https://github.com/autowarefoundation/autoware/tree/main/docker/README.md).
+   より高度な使い方については[こちら](https://github.com/autowarefoundation/autoware/tree/main/docker/README.md)を参照してください。
 
-3. Run Autoware simulator
+3. Autowareシミュレーターを実行します。
 
-   Inside the container, you can run the Autoware simulation by following this tutorial:
+   コンテナの内部で以下のチュートリアルを実行できます:
 
-   [planning simulation](../../tutorials/ad-hoc-simulation/planning-simulation.md)
+   [計画シミュレーション](../../tutorials/ad-hoc-simulation/planning-simulation.md)
 
-   [rosbag replay simulation](../../tutorials/ad-hoc-simulation/rosbag-replay-simulation.md).
+   [rosbagリプレイシミュレーション](../../tutorials/ad-hoc-simulation/rosbag-replay-simulation.md).
