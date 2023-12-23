@@ -35,12 +35,11 @@ yabloc_pose_initializer
 
 ## 基本シミュレーション
 
+!!! [Autoware Launch GUIの使用](#using-autoware-launch-gui)に関する情報
+
+    シミュレーションの起動と管理にコマンドラインよりもグラフィカルユーザーインターフェイス(GUI)を使用したい場合はこのドキュメントの最後にある`Autoware Launch GUIの使用`セクションのステップ・バイ・ステップガイドを参照してください。
+
 ### レーン走行シナリオ
-!!! info [Using Autoware Launch GUI](#using-autoware-launch-gui)
-
-    If you prefer a graphical user interface (GUI) over the command line for launching and managing your simulations, refer to the `Using Autoware Launch GUI` section at the end of this document for a step-by-step guide.
-
-### Lane driving scenario
 
 #### 1. Autowareの起動
 
@@ -209,49 +208,49 @@ c) `Map`チェックボックスを２回クリックしてトピックをリロ
 
 [ビデオチュートリアルを参照する](https://drive.google.com/file/d/1bs_dX1JJ76qHk-SGvS6YF9gmekkN8fz7/view?usp=sharing)
 
-## Using Autoware Launch GUI
+## Autoware Launch GUIの使用
 
-This section provides a step-by-step guide on using the Autoware Launch GUI for planning simulations, offering an alternative to the command-line instructions provided in the Basic simulations section.
+このセクションではAutoware Launch GUIを使用してシミュレーションを計画するためのステップバイステップガイドを提供し、基本的なシミュレーションセクションで提供されるコマンドライン手順の代替手段を提供します。
 
-### Getting Started with Autoware Launch GUI
+### Autoware Launch GUIの使用を開始する
 
-1. **Installation:** Ensure you have installed the Autoware Launch GUI. [Installation instructions](https://github.com/autowarefoundation/autoware-launch-gui#installation).
+1. **インストール:** Autoware Launch GUIがインストールされていることを確認します。 [インストール手順](https://github.com/autowarefoundation/autoware-launch-gui#installation).
 
-2. **Launching the GUI:** Open the Autoware Launch GUI from your applications menu.
+2. **GUIの起動:** アプリケーションメニューからAutoware Launch GUIを開きます。
 
    ![GUI screenshot for launching the GUI](images/planning/launch-gui/launch_gui_main.png)
 
-### Launching a Planning Simulation
+### 計画シミュレーションの実行
 
-#### Lane Driving Scenario
+#### 車線走行シナリオ
 
-1. **Set Autoware Path:** In the GUI, set the path to your Autoware installation.
+1. **Autowareパスの設定:** GUIでAutowareインストールへのパスを設定します。
 
    ![GUI_screenshot_for_setting_Autoware_path](images/planning/launch-gui/launch_gui_setup.png)
 
-2. **Select Launch File:** Choose `planning_simulator.launch.xml` for the lane driving scenario.
+2. **起動ファイルの選択:** 車線走行シナリオの`planning_simulator.launch.xml`を選択します。
 
    ![GUI screenshot for selecting launch file](images/planning/launch-gui/selecting_launch_file.png)
 
-3. **Customize Parameters:** Adjust parameters such as `map_path`, `vehicle_model`, and `sensor_model` as needed.
+3. **パラメータのカスタマイズ:** 必要に応じて、`map_path`、`vehicle_model`、`sensor_model`などのパラメータを調整します。
 
    ![GUI screenshot for customizing parameters](images/planning/launch-gui/customizing-parameters1.png)
    ![GUI screenshot for customizing parameters](images/planning/launch-gui/customizing-parameters2.png)
 
-4. **Start Simulation:** Click the launch button to start the simulation.
+4. **シミュレーションの開始:** 起動ボタンをクリックしてシミュレーションを開始します。
 
    ![GUI screenshot for starting simulation](images/planning/launch-gui/starting_simulation.png)
 
-5. **Any Scenario:** From here, you can follow the instructions in the
+5. **任意のシナリオ:** ここから、次の手順に従うことができます。
 
-- Lane driving scenario: [Lane Driving Scenario](#lane-driving-scenario)
-- Parking scenario: [Parking scenario](#parking-scenario)
-- Lane change scenario: [Lane change scenario](#lane-change-scenario)
-- Avoidance scenario: [Avoidance scenario](#avoidance-scenario)
-- Advanced Simulations: [Advanced Simulations](#advanced-simulations)
+- 車線走行シナリオ: [車線走行シナリオ](#lane-driving-scenario)
+- 駐車シナリオ: [駐車シナリオ](#parking-scenario)
+- 車線変更シナリオ: [車線変更シナリオ](#lane-change-scenario)
+- 回避シナリオ: [回避シナリオ](#avoidance-scenario)
+- 高度なシミュレーション: [高度なシミュレーション](#advanced-simulations)
 
-### Monitoring and Managing the Simulation
+### シミュレーションの監視と管理
 
-- **Real-Time Monitoring:** Use the GUI to monitor CPU/Memory usage and Autoware logs in real-time.
-- **Profile Management:** Save your simulation profiles for quick access in future simulations.
-- **Adjusting Parameters:** Easily modify simulation parameters on-the-fly through the GUI.
+- **リアルタイム監視:** GUIを使用してCPU/メモリの使用状況とAutowareログをリアルタイムで監視します。
+- **プロファイル管理:** 将来のシミュレーションですぐにアクセスできるように、シミュレーションプロファイルを保存します。
+- **パラメータの調整:** GUIを使用してシミュレーションパラメータをオンザフライで簡単に変更できます。
