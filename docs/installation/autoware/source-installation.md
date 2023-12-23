@@ -65,7 +65,7 @@ sudo apt-get -y install git
 
 ## ワークスペースの設定方法
 
-!!! [Using Autoware Build GUI](#using-autoware-build-gui)[Autoware Build GUIの使用]に関する情報
+!!! [Autoware Build GUIの使用](#using-autoware-build-gui)に関する情報
 
     シミュレーションの起動と管理にコマンドラインよりもグラフィカルユーザーインターフェイス(GUI)を使用したい場合は、このドキュメントの最後にある`Autoware Build GUI の使用`セクションのステップ・バイ・ステップガイドを参照してください。
 
