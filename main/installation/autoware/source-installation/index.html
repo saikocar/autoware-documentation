@@ -6751,12 +6751,12 @@
 sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>git
 </code></pre></div>
 <blockquote>
-<p>注意:Ubuntu 20.04でROS2 Galacticを使用したい場合は、<a href="https://autowarefoundation.github.io/autoware-documentation/galactic/installation/autoware/source-installation/">galactic</a> ブランチのインストール手順を参照してください。ただしGalactic版には最新の機能が含まれていない可能性があることに注意してください。</p>
+<p>注意:Ubuntu 20.04でROS2 Galacticを使用したい場合は<a href="https://autowarefoundation.github.io/autoware-documentation/galactic/installation/autoware/source-installation/">galactic</a>ブランチのインストール手順を参照してください。ただしGalactic版には最新の機能が含まれていない可能性があることに注意してください。</p>
 </blockquote>
 <h2 id="_3">開発環境のセットアップ<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ol>
 <li>
-<p><code>autowarefoundation/autoware</code>のクローンを作成し、ディレクトリに移動します。</p>
+<p><code>autowarefoundation/autoware</code>のクローンを作成しディレクトリに移動します。</p>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/autowarefoundation/autoware.git
 <span class="nb">cd</span><span class="w"> </span>autoware
 </code></pre></div>
@@ -6765,7 +6765,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </
 <p>Autowareを初めてインストールする場合は提供されたAnsibleスクリプトを使用して依存関係を自動的にインストールできます。</p>
 <div class="highlight"><pre><span></span><code>./setup-dev-env.sh
 </code></pre></div>
-<p>ビルドの問題が発生した場合は<a href="../../../support/troubleshooting/#build-issues">トラブルシューティング</a>セクションを参照してサポートを求めてください。</p>
+<p>ビルドで問題が発生した場合は<a href="../../../support/troubleshooting/#build-issues">トラブルシューティング</a>を参照してサポートを求めてください。</p>
 </li>
 </ol>
 <div class="admonition 注意">
@@ -6779,7 +6779,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </
 </div>
 <div class="admonition 注記">
 <p class="admonition-title">注記</p>
-<p>以下の項目が自動的にインストールされます。ansibleスクリプトが機能しない場合、または別のバージョンの依存ライブラリがすでにインストールされている場合は、以下のアイテムを手動でインストールしてください。</p>
+<p>以下の項目が自動的にインストールされます。Ansibleスクリプトが機能しない場合、または別のバージョンの依存ライブラリがすでにインストールされている場合は、以下のアイテムを手動でインストールしてください。</p>
 <ul>
 <li><a href="https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/ros2#manual-installation">ROS2のインストール</a></li>
 <li><a href="https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/ros2_dev_tools#manual-installation">ROS2 Dev Toolsのインストール</a></li>
@@ -6791,11 +6791,11 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </
 <li><a href="https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/cuda#manual-installation">Nvidia CUDAのインストール</a></li>
 <li><a href="https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/tensorrt#manual-installation">Nvidia cuDNNとTensorRTのインストール</a></li>
 </ul>
-<p>ansibleスクリプトを使用しなかった場合は<a href="https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/artifacts">アーティファクトの手動ロードマニュアル</a>で説明されているように、いくつかのパッケージアーティファクトをダウンロードする必要があります。そうしないと推論にこれらのアーティファクトが必要なため、一部のパッケージ (主に認識に関連するもの) が実行できなくなります。</p>
+<p>Ansibleスクリプトを使用しなかった場合は<a href="https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/artifacts">アーティファクトの手動ロードマニュアル</a>で説明されているようにいくつかのアーティファクトパッケージをダウンロードする必要があります。そうしないと推論にこれらのアーティファクトが必要なため一部のパッケージ(主に認識に関連するもの)が実行できなくなります。</p>
 </div>
 <h2 id="_4">ワークスペースの設定方法<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
-<p>!!! info <a href="#using-autoware-build-gui">Using Autoware Build GUI</a></p>
-<div class="codehilite"><pre><span></span><code>If you prefer a graphical user interface (GUI) over the command line for launching and managing your simulations, refer to the `Using Autoware Build GUI` section at the end of this document for a step-by-step guide.
+<p>!!! <a href="#using-autoware-build-gui">Using Autoware Build GUI</a>[Autoware Build GUIの使用]に関する情報</p>
+<div class="codehilite"><pre><span></span><code>シミュレーションの起動と管理にコマンドラインよりもグラフィカルユーザーインターフェイス(GUI)を使用したい場合は、このドキュメントの最後にある`Autoware Build GUI の使用`セクションのステップ・バイ・ステップガイドを参照してください。
 </code></pre></div>
 
 <ol>
