@@ -831,13 +831,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#lane-driving-scenario" class="md-nav__link">
-    Lane driving scenario
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
     駐車シナリオ
   </a>
@@ -891,30 +884,30 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-autoware-launch-gui" class="md-nav__link">
-    Using Autoware Launch GUI
+  <a href="#autoware-launch-gui" class="md-nav__link">
+    Autoware Launch GUIの使用
   </a>
   
-    <nav class="md-nav" aria-label="Using Autoware Launch GUI">
+    <nav class="md-nav" aria-label="Autoware Launch GUIの使用">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#getting-started-with-autoware-launch-gui" class="md-nav__link">
-    Getting Started with Autoware Launch GUI
+  <a href="#autoware-launch-gui_1" class="md-nav__link">
+    Autoware Launch GUIの使用を開始する
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#launching-a-planning-simulation" class="md-nav__link">
-    Launching a Planning Simulation
+  <a href="#_13" class="md-nav__link">
+    計画シミュレーションの実行
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#monitoring-and-managing-the-simulation" class="md-nav__link">
-    Monitoring and Managing the Simulation
+  <a href="#_15" class="md-nav__link">
+    シミュレーションの監視と管理
   </a>
   
 </li>
@@ -6733,13 +6726,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#lane-driving-scenario" class="md-nav__link">
-    Lane driving scenario
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
     駐車シナリオ
   </a>
@@ -6793,30 +6779,30 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-autoware-launch-gui" class="md-nav__link">
-    Using Autoware Launch GUI
+  <a href="#autoware-launch-gui" class="md-nav__link">
+    Autoware Launch GUIの使用
   </a>
   
-    <nav class="md-nav" aria-label="Using Autoware Launch GUI">
+    <nav class="md-nav" aria-label="Autoware Launch GUIの使用">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#getting-started-with-autoware-launch-gui" class="md-nav__link">
-    Getting Started with Autoware Launch GUI
+  <a href="#autoware-launch-gui_1" class="md-nav__link">
+    Autoware Launch GUIの使用を開始する
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#launching-a-planning-simulation" class="md-nav__link">
-    Launching a Planning Simulation
+  <a href="#_13" class="md-nav__link">
+    計画シミュレーションの実行
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#monitoring-and-managing-the-simulation" class="md-nav__link">
-    Monitoring and Managing the Simulation
+  <a href="#_15" class="md-nav__link">
+    シミュレーションの監視と管理
   </a>
   
 </li>
@@ -6872,12 +6858,11 @@ yabloc_pose_initializer
 </code></pre></div>
 <p>もし無ければ<a href="https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/artifacts">アーティファクトのダウンロード</a>を確認してください。</p>
 <h2 id="_3">基本シミュレーション<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<h3 id="_4">レーン走行シナリオ<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
-<p>!!! info <a href="#using-autoware-launch-gui">Using Autoware Launch GUI</a></p>
-<div class="codehilite"><pre><span></span><code>If you prefer a graphical user interface (GUI) over the command line for launching and managing your simulations, refer to the `Using Autoware Launch GUI` section at the end of this document for a step-by-step guide.
+<p>!!! <a href="#using-autoware-launch-gui">Autoware Launch GUIの使用</a>に関する情報</p>
+<div class="codehilite"><pre><span></span><code>シミュレーションの起動と管理にコマンドラインよりもグラフィカルユーザーインターフェイス(GUI)を使用したい場合はこのドキュメントの最後にある`Autoware Launch GUIの使用`セクションのステップ・バイ・ステップガイドを参照してください。
 </code></pre></div>
 
-<h3 id="lane-driving-scenario">Lane driving scenario<a class="headerlink" href="#lane-driving-scenario" title="Permanent link">#</a></h3>
+<h3 id="_4">レーン走行シナリオ<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
 <h4 id="1-autoware">1. Autowareの起動<a class="headerlink" href="#1-autoware" title="Permanent link">#</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>~/autoware/install/setup.bash
 ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>planning_simulator.launch.xml<span class="w"> </span>map_path:<span class="o">=</span><span class="nv">$HOME</span>/autoware_map/sample-map-planning<span class="w"> </span>vehicle_model:<span class="o">=</span>sample_vehicle<span class="w"> </span>sensor_model:<span class="o">=</span>sample_sensor_kit
@@ -7019,54 +7004,54 @@ ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span c
 <p><img alt="after-traffic-light-color-update" src="../images/planning/traffic-light/after-traffic-light-color-update.png"></p>
 <p><code>TrafficLightPublishPanel</code>から信号機を削除するには<code>RESET</code>ボタンをクリックします。</p>
 <p><a href="https://drive.google.com/file/d/1bs_dX1JJ76qHk-SGvS6YF9gmekkN8fz7/view?usp=sharing">ビデオチュートリアルを参照する</a></p>
-<h2 id="using-autoware-launch-gui">Using Autoware Launch GUI<a class="headerlink" href="#using-autoware-launch-gui" title="Permanent link">#</a></h2>
-<p>This section provides a step-by-step guide on using the Autoware Launch GUI for planning simulations, offering an alternative to the command-line instructions provided in the Basic simulations section.</p>
-<h3 id="getting-started-with-autoware-launch-gui">Getting Started with Autoware Launch GUI<a class="headerlink" href="#getting-started-with-autoware-launch-gui" title="Permanent link">#</a></h3>
+<h2 id="autoware-launch-gui">Autoware Launch GUIの使用<a class="headerlink" href="#autoware-launch-gui" title="Permanent link">#</a></h2>
+<p>このセクションではAutoware Launch GUIを使用してシミュレーションを計画するためのステップバイステップガイドを提供し、基本的なシミュレーションセクションで提供されるコマンドライン手順の代替手段を提供します。</p>
+<h3 id="autoware-launch-gui_1">Autoware Launch GUIの使用を開始する<a class="headerlink" href="#autoware-launch-gui_1" title="Permanent link">#</a></h3>
 <ol>
 <li>
-<p><strong>Installation:</strong> Ensure you have installed the Autoware Launch GUI. <a href="https://github.com/autowarefoundation/autoware-launch-gui#installation">Installation instructions</a>.</p>
+<p><strong>インストール:</strong> Autoware Launch GUIがインストールされていることを確認します。 <a href="https://github.com/autowarefoundation/autoware-launch-gui#installation">インストール手順</a>.</p>
 </li>
 <li>
-<p><strong>Launching the GUI:</strong> Open the Autoware Launch GUI from your applications menu.</p>
+<p><strong>GUIの起動:</strong> アプリケーションメニューからAutoware Launch GUIを開きます。</p>
 <p><img alt="GUI screenshot for launching the GUI" src="../images/planning/launch-gui/launch_gui_main.png"></p>
 </li>
 </ol>
-<h3 id="launching-a-planning-simulation">Launching a Planning Simulation<a class="headerlink" href="#launching-a-planning-simulation" title="Permanent link">#</a></h3>
-<h4 id="lane-driving-scenario_1">Lane Driving Scenario<a class="headerlink" href="#lane-driving-scenario_1" title="Permanent link">#</a></h4>
+<h3 id="_13">計画シミュレーションの実行<a class="headerlink" href="#_13" title="Permanent link">#</a></h3>
+<h4 id="_14">車線走行シナリオ<a class="headerlink" href="#_14" title="Permanent link">#</a></h4>
 <ol>
 <li>
-<p><strong>Set Autoware Path:</strong> In the GUI, set the path to your Autoware installation.</p>
+<p><strong>Autowareパスの設定:</strong> GUIでAutowareインストールへのパスを設定します。</p>
 <p><img alt="GUI_screenshot_for_setting_Autoware_path" src="../images/planning/launch-gui/launch_gui_setup.png"></p>
 </li>
 <li>
-<p><strong>Select Launch File:</strong> Choose <code>planning_simulator.launch.xml</code> for the lane driving scenario.</p>
+<p><strong>起動ファイルの選択:</strong> 車線走行シナリオの<code>planning_simulator.launch.xml</code>を選択します。</p>
 <p><img alt="GUI screenshot for selecting launch file" src="../images/planning/launch-gui/selecting_launch_file.png"></p>
 </li>
 <li>
-<p><strong>Customize Parameters:</strong> Adjust parameters such as <code>map_path</code>, <code>vehicle_model</code>, and <code>sensor_model</code> as needed.</p>
+<p><strong>パラメータのカスタマイズ:</strong> 必要に応じて、<code>map_path</code>、<code>vehicle_model</code>、<code>sensor_model</code>などのパラメータを調整します。</p>
 <p><img alt="GUI screenshot for customizing parameters" src="../images/planning/launch-gui/customizing-parameters1.png">
  <img alt="GUI screenshot for customizing parameters" src="../images/planning/launch-gui/customizing-parameters2.png"></p>
 </li>
 <li>
-<p><strong>Start Simulation:</strong> Click the launch button to start the simulation.</p>
+<p><strong>シミュレーションの開始:</strong> 起動ボタンをクリックしてシミュレーションを開始します。</p>
 <p><img alt="GUI screenshot for starting simulation" src="../images/planning/launch-gui/starting_simulation.png"></p>
 </li>
 <li>
-<p><strong>Any Scenario:</strong> From here, you can follow the instructions in the</p>
+<p><strong>任意のシナリオ:</strong> ここから、次の手順に従うことができます。</p>
 </li>
 </ol>
 <ul>
-<li>Lane driving scenario: <a href="#lane-driving-scenario">Lane Driving Scenario</a></li>
-<li>Parking scenario: <a href="#parking-scenario">Parking scenario</a></li>
-<li>Lane change scenario: <a href="#lane-change-scenario">Lane change scenario</a></li>
-<li>Avoidance scenario: <a href="#avoidance-scenario">Avoidance scenario</a></li>
-<li>Advanced Simulations: <a href="#advanced-simulations">Advanced Simulations</a></li>
+<li>車線走行シナリオ: <a href="#lane-driving-scenario">車線走行シナリオ</a></li>
+<li>駐車シナリオ: <a href="#parking-scenario">駐車シナリオ</a></li>
+<li>車線変更シナリオ: <a href="#lane-change-scenario">車線変更シナリオ</a></li>
+<li>回避シナリオ: <a href="#avoidance-scenario">回避シナリオ</a></li>
+<li>高度なシミュレーション: <a href="#advanced-simulations">高度なシミュレーション</a></li>
 </ul>
-<h3 id="monitoring-and-managing-the-simulation">Monitoring and Managing the Simulation<a class="headerlink" href="#monitoring-and-managing-the-simulation" title="Permanent link">#</a></h3>
+<h3 id="_15">シミュレーションの監視と管理<a class="headerlink" href="#_15" title="Permanent link">#</a></h3>
 <ul>
-<li><strong>Real-Time Monitoring:</strong> Use the GUI to monitor CPU/Memory usage and Autoware logs in real-time.</li>
-<li><strong>Profile Management:</strong> Save your simulation profiles for quick access in future simulations.</li>
-<li><strong>Adjusting Parameters:</strong> Easily modify simulation parameters on-the-fly through the GUI.</li>
+<li><strong>リアルタイム監視:</strong> GUIを使用してCPU/メモリの使用状況とAutowareログをリアルタイムで監視します。</li>
+<li><strong>プロファイル管理:</strong> 将来のシミュレーションですぐにアクセスできるように、シミュレーションプロファイルを保存します。</li>
+<li><strong>パラメータの調整:</strong> GUIを使用してシミュレーションパラメータをオンザフライで簡単に変更できます。</li>
 </ul>
 <!-- prettier-ignore --></div>
 
