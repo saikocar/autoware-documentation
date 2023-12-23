@@ -1,99 +1,99 @@
-# Docker installation for development
+# 開発向けのDockerを利用したインストール
 
-## Prerequisites
+## 要件
 
 - [Git](https://git-scm.com/)
 
-- For NVIDIA Jetson devices, install [JetPack](https://docs.nvidia.com/jetson/jetpack/install-jetpack/index.html#how-to-install-jetpack) >= 5.0
+- NVIDIA Jetsonデバイスでは[JetPack](https://docs.nvidia.com/jetson/jetpack/install-jetpack/index.html#how-to-install-jetpack) >= 5.0がインストールされていること
 
-## How to set up a development environment
+## 開発環境のセットアップ
 
-1. Clone `autowarefoundation/autoware` and move to the directory.
+1. `autowarefoundation/autoware`をクローンしてディレクトリに移動する。
 
    ```bash
    git clone https://github.com/autowarefoundation/autoware.git
    cd autoware
    ```
 
-2. You can install the dependencies either manually or using the provided Ansible script.
+2. 依存関係を手動あるいは提供されているAnsibleスクリプトを利用することでインストールできます。
 
-> Note: Before installing NVIDIA libraries, confirm and agree with the licenses.
+> 注記: NVIDIAライブラリをインストールする前にライセンスを確認し同意してください。
 
 - [CUDA](https://docs.nvidia.com/cuda/eula/index.html)
 
-### Installing dependencies manually
+### 依存関係の手動インストール
 
-- [Install Nvidia CUDA](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/cuda#manual-installation)
-- [Install Docker Engine](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/docker_engine#manual-installation)
-- [Install NVIDIA Container Toolkit](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/nvidia_docker#manual-installation)
-- [Install rocker](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/rocker#manual-installation)
+- [Nvidia CUDAのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/cuda#manual-installation)
+- [Docker Engineのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/docker_engine#manual-installation)
+- [NVIDIA Container Toolkitのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/nvidia_docker#manual-installation)
+- [rockerのインストール](https://github.com/autowarefoundation/autoware/tree/main/ansible/roles/rocker#manual-installation)
 
-### Installing dependencies using Ansible
+### Ansibleを利用した依存関係のインストール
 
-Be very careful with this method. Make sure you read and confirmed all the steps in the Ansible configuration before using it.
+この手法にはとても注意してください。Ansible構成を使用する前に、Ansible構成のすべての手順を必ず読んで確認してください。
 
-If you've manually installed the dependencies, you can skip this section.
+依存関係を手動でインストール済みならこのセクションは省略できます。
 
 ```bash
 ./setup-dev-env.sh docker
 ```
 
-You might need to log out and log back to make the current user able to use docker.
+現在のユーザーがdockerを使用できるようにするには、ログアウトしてから再度ログオンする必要がある場合があります。
 
-## How to set up a workspace
+## ワークスペースのセットアップ
 
-!!! warning
+!!! 警告
 
-    Before proceeding, confirm and agree with the [NVIDIA Deep Learning Container license](https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license).
-    By pulling and using the Autoware Universe images, you accept the terms and conditions of the license.
+    続行する前に[NVIDIA Deep Learningコンテナライセンス](https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license)を確認し、同意してください。
+    Autoware Universeイメージを取得して使用するとライセンスの利用規約に同意したことになります。
 
-1. Create the `autoware_map` directory for map data later.
+1. `autoware_map`ディレクトリを後の地図データのために作成します。
 
    ```bash
    mkdir ~/autoware_map
    ```
 
-2. Pull the Docker image
+2. Dockerイメージをプルします。
 
    ```bash
    docker pull ghcr.io/autowarefoundation/autoware-universe:latest-cuda
    ```
 
-3. Launch a Docker container.
+3. Dockerコンテナを起動します。
 
-   - For amd64 architecture computers with NVIDIA GPU:
+   - amd64アーキテクチャのコンピュータでNVIDIA GPUを利用する場合:
 
      ```bash
      rocker --nvidia --x11 --user --volume $HOME/autoware --volume $HOME/autoware_map -- ghcr.io/autowarefoundation/autoware-universe:latest-cuda
      ```
 
-   - If you want to run container without using NVIDIA GPU, or for arm64 architecture computers:
+   - NVIDIA GPUを使わずにコンテナを走らせたい、またはarm64アーキテクチャのコンピュータの場合:
 
      ```bash
      rocker -e LIBGL_ALWAYS_SOFTWARE=1 --x11 --user --volume $HOME/autoware --volume $HOME/autoware_map -- ghcr.io/autowarefoundation/autoware-universe:latest-cuda
      ```
 
-     For detailed reason could be found [here](./docker-installation.md#docker-with-nvidia-gpu-fails-to-start-autoware-on-arm64-devices)
+     詳細な理由については[こちら](./docker-installation.md#docker-with-nvidia-gpu-fails-to-start-autoware-on-arm64-devices)で確認できます。
 
-   For more advanced usage, see [here](https://github.com/autowarefoundation/autoware/tree/main/docker/README.md).
+   高度な利用については[こちら](https://github.com/autowarefoundation/autoware/tree/main/docker/README.md)を参照してください。
 
-   After that, move to the workspace in the container:
+   起動したらコンテナ内のワークスペースに移動します:
 
    ```bash
    cd autoware
    ```
 
-4. Create the `src` directory and clone repositories into it.
+4. `src`ディレクトリを作成し、リポジトリを中にクローンします。
 
    ```bash
    mkdir src
    vcs import src < autoware.repos
    ```
 
-5. Update dependent ROS packages.
+5. ROSパッケージの依存関係を更新します。
 
-   The dependency of Autoware may change after the Docker image was created.
-   In that case, you need to run the following commands to update the dependency.
+   Autowareの依存関係は、Dockerイメージの作成後に変更される可能性があります。
+   その場合、以下のコマンドを実行して依存関係を更新する必要があります。
 
    ```bash
    sudo apt update
@@ -101,51 +101,51 @@ You might need to log out and log back to make the current user able to use dock
    rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
    ```
 
-6. Build the workspace.
+6. ワークスペースを構築します。
 
    ```bash
    colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
    ```
 
-   If there is any build issue, refer to [Troubleshooting](../../support/troubleshooting/index.md#build-issues).
+   ビルドに問題がある場合は[トラブルシューティング](../../support/troubleshooting/index.md#build-issues)を参照してください。
 
-## How to update a workspace
+## ワークスペースの更新
 
-1. Update the Docker image.
+1. Dockerイメージを更新します。
 
    ```bash
    docker pull ghcr.io/autowarefoundation/autoware-universe:latest-cuda
    ```
 
-2. Launch a Docker container.
+2. Dockerコンテナを起動します。
 
-   - For amd64 architecture computers:
+   - amd64アーキテクチャのコンピュータの場合:
 
      ```bash
      rocker --nvidia --x11 --user --volume $HOME/autoware -- ghcr.io/autowarefoundation/autoware-universe:latest-cuda
      ```
 
-   - If you want to run container without using NVIDIA GPU, or for arm64 architecture computers:
+   - NVIDIA GPUを使わずにコンテナを走らせたい、またはarm64アーキテクチャのコンピュータの場合:
 
      ```bash
      rocker -e LIBGL_ALWAYS_SOFTWARE=1 --x11 --user --volume $HOME/autoware -- ghcr.io/autowarefoundation/autoware-universe:latest-cuda
      ```
 
-3. Update the `.repos` file.
+3. `.repos`ファイルを更新します。
 
    ```bash
    cd autoware
    git pull
    ```
 
-4. Update the repositories.
+4. リポジトリを更新します。
 
    ```bash
    vcs import src < autoware.repos
    vcs pull src
    ```
 
-5. Build the workspace.
+5. ワークスペースを構築します。
 
    ```bash
    colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
