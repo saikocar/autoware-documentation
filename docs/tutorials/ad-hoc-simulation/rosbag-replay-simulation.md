@@ -47,9 +47,9 @@
 
 ## rosbagリプレイシミュレーションの実行方法
 
-!!! info [Using Autoware Launch GUI](#using-autoware-launch-gui)
+!!! [Autoware Launch GUIの使用](#using-autoware-launch-gui)に関する情報
 
-    If you prefer a graphical user interface (GUI) over the command line for launching and managing your simulations, refer to the `Using Autoware Launch GUI` section at the end of this document for a step-by-step guide.
+    シミュレーションの起動と管理にコマンドラインよりもグラフィカルユーザーインターフェイス(GUI)を使用したい場合は、このドキュメントの最後にある`Autoware Launch GUIの使用`セクションのステップバイステップガイドを参照してください。
 
 1. Autowareを起動します
 
@@ -81,52 +81,52 @@
 
 [ビデオチュートリアルを参照する](https://drive.google.com/file/d/12D6aSC1Y3Kf7STtEPWG5RYynxKdVcPrc/view?usp=sharing)
 
-## Using Autoware Launch GUI
+## Autoware Launch GUIの使用
 
-This section provides a step-by-step guide for using the Autoware Launch GUI to launch and manage your rosbag replay simulation. offering an alternative to the command-line instructions provided in the previous section.
+このセクションでは、Autoware Launch GUIを使用してrosbagリプレイシミュレーションを起動および管理するためのステップバイステップガイドを提供します。前のセクションで説明したコマンドライン命令の代替手段を提供します。
 
-### Getting Started with Autoware Launch GUI
+### Autoware Launch GUIの使用を開始する
 
-1. **Installation:** Ensure you have installed the Autoware Launch GUI. [Installation instructions](https://github.com/autowarefoundation/autoware-launch-gui#installation).
+1. **インストール:** Autoware Launch GUIがインストールされていることを確認します。 [インストール手順](https://github.com/autowarefoundation/autoware-launch-gui#installation).
 
-2. **Launching the GUI:** Open the Autoware Launch GUI from your applications menu.
+2. **GUIの起動:** アプリケーションメニューからAutoware Launch GUIを開きます。
    ![GUI_screenshot_for_launching](images/rosbag-replay/launch-gui/launch_gui_main.png)
 
-### Launching a Logging Simulation
+### 記録シミュレーションの起動
 
-1. **Set Autoware Path:** In the GUI, set the path to your Autoware installation.
+1. **Autowareパスの設定:** GUIでAutowareインストールへのパスを設定します。
    ![GUI_screenshot_for_setting_Autoware_path](images/rosbag-replay/launch-gui/launch_gui_setup.png)
-2. **Select Launch File:** Choose `logging_simulator.launch.xml` for the lane driving scenario.
+2. **起動ファイルの選択:** 車線走行シナリオ用に`logging_simulator.launch.xml`を選択します。
    ![GUI screenshot for selecting launch file](images/rosbag-replay/launch-gui/selecting_launch_file.png)
-3. **Customize Parameters:** Adjust parameters such as `map_path`, `vehicle_model`, and `sensor_model` as needed.
+3. **パラメーターの調整:** 必要に応じて`map_path`、`vehicle_model`、`sensor_model`等のパラメータを調整します。
 
    ![GUI screenshot for customizing parameters](images/rosbag-replay/launch-gui/customizing-parameters1.png)
    ![GUI screenshot for customizing parameters](images/rosbag-replay/launch-gui/customizing-parameters2.png)
 
-4. **Start Simulation:** Click the launch button to start the simulation and have access to all the logs.
+4. **シミュレーションの開始:** 起動ボタンをクリックしてシミュレーションを開始し、すべてのログにアクセスします。
 
    ![GUI screenshot for starting simulation](images/rosbag-replay/launch-gui/starting_simulation.png)
 
-5. **Play Rosbag:** Move to the `Rosbag` tab and select the rosbag file you wish to play.
+5. **Rosbagの再生:** `Rosbag`タブに移動し再生したいrosbagファイルを選択します。
 
    ![GUI screenshot for selecting rosbag file](images/rosbag-replay/launch-gui/selecting_rosbag_file.png)
 
-6. **Adjust Playback Speed:** Adjust the playback speed as needed and any other parameters you wish to customize.
+6. **再生速度の調整:** 必要に応じて再生速度を調整し、カスタマイズしたいその他のパラメーターを調整します。
 
    ![GUI screenshot for adjusting playback speed](images/rosbag-replay/launch-gui/adjusting_flags.png)
 
-7. **Start Playback:** Click the play button to start the rosbag playback and have access to settings such as `pause/play`, `stop`, and `speed slider`5.
+7. **再生開始:** 再生ボタンをクリックするとrosbagの再生が開始し、`pause/play`、`stop`、`speed slider`5などの設定にアクセスできます。
 
    ![GUI screenshot for starting playback](images/rosbag-replay/launch-gui/starting_playback.png)
 
-8. **View Simulation:** Move to the `RViz` window to view the simulation.
+8. **シミュレーションを見る:** `RViz`ウィンドウに移動してシミュレーションを見ます。
 
    ![after-rosbag-play](images/rosbag-replay/after-rosbag-play.png)
 
-9. To focus the view on the ego vehicle, change the `Target Frame` in the RViz Views panel from `viewer` to `base_link`.
+9. 自己車両に焦点を当てるにはRVizのビューパネルの`Target Frame`を`viewer`から`base_link`に変更します。
 
    ![change-target-frame](images/rosbag-replay/change-target-frame.png)
 
-10. To switch the view to `Third Person Follower` etc, change the `Type` in the RViz Views panel.
+10. ビューを`Third Person Follower`等に変更するにはRVizのビューパネルの`Type`を変更します。
 
     ![third-person-follower](images/rosbag-replay/third-person-follower.png)
