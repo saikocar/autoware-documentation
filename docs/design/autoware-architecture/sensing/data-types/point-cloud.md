@@ -1,43 +1,68 @@
-点群前処理設計
-概要
-点群前処理は、生のセンサー データにいくつかの原始的な前処理を適用するモジュールのコレクションです。
+# 点群前処理設計
+
+## 概要
+点群前処理は、生のセンサーデータにいくつかの原始的な前処理を適用するモジュールの集まりです。
 
 このパイプラインは、ドライバーから認識スタックまでのデータの流れをカバーします。
 
-推奨される処理パイプライン
+## 推奨前処理パイプライン
 
-モジュールのリスト
-ここで使用されるモジュールは、pointcloud_preprocessor パッケージからのものです。
+```mermaid
+graph TD
+    Driver["Lidar Driver"] -->|"Cloud XYZIRCADT"| FilterPR["Polygon Remover Filter / CropBox Filter"]
 
-モジュールの詳細については、次の表を参照してください。
+    subgraph "sensing"
+    FilterPR -->|"Cloud XYZIRCADT"| FilterDC["Motion Distortion Corrector Filter"]
+    FilterDC -->|"Cloud XYZIRCAD"| FilterOF["Outlier Remover Filter"]
+    FilterOF -->|"Cloud XYZIRC"| FilterDS["Downsampler Filter"]
+    FilterDS -->|"Cloud XYZIRC"| FilterTrans["Cloud Transformer"]
+    FilterTrans -->|"Cloud XYZIRC"| FilterC
 
-これらのモジュールは、単一のコンテナーでコンポーネントとして使用することをお勧めします。詳細については、「ROS 2 構成」を参照してください。
+    FilterX["..."] -->|"Cloud XYZIRC (i)"| FilterC["Cloud Concatenator"]
+    end
 
-点群フィールド
-理想的なケースでは、ドライバーはポイントPointXYZIRCADTタイプを使用して点群を出力することが期待されます。
+    FilterC -->|"Cloud XYZIRC"| SegGr["Ground Segmentation"]
+```
 
-名前	データ・タイプ	派生	説明
-X	FLOAT32	false	X位置
-Y	FLOAT32	false	Y位置
-Z	FLOAT32	false	Z位置
-I（強度）	FLOAT32	false	測定された反射率、点の強度
-R(戻り値の型)	UINT8	false	デュアルリターンライダー用レーザーリターンタイプ
-C（チャネル）	UINT16	false	ポイントを測定したレーザーの垂直チャネル ID
-A(方位角)	FLOAT32	true	atan2(Y, X), LIDAR の正面からポイントまでの水平角
-D（距離）	FLOAT32	true	hypot(X, Y, Z)、ポイントから LIDAR までのユークリッド距離
-T(タイムスタンプ)	FLOAT64	false	このポイントが測定されたヘッダーの時刻からの経過秒数
+## モジュールのリスト
+
+ここで使用されるモジュールは[pointcloud_preprocessorパッケージ](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/pointcloud_preprocessor)からのものです。
+
+モジュールの詳細については[以下の表](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/pointcloud_preprocessor#inner-workings--algorithms)を参照してください。
+
+これらのモジュールは、単一のコンテナでコンポーネントとして使用することをお勧めします。詳細については[ROS 2構成](https://docs.ros.org/en/rolling/Tutorials/Intermediate/Composition.html)を参照してください。
+
+## 点群のフィールド
+
+理想的なケースでは、ドライバーは`PointXYZIRCADT`ポイント型を使用して点群を出力することが期待されます。
+
+| 名前              | データ型  | 派生 | 説明                                                              |
+| ----------------- | --------- | ------- | ------------------------------------------------------------------------ |
+| `X`               | `FLOAT32` | `false` | X座標                                                               |
+| `Y`               | `FLOAT32` | `false` | Y座標                                                               |
+| `Z`               | `FLOAT32` | `false` | Z座標                                                               |
+| `I` (強度)   | `FLOAT32` | `false` | 測定された反射率、点の強度                            |
+| `R` (戻り値の型) | `UINT8`   | `false` | デュアルリターンライダー用レーザーの戻り値                                 |
+| `C` (チャンネル)     | `UINT16`  | `false` | ポイントを測定したレーザーの垂直チャネルID                 |
+| `A` (方位角)     | `FLOAT32` | `true`  | `atan2(Y, X)`、lidarの正面からポイントまでの水平角 |
+| `D` (距離)    | `FLOAT32` | `true`  | `hypot(X, Y, Z)`、ポイントから LIDAR までのユークリッド距離               |
+| `T` (タイムスタンプ)  | `FLOAT64` | `false` | このポイントが測定されたヘッダーの時刻からの経過秒数 |
+
 !!! 注記
 
-`A (azimuth)` and `D (distance)` fields are derived fields.
-They are provided by the driver to reduce the computational load on some parts of the perception stack.
+    `A (方位)`フィールドと`D (距離)`フィールドは派生フィールドです。
+    これらは、認識スタックの一部の計算負荷を軽減するためにドライバーによって提供されます。
+
 !!! 注記
 
-If the `Motion Distortion Corrector Filter` won't be used, the `T (time)` field can be omitted, `PointXYZIRCAD` point type can be used.
+    `モーション歪み補正フィルタ`を使用しない場合は、`T(時間)`フィールドを省略し、`PointXYZIRCAD`ポイント型を使用できます。 
+
 !!! 警告
 
-Autoware will support conversion from `PointXYZI` to `PointXYZIRC` or `PointXYZIRCAD` (with channel and return is set to 0) for prototyping purposes.
-However, this conversion is not recommended for production use since it's not efficient.
-強度
+    Autowareは試作の目的で、`PointXYZI`から`PointXYZIRC`または`PointXYZIRCAD`(チャネルあり、戻り値が0に設定される)への変換をサポートします。
+    ただしこの変換は効率的ではないため運用環境での使用には推奨されません。
+
+### 強度
 VLP16 ユーザーマニュアルと互換性のある次の強度範囲を使用します。
 
 VLP-16 ユーザーマニュアルからの引用:
@@ -55,20 +80,7 @@ VLP-16 ユーザーマニュアルからの引用:
 ただし、再帰反射体を備えた点群では、強度ポイントは 0 ～ 255 になります。
 
 他の LIDAR ブランドの強度マッピング
-ヘサイ パンダルXT16
-Hesai Pandar XT16 ユーザーマニュアル
 
-この LIDAR には、反射率を報告するための 2 つのモードがあります。
-
-線形マッピング
-非線形マッピング
-線形マッピング モードを使用している場合は、点群を作成するときに [0, 255] から [0, 100] にマッピングする必要があります。
-
-非線形マッピング モードを使用している場合は、(hesai から autoware) にマッピングする必要があります。
-
-[0, 251] ～ [0, 100] および
-[252、254] ～ [101、255]
-点群を構築するとき。
 
 Livox ミッド 70
 Livox Mid-70 ユーザーマニュアル
@@ -149,88 +161,21 @@ year 2038 problems. We will wait for actions on ROS 2 community side.
 各PointXYZIRCTポイント タイプには、T点群の最初のショット ポイントから経過した秒数を表すフィールドがあります。
 
 各ポイントがシュートされた正確な時間を計算するには、そのT秒数がヘッダー時間に追加されます。
-# Point cloud pre-processing design
-
-## Overview
-
-Point cloud pre-processing is a collection of modules that apply some primitive pre-processing to the raw sensor data.
-
-This pipeline covers the flow of data from drivers to the perception stack.
-
-## Recommended processing pipeline
-
-```mermaid
-graph TD
-    Driver["Lidar Driver"] -->|"Cloud XYZIRCADT"| FilterPR["Polygon Remover Filter / CropBox Filter"]
-
-    subgraph "sensing"
-    FilterPR -->|"Cloud XYZIRCADT"| FilterDC["Motion Distortion Corrector Filter"]
-    FilterDC -->|"Cloud XYZIRCAD"| FilterOF["Outlier Remover Filter"]
-    FilterOF -->|"Cloud XYZIRC"| FilterDS["Downsampler Filter"]
-    FilterDS -->|"Cloud XYZIRC"| FilterTrans["Cloud Transformer"]
-    FilterTrans -->|"Cloud XYZIRC"| FilterC
-
-    FilterX["..."] -->|"Cloud XYZIRC (i)"| FilterC["Cloud Concatenator"]
-    end
-
-    FilterC -->|"Cloud XYZIRC"| SegGr["Ground Segmentation"]
-```
-
-## List of modules
-
-The modules used here are from [pointcloud_preprocessor package](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/pointcloud_preprocessor).
-
-For details about the modules, see [the following table](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/pointcloud_preprocessor#inner-workings--algorithms).
-
-It is recommended that these modules are used in a single container as components. For details see [ROS 2 Composition](https://docs.ros.org/en/rolling/Tutorials/Intermediate/Composition.html)
-
-## Point cloud fields
-
-In the ideal case, the driver is expected to output a point cloud with the `PointXYZIRCADT` point type.
-
-| name              | datatype  | derived | description                                                              |
-| ----------------- | --------- | ------- | ------------------------------------------------------------------------ |
-| `X`               | `FLOAT32` | `false` | X position                                                               |
-| `Y`               | `FLOAT32` | `false` | Y position                                                               |
-| `Z`               | `FLOAT32` | `false` | Z position                                                               |
-| `I` (intensity)   | `FLOAT32` | `false` | Measured reflectivity, intensity of the point                            |
-| `R` (return type) | `UINT8`   | `false` | Laser return type for dual return lidars                                 |
-| `C` (channel)     | `UINT16`  | `false` | Vertical channel id of the laser that measured the point                 |
-| `A` (azimuth)     | `FLOAT32` | `true`  | `atan2(Y, X)`, Horizontal angle from the front of the lidar to the point |
-| `D` (distance)    | `FLOAT32` | `true`  | `hypot(X, Y, Z)`, Euclidean distance of the point to lidar               |
-| `T` (time stamp)  | `FLOAT64` | `false` | Seconds passed since the time of the header when this point was measured |
-
-!!! note
-
-    `A (azimuth)` and `D (distance)` fields are derived fields.
-    They are provided by the driver to reduce the computational load on some parts of the perception stack.
-
-!!! note
-
-    If the `Motion Distortion Corrector Filter` won't be used, the `T (time)` field can be omitted, `PointXYZIRCAD` point type can be used.
-
-!!! warning
-
-    Autoware will support conversion from `PointXYZI` to `PointXYZIRC` or `PointXYZIRCAD` (with channel and return is set to 0) for prototyping purposes.
-    However, this conversion is not recommended for production use since it's not efficient.
-
-### Intensity
-
 We will use following ranges for intensity, compatible with [the VLP16 User Manual](https://usermanual.wiki/Pdf/VLP16Manual.1719942037/view):
 
-Quoting from the VLP-16 User Manual:
+VLP-16ユーザーマニュアルからの引用:
 
-> For each laser measurement, a reflectivity byte is returned in addition to distance.
-> Reflectivity byte values are segmented into two ranges, allowing software to distinguish diffuse reflectors
-> (e.g. tree trunks, clothing) in the low range from retroreflectors (e.g. road signs, license plates) in the high range.
-> A retroreflector reflects light back to its source with a minimum of scattering.
-> The VLP-16 provides its own light, with negligible separation between transmitting laser and receiving detector, so
-> retroreflecting surfaces pop with reflected IR light compared to diffuse reflectors that tend to scatter reflected energy.
+> レーザー測定ごとに、距離に加えて反射率バイトが返されます。
+> 反射率バイト値は2つの範囲に分割され、ソフトウェアが低範囲の拡散反射体(木の幹、衣服など)と
+> 高範囲の再帰反射体(道路標識、ナンバープレートなど) を区別できるようにします。
+> 再帰反射体は、散乱を最小限に抑えながら光を光源に反射します。
+> VLP-16は独自の光を提供し、送信レーザーと受信検出器間の分離が無視できるほど小さいため、
+> 反射エネルギーを散乱させる傾向がある拡散反射板と比較して、再帰反射面は反射したIR光で飛び立ちます。
 >
-> - Diffuse reflectors report values from 0 to 100 for reflectivities from 0% to 100%.
-> - Retroreflectors report values from 101 to 255, where 255 represents an ideal reflection.
+> - 拡散反射体は、0%～100%の反射率に対して0～100の値を報告します。
+> - 再帰反射器は101～255 の値を報告します。255は理想的な反射を表します。
 
-In a typical point cloud without retroreflectors, all intensity points will be between 0 and 100.
+再帰反射体のない一般的な点群では、すべての強度点は 0 ～ 100 になります。
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Retroreflective_Gradient_road_sign.jpg" width="200">
 
@@ -238,48 +183,48 @@ In a typical point cloud without retroreflectors, all intensity points will be b
 
 But in a point cloud with retroreflectors, the intensity points will be between 0 and 255.
 
-#### Intensity mapping for other lidar brands
+#### 他のlidarブランドの強度マッピング
 
 ##### Hesai PandarXT16
 
-[Hesai Pandar XT16 User Manual](https://www.oxts.com/wp-content/uploads/2021/01/Hesai-PandarXT16_User_Manual.pdf)
+[Hesai Pandar XT16ユーザーマニュアル](https://www.oxts.com/wp-content/uploads/2021/01/Hesai-PandarXT16_User_Manual.pdf)
 
-This lidar has 2 modes for reporting reflectivity:
+このlidarには反射率を報告するための2つのモードがあります:
 
-- Linear mapping
-- Non-linear mapping
+- 線形マッピング
+- 非線形マッピング
 
-If you are using linear mapping mode, you should map from [0, 255] to [0, 100] when constructing the point cloud.
+線形マッピング モードを使用している場合は、点群を作成するときに[0, 255]から[0, 100]にマッピングする必要があります。
 
-If you are using non-linear mapping mode, you should map (hesai to autoware)
+非線形マッピング モードを使用している場合は, (hesaiからautowareへ)マッピングする必要があります。
 
-- [0, 251] to [0, 100] and
-- [252, 254] to [101, 255]
+- [0, 251]から[0, 100]と
+- [252, 254]から[101, 255]へ
 
-when constructing the point cloud.
+点群を構築するとき。
 
 ##### Livox Mid-70
 
-[Livox Mid-70 User Manual](https://terra-1-g.djicdn.com/65c028cd298f4669a7f0e40e50ba1131/Download/Mid-70/new/Livox%20Mid-70%20User%20Manual_EN_v1.2.pdf)
+[Livox Mid-70ユーザーマニュアル](https://terra-1-g.djicdn.com/65c028cd298f4669a7f0e40e50ba1131/Download/Mid-70/new/Livox%20Mid-70%20User%20Manual_EN_v1.2.pdf)
 
-This lidar has 2 modes for reporting reflectivity similar to Velodyne VLP-16, only the ranges are slightly different.
+このlidarには、Velodyne VLP-16と同様に反射率を報告するための2つのモードがありますが、範囲のみがわずかに異なります。
 
-You should map (livox to autoware)
+(livoxからautowareに)マッピングする必要があります
 
-- [0, 150] to [0, 100] and
-- [151, 255] to [101, 255]
+- [0, 150]から[0, 100]へと
+- [151, 255]から[101, 255]へ
 
-when constructing the point cloud.
+点群を構築するとき。
 
 ##### RoboSense RS-LiDAR-16
 
-[RoboSense RS-LiDAR-16 User Manual](https://cdn.robosense.cn/20200723161715_42428.pdf)
+[RoboSense RS-LiDAR-16ユーザーマニュアル](https://cdn.robosense.cn/20200723161715_42428.pdf)
 
-No mapping required, same as Velodyne VLP-16.
+Velodyne VLP-16と同じであり、マッピングは不要です。
 
 ##### Ouster OS-1-64
 
-[Software User Manual v2.0.0 for all Ouster sensors](https://data.ouster.io/downloads/software-user-manual/software-user-manual-v2p0.pdf)
+[全てのOusterセンサーのソフトウェアユーザーマニュアルv2.0.0](https://data.ouster.io/downloads/software-user-manual/software-user-manual-v2p0.pdf)
 
 In the manual it is stated:
 
@@ -289,7 +234,7 @@ So it is advised to map the 16 bit reflectivity to [0, 100] range.
 
 ##### Leishen CH64W
 
-[I couldn't get the english user manual, link of website](http://www.lslidar.com/en/down)
+[英語のユーザーマニュアルを入手できませんでした。ウェブサイトのリンク](http://www.lslidar.com/en/down)
 
 In a user manual I was able to find it says:
 
