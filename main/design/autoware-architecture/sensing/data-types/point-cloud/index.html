@@ -21,7 +21,7 @@
     
     
       
-        <title>Point cloud - Autoware Documentation</title>
+        <title>点群前処理設計 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#point-cloud-pre-processing-design" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Point cloud
+              点群前処理設計
             
           </span>
         </div>
@@ -4145,12 +4145,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Point cloud
+          点群前処理設計
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Point cloud
+        点群前処理設計
       </a>
       
         
@@ -4169,37 +4169,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#_2" class="md-nav__link">
+    概要
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#recommended-processing-pipeline" class="md-nav__link">
-    Recommended processing pipeline
+  <a href="#_3" class="md-nav__link">
+    推奨前処理パイプライン
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#list-of-modules" class="md-nav__link">
-    List of modules
+  <a href="#_4" class="md-nav__link">
+    モジュールのリスト
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#point-cloud-fields" class="md-nav__link">
-    Point cloud fields
+  <a href="#_5" class="md-nav__link">
+    点群のフィールド
   </a>
   
-    <nav class="md-nav" aria-label="Point cloud fields">
+    <nav class="md-nav" aria-label="点群のフィールド">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#intensity" class="md-nav__link">
-    Intensity
+  <a href="#_6" class="md-nav__link">
+    強度
   </a>
   
 </li>
@@ -6657,37 +6657,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#_2" class="md-nav__link">
+    概要
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#recommended-processing-pipeline" class="md-nav__link">
-    Recommended processing pipeline
+  <a href="#_3" class="md-nav__link">
+    推奨前処理パイプライン
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#list-of-modules" class="md-nav__link">
-    List of modules
+  <a href="#_4" class="md-nav__link">
+    モジュールのリスト
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#point-cloud-fields" class="md-nav__link">
-    Point cloud fields
+  <a href="#_5" class="md-nav__link">
+    点群のフィールド
   </a>
   
-    <nav class="md-nav" aria-label="Point cloud fields">
+    <nav class="md-nav" aria-label="点群のフィールド">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#intensity" class="md-nav__link">
-    Intensity
+  <a href="#_6" class="md-nav__link">
+    強度
   </a>
   
 </li>
@@ -6736,43 +6736,113 @@
   
 
 
-<div><p>点群前処理設計
-概要
-点群前処理は、生のセンサー データにいくつかの原始的な前処理を適用するモジュールのコレクションです。</p>
+<div><h1 id="_1">点群前処理設計<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">概要<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>点群前処理は、生のセンサーデータにいくつかの原始的な前処理を適用するモジュールの集まりです。</p>
 <p>このパイプラインは、ドライバーから認識スタックまでのデータの流れをカバーします。</p>
-<p>推奨される処理パイプライン</p>
-<p>モジュールのリスト
-ここで使用されるモジュールは、pointcloud_preprocessor パッケージからのものです。</p>
-<p>モジュールの詳細については、次の表を参照してください。</p>
-<p>これらのモジュールは、単一のコンテナーでコンポーネントとして使用することをお勧めします。詳細については、「<abbr title="Robot Operating System">ROS</abbr> 2 構成」を参照してください。</p>
-<p>点群フィールド
-理想的なケースでは、ドライバーはポイントPointXYZIRCADTタイプを使用して点群を出力することが期待されます。</p>
-<p>名前  データ・タイプ 派生  説明
-X   FLOAT32 false   X位置
-Y   FLOAT32 false   Y位置
-Z   FLOAT32 false   Z位置
-I（強度）   FLOAT32 false   測定された反射率、点の強度
-R(戻り値の型)    UINT8   false   デュアルリターンライダー用レーザーリターンタイプ
-C（チャネル） UINT16  false   ポイントを測定したレーザーの垂直チャネル ID
-A(方位角)  FLOAT32 true    atan2(Y, X), LIDAR の正面からポイントまでの水平角
-D（距離）   FLOAT32 true    hypot(X, Y, Z)、ポイントから LIDAR までのユークリッド距離
-T(タイムスタンプ)  FLOAT64 false   このポイントが測定されたヘッダーの時刻からの経過秒数</p>
+<h2 id="_3">推奨前処理パイプライン<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<pre class="mermaid"><code>graph TD
+    Driver["Lidar Driver"] --&gt;|"Cloud XYZIRCADT"| FilterPR["Polygon Remover Filter / CropBox Filter"]
+
+    subgraph "sensing"
+    FilterPR --&gt;|"Cloud XYZIRCADT"| FilterDC["Motion Distortion Corrector Filter"]
+    FilterDC --&gt;|"Cloud XYZIRCAD"| FilterOF["Outlier Remover Filter"]
+    FilterOF --&gt;|"Cloud XYZIRC"| FilterDS["Downsampler Filter"]
+    FilterDS --&gt;|"Cloud XYZIRC"| FilterTrans["Cloud Transformer"]
+    FilterTrans --&gt;|"Cloud XYZIRC"| FilterC
+
+    FilterX["..."] --&gt;|"Cloud XYZIRC (i)"| FilterC["Cloud Concatenator"]
+    end
+
+    FilterC --&gt;|"Cloud XYZIRC"| SegGr["Ground Segmentation"]</code></pre>
+<h2 id="_4">モジュールのリスト<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<p>ここで使用されるモジュールは<a href="https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/pointcloud_preprocessor">pointcloud_preprocessorパッケージ</a>からのものです。</p>
+<p>モジュールの詳細については<a href="https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/pointcloud_preprocessor#inner-workings--algorithms">以下の表</a>を参照してください。</p>
+<p>これらのモジュールは、単一のコンテナでコンポーネントとして使用することをお勧めします。詳細については<a href="https://docs.ros.org/en/rolling/Tutorials/Intermediate/Composition.html"><abbr title="Robot Operating System">ROS</abbr> 2構成</a>を参照してください。</p>
+<h2 id="_5">点群のフィールド<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<p>理想的なケースでは、ドライバーは<code>PointXYZIRCADT</code>ポイント型を使用して点群を出力することが期待されます。</p>
+<table>
+<thead>
+<tr>
+<th>名前</th>
+<th>データ型</th>
+<th>派生</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>X</code></td>
+<td><code>FLOAT32</code></td>
+<td><code>false</code></td>
+<td>X座標</td>
+</tr>
+<tr>
+<td><code>Y</code></td>
+<td><code>FLOAT32</code></td>
+<td><code>false</code></td>
+<td>Y座標</td>
+</tr>
+<tr>
+<td><code>Z</code></td>
+<td><code>FLOAT32</code></td>
+<td><code>false</code></td>
+<td>Z座標</td>
+</tr>
+<tr>
+<td><code>I</code> (強度)</td>
+<td><code>FLOAT32</code></td>
+<td><code>false</code></td>
+<td>測定された反射率、点の強度</td>
+</tr>
+<tr>
+<td><code>R</code> (戻り値の型)</td>
+<td><code>UINT8</code></td>
+<td><code>false</code></td>
+<td>デュアルリターンライダー用レーザーの戻り値</td>
+</tr>
+<tr>
+<td><code>C</code> (チャンネル)</td>
+<td><code>UINT16</code></td>
+<td><code>false</code></td>
+<td>ポイントを測定したレーザーの垂直チャネルID</td>
+</tr>
+<tr>
+<td><code>A</code> (方位角)</td>
+<td><code>FLOAT32</code></td>
+<td><code>true</code></td>
+<td><code>atan2(Y, X)</code>、lidarの正面からポイントまでの水平角</td>
+</tr>
+<tr>
+<td><code>D</code> (距離)</td>
+<td><code>FLOAT32</code></td>
+<td><code>true</code></td>
+<td><code>hypot(X, Y, Z)</code>、ポイントから LIDAR までのユークリッド距離</td>
+</tr>
+<tr>
+<td><code>T</code> (タイムスタンプ)</td>
+<td><code>FLOAT64</code></td>
+<td><code>false</code></td>
+<td>このポイントが測定されたヘッダーの時刻からの経過秒数</td>
+</tr>
+</tbody>
+</table>
 <div class="admonition 注記">
 <p class="admonition-title">注記</p>
+<p><code>A (方位)</code>フィールドと<code>D (距離)</code>フィールドは派生フィールドです。
+これらは、認識スタックの一部の計算負荷を軽減するためにドライバーによって提供されます。</p>
 </div>
-<p><code>A (azimuth)</code> and <code>D (distance)</code> fields are derived fields.
-They are provided by the driver to reduce the computational load on some parts of the perception stack.</p>
 <div class="admonition 注記">
 <p class="admonition-title">注記</p>
+<p><code>モーション歪み補正フィルタ</code>を使用しない場合は、<code>T(時間)</code>フィールドを省略し、<code>PointXYZIRCAD</code>ポイント型を使用できます。 </p>
 </div>
-<p>If the <code>Motion Distortion Corrector Filter</code> won't be used, the <code>T (time)</code> field can be omitted, <code>PointXYZIRCAD</code> point type can be used.</p>
 <div class="admonition 警告">
 <p class="admonition-title">警告</p>
+<p>Autowareは試作の目的で、<code>PointXYZI</code>から<code>PointXYZIRC</code>または<code>PointXYZIRCAD</code>(チャネルあり、戻り値が0に設定される)への変換をサポートします。
+ただしこの変換は効率的ではないため運用環境での使用には推奨されません。</p>
 </div>
-<p>Autoware will support conversion from <code>PointXYZI</code> to <code>PointXYZIRC</code> or <code>PointXYZIRCAD</code> (with channel and return is set to 0) for prototyping purposes.
-However, this conversion is not recommended for production use since it's not efficient.
-強度
-VLP16 ユーザーマニュアルと互換性のある次の強度範囲を使用します。</p>
+<h3 id="_6">強度<a class="headerlink" href="#_6" title="Permanent link">#</a></h3>
+<p>VLP16 ユーザーマニュアルと互換性のある次の強度範囲を使用します。</p>
 <p>VLP-16 ユーザーマニュアルからの引用:</p>
 <p>レーザー測定ごとに、距離に加えて反射率バイトが返されます。反射率バイト値は 2 つの範囲に分割され、ソフトウェアが低範囲の拡散反射体 (木の幹、衣服など) と高範囲の再帰反射体 (道路標識、ナンバー プレートなど) を区別できるようにします。再帰反射体は、散乱を最小限に抑えながら光を光源に反射します。VLP-16 は独自の光を提供し、送信レーザーと受信検出器間の分離が無視できるほど小さいため、反射エネルギーを散乱させる傾向がある拡散反射板と比較して、再帰反射面は反射した IR 光で飛び立ちます。</p>
 <p>拡散反射体は、0% ～ 100% の反射率に対して 0 ～ 100 の値を報告します。
@@ -6780,17 +6850,7 @@ VLP16 ユーザーマニュアルと互換性のある次の強度範囲を使�
 再帰反射体のない一般的な点群では、すべての強度点は 0 ～ 100 になります。</p>
 <p>再帰反射勾配道路標識、画像ソース</p>
 <p>ただし、再帰反射体を備えた点群では、強度ポイントは 0 ～ 255 になります。</p>
-<p>他の LIDAR ブランドの強度マッピング
-ヘサイ パンダルXT16
-Hesai Pandar XT16 ユーザーマニュアル</p>
-<p>この LIDAR には、反射率を報告するための 2 つのモードがあります。</p>
-<p>線形マッピング
-非線形マッピング
-線形マッピング モードを使用している場合は、点群を作成するときに [0, 255] から [0, 100] にマッピングする必要があります。</p>
-<p>非線形マッピング モードを使用している場合は、(hesai から autoware) にマッピングする必要があります。</p>
-<p>[0, 251] ～ [0, 100] および
-[252、254] ～ [101、255]
-点群を構築するとき。</p>
+<p>他の LIDAR ブランドの強度マッピング</p>
 <p>Livox ミッド 70
 Livox Mid-70 ユーザーマニュアル</p>
 <p>この LIDAR には、Velodyne VLP-16 と同様に反射率を報告するための 2 つのモードがありますが、範囲のみがわずかに異なります。</p>
@@ -6845,167 +6905,61 @@ year 2038 problems. We will wait for actions on <abbr title="Robot Operating Sys
 <p><strong>More info at:</strong> https://github.com/ros2/rcl_interfaces/issues/85
 個別ポイントのタイムスタンプ
 各PointXYZIRCTポイント タイプには、T点群の最初のショット ポイントから経過した秒数を表すフィールドがあります。</p>
-<p>各ポイントがシュートされた正確な時間を計算するには、そのT秒数がヘッダー時間に追加されます。</p>
-<h1 id="point-cloud-pre-processing-design">Point cloud pre-processing design<a class="headerlink" href="#point-cloud-pre-processing-design" title="Permanent link">#</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<p>Point cloud pre-processing is a collection of modules that apply some primitive pre-processing to the raw sensor data.</p>
-<p>This pipeline covers the flow of data from drivers to the perception stack.</p>
-<h2 id="recommended-processing-pipeline">Recommended processing pipeline<a class="headerlink" href="#recommended-processing-pipeline" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>graph TD
-    Driver["Lidar Driver"] --&gt;|"Cloud XYZIRCADT"| FilterPR["Polygon Remover Filter / CropBox Filter"]
-
-    subgraph "sensing"
-    FilterPR --&gt;|"Cloud XYZIRCADT"| FilterDC["Motion Distortion Corrector Filter"]
-    FilterDC --&gt;|"Cloud XYZIRCAD"| FilterOF["Outlier Remover Filter"]
-    FilterOF --&gt;|"Cloud XYZIRC"| FilterDS["Downsampler Filter"]
-    FilterDS --&gt;|"Cloud XYZIRC"| FilterTrans["Cloud Transformer"]
-    FilterTrans --&gt;|"Cloud XYZIRC"| FilterC
-
-    FilterX["..."] --&gt;|"Cloud XYZIRC (i)"| FilterC["Cloud Concatenator"]
-    end
-
-    FilterC --&gt;|"Cloud XYZIRC"| SegGr["Ground Segmentation"]</code></pre>
-<h2 id="list-of-modules">List of modules<a class="headerlink" href="#list-of-modules" title="Permanent link">#</a></h2>
-<p>The modules used here are from <a href="https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/pointcloud_preprocessor">pointcloud_preprocessor package</a>.</p>
-<p>For details about the modules, see <a href="https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/pointcloud_preprocessor#inner-workings--algorithms">the following table</a>.</p>
-<p>It is recommended that these modules are used in a single container as components. For details see <a href="https://docs.ros.org/en/rolling/Tutorials/Intermediate/Composition.html"><abbr title="Robot Operating System">ROS</abbr> 2 Composition</a></p>
-<h2 id="point-cloud-fields">Point cloud fields<a class="headerlink" href="#point-cloud-fields" title="Permanent link">#</a></h2>
-<p>In the ideal case, the driver is expected to output a point cloud with the <code>PointXYZIRCADT</code> point type.</p>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>datatype</th>
-<th>derived</th>
-<th>description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>X</code></td>
-<td><code>FLOAT32</code></td>
-<td><code>false</code></td>
-<td>X position</td>
-</tr>
-<tr>
-<td><code>Y</code></td>
-<td><code>FLOAT32</code></td>
-<td><code>false</code></td>
-<td>Y position</td>
-</tr>
-<tr>
-<td><code>Z</code></td>
-<td><code>FLOAT32</code></td>
-<td><code>false</code></td>
-<td>Z position</td>
-</tr>
-<tr>
-<td><code>I</code> (intensity)</td>
-<td><code>FLOAT32</code></td>
-<td><code>false</code></td>
-<td>Measured reflectivity, intensity of the point</td>
-</tr>
-<tr>
-<td><code>R</code> (return type)</td>
-<td><code>UINT8</code></td>
-<td><code>false</code></td>
-<td>Laser return type for dual return lidars</td>
-</tr>
-<tr>
-<td><code>C</code> (channel)</td>
-<td><code>UINT16</code></td>
-<td><code>false</code></td>
-<td>Vertical channel id of the laser that measured the point</td>
-</tr>
-<tr>
-<td><code>A</code> (azimuth)</td>
-<td><code>FLOAT32</code></td>
-<td><code>true</code></td>
-<td><code>atan2(Y, X)</code>, Horizontal angle from the front of the lidar to the point</td>
-</tr>
-<tr>
-<td><code>D</code> (distance)</td>
-<td><code>FLOAT32</code></td>
-<td><code>true</code></td>
-<td><code>hypot(X, Y, Z)</code>, Euclidean distance of the point to lidar</td>
-</tr>
-<tr>
-<td><code>T</code> (time stamp)</td>
-<td><code>FLOAT64</code></td>
-<td><code>false</code></td>
-<td>Seconds passed since the time of the header when this point was measured</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><code>A (azimuth)</code> and <code>D (distance)</code> fields are derived fields.
-They are provided by the driver to reduce the computational load on some parts of the perception stack.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If the <code>Motion Distortion Corrector Filter</code> won't be used, the <code>T (time)</code> field can be omitted, <code>PointXYZIRCAD</code> point type can be used.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Autoware will support conversion from <code>PointXYZI</code> to <code>PointXYZIRC</code> or <code>PointXYZIRCAD</code> (with channel and return is set to 0) for prototyping purposes.
-However, this conversion is not recommended for production use since it's not efficient.</p>
-</div>
-<h3 id="intensity">Intensity<a class="headerlink" href="#intensity" title="Permanent link">#</a></h3>
-<p>We will use following ranges for intensity, compatible with <a href="https://usermanual.wiki/Pdf/VLP16Manual.1719942037/view">the VLP16 User Manual</a>:</p>
-<p>Quoting from the VLP-16 User Manual:</p>
+<p>各ポイントがシュートされた正確な時間を計算するには、そのT秒数がヘッダー時間に追加されます。
+We will use following ranges for intensity, compatible with <a href="https://usermanual.wiki/Pdf/VLP16Manual.1719942037/view">the VLP16 User Manual</a>:</p>
+<p>VLP-16ユーザーマニュアルからの引用:</p>
 <blockquote>
-<p>For each laser measurement, a reflectivity byte is returned in addition to distance.
-Reflectivity byte values are segmented into two ranges, allowing software to distinguish diffuse reflectors
-(e.g. tree trunks, clothing) in the low range from retroreflectors (e.g. road signs, license plates) in the high range.
-A retroreflector reflects light back to its source with a minimum of scattering.
-The VLP-16 provides its own light, with negligible separation between transmitting laser and receiving detector, so
-retroreflecting surfaces pop with reflected IR light compared to diffuse reflectors that tend to scatter reflected energy.</p>
+<p>レーザー測定ごとに、距離に加えて反射率バイトが返されます。
+反射率バイト値は2つの範囲に分割され、ソフトウェアが低範囲の拡散反射体(木の幹、衣服など)と
+高範囲の再帰反射体(道路標識、ナンバープレートなど) を区別できるようにします。
+再帰反射体は、散乱を最小限に抑えながら光を光源に反射します。
+VLP-16は独自の光を提供し、送信レーザーと受信検出器間の分離が無視できるほど小さいため、
+反射エネルギーを散乱させる傾向がある拡散反射板と比較して、再帰反射面は反射したIR光で飛び立ちます。</p>
 <ul>
-<li>Diffuse reflectors report values from 0 to 100 for reflectivities from 0% to 100%.</li>
-<li>Retroreflectors report values from 101 to 255, where 255 represents an ideal reflection.</li>
+<li>拡散反射体は、0%～100%の反射率に対して0～100の値を報告します。</li>
+<li>再帰反射器は101～255 の値を報告します。255は理想的な反射を表します。</li>
 </ul>
 </blockquote>
-<p>In a typical point cloud without retroreflectors, all intensity points will be between 0 and 100.</p>
+<p>再帰反射体のない一般的な点群では、すべての強度点は 0 ～ 100 になります。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Retroreflective_Gradient_road_sign.jpg" width="200"></p>
 <p><a href="https://commons.wikimedia.org/wiki/File:Retroreflective_Gradient_road_sign.jpg">Retroreflective Gradient road sign, Image Source</a></p>
 <p>But in a point cloud with retroreflectors, the intensity points will be between 0 and 255.</p>
-<h4 id="intensity-mapping-for-other-lidar-brands">Intensity mapping for other lidar brands<a class="headerlink" href="#intensity-mapping-for-other-lidar-brands" title="Permanent link">#</a></h4>
+<h4 id="lidar">他のlidarブランドの強度マッピング<a class="headerlink" href="#lidar" title="Permanent link">#</a></h4>
 <h5 id="hesai-pandarxt16">Hesai PandarXT16<a class="headerlink" href="#hesai-pandarxt16" title="Permanent link">#</a></h5>
-<p><a href="https://www.oxts.com/wp-content/uploads/2021/01/Hesai-PandarXT16_User_Manual.pdf">Hesai Pandar XT16 User Manual</a></p>
-<p>This lidar has 2 modes for reporting reflectivity:</p>
+<p><a href="https://www.oxts.com/wp-content/uploads/2021/01/Hesai-PandarXT16_User_Manual.pdf">Hesai Pandar XT16ユーザーマニュアル</a></p>
+<p>このlidarには反射率を報告するための2つのモードがあります:</p>
 <ul>
-<li>Linear mapping</li>
-<li>Non-linear mapping</li>
+<li>線形マッピング</li>
+<li>非線形マッピング</li>
 </ul>
-<p>If you are using linear mapping mode, you should map from [0, 255] to [0, 100] when constructing the point cloud.</p>
-<p>If you are using non-linear mapping mode, you should map (hesai to autoware)</p>
+<p>線形マッピング モードを使用している場合は、点群を作成するときに[0, 255]から[0, 100]にマッピングする必要があります。</p>
+<p>非線形マッピング モードを使用している場合は, (hesaiからautowareへ)マッピングする必要があります。</p>
 <ul>
-<li>[0, 251] to [0, 100] and</li>
-<li>[252, 254] to [101, 255]</li>
+<li>[0, 251]から[0, 100]と</li>
+<li>[252, 254]から[101, 255]へ</li>
 </ul>
-<p>when constructing the point cloud.</p>
+<p>点群を構築するとき。</p>
 <h5 id="livox-mid-70">Livox Mid-70<a class="headerlink" href="#livox-mid-70" title="Permanent link">#</a></h5>
-<p><a href="https://terra-1-g.djicdn.com/65c028cd298f4669a7f0e40e50ba1131/Download/Mid-70/new/Livox%20Mid-70%20User%20Manual_EN_v1.2.pdf">Livox Mid-70 User Manual</a></p>
-<p>This lidar has 2 modes for reporting reflectivity similar to Velodyne VLP-16, only the ranges are slightly different.</p>
-<p>You should map (livox to autoware)</p>
+<p><a href="https://terra-1-g.djicdn.com/65c028cd298f4669a7f0e40e50ba1131/Download/Mid-70/new/Livox%20Mid-70%20User%20Manual_EN_v1.2.pdf">Livox Mid-70ユーザーマニュアル</a></p>
+<p>このlidarには、Velodyne VLP-16と同様に反射率を報告するための2つのモードがありますが、範囲のみがわずかに異なります。</p>
+<p>(livoxからautowareに)マッピングする必要があります</p>
 <ul>
-<li>[0, 150] to [0, 100] and</li>
-<li>[151, 255] to [101, 255]</li>
+<li>[0, 150]から[0, 100]へと</li>
+<li>[151, 255]から[101, 255]へ</li>
 </ul>
-<p>when constructing the point cloud.</p>
+<p>点群を構築するとき。</p>
 <h5 id="robosense-rs-lidar-16">RoboSense RS-LiDAR-16<a class="headerlink" href="#robosense-rs-lidar-16" title="Permanent link">#</a></h5>
-<p><a href="https://cdn.robosense.cn/20200723161715_42428.pdf">RoboSense RS-LiDAR-16 User Manual</a></p>
-<p>No mapping required, same as Velodyne VLP-16.</p>
+<p><a href="https://cdn.robosense.cn/20200723161715_42428.pdf">RoboSense RS-LiDAR-16ユーザーマニュアル</a></p>
+<p>Velodyne VLP-16と同じであり、マッピングは不要です。</p>
 <h5 id="ouster-os-1-64">Ouster OS-1-64<a class="headerlink" href="#ouster-os-1-64" title="Permanent link">#</a></h5>
-<p><a href="https://data.ouster.io/downloads/software-user-manual/software-user-manual-v2p0.pdf">Software User Manual v2.0.0 for all Ouster sensors</a></p>
+<p><a href="https://data.ouster.io/downloads/software-user-manual/software-user-manual-v2p0.pdf">全てのOusterセンサーのソフトウェアユーザーマニュアルv2.0.0</a></p>
 <p>In the manual it is stated:</p>
 <blockquote>
 <p>Reflectivity [16 bit unsigned int] - sensor Signal Photons measurements are scaled based on measured range and sensor sensitivity at that range, providing an indication of target reflectivity. Calibration of this measurement has not currently been rigorously implemented, but this will be updated in a future firmware release.</p>
 </blockquote>
 <p>So it is advised to map the 16 bit reflectivity to [0, 100] range.</p>
 <h5 id="leishen-ch64w">Leishen CH64W<a class="headerlink" href="#leishen-ch64w" title="Permanent link">#</a></h5>
-<p><a href="http://www.lslidar.com/en/down">I couldn't get the english user manual, link of website</a></p>
+<p><a href="http://www.lslidar.com/en/down">英語のユーザーマニュアルを入手できませんでした。ウェブサイトのリンク</a></p>
 <p>In a user manual I was able to find it says:</p>
 <blockquote>
 <p>Byte 7 represents echo strength, and the value range is 0-255. (Echo strength can reflect
