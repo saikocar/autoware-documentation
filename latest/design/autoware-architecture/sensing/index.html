@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>計測コンポーネントの設計 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#sensing-component-design" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              計測コンポーネントの設計
             
           </span>
         </div>
@@ -6561,30 +6561,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#_2" class="md-nav__link">
+    概要
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#role" class="md-nav__link">
-    Role
+  <a href="#_3" class="md-nav__link">
+    役割
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    Inputs
+  <a href="#_4" class="md-nav__link">
+    入力
   </a>
   
-    <nav class="md-nav" aria-label="Inputs">
+    <nav class="md-nav" aria-label="入力">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#input-types" class="md-nav__link">
-    Input types
+  <a href="#_5" class="md-nav__link">
+    入力の型
   </a>
   
 </li>
@@ -6595,8 +6595,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#design-by-data-types" class="md-nav__link">
-    Design by data-types
+  <a href="#_6" class="md-nav__link">
+    データ型による設計
   </a>
   
 </li>
@@ -6619,95 +6619,70 @@
   
 
 
-<div><p>センシングコンポーネントの設計
-概要
-センシング コンポーネントは、生のセンサー データにいくつかの原始的な前処理を適用するモジュールのコレクションです。</p>
+<div><h1 id="_1">計測コンポーネントの設計<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">概要<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>計測コンポーネントは、生のセンサーデータにいくつかの原始的な前処理を適用するモジュールの集まりです。</p>
 <p>センサーの入力形式はこのコンポーネントで定義されます。</p>
-<p>役割
-データ形式の抽象化により、さまざまなベンダーのセンサーを使用できるようになります。
-各コンポーネントに必要な共通/原始的なセンサー データ処理を実行します。
-入力
-入力の種類
-センサーデータ メッセージの種類
-点群 (LIDAR、深度カメラなど)  センサー_msgs/msg/PointCloud2.msg
-画像（RGB、モノクロ、深度などのカメラ）   センサー_msgs/msg/Image.msg
-レーダースキャン    レーダー_msgs/msg/RadarScan.msg
-レーダー追跡  レーダー_msgs/msg/RadarTracks.msg
-<abbr title="Global Navigation Satellite System">GNSS</abbr>-INS位置  sensor_msgs/msg/NavSatFix.msg
-<abbr title="Global Navigation Satellite System">GNSS</abbr>-INS の方向    autoware_sensing_msgs/GnssInsOrientationStamped.msg
-<abbr title="Global Navigation Satellite System">GNSS</abbr>-INS速度  geometry_msgs/msg/TwistWithCovarianceStamped.msg
-<abbr title="Global Navigation Satellite System">GNSS</abbr>-INS加速  geometry_msgs/msg/AccelWithCovarianceStamped.msg
-超音波 センサー_msgs/msg/Range.msg
-データ型による設計
-<abbr title="Global Navigation Satellite System">GNSS</abbr>/INSデータ前処理設計
-画像前処理設計
-点群前処理設計
-レーダーデータの前処理設計
-超音波データ前処理設計</p>
-<h1 id="sensing-component-design">Sensing component design<a class="headerlink" href="#sensing-component-design" title="Permanent link">#</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<p>Sensing component is a collection of modules that apply some primitive pre-processing to the raw sensor data.</p>
-<p>The sensor input formats are defined in this component.</p>
-<h2 id="role">Role<a class="headerlink" href="#role" title="Permanent link">#</a></h2>
+<h2 id="_3">役割<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
-<li>Abstraction of data formats to enable usage of sensors from various vendors</li>
-<li>Perform common/primitive sensor data processing required by each component</li>
+<li>データ形式の抽象化により、さまざまなベンダーのセンサーを使用できるようになります。</li>
+<li>各コンポーネントに必要な共通/原始的なセンサー データ処理を実行します。</li>
 </ul>
-<h2 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">#</a></h2>
-<h3 id="input-types">Input types<a class="headerlink" href="#input-types" title="Permanent link">#</a></h3>
+<h2 id="_4">入力<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h3 id="_5">入力の型<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
 <table>
 <thead>
 <tr>
-<th>Sensor Data</th>
-<th>Message Type</th>
+<th>センサーデータ</th>
+<th>メッセージの型</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Point cloud (Lidars, depth cameras, etc.)</td>
+<td>点群(Lidar、深度カメラ等)</td>
 <td><a href="https://github.com/ros2/common_interfaces/blob/rolling/sensor_msgs/msg/PointCloud2.msg">sensor_msgs/msg/PointCloud2.msg</a></td>
 </tr>
 <tr>
-<td>Image (RGB, monochrome, depth, etc. cameras)</td>
+<td>画像(RGB、モノクロ、深度等のカメラ)</td>
 <td><a href="https://github.com/ros2/common_interfaces/blob/rolling/sensor_msgs/msg/Image.msg">sensor_msgs/msg/Image.msg</a></td>
 </tr>
 <tr>
-<td>Radar scan</td>
+<td>レーダースキャン</td>
 <td><a href="https://github.com/ros-perception/radar_msgs/blob/ros2/msg/RadarScan.msg">radar_msgs/msg/RadarScan.msg</a></td>
 </tr>
 <tr>
-<td>Radar tracks</td>
+<td>レーダー追跡</td>
 <td><a href="https://github.com/ros-perception/radar_msgs/blob/ros2/msg/RadarTracks.msg">radar_msgs/msg/RadarTracks.msg</a></td>
 </tr>
 <tr>
-<td><abbr title="Global Navigation Satellite System">GNSS</abbr>-INS position</td>
+<td><abbr title="Global Navigation Satellite System">GNSS</abbr>-INS位置</td>
 <td><a href="https://github.com/ros2/common_interfaces/blob/rolling/sensor_msgs/msg/NavSatFix.msg">sensor_msgs/msg/NavSatFix.msg</a></td>
 </tr>
 <tr>
-<td><abbr title="Global Navigation Satellite System">GNSS</abbr>-INS orientation</td>
+<td><abbr title="Global Navigation Satellite System">GNSS</abbr>-INS方向</td>
 <td><a href="https://github.com/autowarefoundation/autoware_msgs/blob/main/autoware_sensing_msgs/msg/GnssInsOrientationStamped.msg">autoware_sensing_msgs/GnssInsOrientationStamped.msg</a></td>
 </tr>
 <tr>
-<td><abbr title="Global Navigation Satellite System">GNSS</abbr>-INS velocity</td>
+<td><abbr title="Global Navigation Satellite System">GNSS</abbr>-INS速度</td>
 <td><a href="https://github.com/ros2/common_interfaces/blob/rolling/geometry_msgs/msg/TwistWithCovarianceStamped.msg">geometry_msgs/msg/TwistWithCovarianceStamped.msg</a></td>
 </tr>
 <tr>
-<td><abbr title="Global Navigation Satellite System">GNSS</abbr>-INS acceleration</td>
+<td><abbr title="Global Navigation Satellite System">GNSS</abbr>-INS加速度</td>
 <td><a href="https://github.com/ros2/common_interfaces/blob/rolling/geometry_msgs/msg/AccelWithCovarianceStamped.msg">geometry_msgs/msg/AccelWithCovarianceStamped.msg</a></td>
 </tr>
 <tr>
-<td>Ultrasonics</td>
+<td>超音波</td>
 <td><a href="https://github.com/ros2/common_interfaces/blob/rolling/sensor_msgs/msg/Range.msg">sensor_msgs/msg/Range.msg</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="design-by-data-types">Design by data-types<a class="headerlink" href="#design-by-data-types" title="Permanent link">#</a></h2>
+<h2 id="_6">データ型による設計<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
 <ul>
-<li><a href="data-types/gnss-ins-data/"><abbr title="Global Navigation Satellite System">GNSS</abbr>/INS data pre-processing design</a></li>
-<li><a href="data-types/image/">Image pre-processing design</a></li>
-<li><a href="data-types/point-cloud/">Point cloud pre-processing design</a></li>
-<li><a href="data-types/radar-data/">Radar data pre-processing design</a></li>
-<li><a href="data-types/ultrasonics-data/">Ultrasonics data pre-processing design</a></li>
+<li><a href="data-types/gnss-ins-data/"><abbr title="Global Navigation Satellite System">GNSS</abbr>/INSデータ前処理設計</a></li>
+<li><a href="data-types/image/">画像前処理設計</a></li>
+<li><a href="data-types/point-cloud/">点群前処理設計</a></li>
+<li><a href="data-types/radar-data/">レーダーデータの前処理設計</a></li>
+<li><a href="data-types/ultrasonics-data/">超音波データ前処理設計</a></li>
 </ul>
 <!-- prettier-ignore --></div>
 
