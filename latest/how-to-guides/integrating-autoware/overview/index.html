@@ -21,7 +21,7 @@
     
     
       
-        <title>Overview - Autoware Documentation</title>
+        <title>概要 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#sensor_kit" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Overview
+              概要
             
           </span>
         </div>
@@ -1191,9 +1191,54 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          概要
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
-        Overview
+        概要
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    要件: 実車のハードウェアを準備する
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-autoware" class="md-nav__link">
+    1. Autowareメタリポジトリの作成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 車両とセンサーの説明を作成する
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -6564,6 +6609,35 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    要件: 実車のハードウェアを準備する
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-autoware" class="md-nav__link">
+    1. Autowareメタリポジトリの作成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 車両とセンサーの説明を作成する
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -6580,20 +6654,28 @@
   
 
 
-<div><p>概要
-要件: 実車のハードウェアを準備する
-車両の前提条件:</p>
-<p>Autoware インストールの前提条件を満たすオンボード コンピューター
-以下のデバイスが接続されています
-ドライブバイワイヤインターフェース
-ライダー
-オプション：慣性計測ユニット
-オプション: カメラ
-オプション: <abbr title="Global Navigation Satellite System">GNSS</abbr>
-1. Autoware メタリポジトリの作成
-Autoware メタ リポジトリを作成します。簡単な方法の 1 つは、autowarefoundation/autoware をフォークしてクローンを作成することです。リポジトリをフォークする方法については、GitHub Docsを参照してください。</p>
-<p>git clone https://github.com/YOUR_NAME/autoware.git
-複数の種類の車両を設定する場合は、「autoware.vehicle_A」または「autoware.vehicle_B」のようなサフィックスを追加することをお勧めします。</p>
+<div><h1 id="_1">概要<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">要件: 実車のハードウェアを準備する<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>車両の前提条件:</p>
+<ul>
+<li><a href="../../../installation/autoware/source-installation/#prerequisites">Autowareインストールの前提条件</a>を満たす車載コンピューター</li>
+<li>以下のデバイスが接続されています<ul>
+<li>ドライブバイワイヤインターフェース</li>
+<li>LiDAR</li>
+<li>オプション: Inertial measurement unit</li>
+<li>オプション: Camera</li>
+<li>オプション: <abbr title="Global Navigation Satellite System">GNSS</abbr></li>
+</ul>
+</li>
+</ul>
+<h2 id="1-autoware">1. Autowareメタリポジトリの作成<a class="headerlink" href="#1-autoware" title="Permanent link">#</a></h2>
+<p>Autowareメタリポジトリを作成します。
+簡単な方法の1つは、<a href="https://github.com/autowarefoundation/autoware">autowarefoundation/autoware</a>をフォークしてクローンを作成することです。
+リポジトリをフォークする方法については<a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo">GitHub Docs</a>を参照してください。</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YOUR_NAME/autoware.git
+</code></pre></div>
+<p>複数の種類の車両を設定する場合は"autoware.vehicle_A"や"autoware.vehicle_B"のようなサフィックスを追加することをお勧めします</p>
+<h2 id="2">2. 車両とセンサーの説明を作成する<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
 <ol>
 <li>車両とセンサーの説明を作成する
 次に、車両と車両のセンサー構成を定義する記述パッケージを作成する必要があります。</li>
@@ -6649,77 +6731,13 @@ launch/sensing.launch.xml車両上のすべてのセンサーのインターフ�
 To do so, you need to build and install Autoware using your cloned repository. Follow the <a href="../installation/">steps for either Docker or source installation</a> (starting from the dependency installation step) and then run the following command:</p>
 <p></p><div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>planning_simulator.launch.xml<span class="w"> </span>vehicle_model:<span class="o">=</span>YOUR_VEHICLE<span class="w"> </span>sensor_kit:<span class="o">=</span>YOUR_SENSOR_KIT<span class="w"> </span>map_path:<span class="o">=</span>/PATH/TO/YOUR/MAP
 </code></pre></div>
-3.vehicle_interfaceパッケージを作成する
-車両用のインターフェース パッケージを作成する必要があります。このパッケージでは以下の2つの機能を提供する予定です。
-<p>からのコマンドメッセージを受信しvehicle_cmd_gate、それに応じて車両を運転します
-車両ステータス情報を Autoware に送信する
-パッケージの要件に関する詳細情報は、Vehicle Interface 設計ドキュメントvehicle_interfaceで見つけることができます。車両インターフェイス パッケージの例として、 TIER IV のpacmod_interface リポジトリを参照することもできます。</p>
-<ol>
-<li>マップの作成
-Autoware を使用するには、点群マップとベクトル マップの両方が必要です。マップデザインの詳細については、ここをクリックしてください。</li>
-</ol>
-<p>点群マップを作成する
-LiDAR ベースの <abbr title="Simultaneous Localization And Mapping">SLAM</abbr> (Simultaneous Localization And Mapping) パッケージなどのサードパーティ ツールを使用して、次の形式で点群マップを作成します.pcd。詳細については、ここをクリックしてください。</p>
-<p>ベクトルマップを作成する
-TIER IV の Vector Map Builderなどのサードパーティ ツールを使用して、Lanelet2 形式の.osmファイルを作成します。</p>
-<ol>
-<li>オートウェアを起動する
-このセクションでは、Autoware を使用して車両を実行する方法について簡単に説明します。</li>
-</ol>
-<p>オートウェアのインストール
-Autoware のインストール手順に従います。</p>
-<p>オートウェアを起動する
-次のコマンドで Autoware を起動します。</p>
-<p>ros2 launch autoware_launch autoware.launch.xml vehicle_model:=YOUR_VEHICLE sensor_kit:=YOUR_SENSOR_KIT map_path:=/PATH/TO/YOUR/MAP
-初期ポーズを設定する
-<abbr title="Global Navigation Satellite System">GNSS</abbr> が利用可能な場合、Autoware は車両の姿勢を自動的に初期化します。</p>
-<p>そうでない場合は、RViz GUI を使用して初期ポーズを設定する必要があります。</p>
-<p>ツールバーの 2D ポーズ推定ボタンをクリックするか、P キーを押します。
-3D ビュー ペインで、マウスの左ボタンをクリックしたままドラッグして、初期ポーズの方向を設定します。
-ゴールポーズを設定する
-自我車両のゴールポーズを設定します。</p>
-<p>ツールバーの「2D ナビゲーション目標」ボタンをクリックするか、G キーを押します。
-3D ビュー ペインで、マウスの左ボタンをクリックしたままドラッグして、ゴール ポーズの方向を設定します。成功すると、計算された計画パスが RViz 上に表示されます。
-従事する
-ターミナルで次のコマンドを実行します。</p>
-<p>source ~/autoware.YOURS/install/setup.bash
-ros2 topic pub /autoware.YOURS/engage autoware_auto_vehicle_msgs/msg/Engage "engage: true" -1
-RViz 経由で「AutowareStatePanel」を使用することもできます。パネルは にありますPanels &gt; Add New Panel &gt; tier4_state_rviz_plugin &gt; AutowareStatePanel。</p>
-<p>Autoware 状態パネル{: style="高さ:360px;幅:640px"}</p>
-<p>これで、車両は計算された経路に沿って走行するはずです。</p>
-<ol>
-<li>車両と環境に合わせてパラメータを調整する
-車両を運用する領域に応じてパラメータを調整する必要がある場合があります。</li>
-</ol>
-<h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h1>
-<h2 id="requirement-prepare-your-real-vehicle-hardware">Requirement: prepare your real vehicle hardware<a class="headerlink" href="#requirement-prepare-your-real-vehicle-hardware" title="Permanent link">#</a></h2>
-<p>Prerequisites for the vehicle:</p>
+次に、車両と車両のセンサー構成を定義する記述パッケージを作成する必要があります。
+<p>次の2つのパッケージを作成します:</p>
 <ul>
-<li>An onboard computer that satisfies the <a href="../../../installation/autoware/source-installation/#prerequisites">Autoware installation prerequisites</a></li>
-<li>The following devices attached<ul>
-<li>Drive-by-wire interface</li>
-<li>LiDAR</li>
-<li>Optional: Inertial measurement unit</li>
-<li>Optional: Camera</li>
-<li>Optional: <abbr title="Global Navigation Satellite System">GNSS</abbr></li>
+<li>YOUR_VEHICLE_launch (例は<a href="https://github.com/autowarefoundation/sample_vehicle_launch">ここ</a>を参照してください)</li>
+<li>YOUR_SENSOR_KIT_launch (例は<a href="https://github.com/autowarefoundation/sample_sensor_kit_launch">ここ</a>を参照してください)</li>
 </ul>
-</li>
-</ul>
-<h2 id="1-creating-your-autoware-meta-repository">1. Creating your Autoware meta-repository<a class="headerlink" href="#1-creating-your-autoware-meta-repository" title="Permanent link">#</a></h2>
-<p>Create your Autoware meta-repository.
-One easy way is to fork <a href="https://github.com/autowarefoundation/autoware">autowarefoundation/autoware</a> and clone it.
-For how to fork a repository, refer to <a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo">GitHub Docs</a>.</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YOUR_NAME/autoware.git
-</code></pre></div>
-<p>If you set up multiple types of vehicles, adding a suffix like "autoware.vehicle_A" or "autoware.vehicle_B" is recommended.</p>
-<h2 id="2-creating-the-your-vehicle-and-sensor-description">2. Creating the your vehicle and sensor description<a class="headerlink" href="#2-creating-the-your-vehicle-and-sensor-description" title="Permanent link">#</a></h2>
-<p>Next, you need to create description packages that define the vehicle and sensor configuration of your vehicle.</p>
-<p>Create the following two packages:</p>
-<ul>
-<li>YOUR_VEHICLE_launch (see <a href="https://github.com/autowarefoundation/sample_vehicle_launch">here</a> for example)</li>
-<li>YOUR_SENSOR_KIT_launch (see <a href="https://github.com/autowarefoundation/sample_sensor_kit_launch">here</a> for example)</li>
-</ul>
-<p>Once created, you need to update the <code>autoware.repos</code> file of your cloned Autoware repository to refer to these two description packages.</p>
+<p>作成したら、クローンされたAutowareリポジトリの<code>autoware.repos</code>ファイルを更新して、これら2つの説明パッケージを参照する必要があります。</p>
 <div class="highlight"><pre><span></span><code><span class="gd">-  # sensor_kit</span>
 <span class="gd">-  sensor_kit/sample_sensor_kit_launch:</span>
 <span class="gd">-    type: git</span>
@@ -6741,75 +6759,73 @@ For how to fork a repository, refer to <a href="https://docs.github.com/en/get-s
 <span class="gi">+    url: https://github.com/YOUR_NAME/YOUR_VEHICLE_launch.git</span>
 <span class="gi">+    version: main</span>
 </code></pre></div>
-<h3 id="adapt-your_vehicle_launch-for-autoware-launching-system">Adapt YOUR_VEHICLE_launch for autoware launching system<a class="headerlink" href="#adapt-your_vehicle_launch-for-autoware-launching-system" title="Permanent link">#</a></h3>
-<h4 id="at-your_vehicle_description">At YOUR_VEHICLE_description<a class="headerlink" href="#at-your_vehicle_description" title="Permanent link">#</a></h4>
-<p>Define <abbr title="Universal Robotic Description Format">URDF</abbr> and parameters in the vehicle description package (refer to the <a href="https://github.com/autowarefoundation/sample_vehicle_launch/tree/main/sample_vehicle_description">sample vehicle description package</a> for an example).</p>
-<h4 id="at-your_vehicle_launch">At YOUR_VEHICLE_launch<a class="headerlink" href="#at-your_vehicle_launch" title="Permanent link">#</a></h4>
-<p>Create a launch file (refer to the <a href="https://github.com/autowarefoundation/sample_vehicle_launch/tree/main/sample_vehicle_launch">sample vehicle launch package</a> for example).
-If you have multiple vehicles with the same hardware setup, you can specify <code>vehicle_id</code> to distinguish them.</p>
+<h3 id="your_vehicle_launchautoware">YOUR_VEHICLE_launchをAutoware起動システムに適応させる<a class="headerlink" href="#your_vehicle_launchautoware" title="Permanent link">#</a></h3>
+<h4 id="your_vehicle_description">YOUR_VEHICLE_descriptionで<a class="headerlink" href="#your_vehicle_description" title="Permanent link">#</a></h4>
+<p>車両記述パッケージで <abbr title="Universal Robotic Description Format">URDF</abbr> とパラメータを定義します(例については<a href="https://github.com/autowarefoundation/sample_vehicle_launch/tree/main/sample_vehicle_description">車両記述パッケージのサンプル</a>を参照してください)。</p>
+<h4 id="your_vehicle_launch">YOUR_VEHICLE_launchで<a class="headerlink" href="#your_vehicle_launch" title="Permanent link">#</a></h4>
+<p>起動ファイルを作成します(例については<a href="https://github.com/autowarefoundation/sample_vehicle_launch/tree/main/sample_vehicle_launch">車両起動パッケージのサンプル</a>を参照してください)。
+同じハードウェア設定の車両が複数ある場合は<code>vehicle_id</code>をそれらを区別するために指定できます。</p>
 <h3 id="adapt-your_sensor_kit_description-for-autoware-launching-system">Adapt YOUR_SENSOR_KIT_description for autoware launching system<a class="headerlink" href="#adapt-your_sensor_kit_description-for-autoware-launching-system" title="Permanent link">#</a></h3>
-<h4 id="at-your_sensor_kit_description">At YOUR_SENSOR_KIT_description<a class="headerlink" href="#at-your_sensor_kit_description" title="Permanent link">#</a></h4>
+<h4 id="your_sensor_kit_description">YOUR_SENSOR_KIT_descriptionで<a class="headerlink" href="#your_sensor_kit_description" title="Permanent link">#</a></h4>
 <p>Define <abbr title="Universal Robotic Description Format">URDF</abbr> and extrinsic parameters for all the sensors here (refer to the <a href="https://github.com/autowarefoundation/sample_sensor_kit_launch/tree/main/sample_sensor_kit_description">sample sensor kit description package</a> for example).
 Note that you need to calibrate extrinsic parameters for all the sensors beforehand.</p>
-<h4 id="at-your_sensor_kit_launch">At YOUR_SENSOR_KIT_launch<a class="headerlink" href="#at-your_sensor_kit_launch" title="Permanent link">#</a></h4>
+<h4 id="your_sensor_kit_launch">YOUR_SENSOR_KIT_launchで<a class="headerlink" href="#your_sensor_kit_launch" title="Permanent link">#</a></h4>
 <p>Create <code>launch/sensing.launch.xml</code> that launches the interfaces of all the sensors on the vehicle. (refer to the <a href="https://github.com/autowarefoundation/sample_sensor_kit_launch/tree/main/sample_sensor_kit_launch">sample sensor kit launch package</a> for example).</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>At this point, you are now able to run Autoware's Planning Simulator to do a basic test of your vehicle and sensing packages.
-To do so, you need to build and install Autoware using your cloned repository. Follow the <a href="../installation/">steps for either Docker or source installation</a> (starting from the dependency installation step) and then run the following command:</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+<p>この時点で、Autowareの計画シミュレーターを実行して、車両と計測パッケージの基本テストを実行できるようになりました。
+これを行うには複製したリポジトリを使用してAutowareを構築してインストールする必要があります。<a href="../installation/">Dockerまたはソースインストール手順</a> (依存関係のインストール手順から開始)に従い、次のコマンドを実行します:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>planning_simulator.launch.xml<span class="w"> </span>vehicle_model:<span class="o">=</span>YOUR_VEHICLE<span class="w"> </span>sensor_kit:<span class="o">=</span>YOUR_SENSOR_KIT<span class="w"> </span>map_path:<span class="o">=</span>/PATH/TO/YOUR/MAP
 </code></pre></div>
 </div>
-<h2 id="3-create-a-vehicle_interface-package">3. Create a <code>vehicle_interface</code> package<a class="headerlink" href="#3-create-a-vehicle_interface-package" title="Permanent link">#</a></h2>
-<p>You need to create an interface package for your vehicle.
-The package is expected to provide the following two functions.</p>
+<h2 id="3-vehicle_interface">3. <code>vehicle_interface</code>パッケージを作成する<a class="headerlink" href="#3-vehicle_interface" title="Permanent link">#</a></h2>
 <ol>
-<li>Receive command messages from <code>vehicle_cmd_gate</code> and drive the vehicle accordingly</li>
-<li>Send vehicle status information to Autoware</li>
+<li><code>vehicle_cmd_gate</code>からのコマンドメッセージを受信し、それに応じて車両を運転します</li>
+<li>車両ステータス情報をAutowareに送信する</li>
 </ol>
-<p>You can find detailed information about the requirements of the <code>vehicle_interface</code> package in the <a href="../../../design/autoware-interfaces/components/vehicle-interface/">Vehicle Interface design documentation</a>.
-You can also refer to TIER IV's <a href="https://github.com/tier4/pacmod_interface">pacmod_interface repository</a> as an example of a vehicle interface package.</p>
-<h2 id="4-create-maps">4. Create maps<a class="headerlink" href="#4-create-maps" title="Permanent link">#</a></h2>
-<p>You need both a pointcloud map and a vector map in order to use Autoware.
-For more information on map design, please click <a href="../../../design/autoware-architecture/map/">here</a>.</p>
-<h3 id="create-a-pointcloud-map">Create a pointcloud map<a class="headerlink" href="#create-a-pointcloud-map" title="Permanent link">#</a></h3>
-<p>Use third-party tools such as a LiDAR-based <abbr title="Simultaneous Localization And Mapping">SLAM</abbr> (Simultaneous Localization And Mapping) package to create a pointcloud map in the <code>.pcd</code> format.
-For more information, please click <a href="../creating-maps/">here</a>.</p>
-<h3 id="create-vector-map">Create vector map<a class="headerlink" href="#create-vector-map" title="Permanent link">#</a></h3>
-<p>Use third-party tools such as <a href="https://tools.tier4.jp/">TIER IV's Vector Map Builder</a> to create a Lanelet2 format <code>.osm</code> file.</p>
-<h2 id="5-launch-autoware">5. Launch Autoware<a class="headerlink" href="#5-launch-autoware" title="Permanent link">#</a></h2>
+<p><code>vehicle_interface</code>パッケージの要件に関する詳細情報は<a href="../../../design/autoware-interfaces/components/vehicle-interface/">Vehicle Interface設計ドキュメント</a>で見つけることができます。
+車両インターフェイス パッケージの例としてTIER IVの<a href="https://github.com/tier4/pacmod_interface">pacmod_interfaceリポジトリ</a>を参照することもできます。</p>
+<h2 id="4">4. マップの作成<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
+<p>Autowareを使用するには、点群マップとベクターマップの両方が必要です。
+マップデザインの詳細については<a href="../../../design/autoware-architecture/map/">ここ</a>をクリックしてください。</p>
+<h3 id="_3">点群マップを作成する<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
+<p>LiDARベースのSLAM (Simultaneous Localization And Mapping) パッケージなどのサードパーティツールを使用して<code>.pcd</code>形式で点群マップを作成します。
+詳細については<a href="../creating-maps/">ここ</a>をクリックしてください。</p>
+<h3 id="_4">ベクターマップを作成する<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<p><a href="https://tools.tier4.jp/">TIER IV's Vector Map Builder</a>などのサードパーティツールを使用して、Lanelet2 形式の<code>.osm</code>ファイルを作成します。</p>
+<h2 id="5">5. オートウェアを起動する<a class="headerlink" href="#5" title="Permanent link">#</a></h2>
 <p>This section briefly explains how to run your vehicle with Autoware.</p>
-<h3 id="install-autoware">Install Autoware<a class="headerlink" href="#install-autoware" title="Permanent link">#</a></h3>
-<p>Follow the <a href="../../installation/">installation steps of Autoware</a>.</p>
-<h3 id="launch-autoware">Launch Autoware<a class="headerlink" href="#launch-autoware" title="Permanent link">#</a></h3>
-<p>Launch Autoware with the following command:</p>
+<h3 id="autoware">Autowareのインストール<a class="headerlink" href="#autoware" title="Permanent link">#</a></h3>
+<p><a href="../../installation/">Autowareのインストール手順</a>に従います。</p>
+<h3 id="autoware_1">Autowareを起動する<a class="headerlink" href="#autoware_1" title="Permanent link">#</a></h3>
+<p>次のコマンドでAutowareを起動します。:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>autoware.launch.xml<span class="w"> </span>vehicle_model:<span class="o">=</span>YOUR_VEHICLE<span class="w"> </span>sensor_kit:<span class="o">=</span>YOUR_SENSOR_KIT<span class="w"> </span>map_path:<span class="o">=</span>/PATH/TO/YOUR/MAP
 </code></pre></div>
-<h3 id="set-initial-pose">Set initial pose<a class="headerlink" href="#set-initial-pose" title="Permanent link">#</a></h3>
-<p>If <abbr title="Global Navigation Satellite System">GNSS</abbr> is available, Autoware automatically initializes the vehicle's pose.</p>
-<p>If not, you need to set the initial pose using the RViz GUI.</p>
+<h3 id="_5">初期ポーズを設定する<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
+<p>GNSSが利用可能な場合、Autowareは車両の姿勢を自動的に初期化します。</p>
+<p>そうでない場合はRViz GUIを使用して初期ポーズを設定する必要があります。</p>
 <ol>
-<li>Click the 2D Pose estimate button in the toolbar, or hit the P key</li>
-<li>In the 3D View pane, click and hold the left mouse button, and then drag to set the direction for the initial pose.</li>
+<li>ツールバーの 2Dポーズ推定ボタンをクリックするか、Pキーを押します。</li>
+<li>3Dビューペインで、マウスの左ボタンをクリックしたままドラッグして、初期ポーズの方向を設定します。</li>
 </ol>
-<h3 id="set-goal-pose">Set goal pose<a class="headerlink" href="#set-goal-pose" title="Permanent link">#</a></h3>
-<p>Set a goal pose for the ego vehicle.</p>
+<h3 id="_6">ゴールポーズを設定する<a class="headerlink" href="#_6" title="Permanent link">#</a></h3>
+<p>自己車両のゴールポーズを設定します。</p>
 <ol>
-<li>Click the 2D Nav Goal button in the toolbar, or hit the G key</li>
-<li>In the 3D View pane, click and hold the left mouse button, and then drag to set the direction for the goal pose.
-   If successful, you will see the calculated planning path on RViz.</li>
+<li>ツールバーの2Dナビゲーション目標ボタンをクリックするか、Gキーを押します。</li>
+<li>3Dビューペインで、マウスの左ボタンをクリックしたままドラッグして、ゴールポーズの方向を設定します。
+   成功すると、計算された計画パスがRViz上に表示されます。</li>
 </ol>
-<h3 id="engage">Engage<a class="headerlink" href="#engage" title="Permanent link">#</a></h3>
-<p>In your terminal, execute the following command.</p>
+<h3 id="_7">噛み合わせる<a class="headerlink" href="#_7" title="Permanent link">#</a></h3>
+<p>ターミナルで次のコマンドを実行します。</p>
 <div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>~/autoware.YOURS/install/setup.bash
 ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/autoware.YOURS/engage<span class="w"> </span>autoware_auto_vehicle_msgs/msg/Engage<span class="w"> </span><span class="s2">"engage: true"</span><span class="w"> </span>-1
 </code></pre></div>
-<p>You can also engage via RViz with "AutowareStatePanel".
-The panel can be found in <code>Panels &gt; Add New Panel &gt; tier4_state_rviz_plugin &gt; AutowareStatePanel</code>.</p>
+<p>RViz経由で"AutowareStatePanel"を使用することもできます。
+パネルは<code>Panels &gt; Add New Panel &gt; tier4_state_rviz_plugin &gt; AutowareStatePanel</code>にあります。</p>
 <p><img alt="Autoware State Panel" src="../images/autoware-state-panel.png" style="height:360px;width:640px"></p>
-<p>Now the vehicle should drive along the calculated path!</p>
-<h2 id="6-tune-parameters-for-your-vehicle-environment">6. Tune parameters for your vehicle &amp; environment<a class="headerlink" href="#6-tune-parameters-for-your-vehicle-environment" title="Permanent link">#</a></h2>
-<p>You may need to tune your parameters depending on the domain in which you will operate your vehicle.</p>
+<p>これで、車両は計算された経路に沿って走行するはずです。!</p>
+<h2 id="6">6. 車両と環境に合わせてパラメータを調整する<a class="headerlink" href="#6" title="Permanent link">#</a></h2>
+<p>車両を運用する領域に応じてパラメータを調整する必要がある場合があります。</p>
 <!-- prettier-ignore --></div>
 
 
