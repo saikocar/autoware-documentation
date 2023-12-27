@@ -1,68 +1,43 @@
-ROS パッケージへの Clang-Tidy の適用
-Clang-Tidyは強力な C++ リンターです。
+# ROSパッケージへのClang-Tidyの適用
 
-準備
-Clang-Tidy を使用する前に生成する必要がありますbuild/compile_commands.json。
+[Clang-Tidy](https://clang.llvm.org/extra/clang-tidy/)は強力なC++のリンターです。
 
-colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1
-使用法
-clang-tidy -p build/ path/to/file1 path/to/file2 ...
-パッケージ内のすべてのファイルに Clang-Tidy を適用したい場合は、fdコマンドを使用すると便利です。インストールするにはfd、インストールマニュアルを参照してください。
+## 準備
 
-clang-tidy -p build/ $(fd -e cpp -e hpp --full-path "/autoware_utils/")
-IDEの統合
-クライオン
-CLion のドキュメントを参照してください。
-
-Visual Studioコード
-次の拡張子のいずれかを使用します。
-
-C/C++
-カランカラン
-トラブルシューティング
-が発生した場合はclang-diagnostic-error、 をインストールしてみてくださいlibomp-dev。
-
-関連: autowarefoundation/autoware-github-actions#172
-# Applying Clang-Tidy to ROS packages
-
-[Clang-Tidy](https://clang.llvm.org/extra/clang-tidy/) is a powerful C++ linter.
-
-## Preparation
-
-You need to generate `build/compile_commands.json` before using Clang-Tidy.
+Clang-Tidyを使用する前に`build/compile_commands.json`を生成する必要があります。
 
 ```bash
 colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1
 ```
 
-## Usage
+## 使用法
 
 ```bash
 clang-tidy -p build/ path/to/file1 path/to/file2 ...
 ```
 
-If you want to apply Clang-Tidy to all files in a package, using the [fd](https://github.com/sharkdp/fd) command is useful.
-To install `fd`, see the [installation manual](https://github.com/sharkdp/fd#on-ubuntu).
+パッケージ内のすべてのファイルにClang-Tidyを適用したい場合は[fd](https://github.com/sharkdp/fd)コマンドを使用すると便利です。
+`fd`をインストールするには[インストールマニュアル](https://github.com/sharkdp/fd#on-ubuntu)を参照してください。
 
 ```bash
 clang-tidy -p build/ $(fd -e cpp -e hpp --full-path "/autoware_utils/")
 ```
 
-## IDE integration
+## IDEの統合
 
 ### CLion
 
-Refer to the [CLion Documentation](https://www.jetbrains.com/help/clion/clang-tidy-checks-support.html).
+[CLionドキュメント](https://www.jetbrains.com/help/clion/clang-tidy-checks-support.html)を参照してください。
 
 ### Visual Studio Code
 
-Use either one of the following extensions:
+次の拡張子のいずれかを使用します:
 
 - [C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
 - [clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)
 
-## Troubleshooting
+## トラブルシューティング
 
-If you encounter `clang-diagnostic-error`, try installing `libomp-dev`.
+`clang-diagnostic-error`が発生した場合は`libomp-dev`をインストールしてみてくださいl。
 
-Related: <https://github.com/autowarefoundation/autoware-github-actions/pull/172>
+関連: <https://github.com/autowarefoundation/autoware-github-actions/pull/172>
