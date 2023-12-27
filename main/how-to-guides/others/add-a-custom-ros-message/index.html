@@ -21,7 +21,7 @@
     
     
       
-        <title>Add a custom ros message - Autoware Documentation</title>
+        <title>カスタムROSメッセージを追加する - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#add-a-custom-ros-message" class="md-skip">
+        <a href="#ros" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Add a custom ros message
+              カスタムROSメッセージを追加する
             
           </span>
         </div>
@@ -3682,12 +3682,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Add a custom ros message
+          カスタムROSメッセージを追加する
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Add a custom ros message
+        カスタムROSメッセージを追加する
       </a>
       
         
@@ -3706,22 +3706,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#_1" class="md-nav__link">
+    概要
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-to-create-custom-message" class="md-nav__link">
-    How to create custom message
+  <a href="#_2" class="md-nav__link">
+    カスタムメッセージの作成方法
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-to-use-custom-messages-in-autoware" class="md-nav__link">
-    How to use custom messages in Autoware
+  <a href="#autoware" class="md-nav__link">
+    Autowareでカスタムメッセージを使用する方法
   </a>
   
 </li>
@@ -6616,22 +6616,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#_1" class="md-nav__link">
+    概要
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-to-create-custom-message" class="md-nav__link">
-    How to create custom message
+  <a href="#_2" class="md-nav__link">
+    カスタムメッセージの作成方法
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-to-use-custom-messages-in-autoware" class="md-nav__link">
-    How to use custom messages in Autoware
+  <a href="#autoware" class="md-nav__link">
+    Autowareでカスタムメッセージを使用する方法
   </a>
   
 </li>
@@ -6654,126 +6654,62 @@
   
 
 
-<div><p>カスタム <abbr title="Robot Operating System">ROS</abbr> メッセージを追加する
-概要
-Autoware の開発中は、おそらく独自のメッセージを定義する必要があります。カスタム メッセージを追加する前に、次の手順をお読みください。</p>
-<p>autoware_msgsのメッセージはのインターフェイスを定義しますAutoware Core。</p>
-<p>寄稿者が に変更を加えたり、新しいメッセージを追加したい場合は、まず、 「デザイン」カテゴリautoware_msgsの下に新しいディスカッション投稿を作成する必要があります。
-コンポーネント内の内部通信 (計画など) に使用されるその他のマイナー メッセージや提案メッセージは、別のリポジトリで定義する必要があります。</p>
-<p>tier4_autoware_msgsはその一例です。
-以下は、メッセージ パッケージを に追加する簡単なチュートリアルですautoware_msgs。一般的な <abbr title="Robot Operating System">ROS</abbr> 2 チュートリアルについては、「カスタム msg および srv ファイルの作成」を参照してください。</p>
-<p>カスタムメッセージの作成方法
-Autoware ワークスペースにいることを確認し、次のコマンドを実行して新しいパッケージを作成します。例として、センサー メッセージを定義するパッケージを作成してみましょう。</p>
-<p>パッケージを作成する</p>
-<p>cd ./src/core/autoware_msgs
-ros2 pkg create --build-type ament_cmake autoware_sensing_msgs
-カスタムメッセージを作成する</p>
-<p>.msgファイルを作成してディレクトリに配置する必要がありますmsg。</p>
-<p>注.msg:およびファイルの頭文字は.srv大文字にする必要があります。</p>
-<p>例として、.msgファイルを作成しGnssInsOrientation.msgてGnssInsOrientationStamped.msgGNSS/INS 方向メッセージを定義してみましょう。</p>
-<p>mkdir msg
-cd msg
-touch GnssInsOrientation.msg
-touch GnssInsOrientationStamped.msg
-GnssInsOrientation.msgエディタを使用して次の内容になるように編集します。</p>
-<p>geometry_msgs/Quaternion orientation
-float32 rmse_rotation_x
-float32 rmse_rotation_y
-float32 rmse_rotation_z
-この場合、カスタム メッセージは別のメッセージ パッケージのメッセージを使用しますgeometry_msgs/Quaternion。</p>
-<p>GnssInsOrientationStamped.msgエディタを使用して次の内容になるように編集します。</p>
-<p>std_msgs/Header header
-GnssInsOrientation orientation
-この場合、カスタム メッセージは別のメッセージ パッケージのメッセージを使用しますstd_msgs/Header。</p>
-<p>CMakeLists.txt を編集する</p>
-<p>C++このカスタム メッセージをまたは言語で使用するにはPython、次の行を に追加する必要がありますCMakeList.txt。</p>
-<p>rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/GnssInsOrientation.msg"
-  "msg/GnssInsOrientationStamped.msg"
-  DEPENDENCIES
-    geometry_msgs
-    std_msgs
-  ADD_LINTER_TESTS
-)
-💬 このament_cmake_autoツールは非常に便利で、Autoware でより広く使用されているため、ament_cmake_autoの代わりに使用することをお勧めしますament_cmake。</p>
-<p>交換する必要があります</p>
-<p>find_package(ament_cmake REQUIRED)</p>
-<p>ament_package()
-と</p>
-<p>find_package(ament_cmake_auto REQUIRED)</p>
-<p>ament_auto_package()
-package.xmlを編集する</p>
-<p>関連する依存関係を で宣言する必要がありますpackage.xml。上記の例では、次のコンテンツを追加する必要があります。</p>
-<p><buildtool_depend>rosidl_default_generators</buildtool_depend></p>
-<p><exec_depend>rosidl_default_runtime</exec_depend></p>
-<p><depend>geometry_msgs</depend>
-<depend>std_msgs</depend></p>
-<p><member_of_group>rosidl_interface_packages</member_of_group>
-ファイル内の<buildtool_depend>ament_cmake</buildtool_depend>を に置き換える必要があります。<buildtool_depend>ament_cmake_auto</buildtool_depend>package.xml</p>
-<p>カスタムメッセージパッケージを構築する</p>
-<p>たとえば次のコマンドを実行することで、ワークスペースのルートにパッケージをビルドできます。</p>
-<p>colcon build --packages-select autoware_sensing_msgs
-これで、GnssInsOrientationStampedメッセージは Autoware の他のパッケージで検出できるようになります。</p>
-<p>Autoware でカスタム メッセージを使用する方法
-次の手順に従って、Autoware でカスタム メッセージを使用できます。</p>
-<p>に依存関係を追加しますpackage.xml。
-例えば、<depend>autoware_sensing_msgs</depend>。
-.hpp関連するメッセージのファイルをコードに 含めます。
-例えば、#include <autoware_sensing_msgs>。</autoware_sensing_msgs></p>
-<h1 id="add-a-custom-ros-message">Add a custom <abbr title="Robot Operating System">ROS</abbr> message<a class="headerlink" href="#add-a-custom-ros-message" title="Permanent link">#</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<p>During the Autoware development, you will probably need to define your own messages. Read the following instructions before adding a custom message.</p>
+<div><h1 id="ros">カスタムROSメッセージを追加する<a class="headerlink" href="#ros" title="Permanent link">#</a></h1>
+<h2 id="_1">概要<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p>Autowareの開発中は、おそらく独自のメッセージを定義する必要があります。カスタムメッセージを追加する前に、次の手順をお読みください。</p>
 <ol>
 <li>
-<p>Message in <a href="https://github.com/autowarefoundation/autoware_msgs">autoware_msgs</a> define interfaces of <code>Autoware Core</code>.</p>
+<p><a href="https://github.com/autowarefoundation/autoware_msgs">autoware_msgs</a>のメッセージは<code>Autoware Core</code>のインターフェイスを定義します。</p>
 <ul>
-<li>If a contributor wishes to make changes or add new messages to <code>autoware_msgs</code>, they should first create a new discussion post under the <a href="https://github.com/orgs/autowarefoundation/discussions/categories/design">Design category</a>.</li>
+<li>寄稿者が<code>autoware_msgs</code>に変更を加えたり、新しいメッセージを追加したい場合は、まず<a href="https://github.com/orgs/autowarefoundation/discussions/categories/design">設計カテゴリ</a>の下に新しいディスカッション投稿を作成する必要があります。</li>
 </ul>
 </li>
 <li>
-<p>Any other minor or proposal messages used for internal communication within a component(such as planning) should be defined in another repository.</p>
+<p>コンポーネント内の内部通信 (計画など) に使用されるその他のマイナーメッセージや提案メッセージは、別のリポジトリで定義する必要があります。</p>
 <ul>
-<li><a href="https://github.com/tier4/tier4_autoware_msgs">tier4_autoware_msgs</a> is an example of that.</li>
+<li><a href="https://github.com/tier4/tier4_autoware_msgs">tier4_autoware_msgs</a>はその一例です。</li>
 </ul>
 </li>
 </ol>
-<p>The following is a simple tutorial of adding a message package to <code>autoware_msgs</code>. For the general <abbr title="Robot Operating System">ROS</abbr> 2 tutorial, see <a href="http://docs.ros.org/en/galactic/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html">Create custom msg and srv files</a>.</p>
-<h2 id="how-to-create-custom-message">How to create custom message<a class="headerlink" href="#how-to-create-custom-message" title="Permanent link">#</a></h2>
-<p>Make sure you are in the Autoware workspace, and then run the following command to create a new package.
-As an example, let's create a package to define sensor messages.</p>
+<p>以下は、メッセージパッケージを<code>autoware_msgs</code>に追加する簡単なチュートリアルです。一般的な <abbr title="Robot Operating System">ROS</abbr> 2 チュートリアルについては<a href="http://docs.ros.org/en/galactic/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html">カスタムmsgおよびsrvファイルの作成</a>を参照してください。</p>
+<h2 id="_2">カスタムメッセージの作成方法<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>cd ./src/core/autoware_msgs
+ros2 pkg create --build-type ament_cmake autoware_sensing_msgs
+Autowareワークスペースにいることを確認し、次のコマンドを実行して新しいパッケージを作成します。
+例として、センサーメッセージを定義するパッケージを作成してみましょう。</p>
 <ol>
 <li>
-<p>Create a package</p>
+<p>パッケージを作成する</p>
 <div class="highlight"><pre><span></span><code><span class="go">cd ./src/core/autoware_msgs</span>
 <span class="go">ros2 pkg create --build-type ament_cmake autoware_sensing_msgs</span>
 </code></pre></div>
 </li>
 <li>
-<p>Create custom messages</p>
-<p>You should create <code>.msg</code> files and place them in the <code>msg</code> directory.</p>
-<p><strong>NOTE</strong>: The initial letters of the <code>.msg</code> and <code>.srv</code> files must be capitalized.</p>
-<p>As an example, let's make <code>.msg</code> files <code>GnssInsOrientation.msg</code> and <code>GnssInsOrientationStamped.msg</code> to define <abbr title="Global Navigation Satellite System">GNSS</abbr>/INS orientation messages:</p>
+<p>カスタムメッセージを作成する</p>
+<p><code>.msg</code>ファイルを作成して<code>msg</code>ディレクトリに配置する必要があります。</p>
+<p><strong>注記</strong>: <code>.msg</code>と<code>.srv</code>ファイルの頭文字は大文字にする必要があります。</p>
+<p>例として、<code>GnssInsOrientation.msg</code>と<code>GnssInsOrientationStamped.msg</code>の<code>.msg</code> ファイルを作成してGNSS/INS方向メッセージを定義してみましょう。:</p>
 <div class="highlight"><pre><span></span><code><span class="go">mkdir msg</span>
 <span class="go">cd msg</span>
 <span class="go">touch GnssInsOrientation.msg</span>
 <span class="go">touch GnssInsOrientationStamped.msg</span>
 </code></pre></div>
-<p>Edit <code>GnssInsOrientation.msg</code> with your editor to be the following content:</p>
+<p>エディタを使用して<code>GnssInsOrientation.msg</code>を次の内容になるように編集します:</p>
 <div class="highlight"><pre><span></span><code><span class="n">geometry_msgs</span><span class="o">/</span><span class="n">Quaternion</span><span class="w"> </span><span class="n">orientation</span>
 <span class="n">float32</span><span class="w"> </span><span class="n">rmse_rotation_x</span>
 <span class="n">float32</span><span class="w"> </span><span class="n">rmse_rotation_y</span>
 <span class="n">float32</span><span class="w"> </span><span class="n">rmse_rotation_z</span>
 </code></pre></div>
-<p>In this case, the custom message uses a message from another message package <code>geometry_msgs/Quaternion</code>.</p>
-<p>Edit <code>GnssInsOrientationStamped.msg</code> with your editor to be the following content:</p>
+<p>この場合、カスタムメッセージは<code>geometry_msgs/Quaternion</code>とは別のメッセージパッケージのメッセージを使用します。</p>
+<p>エディタを使用して<code>GnssInsOrientationStamped.msg</code>を次の内容になるように編集します:</p>
 <div class="highlight"><pre><span></span><code><span class="n">std_msgs</span><span class="o">/</span><span class="n">Header</span><span class="w"> </span><span class="n">header</span>
 <span class="n">GnssInsOrientation</span><span class="w"> </span><span class="n">orientation</span>
 </code></pre></div>
-<p>In this case, the custom message uses a message from another message package <code>std_msgs/Header</code>.</p>
+<p>この場合、カスタムメッセージはstd_msgs/Header`とは別のメッセージパッケージのメッセージを使用します。</p>
 </li>
 <li>
-<p>Edit CMakeLists.txt</p>
-<p>In order to use this custom message in <code>C++</code> or <code>Python</code> languages, we need to add the following lines to <code>CMakeList.txt</code>:</p>
+<p>CMakeLists.txtを編集する</p>
+<p><code>C++</code>または<code>Python</code>言語でこのカスタム メッセージを使用するには、次の行を<code>CMakeList.txt</code>に追加する必要があります:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">rosidl_generate_interfaces</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span>
 <span class="w">  </span><span class="s2">"msg/GnssInsOrientation.msg"</span>
 <span class="w">  </span><span class="s2">"msg/GnssInsOrientationStamped.msg"</span>
@@ -6783,21 +6719,21 @@ As an example, let's create a package to define sensor messages.</p>
 <span class="w">  </span><span class="s">ADD_LINTER_TESTS</span>
 <span class="p">)</span>
 </code></pre></div>
-<p><img alt="💬" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4ac.svg" title=":speech_balloon:"> The <code>ament_cmake_auto</code> tool is very useful and is more widely used in Autoware, so we recommend using <code>ament_cmake_auto</code> instead of <code>ament_cmake</code>.</p>
-<p>We need to replace</p>
+<p><img alt="💬" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4ac.svg" title=":speech_balloon:"> この<code>ament_cmake_auto</code>ツールは非常に便利で、Autowareでより広く使用されているため、<code>ament_cmake</code>の代わりに使用することをお勧めします。</p>
+<p>交換する必要があります</p>
 <div class="highlight"><pre><span></span><code><span class="nb">find_package</span><span class="p">(</span><span class="s">ament_cmake</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
 
 <span class="nb">ament_package</span><span class="p">()</span>
 </code></pre></div>
-<p>with</p>
+<p>と</p>
 <div class="highlight"><pre><span></span><code><span class="nb">find_package</span><span class="p">(</span><span class="s">ament_cmake_auto</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
 
 <span class="nb">ament_auto_package</span><span class="p">()</span>
 </code></pre></div>
 </li>
 <li>
-<p>Edit package.xml</p>
-<p>We need to declare relevant dependencies in <code>package.xml</code>. For the above example we need to add the following content:</p>
+<p>package.xmlを編集する</p>
+<p>関連する依存関係を<code>package.xml</code>で宣言する必要がありますpackage.xml。上記の例では、次のコンテンツを追加する必要があります:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;buildtool_depend&gt;</span>rosidl_default_generators<span class="nt">&lt;/buildtool_depend&gt;</span>
 
 <span class="nt">&lt;exec_depend&gt;</span>rosidl_default_runtime<span class="nt">&lt;/exec_depend&gt;</span>
@@ -6807,25 +6743,25 @@ As an example, let's create a package to define sensor messages.</p>
 
 <span class="nt">&lt;member_of_group&gt;</span>rosidl_interface_packages<span class="nt">&lt;/member_of_group&gt;</span>
 </code></pre></div>
-<p>We need to replace <code>&lt;buildtool_depend&gt;ament_cmake&lt;/buildtool_depend&gt;</code> with <code>&lt;buildtool_depend&gt;ament_cmake_auto&lt;/buildtool_depend&gt;</code> in the <code>package.xml</code> file.</p>
+<p><code>package.xml</code>ファイル内の<code>&lt;buildtool_depend&gt;ament_cmake&lt;/buildtool_depend&gt;</code>を<code>&lt;buildtool_depend&gt;ament_cmake_auto&lt;/buildtool_depend&gt;</code>に置き換える必要があります。</p>
 </li>
 <li>
-<p>Build the custom message package</p>
-<p>You can build the package in the root of your workspace, for example by running the following command:</p>
+<p>カスタムメッセージパッケージを構築する</p>
+<p>たとえば以下のコマンドを実行することで、ワークスペースのルートにパッケージをビルドできます:</p>
 <div class="highlight"><pre><span></span><code><span class="go">colcon build --packages-select autoware_sensing_msgs</span>
 </code></pre></div>
-<p>Now the <code>GnssInsOrientationStamped</code> message will be discoverable by other packages in Autoware.</p>
+<p>これで、<code>GnssInsOrientationStamped</code>メッセージはAutowareの他のパッケージで検出できるようになります。</p>
 </li>
 </ol>
-<h2 id="how-to-use-custom-messages-in-autoware">How to use custom messages in Autoware<a class="headerlink" href="#how-to-use-custom-messages-in-autoware" title="Permanent link">#</a></h2>
-<p>You can use the custom messages in Autoware by following these steps:</p>
+<h2 id="autoware">Autowareでカスタムメッセージを使用する方法<a class="headerlink" href="#autoware" title="Permanent link">#</a></h2>
+<p>次の手順に従って、Autowareでカスタムメッセージを使用できます:</p>
 <ul>
-<li>Add dependency in <code>package.xml</code>.<ul>
-<li>For example, <code>&lt;depend&gt;autoware_sensing_msgs&lt;/depend&gt;</code>.</li>
+<li><code>package.xml</code>に依存関係を追加します。<ul>
+<li>例えば、<code>&lt;depend&gt;autoware_sensing_msgs&lt;/depend&gt;</code></li>
 </ul>
 </li>
-<li>Include the <code>.hpp</code> file of the relevant message in the code.<ul>
-<li>For example, <code>#include &lt;autoware_sensing_msgs/msg/gnss_ins_orientation_stamped.hpp&gt;</code>.</li>
+<li>関連するメッセージの<code>.hpp</code>ファイルをコードに含めます。<ul>
+<li>例えば、<code>#include &lt;autoware_sensing_msgs/msg/gnss_ins_orientation_stamped.hpp&gt;</code></li>
 </ul>
 </li>
 </ul>
