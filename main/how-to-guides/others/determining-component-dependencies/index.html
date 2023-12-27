@@ -21,7 +21,7 @@
     
     
       
-        <title>Determining component dependencies - Autoware Documentation</title>
+        <title>コンポーネントの依存関係の決定 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#determining-component-dependencies" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Determining component dependencies
+              コンポーネントの依存関係の決定
             
           </span>
         </div>
@@ -3766,12 +3766,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Determining component dependencies
+          コンポーネントの依存関係の決定
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Determining component dependencies
+        コンポーネントの依存関係の決定
       </a>
       
         
@@ -3790,8 +3790,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#perception-component-dependencies" class="md-nav__link">
-    Perception component dependencies
+  <a href="#_2" class="md-nav__link">
+    知覚コンポーネントの依存関係
   </a>
   
 </li>
@@ -6602,8 +6602,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#perception-component-dependencies" class="md-nav__link">
-    Perception component dependencies
+  <a href="#_2" class="md-nav__link">
+    知覚コンポーネントの依存関係
   </a>
   
 </li>
@@ -6626,84 +6626,21 @@
   
 
 
-<div><p>コンポーネントの依存関係の決定
-Autoware をマイクロサービス アーキテクチャとして試して展開したい開発者は、ソフトウェアの依存関係、通信、および各 <abbr title="Robot Operating System">ROS</abbr> パッケージ/ノードの実装された機能を理解する必要があります。</p>
+<div><h1 id="_1">コンポーネントの依存関係の決定<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<p>Autowareをマイクロサービスアーキテクチャとして試したり展開したい開発者は、ソフトウェアの依存関係、通信、および各ROSパッケージ/ノードの実装された機能を理解する必要があります。</p>
 <p>例として、Perception コンポーネントの依存関係を確認するために必要なコマンドを以下に示します。</p>
-<p>知覚コンポーネントの依存関係
-パッケージの依存関係のグラフを生成するには、次のcolconコマンドを使用します。</p>
-<p>colcon graph --dot --packages-up-to tier4_perception_launch | dot -Tpng -o graph.png
-コロングラフ出力{幅="600"}</p>
-<p>依存関係のリストを生成するには、次を使用します。</p>
-<p>colcon list --packages-up-to tier4_perception_launch --names-only
-??? 例「コルコンリスト出力」</p>
-<div class="highlight"><pre><span></span><code>autoware_auto_geometry_msgs
-autoware_auto_mapping_msgs
-autoware_auto_perception_msgs
-autoware_auto_planning_msgs
-autoware_auto_vehicle_msgs
-autoware_cmake
-autoware_lint_common
-autoware_point_types
-compare_map_segmentation
-detected_object_feature_remover
-detected_object_validation
-detection_by_tracker
-euclidean_cluster
-grid_map_cmake_helpers
-grid_map_core
-grid_map_cv
-grid_map_msgs
-grid_map_pcl
-grid_map_ros
-ground_segmentation
-image_projection_based_fusion
-image_transport_decompressor
-interpolation
-kalman_filter
-lanelet2_extension
-lidar_apollo_instance_segmentation
-map_based_prediction
-multi_object_tracker
-mussp
-object_merger
-object_range_splitter
-occupancy_grid_map_outlier_filter
-pointcloud_preprocessor
-pointcloud_to_laserscan
-shape_estimation
-tensorrt_yolo
-tier4_autoware_utils
-tier4_debug_msgs
-tier4_pcl_extensions
-tier4_perception_launch
-tier4_perception_msgs
-traffic_light_classifier
-traffic_light_map_based_detector
-traffic_light_ssd_fine_detector
-traffic_light_visualization
-vehicle_info_util
-</code></pre></div>
-<div class="admonition ヒント">
-<p class="admonition-title">ヒント</p>
-</div>
-<p>To output a list of modules with their respective paths, run the command above without the <code>--names-only</code> parameter.
-どの <abbr title="Robot Operating System">ROS</abbr> トピックがサブスクライブおよび公開されているかを確認するには、rqt_graph次のように使用します。</p>
-<p>ros2 launch tier4_perception_launch perception.launch.xml mode:=lidar
-ros2 run rqt_graph rqt_graph</p>
-<h1 id="determining-component-dependencies">Determining component dependencies<a class="headerlink" href="#determining-component-dependencies" title="Permanent link">#</a></h1>
-<p>For any developers who wish to try and deploy Autoware as a microservices architecture, it is necessary to understand the software dependencies, communication, and implemented features of each <abbr title="Robot Operating System">ROS</abbr> package/node.</p>
-<p>As an example, the commands necessary to determine the dependencies for the Perception component are shown below.</p>
-<h2 id="perception-component-dependencies">Perception component dependencies<a class="headerlink" href="#perception-component-dependencies" title="Permanent link">#</a></h2>
-<p>To generate a graph of package dependencies, use the following <code>colcon</code> command:</p>
+<p>例として知覚コンポーネントの依存関係を確認するために必要なコマンドを以下に示します。</p>
+<h2 id="_2">知覚コンポーネントの依存関係<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>パッケージの依存関係のグラフを生成するには次の<code>colcon</code>コマンドを使用します:</p>
 <div class="highlight"><pre><span></span><code>colcon<span class="w"> </span>graph<span class="w"> </span>--dot<span class="w"> </span>--packages-up-to<span class="w"> </span>tier4_perception_launch<span class="w"> </span><span class="p">|</span><span class="w"> </span>dot<span class="w"> </span>-Tpng<span class="w"> </span>-o<span class="w"> </span>graph.png
 </code></pre></div>
 <p><img alt="colon graph output" src="../images/determining-component-dependencies/perception_stack_dependencies.png" width="600"></p>
-<p>To generate a list of dependencies, use:</p>
+<p>依存関係のリストを生成するには、以下のコマンドを使用します:</p>
 <div class="highlight"><pre><span></span><code>colcon<span class="w"> </span>list<span class="w"> </span>--packages-up-to<span class="w"> </span>tier4_perception_launch<span class="w"> </span>--names-only
 </code></pre></div>
-<details class="example">
-<summary>colcon list output</summary>
-<div class="highlight"><pre><span></span><code>autoware_auto_geometry_msgs
+<p>??? "colcon list output"の例</p>
+<div class="codehilite"><pre><span></span><code>```txt
+autoware_auto_geometry_msgs
 autoware_auto_mapping_msgs
 autoware_auto_perception_msgs
 autoware_auto_planning_msgs
@@ -6749,13 +6686,14 @@ traffic_light_map_based_detector
 traffic_light_ssd_fine_detector
 traffic_light_visualization
 vehicle_info_util
+```
 </code></pre></div>
-</details>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>To output a list of modules with their respective paths, run the command above without the <code>--names-only</code> parameter.</p>
+
+<div class="admonition ヒント">
+<p class="admonition-title">ヒント</p>
+<p>モジュールのリストとそれぞれのパスを出力するには、<code>--names-only</code> パラメーターを指定せずに上記のコマンドを実行します。</p>
 </div>
-<p>To see which <abbr title="Robot Operating System">ROS</abbr> topics are being subscribed and published to, use <code>rqt_graph</code> as follows:</p>
+<p>どのROSトピックがサブスクライブおよび公開されているかを確認するには、<code>rqt_graph</code>を次のように使用します:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>tier4_perception_launch<span class="w"> </span>perception.launch.xml<span class="w"> </span>mode:<span class="o">=</span>lidar
 ros2<span class="w"> </span>run<span class="w"> </span>rqt_graph<span class="w"> </span>rqt_graph
 </code></pre></div>
