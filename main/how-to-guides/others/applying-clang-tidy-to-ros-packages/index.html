@@ -21,7 +21,7 @@
     
     
       
-        <title>Applying clang tidy to ros packages - Autoware Documentation</title>
+        <title>ROSパッケージへのClang-Tidyの適用 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#applying-clang-tidy-to-ros-packages" class="md-skip">
+        <a href="#rosclang-tidy" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Applying clang tidy to ros packages
+              ROSパッケージへのClang-Tidyの適用
             
           </span>
         </div>
@@ -3724,12 +3724,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Applying clang tidy to ros packages
+          ROSパッケージへのClang-Tidyの適用
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Applying clang tidy to ros packages
+        ROSパッケージへのClang-Tidyの適用
       </a>
       
         
@@ -3748,25 +3748,25 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#preparation" class="md-nav__link">
-    Preparation
+  <a href="#_1" class="md-nav__link">
+    準備
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    Usage
+  <a href="#_2" class="md-nav__link">
+    使用法
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#ide-integration" class="md-nav__link">
-    IDE integration
+  <a href="#ide" class="md-nav__link">
+    IDEの統合
   </a>
   
-    <nav class="md-nav" aria-label="IDE integration">
+    <nav class="md-nav" aria-label="IDEの統合">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3789,8 +3789,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    Troubleshooting
+  <a href="#_3" class="md-nav__link">
+    トラブルシューティング
   </a>
   
 </li>
@@ -6643,25 +6643,25 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#preparation" class="md-nav__link">
-    Preparation
+  <a href="#_1" class="md-nav__link">
+    準備
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    Usage
+  <a href="#_2" class="md-nav__link">
+    使用法
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#ide-integration" class="md-nav__link">
-    IDE integration
+  <a href="#ide" class="md-nav__link">
+    IDEの統合
   </a>
   
-    <nav class="md-nav" aria-label="IDE integration">
+    <nav class="md-nav" aria-label="IDEの統合">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -6684,8 +6684,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    Troubleshooting
+  <a href="#_3" class="md-nav__link">
+    トラブルシューティング
   </a>
   
 </li>
@@ -6708,50 +6708,31 @@
   
 
 
-<div><p><abbr title="Robot Operating System">ROS</abbr> パッケージへの Clang-Tidy の適用
-Clang-Tidyは強力な C++ リンターです。</p>
-<p>準備
-Clang-Tidy を使用する前に生成する必要がありますbuild/compile_commands.json。</p>
-<p>colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1
-使用法
-clang-tidy -p build/ path/to/file1 path/to/file2 ...
-パッケージ内のすべてのファイルに Clang-Tidy を適用したい場合は、fdコマンドを使用すると便利です。インストールするにはfd、インストールマニュアルを参照してください。</p>
-<p>clang-tidy -p build/ $(fd -e cpp -e hpp --full-path "/autoware_utils/")
-IDEの統合
-クライオン
-CLion のドキュメントを参照してください。</p>
-<p>Visual Studioコード
-次の拡張子のいずれかを使用します。</p>
-<p>C/C++
-カランカラン
-トラブルシューティング
-が発生した場合はclang-diagnostic-error、 をインストールしてみてくださいlibomp-dev。</p>
-<p>関連: autowarefoundation/autoware-github-actions#172</p>
-<h1 id="applying-clang-tidy-to-ros-packages">Applying Clang-Tidy to <abbr title="Robot Operating System">ROS</abbr> packages<a class="headerlink" href="#applying-clang-tidy-to-ros-packages" title="Permanent link">#</a></h1>
-<p><a href="https://clang.llvm.org/extra/clang-tidy/">Clang-Tidy</a> is a powerful C++ linter.</p>
-<h2 id="preparation">Preparation<a class="headerlink" href="#preparation" title="Permanent link">#</a></h2>
-<p>You need to generate <code>build/compile_commands.json</code> before using Clang-Tidy.</p>
+<div><h1 id="rosclang-tidy">ROSパッケージへのClang-Tidyの適用<a class="headerlink" href="#rosclang-tidy" title="Permanent link">#</a></h1>
+<p><a href="https://clang.llvm.org/extra/clang-tidy/">Clang-Tidy</a>は強力なC++のリンターです。</p>
+<h2 id="_1">準備<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p>Clang-Tidyを使用する前に<code>build/compile_commands.json</code>を生成する必要があります。</p>
 <div class="highlight"><pre><span></span><code>colcon<span class="w"> </span>build<span class="w"> </span>--cmake-args<span class="w"> </span>-DCMAKE_EXPORT_COMPILE_COMMANDS<span class="o">=</span><span class="m">1</span>
 </code></pre></div>
-<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">#</a></h2>
+<h2 id="_2">使用法<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <div class="highlight"><pre><span></span><code>clang-tidy<span class="w"> </span>-p<span class="w"> </span>build/<span class="w"> </span>path/to/file1<span class="w"> </span>path/to/file2<span class="w"> </span>...
 </code></pre></div>
-<p>If you want to apply Clang-Tidy to all files in a package, using the <a href="https://github.com/sharkdp/fd">fd</a> command is useful.
-To install <code>fd</code>, see the <a href="https://github.com/sharkdp/fd#on-ubuntu">installation manual</a>.</p>
+<p>パッケージ内のすべてのファイルにClang-Tidyを適用したい場合は<a href="https://github.com/sharkdp/fd">fd</a>コマンドを使用すると便利です。
+<code>fd</code>をインストールするには<a href="https://github.com/sharkdp/fd#on-ubuntu">インストールマニュアル</a>を参照してください。</p>
 <div class="highlight"><pre><span></span><code>clang-tidy<span class="w"> </span>-p<span class="w"> </span>build/<span class="w"> </span><span class="k">$(</span>fd<span class="w"> </span>-e<span class="w"> </span>cpp<span class="w"> </span>-e<span class="w"> </span>hpp<span class="w"> </span>--full-path<span class="w"> </span><span class="s2">"/autoware_utils/"</span><span class="k">)</span>
 </code></pre></div>
-<h2 id="ide-integration">IDE integration<a class="headerlink" href="#ide-integration" title="Permanent link">#</a></h2>
+<h2 id="ide">IDEの統合<a class="headerlink" href="#ide" title="Permanent link">#</a></h2>
 <h3 id="clion">CLion<a class="headerlink" href="#clion" title="Permanent link">#</a></h3>
-<p>Refer to the <a href="https://www.jetbrains.com/help/clion/clang-tidy-checks-support.html">CLion Documentation</a>.</p>
+<p><a href="https://www.jetbrains.com/help/clion/clang-tidy-checks-support.html">CLionドキュメント</a>を参照してください。</p>
 <h3 id="visual-studio-code">Visual Studio Code<a class="headerlink" href="#visual-studio-code" title="Permanent link">#</a></h3>
-<p>Use either one of the following extensions:</p>
+<p>次の拡張子のいずれかを使用します:</p>
 <ul>
 <li><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">C/C++</a></li>
 <li><a href="https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd">clangd</a></li>
 </ul>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h2>
-<p>If you encounter <code>clang-diagnostic-error</code>, try installing <code>libomp-dev</code>.</p>
-<p>Related: <a href="https://github.com/autowarefoundation/autoware-github-actions/pull/172">https://github.com/autowarefoundation/autoware-github-actions/pull/172</a></p>
+<h2 id="_3">トラブルシューティング<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p><code>clang-diagnostic-error</code>が発生した場合は<code>libomp-dev</code>をインストールしてみてくださいl。</p>
+<p>関連: <a href="https://github.com/autowarefoundation/autoware-github-actions/pull/172">https://github.com/autowarefoundation/autoware-github-actions/pull/172</a></p>
 <!-- prettier-ignore --></div>
 
 
