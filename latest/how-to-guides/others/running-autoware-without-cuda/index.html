@@ -21,7 +21,7 @@
     
     
       
-        <title>Running autoware without cuda - Autoware Documentation</title>
+        <title>CUDAを使用せずにAutowareを実行する - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#running-autoware-without-cuda" class="md-skip">
+        <a href="#cudaautoware" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Running autoware without cuda
+              CUDAを使用せずにAutowareを実行する
             
           </span>
         </div>
@@ -3808,12 +3808,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Running autoware without cuda
+          CUDAを使用せずにAutowareを実行する
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Running autoware without cuda
+        CUDAを使用せずにAutowareを実行する
       </a>
       
         
@@ -3832,15 +3832,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#running-2d3d-object-detection-without-cuda" class="md-nav__link">
-    Running 2D/3D object detection without CUDA
+  <a href="#cuda2d3d" class="md-nav__link">
+    CUDAを使用しない2D/3Dオブジェクト検出の実行
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-traffic-light-detection-without-cuda" class="md-nav__link">
-    Running traffic light detection without CUDA
+  <a href="#cuda" class="md-nav__link">
+    CUDAを使用しないで信号検出を実行する
   </a>
   
 </li>
@@ -6609,15 +6609,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#running-2d3d-object-detection-without-cuda" class="md-nav__link">
-    Running 2D/3D object detection without CUDA
+  <a href="#cuda2d3d" class="md-nav__link">
+    CUDAを使用しない2D/3Dオブジェクト検出の実行
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-traffic-light-detection-without-cuda" class="md-nav__link">
-    Running traffic light detection without CUDA
+  <a href="#cuda" class="md-nav__link">
+    CUDAを使用しないで信号検出を実行する
   </a>
   
 </li>
@@ -6640,27 +6640,11 @@
   
 
 
-<div><p>CUDA を使用せずに Autoware を実行する
-Autoware Universe での物体検出と信号機認識のパフォーマンスを向上させるには CUDA のインストールが推奨されますが、CUDA なしでこれらのアルゴリズムを実行することも可能です。次のサブセクションでは、そのような環境で各アルゴリズムを実行する方法を簡単に説明します。</p>
-<p>CUDA を使用しない 2D/3D オブジェクト検出の実行
-Autoware Universe のオブジェクト検出は、次の 5 つの構成のいずれかを使用して実行できます。</p>
-<p>lidar_centerpoint
-lidar_apollo_instance_segmentation
-lidar-apollo+tensorrt_yolo
-lidar-centerpoint+tensorrt_yolo
-euclidean_cluster
-euclidean_clusterこれら 5 つの構成のうち、 CUDA なしで実行できるのは最後の構成 ( ) だけです。詳細については、euclidean_clusterモジュールの README ファイルを参照してください。</p>
-<p>CUDA を使用しないでの信号検出の実行
-交通信号認識 (検出と分類の両方) には、CUDA を必要とする 2 つのモジュールがあります。</p>
-<p>traffic_light_ssd_fine_detector
-traffic_light_classifier
-CUDA を使用せずに信号機検出を実行するには、信号機起動ファイルでenable_fine_detectionをfalse設定します。これを行うと、 が無効になりtraffic_light_ssd_fine_detector、代わりにモジュールによって信号検出が処理されるようになりますmap_based_traffic_light_detector。</p>
-<p>CUDA を使用せずに信号機分類を実行するには、信号機分類子起動ファイルでuse_gpuをfalse設定します。traffic_light_classifierこれを行うと、 は CUDA や <abbr title="Graphics Processing Unit">GPU</abbr> を必要としない別の分類アルゴリズムを使用することになります。</p>
-<h1 id="running-autoware-without-cuda">Running Autoware without CUDA<a class="headerlink" href="#running-autoware-without-cuda" title="Permanent link">#</a></h1>
-<p>Although CUDA installation is recommended to achieve better performance for object detection and traffic light recognition in Autoware Universe, it is possible to run these algorithms without CUDA.
-The following subsections briefly explain how to run each algorithm in such an environment.</p>
-<h2 id="running-2d3d-object-detection-without-cuda">Running 2D/3D object detection without CUDA<a class="headerlink" href="#running-2d3d-object-detection-without-cuda" title="Permanent link">#</a></h2>
-<p>Autoware Universe's object detection can be run using one of five possible configurations:</p>
+<div><h1 id="cudaautoware">CUDAを使用せずにAutowareを実行する<a class="headerlink" href="#cudaautoware" title="Permanent link">#</a></h1>
+<p>Autoware Universeでの物体検出と信号機認識のパフォーマンスを向上させるにはCUDAのインストールが推奨されますが、CUDAなしでこれらのアルゴリズムを実行することも可能です。
+次のサブセクションでは、そのような環境で各アルゴリズムを実行する方法を簡単に説明します。</p>
+<h2 id="cuda2d3d">CUDAを使用しない2D/3Dオブジェクト検出の実行<a class="headerlink" href="#cuda2d3d" title="Permanent link">#</a></h2>
+<p>Autoware Universeのオブジェクト検出は、次の5つの構成のいずれかを使用して実行できます:</p>
 <ul>
 <li><code>lidar_centerpoint</code></li>
 <li><code>lidar_apollo_instance_segmentation</code></li>
@@ -6668,15 +6652,15 @@ The following subsections briefly explain how to run each algorithm in such an e
 <li><code>lidar-centerpoint</code> + <code>tensorrt_yolo</code></li>
 <li><code>euclidean_cluster</code></li>
 </ul>
-<p>Of these five configurations, only the last one (<code>euclidean_cluster</code>) can be run without CUDA. For more details, refer to the <a href="https://github.com/autowarefoundation/autoware.universe/tree/main/perception/euclidean_cluster"><code>euclidean_cluster</code> module's README file</a>.</p>
-<h2 id="running-traffic-light-detection-without-cuda">Running traffic light detection without CUDA<a class="headerlink" href="#running-traffic-light-detection-without-cuda" title="Permanent link">#</a></h2>
-<p>For traffic light recognition (both detection and classification), there are two modules that require CUDA:</p>
+<p>これら5つの構成のうち、CUDAなしで実行できるのは最後の構成(<code>euclidean_cluster</code>)だけです。詳細については<a href="https://github.com/autowarefoundation/autoware.universe/tree/main/perception/euclidean_cluster"><code>euclidean_cluster</code>モジュールのREADMEファイル</a>を参照してください。</p>
+<h2 id="cuda">CUDAを使用しないで信号検出を実行する<a class="headerlink" href="#cuda" title="Permanent link">#</a></h2>
+<p>交通信号認識(検出と分類の両方)には、CUDAを必要とする2つのモジュールがあります:</p>
 <ul>
 <li><code>traffic_light_ssd_fine_detector</code></li>
 <li><code>traffic_light_classifier</code></li>
 </ul>
-<p>To run traffic light detection without CUDA, set <a href="https://github.com/autowarefoundation/autoware.universe/blob/9445f3a7acd645d12a64507c3d3bfa57e74a3634/launch/tier4_perception_launch/launch/traffic_light_recognition/traffic_light.launch.xml#L3"><code>enable_fine_detection</code> to <code>false</code> in the traffic light launch file</a>. Doing so disables the <code>traffic_light_ssd_fine_detector</code> such that traffic light detection is handled by the <code>map_based_traffic_light_detector</code> module instead.</p>
-<p>To run traffic light classification without CUDA, set <a href="https://github.com/autowarefoundation/autoware.universe/blob/9445f3a7acd645d12a64507c3d3bfa57e74a3634/perception/traffic_light_classifier/launch/traffic_light_classifier.launch.xml#L7"><code>use_gpu</code> to <code>false</code> in the traffic light classifier launch file</a>. Doing so will force the <code>traffic_light_classifier</code> to use a different classification algorithm that does not require CUDA or a <abbr title="Graphics Processing Unit">GPU</abbr>.</p>
+<p>CUDAを使用せずに信号機検出を実行するには、 set <a href="https://github.com/autowarefoundation/autoware.universe/blob/9445f3a7acd645d12a64507c3d3bfa57e74a3634/launch/tier4_perception_launch/launch/traffic_light_recognition/traffic_light.launch.xml#L3">信号機起動ファイルで<code>enable_fine_detection</code>を<code>false</code>に</a>設定します。これを行うと<code>traffic_light_ssd_fine_detector</code> が無効になり、代わりに<code>map_based_traffic_light_detector</code>モジュールによって信号検出が処理されるようになります。</p>
+<p>CUDAを使用せずに信号機分類を実行するには、信号機分類子起動ファイルでuse_gpuをfalse設定します。traffic_light_classifierこれを行うと、 は CUDA や <abbr title="Graphics Processing Unit">GPU</abbr> を必要としない別の分類アルゴリズムを使用することになります。To run traffic light classification without CUDA, set <a href="https://github.com/autowarefoundation/autoware.universe/blob/9445f3a7acd645d12a64507c3d3bfa57e74a3634/perception/traffic_light_classifier/launch/traffic_light_classifier.launch.xml#L7">信号機分類子起動ファイルで<code>use_gpu</code>を<code>false</code>に</a>設定します。これを行うと、<code>traffic_light_classifier</code>はCUDAやGPUを必要としない別の分類アルゴリズムを使用することになります。</p>
 <!-- prettier-ignore --></div>
 
 
