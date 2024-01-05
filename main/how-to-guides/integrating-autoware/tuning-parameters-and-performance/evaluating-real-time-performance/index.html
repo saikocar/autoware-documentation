@@ -6655,11 +6655,11 @@ ring_outlier_filterまずはノードを例に性能向上の手順を説明し�
 <p>// Algorithm is described for point cloud type of pcl
   pcl::PointCloud<pointt>::Ptr output_pcl(new pcl::PointCloud<pointt>);
   fill_pcl(<em>input_pcl, </em>output_pcl);</pointt></pointt></p>
-<p>auto output_msg = allocate_msg<:pointcloud2>(output_size);
+<p>auto output_msg = allocate_msg<sensor_msgs::pointcloud2>(output_size);
   pcl::toROSMsg(<em>output_pcl, </em>output_msg);
   publish(std::move(output_msg));
 }
-PCL ライブラリを使用するには、fromROSMsg()コールtoROSMsg()バックの開始時と終了時にメッセージ タイプ変換を実行するために使用されます。これは無駄なコピープロセスであるため、避けるべきです。PCL (例: autowarefoundation/awf_velodyne#39 )への依存関係を削除して、不要な型変換を排除する必要があります。マップ データなどの大きなメッセージ タイプの場合、物理メモリの観点から、システム全体にインスタンスが 1 つだけ存在する必要があります。</:pointcloud2></p>
+PCL ライブラリを使用するには、fromROSMsg()コールtoROSMsg()バックの開始時と終了時にメッセージ タイプ変換を実行するために使用されます。これは無駄なコピープロセスであるため、避けるべきです。PCL (例: autowarefoundation/awf_velodyne#39 )への依存関係を削除して、不要な型変換を排除する必要があります。マップ データなどの大きなメッセージ タイプの場合、物理メモリの観点から、システム全体にインスタンスが 1 つだけ存在する必要があります。</sensor_msgs::pointcloud2></p>
 <p>計画コンポーネント
 まず、ターンアラウンドタイムが長くなりがちなノードdetection_area内のモジュールをピックアップします。behavior_velocity_planner上記のパフォーマンス分析手順に従って、次のグラフを取得しました。軸はセンシング事例のグラフと同じです。</p>
 <p>検知エリアの所要時間</p>

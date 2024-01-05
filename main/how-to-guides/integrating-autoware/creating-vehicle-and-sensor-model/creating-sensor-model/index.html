@@ -6789,19 +6789,19 @@ sensor_kit_base_linkこのファイルは、親フレームとしてセンサー
 <p>これは、sample_sensor_kit_description パッケージの sensors.xacro ファイルです: (velodyne_rear 変換は、base_link で直接使用されます)</p>
 <?xml version="1.0"?>
 <p><robot name="vehicle" xmlns:xacro="http://ros.org/wiki/xacro">
-  <arg name="config_dir" default="&lt;span class=" arithmatex>\((find sample_sensor_kit_description)/config"/&gt;
-  &lt;xacro:property name="calibration" value="\){xacro.load_yaml('$(arg config_dir)/sensors_calibration.yaml')}"/&gt;</arg></robot></p>
+  <xacro:arg name="config_dir" default="&lt;span class=" arithmatex>\((find sample_sensor_kit_description)/config"/&gt;
+  &lt;xacro:property name="calibration" value="\){xacro.load_yaml('$(arg config_dir)/sensors_calibration.yaml')}"/&gt;</xacro:arg></robot></p>
 <!-- sensor kit -->
-<p><include filename="sensor_kit.xacro"></include>
-  <sensor_kit_macro parent="base_link" x="&lt;span class=" arithmatex>\({calibration['base_link']['sensor_kit_base_link']['x']}"
+<p><xacro:include filename="sensor_kit.xacro"></xacro:include>
+  <xacro:sensor_kit_macro parent="base_link" x="&lt;span class=" arithmatex>\({calibration['base_link']['sensor_kit_base_link']['x']}"
     y="\){calibration['base_link']['sensor_kit_base_link']['y']}"
     z="<span class="arithmatex">\({calibration['base_link']['sensor_kit_base_link']['z']}"
     roll="\)</span>{calibration['base_link']['sensor_kit_base_link']['roll']}"
     pitch="<span class="arithmatex">\({calibration['base_link']['sensor_kit_base_link']['pitch']}"
     yaw="\)</span>{calibration['base_link']['sensor_kit_base_link']['yaw']}"
-  /&gt;</sensor_kit_macro></p>
+  /&gt;</xacro:sensor_kit_macro></p>
 <!-- embedded sensors -->
-<p><include filename="&lt;span class=" arithmatex>\((find velodyne_description)/urdf/VLP-16.urdf.xacro"/&gt;
+<p><xacro:include filename="&lt;span class=" arithmatex>\((find velodyne_description)/urdf/VLP-16.urdf.xacro"/&gt;
   &lt;xacro:VLP-16 parent="base_link" name="velodyne_rear" topic="velodyne_rear/velodyne_points" hz="10" samples="220" gpu="false"&gt;
     &lt;origin
       xyz="\){calibration['base_link']['velodyne_rear_base_link']['x']}
@@ -6813,7 +6813,7 @@ sensor_kit_base_linkこのファイルは、親フレームとしてセンサー
     /&gt;
   
 
-チュートリアルの車両では、base_link に対する直接のセンサー変換はありません。したがって、sensors.xacro ファイルにはbase_linkとsensor_kit_base_linkリンクのみが含まれます。</include></p>
+チュートリアルの車両では、base_link に対する直接のセンサー変換はありません。したがって、sensors.xacro ファイルにはbase_linkとsensor_kit_base_linkリンクのみが含まれます。</xacro:include></p>
 <p>??? 注「sensors.xacrotutorial_vehicle_sensor_kit_description」</p>
 <p></p><div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0"?&gt;</span>
 <span class="nt">&lt;robot</span><span class="w"> </span><span class="na">name=</span><span class="s">"vehicle"</span><span class="w"> </span><span class="na">xmlns:xacro=</span><span class="s">"http://ros.org/wiki/xacro"</span><span class="nt">&gt;</span>

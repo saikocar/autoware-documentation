@@ -6627,11 +6627,11 @@ public:
 private:
     ...
     // from autoware
-    rclcpp::Subscription<:msg::ackermanncontrolcommand>::SharedPtr
+    rclcpp::Subscription<autoware_auto_control_msgs::msg::ackermanncontrolcommand>::SharedPtr
     control_cmd_sub_;
     ...
     // from vehicle
-    rclcpp::Publisher<:msg::gearreport>::SharedPtr gear_status_pub_;
+    rclcpp::Publisher<autoware_auto_vehicle_msgs::msg::gearreport>::SharedPtr gear_status_pub_;
     ...
     // autoware command messages
     ...
@@ -6645,7 +6645,7 @@ private:
     void to_vehicle();
     void from_vehicle();
 }
-.cppファイルYOUR-OWN-VEHICLE-INTERFACE.cppは次のようになります。</:msg::gearreport></:msg::ackermanncontrolcommand></your-own-interface></p>
+.cppファイルYOUR-OWN-VEHICLE-INTERFACE.cppは次のようになります。</autoware_auto_vehicle_msgs::msg::gearreport></autoware_auto_control_msgs::msg::ackermanncontrolcommand></your-own-interface></p>
 <h1 id="include-hpp">include <your-own-vehicle-interface>/<your-own-vehicle-interface>.hpp&gt;<a class="headerlink" href="#include-hpp" title="Permanent link">#</a></your-own-vehicle-interface></your-own-vehicle-interface></h1>
 <p>...</p>
 <p><your-own-vehicle-interface>::<your-own-vehicle-interface>()
@@ -6655,14 +6655,14 @@ private:
   /<em> subscribers </em>/
   using std::placeholders::<em>1;
   // from autoware
-  control_cmd_sub</em> = create_subscription<:msg::ackermanncontrolcommand>(
+  control_cmd_sub</em> = create_subscription<autoware_auto_control_msgs::msg::ackermanncontrolcommand>(
     "/control/command/control_cmd", 1, std::bind(&amp;<your-own-vehicle-interface>::callback_control_cmd, this, <em>1));
   ...
   // to autoware
-  gear_status_pub</em> = create_publisher<:msg::gearreport>(
+  gear_status_pub</em> = create_publisher<autoware_auto_vehicle_msgs::msg::gearreport>(
     "/vehicle/status/gear_status", rclcpp::QoS{1});
   ...
-}</:msg::gearreport></your-own-vehicle-interface></:msg::ackermanncontrolcommand></your-own-vehicle-interface></your-own-vehicle-interface></your-own-vehicle-interface></p>
+}</autoware_auto_vehicle_msgs::msg::gearreport></your-own-vehicle-interface></autoware_auto_control_msgs::msg::ackermanncontrolcommand></your-own-vehicle-interface></your-own-vehicle-interface></your-own-vehicle-interface></p>
 <p>void <your-own-vehicle-interface>::callback_control_cmd(
   const autoware_auto_control_msgs::msg::AckermannControlCommand::ConstSharedPtr msg)
 {
