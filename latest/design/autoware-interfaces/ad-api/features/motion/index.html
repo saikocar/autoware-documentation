@@ -21,7 +21,7 @@
     
     
       
-        <title>Motion - Autoware Documentation</title>
+        <title>モーション - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#motion" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Motion
+              モーション
             
           </span>
         </div>
@@ -4757,12 +4757,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Motion
+          モーション
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Motion
+        モーション
       </a>
       
         
@@ -4781,22 +4781,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#related-api" class="md-nav__link">
-    Related API
+  <a href="#api" class="md-nav__link">
+    関連するAPI
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
+  <a href="#_2" class="md-nav__link">
+    説明
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#states" class="md-nav__link">
-    States
+  <a href="#_3" class="md-nav__link">
+    状態
   </a>
   
 </li>
@@ -6616,22 +6616,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#related-api" class="md-nav__link">
-    Related API
+  <a href="#api" class="md-nav__link">
+    関連するAPI
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
+  <a href="#_2" class="md-nav__link">
+    説明
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#states" class="md-nav__link">
-    States
+  <a href="#_3" class="md-nav__link">
+    状態
   </a>
   
 </li>
@@ -6654,60 +6654,46 @@
   
 
 
-<div><p>モーション
-関連するAPI
-<a href="../../list/api/motion/state">/api/motion/state</a>
-<a href="../../list/api/motion/accept_start">/api/motion/accept_start</a>
-説明
-この API は車両の現在の動作を管理します。アプリケーションは車両の挙動を周囲の人に通知し、オペレーターや乗客に視覚化することができます。</p>
-<p>州
-運動状態は車両の停止と発進を管理します。車両が停止すると、状態は STOPPED になります。この後、車両が発進しようとすると（停止中）、状態は STARTING になります。この状態で起動 API を呼び出すと状態が MOVING に変更され、車両が起動します。この仕組みにより、車両発進前のアナウンスなどの処理を追加することができます。構成によっては、状態が STOPPED から MOVING に直接遷移する場合があります。</p>
-<p>運動状態</p>
-<p>州   説明
-停止  車両が停止している。
-起動  車両は停止していますが、発進しようとしています。
-移動中 車両は動いています。
-ブレーキング (未定) 車両が強く減速しています。</p>
-<h1 id="motion">Motion<a class="headerlink" href="#motion" title="Permanent link">#</a></h1>
-<h2 id="related-api">Related API<a class="headerlink" href="#related-api" title="Permanent link">#</a></h2>
+<div><h1 id="_1">モーション<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="api">関連するAPI<a class="headerlink" href="#api" title="Permanent link">#</a></h2>
 <ul>
 <li><a href="../../list/api/motion/state">/api/motion/state</a></li>
 <li><a href="../../list/api/motion/accept_start">/api/motion/accept_start</a></li>
 </ul>
-<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p>This API manages the current behavior of the vehicle.
-Applications can notify the vehicle behavior to the people around and visualize it for operator and passengers.</p>
-<h2 id="states">States<a class="headerlink" href="#states" title="Permanent link">#</a></h2>
-<p>The motion state manages the stop and start of the vehicle.
-Once the vehicle has stopped, the state will be STOPPED.
-After this, when the vehicle tries to start (is still stopped), the state will be STARTING.
-In this state, calling the start API changes the state to MOVING and the vehicle starts.
-This mechanism can add processing such as announcements before the vehicle starts.
-Depending on the configuration, the state may transition directly from STOPPED to MOVING.</p>
-<p><img alt="motion-state" src="state.drawio.svg"></p>
+<h2 id="_2">説明<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>このAPIは車両の現在の動作を管理します。
+アプリケーションは車両の挙動を周囲の人に通知し、オペレーターや乗客に視覚化することができます。</p>
+<h2 id="_3">状態<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>運動状態は車両の停止と発進を管理します。
+車両が停止すると、状態は STOPPED になります。
+この後、車両が発進しようとすると（停止中）、状態はSTARTINGになります。
+この状態で起動APIを呼び出すと状態がMOVINGに変更され、車両が起動します。
+この仕組みにより、車両発進前のアナウンスなどの処理を追加することができます。
+構成によっては、状態がSTOPPEDからMOVINGに直接遷移する場合があります。</p>
+<p><img alt="運動の状態" src="state.drawio.svg"></p>
 <table>
 <thead>
 <tr>
-<th>State</th>
-<th>Description</th>
+<th>状態</th>
+<th>説明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>STOPPED</td>
-<td>The vehicle is stopped.</td>
+<td>車両が停止している。</td>
 </tr>
 <tr>
 <td>STARTING</td>
-<td>The vehicle is stopped, but is trying to start.</td>
+<td>車両は停止していますが、発進しようとしています。</td>
 </tr>
 <tr>
 <td>MOVING</td>
-<td>The vehicle is moving.</td>
+<td>車両は動いています。</td>
 </tr>
 <tr>
 <td>BRAKING (T.B.D.)</td>
-<td>The vehicle is decelerating strongly.</td>
+<td>車両が強く減速しています。</td>
 </tr>
 </tbody>
 </table>
