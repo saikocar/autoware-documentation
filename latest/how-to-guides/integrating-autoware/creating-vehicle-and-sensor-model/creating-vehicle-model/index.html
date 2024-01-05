@@ -6759,9 +6759,9 @@ Autoware では、.fbx または .dae 形式を 3D モデルとして使用で�
 <p><robot xmlns:xacro="http://ros.org/wiki/xacro">
   <!-- load parameter --></robot></p>
 <ul>
-<li><property name="vehicle_info" value="&lt;span class=" arithmatex>\({xacro.load_yaml('\)(find sample_vehicle_description)/config/vehicle_info.param.yaml')}"/&gt;</property></li>
+<li><xacro:property name="vehicle_info" value="&lt;span class=" arithmatex>\({xacro.load_yaml('\)(find sample_vehicle_description)/config/vehicle_info.param.yaml')}"/&gt;</xacro:property></li>
 <li>
-<p><property name="vehicle_info" value="&lt;span class=" arithmatex>\({xacro.load_yaml('\)(find \<your-vehicle-name>_vehicle_description)/config/vehicle_info.param.yaml')}"/&gt;</your-vehicle-name></property></p>
+<p><xacro:property name="vehicle_info" value="&lt;span class=" arithmatex>\({xacro.load_yaml('\)(find \<your-vehicle-name>_vehicle_description)/config/vehicle_info.param.yaml')}"/&gt;</your-vehicle-name></xacro:property></p>
 <!-- vehicle body -->
 <p><link name="base_link">
   <visual>
