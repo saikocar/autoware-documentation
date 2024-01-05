@@ -21,7 +21,7 @@
     
     
       
-        <title>Operation mode - Autoware Documentation</title>
+        <title>動作モード - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#operation-mode" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Operation mode
+              動作モード
             
           </span>
         </div>
@@ -4771,12 +4771,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Operation mode
+          動作モード
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Operation mode
+        動作モード
       </a>
       
         
@@ -4795,44 +4795,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#related-api" class="md-nav__link">
-    Related API
+  <a href="#api" class="md-nav__link">
+    関連するAPI
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
+  <a href="#_2" class="md-nav__link">
+    説明
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#states" class="md-nav__link">
-    States
+  <a href="#_3" class="md-nav__link">
+    状態
   </a>
   
-    <nav class="md-nav" aria-label="States">
+    <nav class="md-nav" aria-label="状態">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#autoware-control-flag" class="md-nav__link">
-    Autoware control flag
+  <a href="#autoware" class="md-nav__link">
+    Autoware制御フラグ
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#operation-mode-and-change-flags" class="md-nav__link">
-    Operation mode and change flags
+  <a href="#_4" class="md-nav__link">
+    動作モードと変更フラグ
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#transition-flag" class="md-nav__link">
-    Transition flag
+  <a href="#_5" class="md-nav__link">
+    移行フラグ
   </a>
   
 </li>
@@ -6643,44 +6643,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#related-api" class="md-nav__link">
-    Related API
+  <a href="#api" class="md-nav__link">
+    関連するAPI
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
+  <a href="#_2" class="md-nav__link">
+    説明
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#states" class="md-nav__link">
-    States
+  <a href="#_3" class="md-nav__link">
+    状態
   </a>
   
-    <nav class="md-nav" aria-label="States">
+    <nav class="md-nav" aria-label="状態">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#autoware-control-flag" class="md-nav__link">
-    Autoware control flag
+  <a href="#autoware" class="md-nav__link">
+    Autoware制御フラグ
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#operation-mode-and-change-flags" class="md-nav__link">
-    Operation mode and change flags
+  <a href="#_4" class="md-nav__link">
+    動作モードと変更フラグ
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#transition-flag" class="md-nav__link">
-    Transition flag
+  <a href="#_5" class="md-nav__link">
+    移行フラグ
   </a>
   
 </li>
@@ -6708,32 +6708,8 @@
   
 
 
-<div><p>動作モード
-関連するAPI
-<a href="../../list/api/operation_mode/state">/api/operation_mode/state</a>
-<a href="../../list/api/operation_mode/change_to_autonomous">/api/operation_mode/change_to_autonomous</a>
-<a href="../../list/api/operation_mode/change_to_stop">/api/operation_mode/change_to_stop</a>
-<a href="../../list/api/operation_mode/change_to_local">/api/operation_mode/change_to_local</a>
-<a href="../../list/api/operation_mode/change_to_remote">/api/operation_mode/change_to_remote</a>
-<a href="../../list/api/operation_mode/enable_autoware_control">/api/operation_mode/enable_autoware_control</a>
-<a href="../../list/api/operation_mode/disable_autoware_control">/api/operation_mode/disable_autoware_control</a>
-説明
-以下に示すように、Autoware は車両インターフェイスに Autoware 制御と直接制御の 2 つのモードがあることを前提としています。ダイレクト制御モードでは、ステアリングやペダルなどのデバイスを使用して車両を操作します。車両が直接制御モードをサポートしていない場合は、常に Autoware 制御モードとして扱われます。Autoware 制御モードには 4 つの動作モードがあります。</p>
-<p>モード 説明
-停止  車両は停止したままにしてください。
-自律型 車両を自律的に制御します。
-地元  ジョイスティックなどのデバイスを使用して、近くから車両を手動で制御します。
-リモート    クラウド上のWebアプリケーションから車両を手動で制御します。
-動作モードアーキテクチャ</p>
-<p>州
-Autoware制御フラグ
-フラグは、is_autoware_control_enabled車両が Autoware によって制御されているかどうかを示します。ソフトウェアで制御を切り替えることができる場合は、有効化および無効化 API を使用できます。車両がモード切り替えをサポートしていない場合、またはハードウェアによって切り替えられている場合、これらの API は常に失敗します。</p>
-<p>動作モードと変更フラグ
-状態は、operation_modeAutoware 制御が有効な場合にどのコマンドが使用されるかを示します。フラグによりchange_to_*​​各モードへの遷移が可能かどうかを確認することができます。</p>
-<p>移行フラグ
-Autoware では、速度超過時の自律モードへの切り替えなどの安全性を保証できない場合があります。この状況を表すフラグがありis_in_transition、モードを変更するときにこれが true になります。モードを変更したオペレータは、このフラグが true の間、安全を確保する必要があります。モード変更が完了すると、フラグは false になります。</p>
-<h1 id="operation-mode">Operation mode<a class="headerlink" href="#operation-mode" title="Permanent link">#</a></h1>
-<h2 id="related-api">Related API<a class="headerlink" href="#related-api" title="Permanent link">#</a></h2>
+<div><h1 id="_1">動作モード<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="api">関連するAPI<a class="headerlink" href="#api" title="Permanent link">#</a></h2>
 <ul>
 <li><a href="../../list/api/operation_mode/state">/api/operation_mode/state</a></li>
 <li><a href="../../list/api/operation_mode/change_to_autonomous">/api/operation_mode/change_to_autonomous</a></li>
@@ -6743,50 +6719,51 @@ Autoware では、速度超過時の自律モードへの切り替えなどの�
 <li><a href="../../list/api/operation_mode/enable_autoware_control">/api/operation_mode/enable_autoware_control</a></li>
 <li><a href="../../list/api/operation_mode/disable_autoware_control">/api/operation_mode/disable_autoware_control</a></li>
 </ul>
-<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p>As shown below, Autoware assumes that the vehicle interface has two modes, Autoware control and direct control.
-In direct control mode, the vehicle is operated using devices such as steering and pedals.
-If the vehicle does not support direct control mode, it is always treated as Autoware control mode.
-Autoware control mode has four operation modes.</p>
+<h2 id="_2">説明<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>以下に示すように、Autowareは車両インターフェイスにAutoware制御と直接制御の2つのモードがあることを前提としています。
+直接制御モードでは、ステアリングやペダルなどのデバイスを使用して車両を操作します。
+車両が直接制御モードをサポートしていない場合は、常にAutoware制御モードとして扱われます。
+Autoware制御モードには4つの動作モードがあります。</p>
 <table>
 <thead>
 <tr>
-<th>Mode</th>
-<th>Description</th>
+<th>モード</th>
+<th>説明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Stop</td>
-<td>Keep the vehicle stopped.</td>
+<td>車両を停止したままにします。</td>
 </tr>
 <tr>
 <td>Autonomous</td>
-<td>Autonomously control the vehicle.</td>
+<td>車両を自律的に制御します。</td>
 </tr>
 <tr>
 <td>Local</td>
-<td>Manually control the vehicle from nearby with some device such as a joystick.</td>
+<td>ジョイスティックなどのデバイスを使用して、近くから車両を手動で制御します。</td>
 </tr>
 <tr>
 <td>Remote</td>
-<td>Manually control the vehicle from a web application on the cloud.</td>
+<td>クラウド上のWebアプリケーションから車両を手動で制御します。</td>
 </tr>
 </tbody>
 </table>
-<p><img alt="operation-mode-architecture" src="architecture.drawio.svg"></p>
-<h2 id="states">States<a class="headerlink" href="#states" title="Permanent link">#</a></h2>
-<h3 id="autoware-control-flag">Autoware control flag<a class="headerlink" href="#autoware-control-flag" title="Permanent link">#</a></h3>
-<p>The flag <code>is_autoware_control_enabled</code> indicates if the vehicle is controlled by Autoware.
-The enable and disable APIs can be used if the control can be switched by software.
-These APIs will always fail if the vehicle does not support mode switching or is switched by hardware.</p>
-<h3 id="operation-mode-and-change-flags">Operation mode and change flags<a class="headerlink" href="#operation-mode-and-change-flags" title="Permanent link">#</a></h3>
-<p>The state <code>operation_mode</code> indicates what command is used when Autoware control is enabled.
-The flags <code>change_to_*</code> can be used to check if it is possible to transition to each mode.</p>
-<h3 id="transition-flag">Transition flag<a class="headerlink" href="#transition-flag" title="Permanent link">#</a></h3>
-<p>Since Autoware may not be able to guarantee safety, such as switching to autonomous mode during overspeed.
-There is the flag <code>is_in_transition</code> for this situation and it will be true when changing modes.
-The operator who changed the mode should ensure safety while this flag is true. The flag will be false when the mode change is complete.</p>
+<p><img alt="動作モードアーキテクチャ" src="architecture.drawio.svg"></p>
+<h2 id="_3">状態<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h3 id="autoware">Autoware制御フラグ<a class="headerlink" href="#autoware" title="Permanent link">#</a></h3>
+<p><code>is_autoware_control_enabled</code>フラグは、車両がAutowareによって制御されているかどうかを示します。
+ソフトウェアで制御を切り替えることができる場合は、有効化および無効化APIを使用できます。
+車両がモード切り替えをサポートしていない場合、またはハードウェアによって切り替えられている場合、これらの API は常に失敗します。</p>
+<h3 id="_4">動作モードと変更フラグ<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<p>​​
+<code>operation_mode</code>状態は、Autoware 制御が有効な場合にどのコマンドが使用されるかを示します。
+<code>change_to_*</code>フラグにより各モードへの遷移が可能かどうかを確認することができます。</p>
+<h3 id="_5">移行フラグ<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
+<p>Autowareでは、速度超過時の自律モードへの切り替えなどの安全性を保証できない場合があります。
+この状況を表す<code>is_in_transition</code>フラグがあり、モードを変更するときにこれが true になります。
+モードを変更したオペレータは、このフラグがtrueの間、安全を確保する必要があります。モード変更が完了すると、フラグはfalseになります。</p>
 <!-- prettier-ignore --></div>
 
 
