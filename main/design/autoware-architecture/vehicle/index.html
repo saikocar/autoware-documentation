@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>車両インターフェース設計 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#vehicle-interface-design" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              車両インターフェース設計
             
           </span>
         </div>
@@ -6561,50 +6561,50 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#abstract" class="md-nav__link">
-    Abstract
+  <a href="#_2" class="md-nav__link">
+    概要
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-requirements" class="md-nav__link">
-    1. Requirements
+  <a href="#1" class="md-nav__link">
+    1. 要件
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-architecture" class="md-nav__link">
-    2. Architecture
+  <a href="#2" class="md-nav__link">
+    2. アーキテクチャ
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-features" class="md-nav__link">
-    3. Features
+  <a href="#3" class="md-nav__link">
+    3. 機能
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-interface-and-data-structure" class="md-nav__link">
-    4. Interface and Data Structure
+  <a href="#4" class="md-nav__link">
+    4. インターフェースとデータ構造
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-concerns-assumptions-and-limitations" class="md-nav__link">
-    5. Concerns, Assumptions, and Limitations
+  <a href="#5" class="md-nav__link">
+    5. 懸念事項、仮定、制限事項
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-examples-of-accuracy-requirements-by-odd" class="md-nav__link">
-    6. Examples of accuracy requirements by ODD
+  <a href="#6-odd" class="md-nav__link">
+    6. ODDによる精度要求の例
   </a>
   
 </li>
@@ -6627,227 +6627,140 @@
   
 
 
-<div><p>車両インターフェース設計
-抽象的な
-Vehicle Interface コンポーネントは、Autoware と車両の間のインターフェースを提供し、車両のドライブ バイ ワイヤ システムに制御信号を渡し、Autoware に返される車両情報を受信します。</p>
-<ol>
-<li>要件
-目標:</li>
-</ol>
-<p>Vehicle Interface コンポーネントは、Autoware コマンドを車両固有の形式に変換し、車両のステータスを車両固有の形式で Autoware メッセージに変換します。
-Autoware と Vehicle コンポーネントの間のインターフェイスは抽象化されており、ハードウェアから独立しています。
-このインターフェイスは拡張可能であるため、車両固有のコマンドを簡単に追加できます。例えばヘッドライトの制御。
-目標以外:</p>
-<p>車両からの応答の精度は定義されませんが、参考設計からの精度要件の例が例として提供されます。
-応答速度は定義されません。
-2. アーキテクチャ
-Vehicle Interface コンポーネントは次のコンポーネントで構成されます。</p>
-<p>速度/加速制御がドライブ・バイ・ワイヤ・システムによってサポートされている場合、制御コンポーネントからの車両コマンドを通過する生の車両コマンド・コンバーター・コンポーネント。それ以外の場合、制御コマンドは制御方法に従って変更されます (例: 加速マップを使用して、制御コンポーネントからの目標加速度を車両固有のアクセル/ブレーキ ペダル値に変換する)
-Autoware と車両の間のインターフェースとして機能し、制御信号を通信し、車両に関する情報 (ステアリング出力、タイヤ角度など) を取得する車両インターフェース コンポーネント (車両固有)
-各コンポーネントには Autoware の静的ノードが含まれていますが、各モジュールは動的にロードおよびアンロードできます (C++ クラスに対応)。Vehicle Interface コンポーネントのメカニズムは、次の図で示されています。</p>
-<p>車両インターフェースの概要</p>
-<p>車両インターフェースの概要</p>
-<ol>
-<li>特徴
-Vehicle Interface コンポーネントは、次の機能と機能を提供できます。</li>
-</ol>
-<p>基本機能</p>
-<p>Autoware 制御コマンドを車両固有のコマンドに変換する
-車両固有のステータス情報 (速度、ステアリング) を Autoware ステータス メッセージに変換する
-診断</p>
-<p>利用可能な機能をリストする
-コントロールコンポーネントが車両インターフェースコンポーネントで利用できない機能を使用しようとした場合に警告を提供します。
-車両のハードウェアに応じて、追加の機能や機能が追加される場合があります。いくつかの機能の例を以下に示します。</p>
-<p>安全機能
-手動介入により自動運転を解除します。
-これは、緊急解除ボタンを使用するか、安全ドライバーが手動でステアリングホイールを回すかブレーキを押すことによって行うことができます。
-オプションのコントロール
-方向指示器
-ハンドブレーキ
-ヘッドライト
-ハザードライト
-ドア
-ホーン
-ワイパー
-4. インターフェースとデータ構造
-同じプロセス空間内で実行されている他のコンポーネントが車両インターフェース コンポーネントの機能と能力にアクセスするための車両インターフェース コンポーネントのインターフェースは、次のように定義されます。</p>
-<p>フロムコントロール</p>
-<p>作動コマンド
-目標の加速、制動、ステアリング角度
-企画から</p>
-<p>車両固有のコマンド (オプションで、タイプごとに個別のメッセージ)
-シフト
-ドア
-ワイパー
-等
-車両から</p>
-<p>車両ステータスメッセージ
-Autoware 固有の形式のメッセージに変換するための車両固有の形式のメッセージ
-速度ステータス
-ステアリングステータス (オプション)
-シフトステータス（オプション）
-方向指示器ステータス (オプション)
-作動状態（オプション）
-Vehicle Interface コンポーネントの出力インターフェイス:</p>
-<p>車両への車両制御メッセージ
-車両を駆動するための制御信号
-車両のタイプ/プロトコルによって異なりますが、少なくともステアリングと速度のコマンドを含める必要があります
-Autoware への車両ステータス メッセージ
-作動ステータス
-アクセル、ブレーキ、ステアリングの状態
-車両オドメトリ (ローカリゼーションへの出力)
-車両ねじれ情報
-制御モード
-車両が自律制御されているか手動制御されているかに関する情報
-シフトステータス（オプション）
-車両のシフト状態
-方向指示器ステータス (オプション)
-車両の方向指示器の状態
-Vehicle Interface コンポーネントで使用されるオブジェクトと軌道のセマンティクスの内部表現のデータ構造は、次のように定義されます。</p>
-<ol>
-<li>懸念事項、仮定、制限事項
-懸念事項</li>
-</ol>
-<p>アーキテクチャのトレードオフとスケーラビリティ
-仮定</p>
-<p>制限事項</p>
-<ol>
-<li>ODDによる精度要求の例</li>
-</ol>
-<h1 id="vehicle-interface-design">Vehicle Interface design<a class="headerlink" href="#vehicle-interface-design" title="Permanent link">#</a></h1>
-<h2 id="abstract">Abstract<a class="headerlink" href="#abstract" title="Permanent link">#</a></h2>
-<p>The Vehicle Interface component provides an interface between Autoware and a vehicle that passes control signals to the vehicle’s drive-by-wire system and receives vehicle information that is passed back to Autoware.</p>
-<h2 id="1-requirements">1. Requirements<a class="headerlink" href="#1-requirements" title="Permanent link">#</a></h2>
-<p>Goals:</p>
+<div><h1 id="_1">車両インターフェース設計<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">概要<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>車両インターフェースコンポーネントは、Autowareと車両の間のインターフェースを提供し、車両のドライブバイワイヤシステムに制御信号を渡し、Autowareに返される車両情報を受信します。</p>
+<h2 id="1">1. 要件<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
+<p>目標:</p>
 <ul>
-<li>The Vehicle Interface component converts Autoware commands to a vehicle-specific format and converts vehicle status in a vehicle-specific format to Autoware messages.</li>
-<li>The interface between Autoware and the Vehicle component is abstracted and independent of hardware.</li>
-<li>The interface is extensible such that additional vehicle-specific commands can be easily added. For example, headlight control.</li>
+<li>車両インターフェースコンポーネントは、Autoware コマンドを車両固有の形式に変換し、車両のステータスを車両固有の形式で Autoware メッセージに変換します。</li>
+<li>Autowareと車両コンポーネントの間のインターフェイスは抽象化されており、ハードウェアから独立しています。</li>
+<li>このインターフェイスは拡張可能であるため、車両固有のコマンドを簡単に追加できます。例えばヘッドライトの制御。</li>
 </ul>
-<p>Non-goals:</p>
+<p>非目標:</p>
 <ul>
-<li>Accuracy of responses from the vehicle will not be defined, but example accuracy requirements from reference designs are provided as examples.</li>
-<li>Response speed will not be defined.</li>
+<li>車両からの応答の精度は定義されませんが、参考設計からの精度要件の例が参考として提供されます。</li>
+<li>応答速度は定義されません。</li>
 </ul>
-<h2 id="2-architecture">2. Architecture<a class="headerlink" href="#2-architecture" title="Permanent link">#</a></h2>
-<p>The Vehicle Interface component consists of the following components:</p>
+<h2 id="2">2. アーキテクチャ<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
+<p>車両インターフェースコンポーネントは次のコンポーネントで構成されます:</p>
 <ul>
-<li>A Raw Vehicle Command Converter component that will pass through vehicle commands from the Control component if velocity/acceleration control is supported by the drive-by-wire system. Otherwise, the Control commands will be modified according to the control method (eg: converting a target acceleration from the Control component to a vehicle specific accel/brake pedal value through the use of an acceleration map)</li>
-<li>A Vehicle Interface component (vehicle specific) that acts as an interface between Autoware and a vehicle to communicate control signals and to obtain information about the vehicle (steer output, tyre angle etc)</li>
+<li>速度/加速制御がドライブバイワイヤシステムによってサポートされている場合、制御コンポーネントからの車両コマンドを通過する生の車両コマンド・コンバーター・コンポーネント。それ以外の場合、制御コマンドは制御方法に従って変更されます (例: 加速マップを使用して、制御コンポーネントからの目標加速度を車両固有のアクセル/ブレーキ ペダル値に変換する)</li>
+<li>Autowareと車両の間のインターフェースとして機能し、制御信号を通信し、車両に関する情報(ステアリング出力、タイヤ角度など)を取得する車両インターフェースコンポーネント(車両固有)</li>
 </ul>
-<p>Each component contains static nodes of Autoware, while each module can be dynamically loaded and unloaded (corresponding to C++ classes). The mechanism of the Vehicle Interface component is depicted by the following figures:</p>
-<p><img alt="Vehicle Interface overview" src="image/vehicle_interface_architecture.png"></p>
-<p><img alt="Vehicle Interface overview" src="image/vehicle_interface_overview.png"></p>
-<h2 id="3-features">3. Features<a class="headerlink" href="#3-features" title="Permanent link">#</a></h2>
-<p>The Vehicle Interface component can provide the following features in functionality and capability:</p>
+<p>各コンポーネントにはAutowareの静的ノードが含まれていますが、各モジュールは動的にロードおよびアンロードできます(C++クラスに対応)。車両インターフェースコンポーネントのメカニズムは、次の図で示されています:</p>
+<p><img alt="車両インターフェースの概要" src="image/vehicle_interface_architecture.png"></p>
+<p><img alt="車両インターフェースの概要" src="image/vehicle_interface_overview.png"></p>
+<h2 id="3">3. 機能<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
+<p>車両インターフェースコンポーネントは、次の機能と機能を提供できます:</p>
 <ul>
 <li>
-<p>Basic functions</p>
+<p>基本機能</p>
 <ul>
-<li>Converting Autoware control commands to vehicle specific command</li>
-<li>Converting vehicle specific status information (velocity, steering) to Autoware status message</li>
+<li>Autoware制御コマンドを車両固有のコマンドに変換する</li>
+<li>車両固有のステータス情報(速度、ステアリング)をAutowareステータスメッセージに変換する</li>
 </ul>
 </li>
 </ul>
 <ul>
-<li>Diagnostics<ul>
-<li>List available features</li>
-<li>Provide a warning if the Control component tries to use a feature that is not available in the Vehicle Interface component</li>
+<li>診断<ul>
+<li>利用可能な機能をリストする</li>
+<li>コントロールコンポーネントが車両インターフェースコンポーネントで利用できない機能を使用しようとした場合に警告を提供します</li>
 </ul>
 </li>
 </ul>
-<p>Additional functionality and capability features may be added, depending on the vehicle hardware. Some example features are listed below:</p>
+<p>車両のハードウェアに応じて、追加の機能や機能が追加される場合があります。いくつかの機能の例を以下に示します:</p>
 <ul>
-<li>Safety features<ul>
-<li>Disengage autonomous driving via manual intervention.<ul>
-<li>This can be done through the use of an emergency disengage button, or by a safety driver manually turning the steering wheel or pressing the brake</li>
+<li>安全機能<ul>
+<li>手動介入により自動運転を解除します。<ul>
+<li>これは、緊急解除ボタンを使用するか、安全ドライバーが手動でステアリングホイールを回すかブレーキを押すことによって行うことができます。</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>Optional controls<ul>
-<li>Turn indicator</li>
-<li>Handbrake</li>
-<li>Headlights</li>
-<li>Hazard lights</li>
-<li>Doors</li>
-<li>Horn</li>
-<li>Wipers</li>
+<li>オプションのコントロール<ul>
+<li>方向指示器</li>
+<li>ハンドブレーキ</li>
+<li>ヘッドライト</li>
+<li>ハザードライト</li>
+<li>ドア</li>
+<li>警笛</li>
+<li>ワイパー</li>
 </ul>
 </li>
 </ul>
-<h2 id="4-interface-and-data-structure">4. Interface and Data Structure<a class="headerlink" href="#4-interface-and-data-structure" title="Permanent link">#</a></h2>
-<p>The interface of the Vehicle Interface component for other components running in the same process space to access the functionality and capability of the Vehicle Interface component is defined as follows.</p>
-<p>From Control</p>
+<h2 id="4">4. インターフェースとデータ構造<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
+<p>同じプロセス空間内で実行されている他のコンポーネントが車両インターフェース コンポーネントの機能と能力にアクセスするための車両インターフェース コンポーネントのインターフェースは、次のように定義されます。</p>
+<p>制御から</p>
 <ul>
-<li>Actuation Command<ul>
-<li>target acceleration, braking, and steering angle</li>
+<li>作動コマンド<ul>
+<li>目標の加速、制動、ステアリング角度</li>
 </ul>
 </li>
 </ul>
-<p>From Planning</p>
+<p>計画から</p>
 <ul>
-<li>Vehicle Specific Commands (optional and a separate message for each type)<ul>
-<li>Shift</li>
-<li>Door</li>
-<li>Wiper</li>
-<li>etc</li>
+<li>車両固有のコマンド (オプションで、タイプごとに個別のメッセージ)<ul>
+<li>シフト</li>
+<li>ドア</li>
+<li>ワイパー</li>
+<li>等</li>
 </ul>
 </li>
 </ul>
-<p>From the vehicle</p>
+<p>車両から</p>
 <ul>
-<li>Vehicle status messages<ul>
-<li>Vehicle-specific format messages for conversion into Autoware-specific format messages<ul>
-<li>Velocity status</li>
-<li>Steering status (optional)</li>
-<li>Shift status (optional)</li>
-<li>Turn signal status (optional)</li>
-<li>Actuation status (optional)</li>
+<li>車両ステータスメッセージ<ul>
+<li>Autoware 固有の形式のメッセージに変換するための車両固有の形式のメッセージ<ul>
+<li>速度ステータス</li>
+<li>ステアリングステータス (オプション)</li>
+<li>シフトステータス（オプション）</li>
+<li>方向指示器ステータス (オプション)</li>
+<li>作動状態（オプション）</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p>The output interface of the Vehicle Interface component:</p>
+<p>車両インターフェースコンポーネントの出力インターフェイス:</p>
 <ul>
-<li>Vehicle control messages to the vehicle<ul>
-<li>Control signals to drive the vehicle</li>
-<li>Depends on the vehicle type/protocol, but should include steering and velocity commands at a minimum</li>
+<li>車両への車両制御メッセージ<ul>
+<li>車両を駆動するための制御信号</li>
+<li>車両のタイプ/プロトコルによって異なりますが、少なくともステアリングと速度のコマンドを含める必要があります</li>
 </ul>
 </li>
-<li>Vehicle status messages to Autoware</li>
-<li>Actuation Status<ul>
-<li>Acceleration, brake, steering status</li>
+<li>Autowareへの車両ステータスメッセージ</li>
+<li>作動ステータス<ul>
+<li>アクセル、ブレーキ、ステアリングの状態</li>
 </ul>
 </li>
-<li>Vehicle odometry (output to Localization)<ul>
-<li>Vehicle twist information</li>
+<li>車両オドメトリ (位置推定への出力)<ul>
+<li>車両ツイスト情報</li>
 </ul>
 </li>
-<li>Control mode<ul>
-<li>Information about whether the vehicle is under autonomous control or manual control</li>
+<li>制御モード<ul>
+<li>車両が自律制御されているか手動制御されているかに関する情報</li>
 </ul>
 </li>
-<li>Shift status (optional)<ul>
-<li>Vehicle shift status</li>
+<li>シフトステータス（オプション）<ul>
+<li>車両のシフト状態</li>
 </ul>
 </li>
-<li>Turn signal status (optional)<ul>
-<li>Vehicle turn signal status</li>
+<li>方向指示器ステータス (オプション)<ul>
+<li>車両の方向指示器の状態</li>
 </ul>
 </li>
 </ul>
-<p>The data structure for the internal representation of semantics for the objects and trajectories used in the Vehicle Interface component is defined as follows:</p>
-<h2 id="5-concerns-assumptions-and-limitations">5. Concerns, Assumptions, and Limitations<a class="headerlink" href="#5-concerns-assumptions-and-limitations" title="Permanent link">#</a></h2>
-<p>Concerns</p>
+<p>車両インターフェースコンポーネントで使用されるオブジェクトと軌道のセマンティクスの内部表現のデータ構造は、次のように定義されます:</p>
+<h2 id="5">5. 懸念事項、仮定、制限事項<a class="headerlink" href="#5" title="Permanent link">#</a></h2>
+<p>懸念事項</p>
 <ul>
-<li>Architectural trade-offs and scalability</li>
+<li>アーキテクチャのトレードオフとスケーラビリティ</li>
 </ul>
-<p>Assumptions</p>
+<p>仮定</p>
 <p>-</p>
-<p>Limitations</p>
-<h2 id="6-examples-of-accuracy-requirements-by-odd">6. Examples of accuracy requirements by <abbr title="Operational Design Domain">ODD</abbr><a class="headerlink" href="#6-examples-of-accuracy-requirements-by-odd" title="Permanent link">#</a></h2>
+<p>制限事項</p>
+<h2 id="6-odd">6. ODDによる精度要求の例<a class="headerlink" href="#6-odd" title="Permanent link">#</a></h2>
 <!-- prettier-ignore --></div>
 
 
