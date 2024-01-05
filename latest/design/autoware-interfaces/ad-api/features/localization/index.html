@@ -21,7 +21,7 @@
     
     
       
-        <title>Localization - Autoware Documentation</title>
+        <title>位置推定 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#localization" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Localization
+              位置推定
             
           </span>
         </div>
@@ -4743,12 +4743,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Localization
+          位置推定
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Localization
+        位置推定
       </a>
       
         
@@ -4767,22 +4767,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#related-api" class="md-nav__link">
-    Related API
+  <a href="#api" class="md-nav__link">
+    関連するAPI
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
+  <a href="#_2" class="md-nav__link">
+    説明
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#states" class="md-nav__link">
-    States
+  <a href="#_3" class="md-nav__link">
+    状態
   </a>
   
 </li>
@@ -6616,22 +6616,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#related-api" class="md-nav__link">
-    Related API
+  <a href="#api" class="md-nav__link">
+    関連するAPI
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
+  <a href="#_2" class="md-nav__link">
+    説明
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#states" class="md-nav__link">
-    States
+  <a href="#_3" class="md-nav__link">
+    状態
   </a>
   
 </li>
@@ -6654,47 +6654,35 @@
   
 
 
-<div><p>ローカリゼーション
-関連するAPI
-<a href="../../list/api/localization/initialization_state">/api/localization/initialization_state</a>
-<a href="../../list/api/localization/initialize">/api/localization/initialize</a>
-説明
-この API はローカリゼーションの初期化を管理します。Autoware では、ローカリゼーションの最初の推測としてグローバル ポーズが必要です。</p>
-<p>州
-ローカリゼーション初期化状態</p>
-<p>州   説明
-未初期化    ローカリゼーションが初期化されていません。最初の推測としてグローバル ポーズを待っています。
-初期化中    ローカリゼーションを初期化しています。
-初期化されました    ローカリゼーションが初期化されます。必要に応じて、再度初期化を要求できます。</p>
-<h1 id="localization">Localization<a class="headerlink" href="#localization" title="Permanent link">#</a></h1>
-<h2 id="related-api">Related API<a class="headerlink" href="#related-api" title="Permanent link">#</a></h2>
+<div><h1 id="_1">位置推定<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="api">関連するAPI<a class="headerlink" href="#api" title="Permanent link">#</a></h2>
 <ul>
 <li><a href="../../list/api/localization/initialization_state">/api/localization/initialization_state</a></li>
 <li><a href="../../list/api/localization/initialize">/api/localization/initialize</a></li>
 </ul>
-<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p>This API manages the initialization of localization. Autoware requires a global pose as the initial guess for localization.</p>
-<h2 id="states">States<a class="headerlink" href="#states" title="Permanent link">#</a></h2>
-<p><img alt="localization-initialization-state" src="state.drawio.svg"></p>
+<h2 id="_2">説明<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>このAPIは位置推定の初期化を管理します。Autowareでは、位置推定の最初の推測としてグローバルの姿勢が必要です。</p>
+<h2 id="_3">状態<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p><img alt="位置推定初期化状態" src="state.drawio.svg"></p>
 <table>
 <thead>
 <tr>
-<th>State</th>
-<th>Description</th>
+<th>状態</th>
+<th>説明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>UNINITIALIZED</td>
-<td>Localization is not initialized. Waiting for a global pose as the initial guess.</td>
+<td>位置推定が初期化されていません。最初の推測としてグローバルの姿勢を待っています。</td>
 </tr>
 <tr>
 <td>INITIALIZING</td>
-<td>Localization is initializing.</td>
+<td>位置推定を初期化しています。</td>
 </tr>
 <tr>
 <td>INITIALIZED</td>
-<td>Localization is initialized. Initialization can be requested again if necessary.</td>
+<td>位置推定が初期化されます。必要に応じて、再度初期化を要求できます。</td>
 </tr>
 </tbody>
 </table>
