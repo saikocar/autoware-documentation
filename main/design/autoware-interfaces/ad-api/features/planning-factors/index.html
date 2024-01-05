@@ -21,7 +21,7 @@
     
     
       
-        <title>Planning factors - Autoware Documentation</title>
+        <title>計画要素 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#planning-factors" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Planning factors
+              計画要素
             
           </span>
         </div>
@@ -4799,12 +4799,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Planning factors
+          計画要素
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Planning factors
+        計画要素
       </a>
       
         
@@ -4823,29 +4823,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#related-api" class="md-nav__link">
-    Related API
+  <a href="#api" class="md-nav__link">
+    関連するAPI
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
+  <a href="#_2" class="md-nav__link">
+    説明
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#velocity-factors" class="md-nav__link">
-    Velocity factors
+  <a href="#_3" class="md-nav__link">
+    速度要素
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#steering-factors" class="md-nav__link">
-    Steering factors
+  <a href="#_4" class="md-nav__link">
+    ステアリング要素
   </a>
   
 </li>
@@ -6623,29 +6623,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#related-api" class="md-nav__link">
-    Related API
+  <a href="#api" class="md-nav__link">
+    関連するAPI
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
+  <a href="#_2" class="md-nav__link">
+    説明
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#velocity-factors" class="md-nav__link">
-    Velocity factors
+  <a href="#_3" class="md-nav__link">
+    速度要素
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#steering-factors" class="md-nav__link">
-    Steering factors
+  <a href="#_4" class="md-nav__link">
+    ステアリング要素
   </a>
   
 </li>
@@ -6668,179 +6668,140 @@
   
 
 
-<div><p>計画要素
-関連するAPI
-<a href="../../list/api/planning/velocity_factors">/api/planning/velocity_factors</a>
-<a href="../../list/api/planning/steering_factors">/api/planning/steering_factors</a>
-説明
-この API は、車両の計画された動作を管理します。アプリケーションは車両の挙動を周囲の人に通知し、オペレーターや乗客に視覚化することができます。</p>
-<p>速度係数
-速度係数は、車両が停止または減速する動作に関する一連の情報です。各要因には、以下で説明する動作タイプがあります。一部の動作タイプには、追加情報としてシーケンスと詳細が含まれます。</p>
-<p>行動  説明
-周囲の障害物  車両のすぐ周囲に障害物があります。
-ルート障害物  この先のルートには障害物があります。
-交差点 進路上の他の車線に障害物があります。
-横断歩道    横断歩道に障害物があります。
-後方確認    背後には人間のドライバーの死角となる障害物があります。
-ユーザー定義の注目領域 事前に定義された注意エリアに障害物があります。
-一時停止禁止区域    停車禁止エリアを超えると十分なスペースがありません。
-一時停止標識  一時停止の標識で一時停止。
-交通信号    信号で一時停止。
-v2x-ゲートエリア  ゲートエリアに立ち寄ります。シーケンスとして Enter と Leave があり、詳細として v2x タイプがあります。
-マージ 車線合流前の一時停止。
-歩道  歩道を渡る前に一時停止。
-車線変更    車線変更です。
-回避  現在の車線の障害物を回避するための経路変更。
-緊急手術    オペレーターからの緊急指示による停止。
-各要素は、ステータス、ベース リンク フレーム内のポーズ、およびそのポーズからの距離も提供します。車両が停止位置に近づくと、この要因は「接近中」というステータスで表示されます。そして、車両がその位置に到達して停止すると、ステータスは STOPPED になります。ポーズは停止位置を示します。停止位置が計算できない場合はベース リンクを示します。</p>
-<p>速度係数</p>
-<p>ステアリングファクター
-ステアリング要素は、左折または右折など、方向指示器の使用を必要とする操縦に関する一連の情報です。各要因には、以下に説明する動作タイプとステアリング方向があります。一部の動作タイプには、追加情報としてシーケンスと詳細が含まれます。</p>
-<p>行動  説明
-交差点 交差点での左折または右折。
-車線変更    車線変更です。
-回避  障害物を避けるための経路変更。変化と復帰のシーケンスがあります。
-スタートプランナー   未定
-目標プランナー 未定
-緊急手術    オペレーターの緊急指示による経路変更。
-各要素は、ステータス、ベース リンク フレーム内のポーズ、およびそのポーズからの距離も提供します。車両がステアリングを開始する位置に近づくと、この要素は APPROACHING というステータスで表示されます。車両がその位置に到達すると、ステータスは TURNING になります。ポーズは、ステータスが TURNING であるセクションの開始位置と終了位置を示します。</p>
-<p>ステアリングファクター-1</p>
-<p>車線変更や回避など、状況に応じて範囲内の任意の位置からステアリングを開始します。これらのタイプの場合、ステータスが TURNING であるセクションが動的に更新され、ポーズはそれに追従します。</p>
-<p>ステアリングファクター-2</p>
-<h1 id="planning-factors">Planning factors<a class="headerlink" href="#planning-factors" title="Permanent link">#</a></h1>
-<h2 id="related-api">Related API<a class="headerlink" href="#related-api" title="Permanent link">#</a></h2>
+<div><h1 id="_1">計画要素<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="api">関連するAPI<a class="headerlink" href="#api" title="Permanent link">#</a></h2>
 <ul>
 <li><a href="../../list/api/planning/velocity_factors">/api/planning/velocity_factors</a></li>
 <li><a href="../../list/api/planning/steering_factors">/api/planning/steering_factors</a></li>
 </ul>
-<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p>This API manages the planned behavior of the vehicle.
-Applications can notify the vehicle behavior to the people around and visualize it for operator and passengers.</p>
-<h2 id="velocity-factors">Velocity factors<a class="headerlink" href="#velocity-factors" title="Permanent link">#</a></h2>
-<p>The velocity factors is an array of information on the behavior that the vehicle stops or slows down.
-Each factor has a behavior type which is described below.
-Some behavior types have sequence and details as additional information.</p>
+<h2 id="_2">説明<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>このAPIは、車両の計画された動作を管理します。
+アプリケーションは車両の挙動を周囲の人に通知し、オペレーターや乗客に視覚化することができます。</p>
+<h2 id="_3">速度要素<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>速度要素は、車両が停止または減速する動作に関する一連の情報です。
+各要素には、以下で説明する動作タイプがあります。
+一部の動作タイプには、追加情報としてシーケンスと詳細が含まれます。</p>
 <table>
 <thead>
 <tr>
-<th>Behavior</th>
-<th>Description</th>
+<th>動作</th>
+<th>説明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>surrounding-obstacle</td>
-<td>There are obstacles immediately around the vehicle.</td>
+<td>周囲の障害物</td>
+<td>車両のすぐ周囲に障害物があります。</td>
 </tr>
 <tr>
-<td>route-obstacle</td>
-<td>There are obstacles along the route ahead.</td>
+<td>ルート障害物</td>
+<td>この先のルートには障害物があります。</td>
 </tr>
 <tr>
-<td>intersection</td>
-<td>There are obstacles in other lanes in the path.</td>
+<td>交差点</td>
+<td>進路上の他の車線に障害物があります。</td>
 </tr>
 <tr>
-<td>crosswalk</td>
-<td>There are obstacles on the crosswalk.</td>
+<td>横断歩道</td>
+<td>横断歩道に障害物があります。</td>
 </tr>
 <tr>
-<td>rear-check</td>
-<td>There are obstacles behind that would be in a human driver's blind spot.</td>
+<td>後方確認</td>
+<td>背後には人間のドライバーの死角となる障害物があります。</td>
 </tr>
 <tr>
-<td>user-defined-attention-area</td>
-<td>There are obstacles in the predefined attention area.</td>
+<td>ユーザー定義の注目領域</td>
+<td>事前に定義された注意エリアに障害物があります。</td>
 </tr>
 <tr>
-<td>no-stopping-area</td>
-<td>There is not enough space beyond the no stopping area.</td>
+<td>一時停止禁止区域</td>
+<td>停車禁止エリアを超えると十分なスペースがありません。</td>
 </tr>
 <tr>
-<td>stop-sign</td>
-<td>A stop by a stop sign.</td>
+<td>一時停止標識</td>
+<td>一時停止の標識で一時停止。</td>
 </tr>
 <tr>
-<td>traffic-signal</td>
-<td>A stop by a traffic signal.</td>
+<td>交通信号</td>
+<td>信号で一時停止。</td>
 </tr>
 <tr>
-<td>v2x-gate-area</td>
-<td>A stop by a gate area. It has enter and leave as sequences and v2x type as details.</td>
+<td>v2xゲートエリア</td>
+<td>ゲートエリアに立ち寄ります。シーケンスとしてEnterとLeaveがあり、詳細としてv2xタイプがあります。</td>
 </tr>
 <tr>
-<td>merge</td>
-<td>A stop before merging lanes.</td>
+<td>合流</td>
+<td>車線合流前の一時停止。</td>
 </tr>
 <tr>
-<td>sidewalk</td>
-<td>A stop before crossing the sidewalk.</td>
+<td>歩道</td>
+<td>歩道を渡る前の一時停止。</td>
 </tr>
 <tr>
-<td>lane-change</td>
-<td>A lane change.</td>
+<td>車線変更</td>
+<td>車線変更です。</td>
 </tr>
 <tr>
-<td>avoidance</td>
-<td>A path change to avoid an obstacle in the current lane.</td>
+<td>回避</td>
+<td>現在の車線の障害物を回避するための経路変更。</td>
 </tr>
 <tr>
-<td>emergency-operation</td>
-<td>A stop by emergency instruction from the operator.</td>
+<td>緊急指令</td>
+<td>オペレーターからの緊急指示による停止。</td>
 </tr>
 </tbody>
 </table>
-<p>Each factor also provides status, poses in the base link frame, and distance from that pose.
-As the vehicle approaches the stop position, this factor appears with a status of APPROACHING.
-And when the vehicle reaches that position and stops, the status will be STOPPED.
-The pose indicates the stop position, or the base link if the stop position cannot be calculated.</p>
-<p><img alt="velocity-factors" src="velocity-factors.drawio.svg"></p>
-<h2 id="steering-factors">Steering factors<a class="headerlink" href="#steering-factors" title="Permanent link">#</a></h2>
-<p>The steering factors is an array of information on the maneuver that requires use of turn indicators, such as turning left or right.
-Each factor has a behavior type which is described below and steering direction.
-Some behavior types have sequence and details as additional information.</p>
+<p>各要素は、ステータス、ベースリンクフレーム内のポーズ、およびそのポーズからの距離も提供します。
+車両が停止位置に近づくと、この要素はAPPROACHINGというステータスで表示されます。
+そして、車両がその位置に到達して停止すると、ステータスはSTOPPEDになります。
+ポーズは停止位置を示しますが、また停止位置が計算できない場合はベースリンクを示します。</p>
+<p><img alt="速度要素" src="velocity-factors.drawio.svg"></p>
+<h2 id="_4">ステアリング要素<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<p>ステアリング要素は、左折または右折など、方向指示器の使用を必要とする操縦に関する一連の情報です。
+各要素には、以下に説明する動作タイプとステアリング方向があります。
+一部の動作タイプには、追加情報としてシーケンスと詳細が含まれます。</p>
 <table>
 <thead>
 <tr>
-<th>Behavior</th>
-<th>Description</th>
+<th>動作</th>
+<th>説明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>intersection</td>
-<td>A turning left or right at an intersection.</td>
+<td>交差点</td>
+<td>交差点での左折または右折。</td>
 </tr>
 <tr>
-<td>lane-change</td>
-<td>A lane change.</td>
+<td>車線変更</td>
+<td>車線変更です。</td>
 </tr>
 <tr>
-<td>avoidance</td>
-<td>A path change to avoid an obstacle. It has a sequence of change and return.</td>
+<td>回避</td>
+<td>障害物を避けるための経路変更。変化と復帰のシーケンスがあります。</td>
 </tr>
 <tr>
-<td>start-planner</td>
-<td>T.B.D.</td>
+<td>スタートプランナー</td>
+<td>未定</td>
 </tr>
 <tr>
-<td>goal-planner</td>
-<td>T.B.D.</td>
+<td>ゴールプランナー</td>
+<td>未定</td>
 </tr>
 <tr>
-<td>emergency-operation</td>
-<td>A path change by emergency instruction from the operator.</td>
+<td>緊急指令</td>
+<td>オペレーターの緊急指示による経路変更。</td>
 </tr>
 </tbody>
 </table>
-<p>Each factor also provides status, poses in the base link frame, and distances from that poses.
-As the vehicle approaches the position to start steering, this factor appears with a status of APPROACHING.
-And when the vehicle reaches that position, the status will be TURNING.
-The poses indicate the start and end position of the section where the status is TURNING.</p>
-<p><img alt="steering-factors-1" src="steering-factors-1.drawio.svg"></p>
-<p>In cases such as lane change and avoidance, the vehicle will start steering at any position in the range depending on the situation.
-For these types, the section where the status is TURNING will be updated dynamically and the poses will follow that.</p>
-<p><img alt="steering-factors-2" src="steering-factors-2.drawio.svg"></p>
+<p>各要素は、ステータス、ベースリンクフレーム内のポーズ、およびそのポーズからの距離も提供します。
+車両がステアリングを開始する位置に近づくと、この要素はAPPROACHINGというステータスで表示されます。
+車両がその位置に到達すると、ステータスは TURNING になります。
+ポーズは、ステータスがTURNINGであるセクションの開始位置と終了位置を示します。</p>
+<p><img alt="ステアリングファクター-1" src="steering-factors-1.drawio.svg"></p>
+<p>車線変更や回避など、状況に応じて範囲内の任意の位置からステアリングを開始します。
+これらのタイプの場合、ステータスがTURNINGであるセクションが動的に更新され、ポーズはそれに追従します。</p>
+<p><img alt="ステアリングファクター-2" src="steering-factors-2.drawio.svg"></p>
 <!-- prettier-ignore --></div>
 
 
