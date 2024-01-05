@@ -1,78 +1,43 @@
-アーキテクチャの概要
+# アーキテクチャの概要
+
 このページでは Autoware のアーキテクチャについて説明します。
 
-導入
-現在の Autoware は、各モジュールの役割を明確にし、それらの間のインターフェイスを簡素化する階層化アーキテクチャとして定義されています。そうすることによって：
+## 導入
 
-Autoware の内部処理がより透明になります。
-モジュール間の相互依存性が軽減されるため、共同開発が容易になります。
-ユーザーは、Autoware のインターフェイスに合うようにソフトウェアをラップするだけで、既存のモジュール (ローカリゼーションなど) を独自のソフトウェア コンポーネントに簡単に置き換えることができます。
-このアーキテクチャ設計の当初の焦点は駆動能力のみにあったため、次の機能は将来の作業として残されたことに注意してください。
+現在のAutowareは、各モジュールの役割を明確にし、それらの間のインターフェイスを簡素化する階層化アーキテクチャとして定義されています。そうすることによって:
 
-フェイルセーフ
-ヒューマン・マシン・インターフェース
-リアルタイム処理
-冗長化システム
-状態監視システム
-高レベルのアーキテクチャ設計
-概要
+- Autowareの内部処理がより透明になります。
+- モジュール間の相互依存性が軽減されるため、共同開発が容易になります。
+- ユーザーは、Autowareのインターフェイスに合うようにソフトウェアをラップするだけで、既存のモジュール(位置推定など)を独自のソフトウェアコンポーネントに簡単に置き換えることができます。
 
-Autoware のアーキテクチャは次の 6 つのスタックで構成されます。リンクされた各ページには、そのスタックに固有のより詳細な要件とユースケースのセットが含まれています。
+このアーキテクチャ設計の当初の焦点は駆動能力のみにあったため、次の機能は将来の作業として残されたことに注意してください:
 
-センシング設計
-地図デザイン
-ローカリゼーション設計
-知覚デザイン
-企画デザイン
-制御設計
-車両インターフェース設計
-ノード図
-デフォルト構成の Autoware ノードを示す図は、ノード図ページにあります。各ノードの詳細なドキュメントは、Autoware Universe のドキュメントで入手できます。
+- フェイルセーフ
+- ヒューマン・マシン・インターフェース
+- リアルタイム処理
+- 冗長化システム
+- 状態監視システム
 
-Autoware 構成はスケーラブル/選択可能であり、環境と必要なユースケースによって異なることに注意してください。
+## 高階層のアーキテクチャ設計
 
-参考文献
-2020 年 3 月、AWF 技術運営委員会に対して行われたアーキテクチャのプレゼンテーション
-# Architecture overview
+![概要](image/autoware-architecture-overview.drawio.svg)
 
-This page describes the architecture of Autoware.
+Autowareのアーキテクチャは次の6つのスタックで構成されます。リンクされた各ページには、そのスタックに固有のより詳細な要件とユースケースのセットが含まれています:
 
-## Introduction
+- [計測設計](sensing/index.md)
+- [地図設計](map/index.md)
+- [位置推定設計](localization/index.md)
+- [知覚設計](perception/index.md)
+- [計画設計](planning/index.md)
+- [制御設計](control/index.md)
+- [車両インターフェース設計](vehicle/index.md)
 
-The current Autoware is defined to be a layered architecture that clarifies each module's role and simplifies the interface between them. By doing so:
+## ノード図
 
-- Autoware's internal processing becomes more transparent.
-- Collaborative development is made easier because of the reduced interdependency between modules.
-- Users can easily replace an existing module (e.g. localization) with their own software component by simply wrapping their software to fit in with Autoware's interface.
+デフォルト構成のAutowareノードを示す図は、[ノード図](node-diagram/index.md)ページにあります。 各ノードの詳細なドキュメントは[Autoware Universeのドキュメント](https://autowarefoundation.github.io/autoware.universe/main/)で入手できます。
 
-Note that the initial focus of this architecture design was solely on driving capability, and so the following features were left as future work:
+Autoware構成は拡張/選択可能であり、環境と必要なユースケースによって異なることに注意してください。
 
-- Fail safe
-- Human Machine Interface
-- Real-time processing
-- Redundant system
-- State monitoring system
+## 参考
 
-## High-level architecture design
-
-![Overview](image/autoware-architecture-overview.drawio.svg)
-
-Autoware's architecture consists of the following six stacks. Each linked page contains a more detailed set of requirements and use cases specific to that stack:
-
-- [Sensing design](sensing/index.md)
-- [Map design](map/index.md)
-- [Localization design](localization/index.md)
-- [Perception design](perception/index.md)
-- [Planning design](planning/index.md)
-- [Control design](control/index.md)
-- [Vehicle Interface design](vehicle/index.md)
-
-## Node diagram
-
-A diagram showing Autoware's nodes in the default configuration can be found on the [Node diagram](node-diagram/index.md) page. Detailed documents for each node are available in the [Autoware Universe docs](https://autowarefoundation.github.io/autoware.universe/main/).
-
-Note that Autoware configurations are scalable / selectable and will vary depending on the environment and required use cases.
-
-## References
-
-- [The architecture presentation given to the AWF Technical Steering Committee, March 2020](https://discourse.ros.org/uploads/short-url/woUU7TGLPXFCTJLtht11rJ0SqCL.pdf)
+- [AWF技術運営委員会に対して行われたアーキテクチャのプレゼンテーション、2020年3月](https://discourse.ros.org/uploads/short-url/woUU7TGLPXFCTJLtht11rJ0SqCL.pdf)
