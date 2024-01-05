@@ -21,7 +21,7 @@
     
     
       
-        <title>Fail safe - Autoware Documentation</title>
+        <title>フェイルセーフ - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#fail-safe" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Fail safe
+              フェイルセーフ
             
           </span>
         </div>
@@ -4715,12 +4715,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Fail safe
+          フェイルセーフ
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Fail safe
+        フェイルセーフ
       </a>
       
         
@@ -4739,29 +4739,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#related-api" class="md-nav__link">
-    Related API
+  <a href="#api" class="md-nav__link">
+    関連するAPI
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
+  <a href="#_2" class="md-nav__link">
+    説明
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#states" class="md-nav__link">
-    States
+  <a href="#_3" class="md-nav__link">
+    状態
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#behavior" class="md-nav__link">
-    Behavior
+  <a href="#_4" class="md-nav__link">
+    動作
   </a>
   
 </li>
@@ -6623,29 +6623,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#related-api" class="md-nav__link">
-    Related API
+  <a href="#api" class="md-nav__link">
+    関連するAPI
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
+  <a href="#_2" class="md-nav__link">
+    説明
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#states" class="md-nav__link">
-    States
+  <a href="#_3" class="md-nav__link">
+    状態
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#behavior" class="md-nav__link">
-    Behavior
+  <a href="#_4" class="md-nav__link">
+    動作
   </a>
   
 </li>
@@ -6668,93 +6668,72 @@
   
 
 
-<div><p>フェイルセーフ
-関連するAPI
-<a href="../../list/api/fail_safe/mrm_state">/api/fail_safe/mrm_state</a>
-説明
-車両の異常に関する挙動を管理するAPIです。これは、介入要求 (RTI)、最小リスク操作 (MRM)、および最小リスク条件 (MRC) の状態を提供します。Autoware には以下に示すように、通常動作時のコマンドと異常動作時のコマンドを切り替えるゲートがあります。安全のため、Autoware は異常を検出すると MRM に動作を切り替えます。状況に応じて求められる動作が異なるため、MRMは通常のモジュール内の特定のモード、または独立したモジュールとしてさまざまな場所に実装されます。フェールセーフモジュールは異常に応じてMRMの動作を選択し、ゲート出力をそのコマンドに切り替えます。</p>
-<p>フェイルセーフアーキテクチャ</p>
-<p>州
-MRM 状態は、MRM が動作しているかどうかを示します。この状態は成功または失敗も示します。通常、MRM は失敗すると別の動作に切り替わります。</p>
-<p>mrm-状態</p>
-<p>州   説明
-なし  MRM が動作していません。
-オペレーティング    異常を検知したためMRMが動作しています。
-成功しました  MRMは成功しました。車両は安全な状態にあります。
-失敗した    MRM が失敗しました。車両は依然として危険な状態にある。
-行動
-MRM の動作間には依存関係があります。たとえば、快適な停止から緊急停止に切り替わりますが、その逆は切り替わりません。これはサービスに依存します。Autoware は、デフォルトで次のトランジションをサポートします。</p>
-<p>mrm の動作</p>
-<p>州   説明
-なし  MRM が動作していないか、動作しているが特別な動作は必要ありません。
-快適_停止   心地よい減速でクルマはすぐに止まります。
-緊急停止    車両は可能な限り減速して直ちに停止します。</p>
-<h1 id="fail-safe">Fail-safe<a class="headerlink" href="#fail-safe" title="Permanent link">#</a></h1>
-<h2 id="related-api">Related API<a class="headerlink" href="#related-api" title="Permanent link">#</a></h2>
+<div><h1 id="_1">フェイルセーフ<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="api">関連するAPI<a class="headerlink" href="#api" title="Permanent link">#</a></h2>
 <ul>
 <li><a href="../../list/api/fail_safe/mrm_state">/api/fail_safe/mrm_state</a></li>
 </ul>
-<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p>This API manages the behavior related to the abnormality of the vehicle.
-It provides the state of Request to Intervene (RTI), Minimal Risk Maneuver (MRM) and Minimal Risk Condition (MRC).
-As shown below, Autoware has the gate to switch between the command during normal operation and the command during abnormal operation.
-For safety, Autoware switches the operation to MRM when an abnormality is detected.
-Since the required behavior differs depending on the situation, MRM is implemented in various places as a specific mode in a normal module or as an independent module.
-The fail-safe module selects the behavior of MRM according to the abnormality and switches the gate output to that command.</p>
-<p><img alt="fail-safe-architecture" src="architecture.drawio.svg"></p>
-<h2 id="states">States<a class="headerlink" href="#states" title="Permanent link">#</a></h2>
-<p>The MRM state indicates whether MRM is operating. This state also provides success or failure.
-Generally, MRM will switch to another behavior if it fails.</p>
-<p><img alt="mrm-state" src="mrm-state.drawio.svg"></p>
+<h2 id="_2">説明<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>車両の異常に関する挙動を管理するAPIです。
+これは、介入要求(RTI)、最小リスク操作(MRM)、および最小リスク条件(MRC)の状態を提供します。
+Autowareには以下に示すように、通常動作時のコマンドと異常動作時のコマンドを切り替えるゲートがあります。
+安全のため、Autowareは異常を検出するとMRMに動作を切り替えます。
+状況に応じて求められる動作が異なるため、MRMは通常のモジュール内の特定のモード、または独立したモジュールとしてさまざまな場所に実装されます。
+フェールセーフモジュールは異常に応じてMRMの動作を選択し、ゲート出力をそのコマンドに切り替えます。</p>
+<p><img alt="フェイルセーフアーキテクチャ" src="architecture.drawio.svg"></p>
+<h2 id="_3">状態<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>MRM状態は、MRMが動作しているかどうかを示します。この状態は成功または失敗も示します。
+通常、MRM は失敗すると別の動作に切り替わります。</p>
+<p><img alt="mrm状態" src="mrm-state.drawio.svg"></p>
 <table>
 <thead>
 <tr>
-<th>State</th>
-<th>Description</th>
+<th>状態</th>
+<th>説明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>NONE</td>
-<td>MRM is not operating.</td>
+<td>MRMは動作していません。</td>
 </tr>
 <tr>
 <td>OPERATING</td>
-<td>MRM is operating because an abnormality has been detected.</td>
+<td>異常を検知したためMRMが動作しています。</td>
 </tr>
 <tr>
 <td>SUCCEEDED</td>
-<td>MRM succeeded. The vehicle is in a safe condition.</td>
+<td>MRMは成功しました。車両は安全な状態にあります。</td>
 </tr>
 <tr>
 <td>FAILED</td>
-<td>MRM failed. The vehicle is still in an unsafe condition.</td>
+<td>MRMは失敗しました。車両は依然として危険な状態にあります。</td>
 </tr>
 </tbody>
 </table>
-<h2 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">#</a></h2>
-<p>There is a dependency between MRM behaviors. For example, it switches from a comfortable stop to a emergency stop, but not the other way around.
-This is service dependent. Autoware supports the following transitions by default.</p>
-<p><img alt="mrm-behavior" src="mrm-behavior.drawio.svg"></p>
+<h2 id="_4">動作<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<p>MRMの動作間には依存関係があります。たとえば、快適な停止から緊急停止に切り替わりますが、その逆は切り替わりません
+これはサービスに依存します。Autowareは、デフォルトで次のトランジションをサポートします。</p>
+<p><img alt="mrmの動作" src="mrm-behavior.drawio.svg"></p>
 <table>
 <thead>
 <tr>
-<th>State</th>
-<th>Description</th>
+<th>状態</th>
+<th>説明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>NONE</td>
-<td>MRM is not operating or is operating but no special behavior is required.</td>
+<td>MRMが動作していないか、動作しているが特別な動作は必要ありません。</td>
 </tr>
 <tr>
 <td>COMFORTABLE_STOP</td>
-<td>The vehicle will stop quickly with a comfortable deceleration.</td>
+<td>心地よい減速でクルマはすぐに止まります。</td>
 </tr>
 <tr>
 <td>EMERGENCY_STOP</td>
-<td>The vehicle will stop immediately with as much deceleration as possible.</td>
+<td>車両は可能な限り減速して直ちに停止します。</td>
 </tr>
 </tbody>
 </table>
