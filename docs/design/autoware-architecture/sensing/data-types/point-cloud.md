@@ -63,105 +63,8 @@ graph TD
     ただしこの変換は効率的ではないため運用環境での使用には推奨されません。
 
 ### 強度
-VLP16 ユーザーマニュアルと互換性のある次の強度範囲を使用します。
 
-VLP-16 ユーザーマニュアルからの引用:
-
-レーザー測定ごとに、距離に加えて反射率バイトが返されます。反射率バイト値は 2 つの範囲に分割され、ソフトウェアが低範囲の拡散反射体 (木の幹、衣服など) と高範囲の再帰反射体 (道路標識、ナンバー プレートなど) を区別できるようにします。再帰反射体は、散乱を最小限に抑えながら光を光源に反射します。VLP-16 は独自の光を提供し、送信レーザーと受信検出器間の分離が無視できるほど小さいため、反射エネルギーを散乱させる傾向がある拡散反射板と比較して、再帰反射面は反射した IR 光で飛び立ちます。
-
-拡散反射体は、0% ～ 100% の反射率に対して 0 ～ 100 の値を報告します。
-再帰反射器は 101 ～ 255 の値を報告します。255 は理想的な反射を表します。
-再帰反射体のない一般的な点群では、すべての強度点は 0 ～ 100 になります。
-
-
-
-再帰反射勾配道路標識、画像ソース
-
-ただし、再帰反射体を備えた点群では、強度ポイントは 0 ～ 255 になります。
-
-他の LIDAR ブランドの強度マッピング
-
-
-Livox ミッド 70
-Livox Mid-70 ユーザーマニュアル
-
-この LIDAR には、Velodyne VLP-16 と同様に反射率を報告するための 2 つのモードがありますが、範囲のみがわずかに異なります。
-
-(livox から autoware に) マッピングする必要があります。
-
-[0, 150] ～ [0, 100] および
-[151、255] ～ [101、255]
-点群を構築するとき。
-
-ロボセンス RS-LiDAR-16
-RoboSense RS-LiDAR-16 ユーザーマニュアル
-
-Velodyne VLP-16 と同様にマッピングは必要ありません。
-
-オースター OS-1-64
-すべての Ouster センサー用ソフトウェア ユーザー マニュアル v2.0.0
-
-マニュアルには次のように記載されています。
-
-反射率 [16 ビット unsigned int] - センサーのシグナル フォトンの測定値は、測定範囲とその範囲でのセンサー感度に基づいてスケールされ、ターゲットの反射率を示します。この測定の校正は現在厳密に実装されていませんが、将来のファームウェア リリースで更新される予定です。
-
-したがって、16 ビットの反射率を [0, 100] の範囲にマッピングすることをお勧めします。
-
-レーシェン CH64W
-英語のユーザーマニュアル、ウェブサイトのリンクが入手できませんでした
-
-ユーザーマニュアルには次のように書かれているのを見つけることができました。
-
-バイト 7 はエコー強度を表し、値の範囲は 0 ～ 255 です。（エコー強度は、実際の測定環境における測定対象物のエネルギー反射特性を反映することができるため、反射特性の異なる対象物を区別するために使用できます。）
-
-したがって、[0, 255] から [0, 100] の範囲をマップすることをお勧めします。
-
-戻り値の型
-さまざまな LIDAR が複数のリターン モードをサポートしています。Velodyne LIDAR は、最強および最後のリターン モードをサポートしています。
-
-PointXYZIRCTおよび のタイプではPointXYZIRC、Rフィールドはリターン モードを で表しますUINT8。
-
-R（戻り値の型）	説明
-0	不明 / マークなし
-1	最強
-2	最後
-チャネル
-チャネル フィールドは、ポイントを測定したレーザーの垂直チャネルを識別するために使用されます。さまざまな LIDAR マニュアルや文献では、レーザー ID、リング、レーザー ラインと呼ばれることもあります。
-
-Velodyne VLP-16 の場合、16 チャンネルがあります。ドライバー内のチャネルのデフォルトの順序は、通常、起動順です。
-
-PointXYZIRCTおよびタイプではPointXYZIRC、Cフィールドは垂直チャネル ID を . で表しますUINT16。
-
-ソリッドステートライダーと花びらパターンライダー
-!!! 警告
-
-This section is subject to change. Following are suggestions and open for discussion.
-ラインを持つソリッド ステート LIDAR の場合、行番号をチャネル ID として割り当てます。
-
-花びらパターン LIDAR の場合は、チャネル 0 を維持できます。
-
-タイムスタンプ
-LIDAR 点群では、各点の測定値に個別のタイムスタンプを付けることができます。この情報は、スキャン中の LIDAR の動きによって生じるモーション ブラーを除去するために使用できます。
-
-点群ヘッダー時間
-ヘッダーにはTime フィールドが含まれます。時間フィールドには 2 つのコンポーネントがあります。
-
-分野	タイプ	説明
-sec	int32	Unix 時間 (1970 年 1 月 1 日からの経過秒数)
-nanosec	uint32	secフィールドからの経過時間 (ナノ秒)
-点群メッセージのヘッダーには、その点が持つ最も古い点の時間が含まれることが期待されます。
-
-!!! 注記
-
-The `sec` field is `int32` in ROS 2 humble. The largest value it can represent is 2^31 seconds, it is subject to
-year 2038 problems. We will wait for actions on ROS 2 community side.
-
-**More info at:** https://github.com/ros2/rcl_interfaces/issues/85
-個別ポイントのタイムスタンプ
-各PointXYZIRCTポイント タイプには、T点群の最初のショット ポイントから経過した秒数を表すフィールドがあります。
-
-各ポイントがシュートされた正確な時間を計算するには、そのT秒数がヘッダー時間に追加されます。
-We will use following ranges for intensity, compatible with [the VLP16 User Manual](https://usermanual.wiki/Pdf/VLP16Manual.1719942037/view):
+[VLP16ユーザーマニュアル](https://usermanual.wiki/Pdf/VLP16Manual.1719942037/view)と互換性のある次の強度範囲を使用します:
 
 VLP-16ユーザーマニュアルからの引用:
 
@@ -226,82 +129,82 @@ Velodyne VLP-16と同じであり、マッピングは不要です。
 
 [全てのOusterセンサーのソフトウェアユーザーマニュアルv2.0.0](https://data.ouster.io/downloads/software-user-manual/software-user-manual-v2p0.pdf)
 
-In the manual it is stated:
+マニュアルには次のように記載されています:
 
-> Reflectivity [16 bit unsigned int] - sensor Signal Photons measurements are scaled based on measured range and sensor sensitivity at that range, providing an indication of target reflectivity. Calibration of this measurement has not currently been rigorously implemented, but this will be updated in a future firmware release.
+> 反射率 [16 bit unsigned int] - センサーのシグナルフォトンの測定値は、測定範囲とその範囲でのセンサー感度に基づいてスケールされ、ターゲットの反射率を示します。この測定の校正は現在厳密に実装されていませんが、将来のファームウェアリリースで更新される予定です。
 
-So it is advised to map the 16 bit reflectivity to [0, 100] range.
+したがって、16 ビットの反射率を[0, 100]の範囲にマッピングすることをお勧めします。
 
 ##### Leishen CH64W
 
 [英語のユーザーマニュアルを入手できませんでした。ウェブサイトのリンク](http://www.lslidar.com/en/down)
 
-In a user manual I was able to find it says:
+ユーザーマニュアルには次のように書かれているのを見つけることができました:
 
-> Byte 7 represents echo strength, and the value range is 0-255. (Echo strength can reflect
-> the energy reflection characteristics of the measured object in the actual measurement
-> environment. Therefore, the echo strength can be used to distinguish objects with
-> different reflection characteristics.)
+> バイト7はエコー強度を表し、値の範囲は0-255です。エコー強度は、
+> 実際の測定環境における測定対象物のエネルギー反射特性を
+> 反映することができるため、反射特性の異なる対象物を
+> 区別するために使用できます。）
 
-So it is advised to map the [0, 255] to [0, 100] range.
+したがって、[0, 255]から[0, 100]の範囲をマップすることをお勧めします。
 
-### Return type
+### 戻り値の型
 
-Various lidars support multiple return modes. Velodyne lidars support **Strongest** and **Last** return modes.
+さまざまなlidarが複数のリターンモードをサポートしています。Velodyne lidarは、**Strongest**および**Last**のリターンモードをサポートしています。
 
-In the `PointXYZIRCT` and `PointXYZIRC` types, `R` field represents return mode with an `UINT8`.
+`PointXYZIRCT`および`PointXYZIRC`のタイプでは、`R`フィールドはリターン モードを`UINT8`で表します。
 
-| R (return type) | Description          |
+| R (戻り値の型) | 説明          |
 | --------------- | -------------------- |
 | `0`             | Unknown / Not Marked |
 | `1`             | Strongest            |
 | `2`             | Last                 |
 
-### Channel
+### チャネル
 
-The channel field is used to identify the vertical channel of the laser that measured the point.
-In various lidar manuals or literature, it can also be called _laser id_, _ring_, _laser line_.
+チャネルフィールドは、ポイントを測定したレーザーの垂直チャネルを識別するために使用されます。
+さまざまな LIDAR マニュアルや文献では、_レーザー ID_、 _リング_、 _レーザーライン_と呼ばれることもあります。
 
-For Velodyne VLP-16, there are 16 channels. Default order of channels in drivers are generally in firing order.
+Velodyne VLP-16の場合、16 チャンネルがあります。ドライバー内のチャネルのデフォルトの順序は、通常、起動順です。
 
-In the `PointXYZIRCT` and `PointXYZIRC` types, `C` field represents the vertical channel id with an `UINT16`.
+`PointXYZIRCT`および`PointXYZIRC`型では、`C`フィールドは垂直チャネルIDを`UINT16`で表します。
 
-#### Solid state and petal pattern lidars
+#### ソリッドステートライダーとペタルパターンライダー
 
-!!! warning
+!!! 警告
 
-    This section is subject to change. Following are suggestions and open for discussion.
+    このセクションは変更される可能性があります。以下は提案であり、議論の余地があります。
 
-For solid state lidars that have lines, assign row number as the channel id.
+ラインを持つソリッドステートlidarの場合、行番号をチャンネルIDとして割り当てます。
 
-For petal pattern lidars, you can keep channel 0.
+ペタルパターンlidarの場合は、チャンネル0を維持できます。.
 
-### Time stamp
+### タイムスタンプ
 
-In lidar point clouds, each point measurement can have its individual time stamp.
-This information can be used to eliminate the motion blur that is caused by the movement of the lidar during the scan.
+lidar点群では、各点の測定値に個別のタイムスタンプを付けることができます。
+この情報は、スキャン中のlidarの動きによって生じるモーションブラーを除去するために使用できます。
 
-#### Point cloud header time
+#### 点群ヘッダー時間
 
-The header contains a [Time field](https://github.com/ros2/rcl_interfaces/blob/rolling/builtin_interfaces/msg/Time.msg).
-The time field has 2 components:
+ヘッダーには[Timeフィールド(https://github.com/ros2/rcl_interfaces/blob/rolling/builtin_interfaces/msg/Time.msg)が含まれます。
+Timeフィールドには 2 つのコンポーネントがあります:
 
-| Field     | Type     | Description                                       |
+| フィールド     | 型     | 説明                                       |
 | --------- | -------- | ------------------------------------------------- |
-| `sec`     | `int32`  | Unix time (seconds elapsed since January 1, 1970) |
-| `nanosec` | `uint32` | Nanoseconds elapsed since the `sec` field         |
+| `sec`     | `int32`  | Unix 時間 (1970年1月1日からの経過秒数) |
+| `nanosec` | `uint32` | `sec`フィールドからの経過時間 (ナノ秒)         |
 
-The header of the point cloud message is expected to have the time of the earliest point it has.
+点群メッセージのヘッダーには、その点が持つ最も古い点の時間が含まれることが期待されます。
 
-!!! note
+!!! 注記
 
-    The `sec` field is `int32` in ROS 2 humble. The largest value it can represent is 2^31 seconds, it is subject to
-    year 2038 problems. We will wait for actions on ROS 2 community side.
+    `sec`フィールドは、ROS 2 humbleでは`int32`で表現できる最大値は2^31秒であることから2038年問題の対象です。
+    ROS 2コミュニティ側のアクションを待ちます。
 
-    **More info at:** https://github.com/ros2/rcl_interfaces/issues/85
+    **さらなる情報はこちら:** https://github.com/ros2/rcl_interfaces/issues/85
 
-#### Individual point time stamp
+#### 個別ポイントのタイムスタンプ
 
-Each `PointXYZIRCT` point type has the `T` field for representing the seconds passed since the first-shot point of the point cloud.
+各`PointXYZIRCT`ポイント型には、点群の最初のショットポイントから経過した秒数を表す`T`フィールドがあります。
 
-To calculate exact time each point was shot, the `T` seconds are added to the header time.
+各ポイントが撮影された正確な時間を計算するには、その`T`秒数がヘッダー時間に追加されます。
