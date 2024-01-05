@@ -1,73 +1,6 @@
-協力
-関連するAPI
-{{ link_ad_api('/api/planning/velocity_factors') }}
-{{ link_ad_api('/api/planning/steering_factors') }}
-{{ link_ad_api('/api/planning/cooperation/set_commands') }}
-{{ link_ad_api('/api/planning/cooperation/set_policies') }}
-{{ link_ad_api('/api/planning/cooperation/get_policies') }}
-説明
-協力要請 (RTC) は、人間のオペレーターが自動運転モードでの決定をサポートできるようにする機能です。Autoware は通常、独自の決定に基づいて車両を運転しますが、実験や複雑な状況ではオペレーターが決定を下すことを好む場合があります。
+# 協力
 
-計画コンポーネントは、意思決定が必要な各状況をシーンとして管理します。各シーンには ID があり、シーンが完了するかキャンセルされるまで変更されません。オペレータは、この ID を使用してターゲット シーンの決定を無効にすることができます。実際には、ユーザー インターフェイス アプリケーションは ID の仕様を隠し、抽象化されたインターフェイスをオペレーターに提供できます。
-
-たとえば、次の図の状況では、車両は 2 回の車線変更と交差点での左折を行うことが予想されます。したがって、計画コンポーネントは、必要なアクションごとに 3 つのシーン インスタンスを生成し、各シーン インスタンスは決定が下されるまで待機します。この場合は、「車線変更または維持」と「左折または交差点での待機」です。ここで Autoware は障害物のため 2 回目の車線変更は行わないと判断し、車両はそこで停止します。ただし、オペレーターは RTC 機能を通じてその決定を上書きし、車両が目的地に到達できるように車線変更を強制することができます。RTC を使用すると、オペレーターはこれらの決定を無効にして、車両を目標まで運転し続けることができます。
-
-協力シーン
-
-建築
-RTC をサポートするモジュールには、モジュールの決定に加えて、以下に示すように、オペレーターの決定と連携ポリシーがあります。これらのモジュールは、車両の動作を計画するときに、これらの値によって決定される統合された決定を使用します。これらの値の詳細については、決定セクションを参照してください。連携ポリシーは、オペレータの決定がない場合に使用され、システム設定によってデフォルト値が設定されます。モジュールが RTC をサポートしている場合、これらの情報は、協力ステータスとして速度係数またはステアリング係数で利用できます。
-
-協力アーキテクチャ
-
-順序
-これは、シーンの決定を無効にして車線変更を強制するシーケンスの例です。これは、アーキテクチャ セクションの図の 2 番目のシーンです。ここでは、協力ポリシーがオプションに設定されていると仮定します。詳細については、後で説明する決定セクションを参照してください。
-
-計画モジュールは、車線変更が必要な場所に近づくと、一意の ID を持つシーン インスタンスを作成します。
-シーン インスタンスは、現在の状況からモジュールの決定を生成します。この場合、モジュールは障害物のため車線変更を行わないことを決定します。
-シーン インスタンスはマージされた決定を生成します。この時点ではまだオペレーターの決定がないため、モジュールの決定に基づきます。
-シーン インスタンスは、マージされた決定に従って車線を維持するように車両を計画します。
-シーン インスタンスは連携ステータスを送信します。
-オペレータは連携状況を受信します。
-オペレーターは、モジュールの決定を無効にして車線変更を行うための協力コマンドを送信します。
-シーン インスタンスは連携コマンドを受信し、オペレーターの決定を更新します。
-シーン インスタンスは、現在の状況からモジュールの決定を更新します。
-シーン インスタンスはマージされた決定を更新します。これはオペレーターが受け取った決定に基づいています。
-シーン インスタンスは、統合された決定に従って車両が車線を変更するように計画します。
-決定
-統合決定は、モジュール決定、オペレーター決定、連携ポリシーによって決定され、それぞれ次の表に示す値になります。
-
-状態	価値観
-統合された決定	非アクティブ化、アクティブ化
-モジュールの決定	非アクティブ化、アクティブ化
-オペレーターの決定	非アクティブ化、アクティブ化、自律、なし
-協力政策	必須、オプション
-これらの値の意味は以下のとおりです。連携ポリシーはモジュールごとに共通であるため、変更すると同じモジュール内のすべてのシーンに影響することに注意してください。
-
-価値	説明
-非アクティブ化する	安全性を優先して車両の動作を計画するためのオペレーター/モジュールの決定。
-活性化	運転を優先して車両の動作を計画するためのオペレーター/モジュールの決定。
-自律的	モジュールの決定に続くオペレーターの決定。
-なし	オペレーター決定の初期値。オペレーター決定がまだないことを示します。
-必須	運転を継続するためにオペレーターの判断を必要とするポリシー。
-オプション	運転を継続するためにオペレーターの判断を必要としないポリシー。
-統合決定がどのように決定されるかについては、次のような流れになります。
-
-協力決定
-
-例
-車線変更モジュールの連携例です。判定の組み合わせによる動作は以下の通りです。
-
-オペレーターの判断	ポリシー	モジュールの決定	説明
-非アクティブ化する	-	-	オペレーターはモジュールの決定に関係なく車線を維持するよう指示します。したがって、車両はオペレーターの判断によって車線を維持します。
-活性化	-	-	オペレーターはモジュールの決定に関係なく車線変更を指示します。したがって、車両はオペレーターの判断によって車線を変更します。
-自律的	-	非アクティブ化する	オペレータはモジュールの決定に従うように指示します。したがって、車両はモジュールの決定によって車線を維持します。
-自律的	-	活性化	オペレータはモジュールの決定に従うように指示します。したがって、車両はモジュールの決定によって車線を変更します。
-なし	必須	-	オペレーターの指示がないため、必要なポリシーが使用されます。したがって、車両は協力ポリシーによって車線を維持します。
-なし	オプション	非アクティブ化する	オペレータの指示がないため、オプションのポリシーが使用されます。したがって、車両はモジュールの決定によって車線を維持します。
-なし	オプション	活性化	オペレータの指示がないため、オプションのポリシーが使用されます。したがって、車両はモジュールの決定によって車線を変更します。
-# Cooperation
-
-## Related API
+## 関連するAPI
 
 - {{ link_ad_api('/api/planning/velocity_factors') }}
 - {{ link_ad_api('/api/planning/steering_factors') }}
@@ -75,87 +8,87 @@ RTC をサポートするモジュールには、モジュールの決定に加�
 - {{ link_ad_api('/api/planning/cooperation/set_policies') }}
 - {{ link_ad_api('/api/planning/cooperation/get_policies') }}
 
-## Description
+## 説明
 
-Request to cooperate (RTC) is a feature that enables a human operator to support the decision in autonomous driving mode.
-Autoware usually drives the vehicle using its own decisions, but the operator may prefer to make their decisions in experiments and complex situations.
+協力要請(RTC)は、人間のオペレーターが自動運転モードでの決定をサポートできるようにする機能です。
+Autoware は通常、独自の決定に基づいて車両を運転しますが、実験や複雑な状況ではオペレーターが決定を下すことを好む場合があります。
 
-The planning component manages each situation that requires decision as a scene.
-Each scene has an ID that doesn't change until the scene is completed or canceled.
-The operator can override the decision of the target scene using this ID.
-In practice, the user interface application can hides the specification of the ID and provides an abstracted interface to the operator.
+計画コンポーネントは、意思決定が必要な各状況をシーンとして管理します。
+各シーンにはIDがあり、シーンが完了するかキャンセルされるまで変更されません。
+オペレータは、この ID を使用してターゲット シーンの決定を無効にすることができます。
+実際には、ユーザーインターフェイスアプリケーションはIDの仕様を隠し、抽象化されたインターフェイスをオペレーターに提供できます。
 
-For example, in the situation in the diagram below, vehicle is expected to make two lane changes and turning left at the intersection.
-Therefore the planning component generates three scene instances for each required action, and each scene instance will wait for the decision to be made, in this case "changing or keeping lane" and "turning left or waiting at the intersection".
-Here Autoware decides not to change lanes a second time due to the obstacle, so the vehicle will stop there.
-However, operator could overwrite that decision through RTC function and force the lane change so that vehicle could reach to it's goal.
-Using RTC, the operator can override these decisions to continue driving the vehicle to the goal.
+たとえば、次の図の状況では、車両は2回の車線変更と交差点での左折を行うことが予想されます。
+したがって、計画コンポーネントは、必要なアクションごとに3つのシーンインスタンスを生成し、各シーンインスタンスは決定が下されるまで待機しますが、この場合は、"車線変更または維持"と"左折または交差点での待機"です。
+ここで Autoware は障害物のため2回目の車線変更は行わないと判断し、車両はそこで停止します。
+ただし、オペレーターはRTC機能を通じてその決定を上書きし、車両が目的地に到達できるように車線変更を強制することができます。
+RTCを使用すると、オペレーターはこれらの決定を無効にして、車両を目標まで運転し続けることができます。
 
-![cooperation-scenes](./cooperation/scenes.drawio.svg)
+![協力シーン](./cooperation/scenes.drawio.svg)
 
-## Architecture
+## アーキテクチャ
 
-Modules that support RTC have the operator decision and cooperation policy in addition to the module decision as shown below.
-These modules use the merged decision that is determined by these values when planning vehicle behavior.
-See decisions section for details of these values.
-The cooperation policy is used when there is no operator decision and has a default value set by the system settings.
-If the module supports RTC, these information are available in [velocity factors or steering factors](./planning-factors.md) as [cooperation status](../types/autoware_adapi_v1_msgs/msg/CooperationStatus.md).
+RTC をサポートするモジュールには、モジュールの決定に加えて、以下に示すように、オペレーターの決定と連携ポリシーがあります。
+これらのモジュールは、車両の動作を計画するときに、これらの値によって決定される統合された決定を使用します。
+これらの値の詳細については、決定セクションを参照してください。
+連携ポリシーは、オペレータの決定がない場合に使用され、システム設定によってデフォルト値が設定されます。
+モジュールがRTCをサポートしている場合、これらの情報は、[連携ステータス](../types/autoware_adapi_v1_msgs/msg/CooperationStatus.md)として[速度係数またはステアリング係数](./planning-factors.md)で利用できます。
 
 ![cooperation-architecture](./cooperation/architecture.drawio.svg)
 
-## Sequence
+## 順序
 
-This is an example sequence that overrides the scene decision to force a lane change. It is for the second scene in the diagram in the architecture section.
-Here let's assume the cooperation policy is set to optional, see the decisions section described later for details.
+これは、シーンの決定を無効にして車線変更を強制するシーケンスの例です。これは、アーキテクチャセクションの図の2番目のシーンです。
+ここでは、連携ポリシーがオプションに設定されていると仮定します。詳細については、後で説明する決定セクションを参照してください。
 
-1. A planning module creates a scene instance with unique ID when approaching a place where a lane change is needed.
-2. The scene instance generates the module decision from the current situation. In this case, the module decision is not to do a lane change due to the obstacle.
-3. The scene instance generates the merged decision. At this point, there is no operator decision yet, so it is based on the module decision.
-4. The scene instance plans the vehicle to keep the lane according to the merged decision.
-5. The scene instance sends a cooperation status.
-6. The operator receives the cooperation status.
-7. The operator sends a cooperation command to override the module decision and to do a lane change.
-8. The scene instance receives the cooperation command and update the operator decision.
-9. The scene instance updates the module decision from the current situation.
-10. The scene instance updates the merged decision. It is based on the operator decision received.
-11. The scene instance plans the vehicle to change the lane according to the merged decision.
+1. 計画モジュールは、車線変更が必要な場所に近づくと、一意のIDを持つシーンインスタンスを作成します。
+2. シーン インスタンスは、現在の状況からモジュールの決定を生成します。この場合、モジュールは障害物のため車線変更を行わないことを決定します。
+3. シーンインスタンスはマージされた決定を生成します。この時点ではまだオペレーターの決定がないため、モジュールの決定に基づきます。
+4. シーンインスタンスは、マージされた決定に従って車線を維持するように車両を計画します。
+5. シーンインスタンスは連携ステータスを送信します。
+6. オペレータは連携状況を受信します。
+7. オペレーターは、モジュールの決定を無効にして車線変更を行うための協力コマンドを送信します。
+8. シーンインスタンスは連携コマンドを受信し、オペレーターの決定を更新します。
+9. シーンインスタンスは、現在の状況からモジュールの決定を更新します。
+10. シーンインスタンスはマージされた決定を更新します。これはオペレーターが受け取った決定に基づいています。
+11. シーンインスタンスは、統合された決定に従って車両が車線を変更するように計画します。
 
-## Decisions
+## 決定
 
-The merged decision is determined by the module decision, operator decision, and cooperation policy, each of which takes the value shown in the table below.
+統合決定は、モジュール決定、オペレーター決定、連携ポリシーによって決定され、それぞれ次の表に示す値になります。
 
-| Status             | Values                                 |
+| 状態             | 値                                 |
 | ------------------ | -------------------------------------- |
-| merged decision    | deactivate, activate                   |
-| module decision    | deactivate, activate                   |
-| operator decision  | deactivate, activate, autonomous, none |
-| cooperation policy | required, optional                     |
+| 統合された決定    | 非アクティブ化、活性化                   |
+| モジュールの決定    | 非アクティブ化、活性化                   |
+| オペレーターの決定  | 非アクティブ化、活性化、自律的、なし |
+| 連携ポリシー | 必須、オプション                     |
 
-The meanings of these values are as follows. Note that the cooperation policy is common per module, so changing it will affect all scenes in the same module.
+これらの値の意味は以下のとおりです。連携ポリシーはモジュールごとに共通であるため、変更すると同じモジュール内のすべてのシーンに影響することに注意してください。
 
-| Value      | Description                                                                                |
+| 値      | 説明                                                                                |
 | ---------- | ------------------------------------------------------------------------------------------ |
-| deactivate | An operator/module decision to plan vehicle behavior with priority on safety.              |
-| activate   | An operator/module decision to plan vehicle behavior with priority on driving.             |
-| autonomous | An operator decision that follows the module decision.                                     |
-| none       | An initial value for operator decision, indicating that there is no operator decision yet. |
-| required   | A policy that requires the operator decision to continue driving.                          |
-| optional   | A policy that does not require the operator decision to continue driving.                  |
+| 非アクティブ化 | 安全性を優先して車両の動作を計画するためのオペレーター/モジュールの決定。              |
+| 活性化   | 運転を優先して車両の動作を計画するためのオペレーター/モジュールの決定。             |
+| 自律的 | モジュールの決定に続くオペレーターの決定。                                     |
+| なし       | オペレーター決定の初期値。オペレーター決定がまだないことを示します。 |
+| 必須   | 運転を継続するためにオペレーターの判断を必要とするポリシー。                          |
+| オプション   | 運転を継続するためにオペレーターの判断を必要としないポリシー。                  |
 
-The following flow is how the merged decision is determined.
+統合決定がどのように決定されるかについては、次のような流れになります。
 
-![cooperation-decisions](./cooperation/decisions.drawio.svg)
+![協力決定](./cooperation/decisions.drawio.svg)
 
-## Examples
+## 例
 
-This is an example of cooperation for lane change module. The behaviors by the combination of decisions are as follows.
+車線変更モジュールの連携例です。判定の組み合わせによる動作は以下の通りです。
 
-| Operator decision | Policy   | Module decision | Description                                                                                                                     |
+| オペレーターの判断 | ポリシー   | モジュールの決定 | 説明                                                                                                                     |
 | ----------------- | -------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| deactivate        | -        | -               | The operator instructs to keep lane regardless the module decision. So the vehicle keeps the lane by the operator decision.     |
-| activate          | -        | -               | The operator instructs to change lane regardless the module decision. So the vehicle changes the lane by the operator decision. |
-| autonomous        | -        | deactivate      | The operator instructs to follow the module decision. So the vehicle keeps the lane by the module decision.                     |
-| autonomous        | -        | activate        | The operator instructs to follow the module decision. So the vehicle changes the lane by the module decision.                   |
-| none              | required | -               | The required policy is used because no operator instruction. So the vehicle keeps the lane by the cooperation policy.           |
-| none              | optional | deactivate      | The optional policy is used because no operator instruction. So the vehicle keeps the lane by the module decision.              |
-| none              | optional | activate        | The optional policy is used because no operator instruction. So the vehicle change the lane by the module decision.             |
+| 非アクティブ化        | -        | -               | オペレーターはモジュールの決定に関係なく車線を維持するよう指示します。したがって、車両はオペレーターの判断によって車線を維持します。     |
+| 活性化          | -        | -               | オペレーターはモジュールの決定に関係なく車線変更を指示します。したがって、車両はオペレーターの判断によって車線を変更します。 |
+| 自律的        | -        | 非アクティブ化      | オペレータはモジュールの決定に従うように指示します。したがって、車両はモジュールの決定によって車線を維持します。                     |
+| 自律的        | -        | 活性化        | オペレータはモジュールの決定に従うように指示します。したがって、車両はモジュールの決定によって車線を変更します。                   |
+| なし              | 必須 | -               | オペレーターの指示がないため、必要なポリシーが使用されます。したがって、車両は協力ポリシーによって車線を維持します。           |
+| なし              | オプション | 非アクティブ化      | オペレータの指示がないため、オプションのポリシーが使用されます。したがって、車両はモジュールの決定によって車線を維持します。              |
+| なし              | オプション | 活性化        | オペレータの指示がないため、オプションのポリシーが使用されます。したがって、車両はモジュールの決定によって車線を変更します。             |
