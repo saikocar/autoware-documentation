@@ -21,7 +21,7 @@
     
     
       
-        <title>Bus service - Autoware Documentation</title>
+        <title>バスサービスのユーザーストーリー - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#user-story-of-bus-service" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Bus service
+              バスサービスのユーザーストーリー
             
           </span>
         </div>
@@ -6561,15 +6561,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#_2" class="md-nav__link">
+    概要
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#scenario" class="md-nav__link">
-    Scenario
+  <a href="#_3" class="md-nav__link">
+    シナリオ
   </a>
   
 </li>
@@ -6592,77 +6592,63 @@
   
 
 
-<div><p>バスサービスのユーザーストーリー
-概要
-このユーザー ストーリーは、指定された停留所を巡るバス サービスです。</p>
-<p>シナリオ
-ステップ    手術  使用事例
-1   自動運転システムを起動します。 起動と終了
-2   車をガレージから待機位置まで運転します。    動作モードを変更する
-3   自律制御を有効にします。    動作モードを変更する
-4   次のバス停まで車を運転します。 指定された位置まで運転します
-5   車両に乗り降りします。 乗って降りる
-6   終点のバス停でない場合は、手順 4 に戻ります。  <br>
-7   車両を待機位置まで運転します。 指定された位置まで運転します
-8   車両を待機位置からガレージまで運転します。   動作モードを変更する
-9   自動運転システムを停止します。 起動と終了</p>
-<h1 id="user-story-of-bus-service">User story of bus service<a class="headerlink" href="#user-story-of-bus-service" title="Permanent link">#</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<p>This user story is a bus service that goes around the designated stops.</p>
-<h2 id="scenario">Scenario<a class="headerlink" href="#scenario" title="Permanent link">#</a></h2>
+<div><h1 id="_1">バスサービスのユーザーストーリー<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">概要<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>このユーザーストーリーは、指定された停留所を巡るバスサービスです。</p>
+<h2 id="_3">シナリオ<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
-<th>Step</th>
-<th>Operation</th>
-<th>Use Case</th>
+<th>ステップ</th>
+<th>操作</th>
+<th>使用事例</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
-<td>Startup the autonomous driving system.</td>
-<td><a href="../../use-cases/launch-terminate/">Launch and terminate</a></td>
+<td>自動運転システムを起動します。</td>
+<td><a href="../../use-cases/launch-terminate/">起動と終了</a></td>
 </tr>
 <tr>
 <td>2</td>
-<td>Drive the vehicle from the garage to the waiting position.</td>
-<td><a href="../../use-cases/change-operation-mode/">Change the operation mode</a></td>
+<td>車をガレージから待機位置まで運転します。</td>
+<td><a href="../../use-cases/change-operation-mode/">動作モードの変更</a></td>
 </tr>
 <tr>
 <td>3</td>
-<td>Enable autonomous control.</td>
-<td><a href="../../use-cases/change-operation-mode/">Change the operation mode</a></td>
+<td>自律制御を有効にします。</td>
+<td><a href="../../use-cases/change-operation-mode/">動作モードの変更</a></td>
 </tr>
 <tr>
 <td>4</td>
-<td>Drive the vehicle to the next bus stop.</td>
-<td><a href="../../use-cases/drive-designated-position/">Drive to the designated position</a></td>
+<td>次のバス停まで車を運転します。</td>
+<td><a href="../../use-cases/drive-designated-position/">指定された場所までの運転</a></td>
 </tr>
 <tr>
 <td>5</td>
-<td>Get on and off the vehicle.</td>
-<td><a href="../../use-cases/get-on-off/">Get on and get off</a></td>
+<td>車両に乗り降りします。</td>
+<td><a href="../../use-cases/get-on-off/">乗降</a></td>
 </tr>
 <tr>
 <td>6</td>
-<td>Return to step 4 unless it's the last bus stop.</td>
+<td>終点のバス停でない場合は、ステップ4に戻ります。</td>
 <td></td>
 </tr>
 <tr>
 <td>7</td>
-<td>Drive the vehicle to the waiting position.</td>
-<td><a href="../../use-cases/drive-designated-position/">Drive to the designated position</a></td>
+<td>車両を待機位置まで運転します。</td>
+<td><a href="../../use-cases/drive-designated-position/">指定された場所までの運転</a></td>
 </tr>
 <tr>
 <td>8</td>
-<td>Drive the vehicle from the waiting position to the garage.</td>
-<td><a href="../../use-cases/change-operation-mode/">Change the operation mode</a></td>
+<td>車両を待機位置からガレージまで運転します。</td>
+<td><a href="../../use-cases/change-operation-mode/">動作モードの変更</a></td>
 </tr>
 <tr>
 <td>9</td>
-<td>Shutdown the autonomous driving system.</td>
-<td><a href="../../use-cases/launch-terminate/">Launch and terminate</a></td>
+<td>自動運転システムを停止します。</td>
+<td><a href="../../use-cases/launch-terminate/">起動と終了</a></td>
 </tr>
 </tbody>
 </table>
