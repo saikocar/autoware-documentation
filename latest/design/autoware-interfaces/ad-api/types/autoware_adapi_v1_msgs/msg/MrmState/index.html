@@ -21,7 +21,7 @@
     
     
       
-        <title>MrmState - Autoware Documentation</title>
+        <title>autoware_adapi_v1_msgs/msg/MrmState - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#macro-syntax-error" class="md-skip">
+        <a href="#autoware_adapi_v1_msgsmsgmrmstate" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MrmState
+              autoware_adapi_v1_msgs/msg/MrmState
             
           </span>
         </div>
@@ -6554,6 +6554,35 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#definition" class="md-nav__link">
+    Definition
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#this-type-uses" class="md-nav__link">
+    This type uses
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#this-type-is-used-by" class="md-nav__link">
+    This type is used by
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -6570,11 +6599,35 @@
   
 
 
-<div><h1 id="macro-syntax-error"><em>Macro Syntax Error</em><a class="headerlink" href="#macro-syntax-error" title="Permanent link">#</a></h1>
-<p><em>File</em>: <code>design/autoware-interfaces/ad-api/types/autoware_adapi_v1_msgs/msg/MrmState.md</code></p>
-<p><em>Line 3 in Markdown file:</em> <strong>Encountered unknown tag 'ブロック定義'.</strong>
-</p><div class="highlight"><pre><span></span><code>{% extends 'design/autoware-interfaces/templates/autoware-data-type.jinja2' %} {% ブロック定義 %}
+<div><h1 id="autoware_adapi_v1_msgsmsgmrmstate">autoware_adapi_v1_msgs/msg/MrmState<a class="headerlink" href="#autoware_adapi_v1_msgsmsgmrmstate" title="Permanent link">#</a></h1>
+<h2 id="definition">Definition<a class="headerlink" href="#definition" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code>builtin_interfaces/Time stamp
+
+# For common use
+uint16 UNKNOWN = 0
+
+# For state
+uint16 NORMAL = 1
+uint16 MRM_OPERATING = 2
+uint16 MRM_SUCCEEDED = 3
+uint16 MRM_FAILED = 4
+
+# For behavior
+uint16 NONE = 1
+uint16 EMERGENCY_STOP = 2
+uint16 COMFORTABLE_STOP = 3
+
+uint16 state
+uint16 behavior
 </code></pre></div>
+<h2 id="this-type-uses">This type uses<a class="headerlink" href="#this-type-uses" title="Permanent link">#</a></h2>
+<ul>
+<li>None</li>
+</ul>
+<h2 id="this-type-is-used-by">This type is used by<a class="headerlink" href="#this-type-is-used-by" title="Permanent link">#</a></h2>
+<ul>
+<li>None</li>
+</ul>
 <!-- prettier-ignore --></div>
 
 
@@ -6618,13 +6671,13 @@
         
         
           
-          <a href="../ObjectClassification/" class="md-footer__link md-footer__link--next" aria-label="Next: ObjectClassification" rel="next">
+          <a href="../ObjectClassification/" class="md-footer__link md-footer__link--next" aria-label="Next: autoware_adapi_v1_msgs/msg/ObjectClassification" rel="next">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                ObjectClassification
+                autoware_adapi_v1_msgs/msg/ObjectClassification
               </div>
             </div>
             <div class="md-footer__button md-icon">
