@@ -1,39 +1,8 @@
-タイトル	状態	方法	タイプ
-/api/planning/steering_factors
-解放されていない
-リアルタイムストリーム
-名前	メッセージ
-autoware_adapi_v1_msgs/msg/SteeringFactorArray
-名前	文章
-要因のポーズ
-ステアリング係数に関連するベース リンクのポーズ。
-名前	文章
-係数.距離
-ベースリンクから上記のポーズまでの距離。
-名前	文章
-要因.方向
-ステアリング係数の方向。
-名前	文章
-要因.ステータス
-ステアリング係数のステータス。
-名前	文章
-要因.行動
-ステアリング係数の動作タイプ。
-名前	文章
-因子.シーケンス
-ステアリング係数のシーケンス タイプ。
-名前	文章
-要因の詳細
-ステアリング係数の追加情報。
-名前	文章
-要因.協力
-モジュールがサポートしている場合の連携ステータス。
-{% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %} {% ブロックの説明 %} ステアリング係数を距離の昇順で取得します。詳細については、計画要素を参照してください。{% エンドブロック %}
 ---
-title: /api/planning/steering_factors
-status: not released
-method: realtime stream
-type:
+タイトル: /api/planning/steering_factors
+ステータス: リリースされていません
+手法: リアルタイムストリーム
+型:
   name: autoware_adapi_v1_msgs/msg/SteeringFactorArray
   msg:
     - name: factors.pose
@@ -56,6 +25,6 @@ type:
 
 {% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %}
 {% block description %}
-Get the steering factors, sorted in ascending order of distance.
-For details, see the [planning factors](../../../features/planning-factors.md).
+ステアリング係数を距離の昇順で取得します。
+詳細については[計画要素](../../../features/planning-factors.md)を参照してください。
 {% endblock %}
