@@ -1,29 +1,18 @@
-ポーズを初期化する
-関連するAPI
-ポーズ
-順序
-入力を使用したポーズの初期化。
+# 姿勢の初期化
 
-{% include 'design/autoware-interfaces/ad-api/use-cases/sequence/initialize-pose-input.plantuml' %}
-GNSS を使用したポーズの初期化。
+## 関連するAPI
 
-{% include 'design/autoware-interfaces/ad-api/use-cases/sequence/initialize-pose-gnss.plantuml' %}
+- 姿勢
 
-# Initialize the pose
+## 順序
 
-## Related API
-
-- Pose
-
-## Sequence
-
-- Initialization of the pose using input.
+- 入力を使用したポーズの初期化。
 
   ```plantuml
   {% include 'design/autoware-interfaces/ad-api/use-cases/sequence/initialize-pose-input.plantuml' %}
   ```
 
-- Initialization of the pose using GNSS.
+- GNSS を使用したポーズの初期化。
 
   ```plantuml
   {% include 'design/autoware-interfaces/ad-api/use-cases/sequence/initialize-pose-gnss.plantuml' %}
