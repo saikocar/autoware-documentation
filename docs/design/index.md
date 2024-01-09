@@ -1,100 +1,55 @@
-Autoware のデザイン
-建築
-コアとユニバース。
+# Autowareのデザイン
 
-Autoware は、オープンソース ソフトウェアによってランタイムとテクノロジ コンポーネントを提供します。ランタイムはロボット オペレーティング システム (ROS) に基づいています。テクノロジー コンポーネントは貢献者によって提供されます。これには以下が含まれますが、これらに限定されません。
+## アーキテクチャ
 
-センシング
-カメラコンポーネント
-LiDAR コンポーネント
-レーダーコンポーネント
-GNSSコンポーネント
-コンピューティング
-ローカリゼーションコンポーネント
-知覚コンポーネント
-計画コンポーネント
-制御コンポーネント
-ロギングコンポーネント
-システム監視コンポーネント
-作動
-DBWコンポーネント
-ツール
-シミュレータコンポーネント
-マッピングコンポーネント
-リモートコンポーネント
-ML コンポーネント
-注釈コンポーネント
-校正コンポーネント
-懸念、仮定、および制限
-マイクロオートノミー アーキテクチャの欠点は、機能モジュール性に起因するデータ パスのオーバーヘッドにより、エンド アプリケーションの計算パフォーマンスが犠牲になることです。言い換えれば、マイクロオートノミー アーキテクチャのトレードオフ特性は、計算パフォーマンスと機能モジュール性の間に存在します。このトレードオフの問題は、リアルタイム機能を導入することで技術的に解決できます。これは、自動運転システムが実際には高速になるように設計されていないためです。つまり、低遅延コンピューティングはあれば便利ですが、必須ではありません。自動運転システムに必須の機能は、コンピューティングの遅延が予測可能であること、つまりシステムがリアルタイムであることです。全体として、自動運転システムの所定のタイミング制約 (計算のデッドラインと呼ばれることが多い) を満たすのに十分な予測可能な範囲で、計算パフォーマンスを妥協することができます。
+CoreとUniverse.
 
-デザイン
+Autowareは、オープンソースソフトウェアによってランタイムとテクノロジコンポーネントを提供します。ランタイムはロボットオペレーティングシステム(ROS)に基づいています。テクノロジーコンポーネントは貢献者によって提供されます。これには以下が含まれますが、これらに限定されません。:
+
+- 計測
+  - カメラコンポーネント
+  - LiDARコンポーネント
+  - RADARコンポーネント
+  - GNSSコンポーネント
+- 計算
+  - 位置推定コンポーネント
+  - 知覚コンポーネント
+  - 計画コンポーネント
+  - 制御コンポーネント
+  - ロギングコンポーネント
+  - システム監視コンポーネント
+- 作動
+  - DBWコンポーネント
+- ツール
+  - シミュレータコンポーネント
+  - マッピングコンポーネント
+  - リモートコンポーネント
+  - MLコンポーネント
+  - 注釈コンポーネント
+  - 校正コンポーネント
+
+## 懸念、仮定、および制限
+
+マイクロオートノミーアーキテクチャの欠点は、機能モジュール性に起因するデータパスのオーバーヘッドにより、エンドアプリケーションの計算パフォーマンスが犠牲になることです。言い換えれば、マイクロオートノミーアーキテクチャのトレードオフ特性は、計算パフォーマンスと機能モジュール性の間に存在します。このトレードオフの問題は、リアルタイム機能を導入することで技術的に解決できます。これは、自動運転システムが実際には高速になるように設計されていないためです。つまり、低遅延コンピューティングはあれば便利ですが、必須ではありません。自動運転システムに必須の機能は、コンピューティングの遅延が予測可能であること、つまりシステムがリアルタイムであることです。全体として、自動運転システムの所定のタイミング制約 (計算のデッドラインと呼ばれることが多い) を満たすのに十分な予測可能な範囲で、計算パフォーマンスを妥協することができます。
+
+## 設計
+
 !!! 警告
 
-Under Construction
-オートウェアの概念
-Autowareの概念ページでは、 Autoware の設計哲学について説明します。読者 (サービス プロバイダーおよびすべての Autoware ユーザー) は、マイクロオートノミーやコア/ユニバース アーキテクチャなど、Autoware 開発の基礎となる基本概念を学びます。
+    構築中
 
-オートウェアのアーキテクチャ
-Autowareアーキテクチャのページでは、 Autoware を構成する各モジュールの概要について説明します。読者 (すべての Autoware ユーザー) は、Autoware を構成する各モジュールがどのように機能するかの概要を理解できます。
+### Autowareの概念
 
-オートウェアインターフェイス
-Autowareインターフェイスのページでは、 Autoware を構成する各モジュールのインターフェイスについて詳しく説明します。読者 (中級開発者) は、Autoware に新しい機能を追加する方法と、独自のモジュールを Autoware に統合する方法を学びます。
+[Autowareの概念ページ](autoware-concepts/index.md)ではAutowareの設計哲学について説明します。読者(サービスプロバイダーおよびすべてのAutowareユーザー)は、マイクロオートノミーやCore/Universeアーキテクチャなど、Autoware開発の基礎となる基本概念を学びます。 
 
-構成管理
-結論
-# Autoware's Design
+### Autowareのアーキテクチャ
 
-## Architecture
+[Autowareアーキテクチャのページ](autoware-architecture/index.md)では、Autowareを構成する各モジュールの概要について説明します。読者(すべてのAutowareユーザー)は、Autowareを構成する各モジュールがどのように機能するかの概要を理解できます。
 
-Core and Universe.
+### Autowareのインターフェイス
 
-Autoware provides the runtimes and technology components by open-source software. The runtimes are based on the Robot Operating System (ROS). The technology components are provided by contributors, which include, but are not limited to:
+[Autowareインターフェイスのページ](autoware-interfaces/index.md)Autowareを構成する各モジュールのインターフェイスについて詳しく説明します。読者(中級開発者)は、Autowareに新しい機能を追加する方法と、独自のモジュールをAutowareに統合する方法を学びます。
 
-- Sensing
-  - Camera Component
-  - LiDAR Component
-  - RADAR Component
-  - GNSS Component
-- Computing
-  - Localization Component
-  - Perception Component
-  - Planning Component
-  - Control Component
-  - Logging Component
-  - System Monitoring Component
-- Actuation
-  - DBW Component
-- Tools
-  - Simulator Component
-  - Mapping Component
-  - Remote Component
-  - ML Component
-  - Annotation Component
-  - Calibration Component
+### 構成管理
 
-## Concern, Assumption, and Limitation
-
-The downside of the microautonomy architecture is that the computational performance of end applications is sacrificed due to its data path overhead attributed to functional modularity. In other words, the trade-off characteristic of the microautonomy architecture exists between computational performance and functional modularity. This trade-off problem can be solved technically by introducing real-time capability. This is because autonomous driving systems are not really designed to be real-fast, that is, low-latency computing is nice-to-have but not must-have. The must-have feature for autonomous driving systems is that the latency of computing is predictable, that is, the systems are real-time. As a whole, we can compromise computational performance to an extent that is predictable enough to meet the given timing constraints of autonomous driving systems, often referred to as deadlines of computation.
-
-## Design
-
-!!! warning
-
-    Under Construction
-
-### Autoware concepts
-
-The [Autoware concepts page](autoware-concepts/index.md) describes the design philosophy of Autoware. Readers (service providers and all Autoware users) will learn the basic concepts underlying Autoware development, such as microautonomy and the Core/Universe architecture.
-
-### Autoware architecture
-
-The [Autoware architecture page](autoware-architecture/index.md) describes an overview of each module that makes up Autoware. Readers (all Autoware users) will gain a high-level picture of how each module that composes Autoware works.
-
-### Autoware interfaces
-
-The [Autoware interfaces page](autoware-interfaces/index.md) describes in detail the interface of each module that makes up Autoware. Readers (intermediate developers) will learn how to add new functionality to Autoware and how to integrate their own modules with Autoware.
-
-### Configuration management
-
-## Conclusion
+## 結論
