@@ -1,18 +1,8 @@
-タイトル	状態	方法	タイプ
-/api/モーション/状態
-解放されていない
-通知
-名前	メッセージ
-autoware_adapi_v1_msgs/msg/MotionState
-名前	文章
-州
-動作状態の値。
-{% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %} {% ブロックの説明 %} モーション状態を取得します。詳細については、動作状態を参照してください。{% エンドブロック %}
 ---
-title: /api/motion/state
-status: not released
-method: notification
-type:
+タイトル: /api/motion/state
+ステータス: リリースされていません
+手法: 通知
+型:
   name: autoware_adapi_v1_msgs/msg/MotionState
   msg:
     - name: state
@@ -21,6 +11,6 @@ type:
 
 {% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %}
 {% block description %}
-Get the motion state.
-For details, see the [motion state](../../../features/motion.md).
+動作状態を取得します。
+詳細については[動作状態](../../../features/motion.md)を参照してください。
 {% endblock %}
