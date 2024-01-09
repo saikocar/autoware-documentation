@@ -1,27 +1,8 @@
-タイトル	状態	方法	タイプ
-/api/routing/set_route_points
-v1.0.0
-関数呼び出し
-名前	要求	レス
-autoware_adapi_v1_msgs/srv/SetRoutePoints
-名前	文章
-ヘッダ
-ポーズ変換用のヘッダー
-名前	文章
-ゴール
-ゴールポーズ
-名前	文章
-ウェイポイント
-ウェイポイントポーズ
-名前	文章
-状態
-対応状況
-{% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %} {% ブロックの説明 %} ウェイポイントのポーズでルートを設定します。開始ポーズが指定されていない場合は、現在のポーズが使用されます。{% エンドブロック %}
 ---
-title: /api/routing/set_route_points
-status: v1.0.0
-method: function call
-type:
+タイトル: /api/routing/set_route_points
+ステータス: v1.0.0
+手法: 関数呼び出し
+型:
   name: autoware_adapi_v1_msgs/srv/SetRoutePoints
   req:
     - name: header
@@ -37,5 +18,5 @@ type:
 
 {% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %}
 {% block description %}
-Set the route with the waypoint poses. If start pose is not specified, the current pose will be used.
+ウェイポイントのポーズで経路を設定します。開始姿勢が指定されていない場合は、現在の姿勢が使用されます。
 {% endblock %}
