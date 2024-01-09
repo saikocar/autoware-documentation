@@ -1,29 +1,18 @@
-動作モードを変更する
-関連するAPI
-動作モード
-順序
-ソフトウェアスイッチでモードを切り替えます。
+# 動作モードを変更する
 
-{% include 'design/autoware-interfaces/ad-api/use-cases/sequence/operation-mode-software.plantuml' %}
-ハードウェアスイッチでモードを変更します。
+## 関連するAPI
 
-{% include 'design/autoware-interfaces/ad-api/use-cases/sequence/operation-mode-hardware.plantuml' %}
+- 動作モード
 
-# Change the operation mode
+## 順序
 
-## Related API
-
-- Operation mode
-
-## Sequence
-
-- Change the mode with software switch.
+- ソフトウェアスイッチでモードを切り替えます。
 
   ```plantuml
   {% include 'design/autoware-interfaces/ad-api/use-cases/sequence/operation-mode-software.plantuml' %}
   ```
 
-- Change the mode with hardware switch.
+- ハードウェアスイッチでモードを変更します。
 
   ```plantuml
   {% include 'design/autoware-interfaces/ad-api/use-cases/sequence/operation-mode-hardware.plantuml' %}
