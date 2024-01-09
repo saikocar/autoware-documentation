@@ -1,8 +1,8 @@
 ---
-title: /api/vehicle/doors/status
-status: not released
-method: notification
-type:
+タイトル: /api/vehicle/doors/status
+ステータス: リリースされていません
+手法: 通知
+型:
   name: autoware_adapi_v1_msgs/msg/DoorStatusArray
   msg:
     - name: doors.status
@@ -11,5 +11,5 @@ type:
 
 {% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %}
 {% block description %}
-The status of each door such as opened or closed.
+それぞれのドアの開閉状態といったステータス。
 {% endblock %}
