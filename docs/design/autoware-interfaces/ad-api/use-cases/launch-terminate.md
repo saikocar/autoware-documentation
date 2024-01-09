@@ -1,18 +1,11 @@
-起動と終了
-関連するAPI
-インターフェース
-ランチャー
-順序
-{% include 'design/autoware-interfaces/ad-api/use-cases/sequence/launch-terminate.plantuml' %}
+# 起動と終了
 
-# Launch and terminate
+## 関連するAPI
 
-## Related API
+- インターフェース
+- 起動
 
-- Interface
-- Launcher
-
-## Sequence
+## 順序
 
 ```plantuml
 {% include 'design/autoware-interfaces/ad-api/use-cases/sequence/launch-terminate.plantuml' %}
