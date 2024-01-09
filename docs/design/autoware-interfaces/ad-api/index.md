@@ -1,73 +1,42 @@
-オートウェア AD API
-概要
-Autoware AD APIは、自動運転システムの外部から車両を操作するためのインターフェースです。 Autoware の全体的なインターフェイス設計については、こちらを参照してください。
-
-ユーザーストーリー
-ユーザーストーリーは、AD APIが想定するサービスシナリオです。AD API はこれらのシナリオに基づいて設計されています。各シナリオは、後述するユースケースの組み合わせによって実現されます。カバーできないシナリオがある場合は、ユーザー ストーリーの追加についてご相談ください。
-
-バスサービス
-タクシーサービス
-ユースケース
-ユースケースは、ユーザーストーリーから派生し、一般的に設計された部分的なシナリオです。サービス プロバイダーは、これらのユース ケースを組み合わせてユーザー ストーリーを定義し、AD API を独自のシナリオに適用できるかどうかを確認できます。
-
-起動と終了
-ポーズを初期化する
-動作モードを変更する
-指定された位置まで運転します
-乗って降りる
-車両監視
-車両の運行
-特徴
-インターフェース
-動作モード
-ルーティング
-ローカリゼーション
-モーション
-企画
-感知
-フェイルセーフ
-車両状態
-車両ドア
-協力
 # Autoware AD API
 
-## Overview
+## 概要
 
-Autoware AD API is the interface for operating the vehicle from outside the autonomous driving system.
-[See here for the overall interface design of Autoware.](../index.md)
+Autoware AD APIは、自動運転システムの外部から車両を操作するためのインターフェースです。
+[Autowareの全体的なインターフェイス設計については、こちらを参照してください。](../index.md)
 
-## User stories
+## ユーザーストーリー
 
-The user stories are service scenarios that AD API assumes. AD API is designed based on these scenarios.
-Each scenario is realized by a combination of use cases described later.
-If there are scenarios that cannot be covered, please discuss adding a user story.
+ユーザーストーリーは、AD APIが想定するサービスシナリオです。AD APIはこれらのシナリオに基づいて設計されています。
+各シナリオは、後述するユースケースの組み合わせによって実現されます。
+カバーできないシナリオがある場合は、ユーザーストーリーの追加についてご相談ください。
 
-- [Bus service](./stories/bus-service.md)
-- [Taxi service](./stories/taxi-service.md)
+- [バスサービス](./stories/bus-service.md)
+- [タクシーサービス](./stories/taxi-service.md)
 
-## Use cases
+## ユースケース
 
-Use cases are partial scenarios derived from the user story and generically designed.
-Service providers can combine these use cases to define user stories and check if AD API can be applied to their own scenarios.
+ユースケースは、ユーザーストーリーから派生し、一般的に設計された部分的なシナリオです。
+サービスプロバイダーは、これらのユースケースを組み合わせてユーザーストーリーを定義し、AD APIを独自のシナリオに適用できるかどうかを確認できます。
 
-- [Launch and terminate](./use-cases/launch-terminate.md)
-- [Initialize the pose](./use-cases/initialize-pose.md)
-- [Change the operation mode](./use-cases/change-operation-mode.md)
-- [Drive to the designated position](./use-cases/drive-designated-position.md)
-- [Get on and get off](./use-cases/get-on-off.md)
-- [Vehicle monitoring](./use-cases/vehicle-monitoring.md)
-- [Vehicle operation](./use-cases/vehicle-operation.md)
+- [起動と終了](./use-cases/launch-terminate.md)
+- [ポーズを初期化する](./use-cases/initialize-pose.md)
+- [動作モードを変更する](./use-cases/change-operation-mode.md)
+- [指定された位置まで運転します](./use-cases/drive-designated-position.md)
+- [乗降](./use-cases/get-on-off.md)
+- [車両監視](./use-cases/vehicle-monitoring.md)
+- [車両の運行](./use-cases/vehicle-operation.md)
 
-## Features
+## 機能
 
-- [Interface](./features/interface.md)
-- [Operation Mode](./features/operation_mode.md)
-- [Routing](./features/routing.md)
-- [Localization](./features/localization.md)
-- [Motion](./features/motion.md)
-- [Planning](./features/planning-factors.md)
-- [Perception](./features/perception.md)
-- [Fail-safe](./features/fail-safe.md)
-- [Vehicle status](./features/vehicle-status.md)
-- [Vehicle doors](./features/vehicle-doors.md)
-- [Cooperation](./features/cooperation.md)
+- [インターフェース](./features/interface.md)
+- [動作モード](./features/operation_mode.md)
+- [ルーティング](./features/routing.md)
+- [位置推定](./features/localization.md)
+- [動作](./features/motion.md)
+- [計画](./features/planning-factors.md)
+- [知覚](./features/perception.md)
+- [フェイルセーフ](./features/fail-safe.md)
+- [車両状態](./features/vehicle-status.md)
+- [車両ドア](./features/vehicle-doors.md)
+- [連携](./features/cooperation.md)
