@@ -1,27 +1,8 @@
-タイトル	状態	方法	タイプ
-/api/vehicle/キネマティクス
-解放されていない
-リアルタイムストリーム
-名前	メッセージ
-autoware_adapi_v1_msgs/msg/VehicleKinematics
-名前	文章
-地理的ポーズ
-車両の経度と緯度。マップがローカル座標を使用している場合は使用できません。
-名前	文章
-ポーズ
-ベースリンクからの共分散を伴うポーズ。
-名前	文章
-ねじれ
-共分散を伴う車両電流のねじれ。
-名前	文章
-アクセル
-共分散を伴う車両の現在の加速度。
-{% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %} {% ブロックの説明 %} 車両の運動学を公開します。{% エンドブロック %}
 ---
-title: /api/vehicle/kinematics
-status: not released
-method: realtime stream
-type:
+タイトル: /api/vehicle/kinematics
+ステータス: リリースされていません
+手法: リアルタイムストリーム
+型:
   name: autoware_adapi_v1_msgs/msg/VehicleKinematics
   msg:
     - name: geographic_pose
@@ -36,5 +17,5 @@ type:
 
 {% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %}
 {% block description %}
-Publish vehicle kinematics.
+車両の運動学を公開します。
 {% endblock %}
