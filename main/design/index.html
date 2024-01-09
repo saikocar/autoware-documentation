@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>Autowareのデザイン - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#autowares-design" class="md-skip">
+        <a href="#autoware" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              Autowareのデザイン
             
           </span>
         </div>
@@ -6561,51 +6561,51 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
-    Architecture
+  <a href="#_1" class="md-nav__link">
+    アーキテクチャ
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#concern-assumption-and-limitation" class="md-nav__link">
-    Concern, Assumption, and Limitation
+  <a href="#_2" class="md-nav__link">
+    懸念、仮定、および制限
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#design" class="md-nav__link">
-    Design
+  <a href="#_3" class="md-nav__link">
+    設計
   </a>
   
-    <nav class="md-nav" aria-label="Design">
+    <nav class="md-nav" aria-label="設計">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#autoware-concepts" class="md-nav__link">
-    Autoware concepts
+  <a href="#autoware_1" class="md-nav__link">
+    Autowareの概念
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#autoware-architecture" class="md-nav__link">
-    Autoware architecture
+  <a href="#autoware_2" class="md-nav__link">
+    Autowareのアーキテクチャ
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#autoware-interfaces" class="md-nav__link">
-    Autoware interfaces
+  <a href="#autoware_3" class="md-nav__link">
+    Autowareのインターフェイス
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#configuration-management" class="md-nav__link">
-    Configuration management
+  <a href="#_4" class="md-nav__link">
+    構成管理
   </a>
   
 </li>
@@ -6616,8 +6616,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#conclusion" class="md-nav__link">
-    Conclusion
+  <a href="#_5" class="md-nav__link">
+    結論
   </a>
   
 </li>
@@ -6640,96 +6640,56 @@
   
 
 
-<div><p>Autoware のデザイン
-建築
-コアとユニバース。</p>
-<p>Autoware は、オープンソース ソフトウェアによってランタイムとテクノロジ コンポーネントを提供します。ランタイムはロボット オペレーティング システム (<abbr title="Robot Operating System">ROS</abbr>) に基づいています。テクノロジー コンポーネントは貢献者によって提供されます。これには以下が含まれますが、これらに限定されません。</p>
-<p>センシング
-カメラコンポーネント
-LiDAR コンポーネント
-レーダーコンポーネント
-GNSSコンポーネント
-コンピューティング
-ローカリゼーションコンポーネント
-知覚コンポーネント
-計画コンポーネント
-制御コンポーネント
-ロギングコンポーネント
-システム監視コンポーネント
-作動
-DBWコンポーネント
-ツール
-シミュレータコンポーネント
-マッピングコンポーネント
-リモートコンポーネント
-ML コンポーネント
-注釈コンポーネント
-校正コンポーネント
-懸念、仮定、および制限
-マイクロオートノミー アーキテクチャの欠点は、機能モジュール性に起因するデータ パスのオーバーヘッドにより、エンド アプリケーションの計算パフォーマンスが犠牲になることです。言い換えれば、マイクロオートノミー アーキテクチャのトレードオフ特性は、計算パフォーマンスと機能モジュール性の間に存在します。このトレードオフの問題は、リアルタイム機能を導入することで技術的に解決できます。これは、自動運転システムが実際には高速になるように設計されていないためです。つまり、低遅延コンピューティングはあれば便利ですが、必須ではありません。自動運転システムに必須の機能は、コンピューティングの遅延が予測可能であること、つまりシステムがリアルタイムであることです。全体として、自動運転システムの所定のタイミング制約 (計算のデッドラインと呼ばれることが多い) を満たすのに十分な予測可能な範囲で、計算パフォーマンスを妥協することができます。</p>
-<p>デザイン</p>
+<div><h1 id="autoware">Autowareのデザイン<a class="headerlink" href="#autoware" title="Permanent link">#</a></h1>
+<h2 id="_1">アーキテクチャ<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p>CoreとUniverse.</p>
+<p>Autowareは、オープンソースソフトウェアによってランタイムとテクノロジコンポーネントを提供します。ランタイムはロボットオペレーティングシステム(<abbr title="Robot Operating System">ROS</abbr>)に基づいています。テクノロジーコンポーネントは貢献者によって提供されます。これには以下が含まれますが、これらに限定されません。:</p>
+<ul>
+<li>計測<ul>
+<li>カメラコンポーネント</li>
+<li>LiDARコンポーネント</li>
+<li>RADARコンポーネント</li>
+<li>GNSSコンポーネント</li>
+</ul>
+</li>
+<li>計算<ul>
+<li>位置推定コンポーネント</li>
+<li>知覚コンポーネント</li>
+<li>計画コンポーネント</li>
+<li>制御コンポーネント</li>
+<li>ロギングコンポーネント</li>
+<li>システム監視コンポーネント</li>
+</ul>
+</li>
+<li>作動<ul>
+<li>DBWコンポーネント</li>
+</ul>
+</li>
+<li>ツール<ul>
+<li>シミュレータコンポーネント</li>
+<li>マッピングコンポーネント</li>
+<li>リモートコンポーネント</li>
+<li>MLコンポーネント</li>
+<li>注釈コンポーネント</li>
+<li>校正コンポーネント</li>
+</ul>
+</li>
+</ul>
+<h2 id="_2">懸念、仮定、および制限<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>マイクロオートノミーアーキテクチャの欠点は、機能モジュール性に起因するデータパスのオーバーヘッドにより、エンドアプリケーションの計算パフォーマンスが犠牲になることです。言い換えれば、マイクロオートノミーアーキテクチャのトレードオフ特性は、計算パフォーマンスと機能モジュール性の間に存在します。このトレードオフの問題は、リアルタイム機能を導入することで技術的に解決できます。これは、自動運転システムが実際には高速になるように設計されていないためです。つまり、低遅延コンピューティングはあれば便利ですが、必須ではありません。自動運転システムに必須の機能は、コンピューティングの遅延が予測可能であること、つまりシステムがリアルタイムであることです。全体として、自動運転システムの所定のタイミング制約 (計算のデッドラインと呼ばれることが多い) を満たすのに十分な予測可能な範囲で、計算パフォーマンスを妥協することができます。</p>
+<h2 id="_3">設計<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <div class="admonition 警告">
 <p class="admonition-title">警告</p>
+<p>構築中</p>
 </div>
-<p>Under Construction
-オートウェアの概念
-Autowareの概念ページでは、 Autoware の設計哲学について説明します。読者 (サービス プロバイダーおよびすべての Autoware ユーザー) は、マイクロオートノミーやコア/ユニバース アーキテクチャなど、Autoware 開発の基礎となる基本概念を学びます。</p>
-<p>オートウェアのアーキテクチャ
-Autowareアーキテクチャのページでは、 Autoware を構成する各モジュールの概要について説明します。読者 (すべての Autoware ユーザー) は、Autoware を構成する各モジュールがどのように機能するかの概要を理解できます。</p>
-<p>オートウェアインターフェイス
-Autowareインターフェイスのページでは、 Autoware を構成する各モジュールのインターフェイスについて詳しく説明します。読者 (中級開発者) は、Autoware に新しい機能を追加する方法と、独自のモジュールを Autoware に統合する方法を学びます。</p>
-<p>構成管理
-結論</p>
-<h1 id="autowares-design">Autoware's Design<a class="headerlink" href="#autowares-design" title="Permanent link">#</a></h1>
-<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">#</a></h2>
-<p>Core and Universe.</p>
-<p>Autoware provides the runtimes and technology components by open-source software. The runtimes are based on the Robot Operating System (<abbr title="Robot Operating System">ROS</abbr>). The technology components are provided by contributors, which include, but are not limited to:</p>
-<ul>
-<li>Sensing<ul>
-<li>Camera Component</li>
-<li>LiDAR Component</li>
-<li>RADAR Component</li>
-<li><abbr title="Global Navigation Satellite System">GNSS</abbr> Component</li>
-</ul>
-</li>
-<li>Computing<ul>
-<li>Localization Component</li>
-<li>Perception Component</li>
-<li>Planning Component</li>
-<li>Control Component</li>
-<li>Logging Component</li>
-<li>System Monitoring Component</li>
-</ul>
-</li>
-<li>Actuation<ul>
-<li><abbr title="Drive-By-Wire">DBW</abbr> Component</li>
-</ul>
-</li>
-<li>Tools<ul>
-<li>Simulator Component</li>
-<li>Mapping Component</li>
-<li>Remote Component</li>
-<li>ML Component</li>
-<li>Annotation Component</li>
-<li>Calibration Component</li>
-</ul>
-</li>
-</ul>
-<h2 id="concern-assumption-and-limitation">Concern, Assumption, and Limitation<a class="headerlink" href="#concern-assumption-and-limitation" title="Permanent link">#</a></h2>
-<p>The downside of the microautonomy architecture is that the computational performance of end applications is sacrificed due to its data path overhead attributed to functional modularity. In other words, the trade-off characteristic of the microautonomy architecture exists between computational performance and functional modularity. This trade-off problem can be solved technically by introducing real-time capability. This is because autonomous driving systems are not really designed to be real-fast, that is, low-latency computing is nice-to-have but not must-have. The must-have feature for autonomous driving systems is that the latency of computing is predictable, that is, the systems are real-time. As a whole, we can compromise computational performance to an extent that is predictable enough to meet the given timing constraints of autonomous driving systems, often referred to as deadlines of computation.</p>
-<h2 id="design">Design<a class="headerlink" href="#design" title="Permanent link">#</a></h2>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Under Construction</p>
-</div>
-<h3 id="autoware-concepts">Autoware concepts<a class="headerlink" href="#autoware-concepts" title="Permanent link">#</a></h3>
-<p>The <a href="autoware-concepts/">Autoware concepts page</a> describes the design philosophy of Autoware. Readers (service providers and all Autoware users) will learn the basic concepts underlying Autoware development, such as microautonomy and the Core/Universe architecture.</p>
-<h3 id="autoware-architecture">Autoware architecture<a class="headerlink" href="#autoware-architecture" title="Permanent link">#</a></h3>
-<p>The <a href="autoware-architecture/">Autoware architecture page</a> describes an overview of each module that makes up Autoware. Readers (all Autoware users) will gain a high-level picture of how each module that composes Autoware works.</p>
-<h3 id="autoware-interfaces">Autoware interfaces<a class="headerlink" href="#autoware-interfaces" title="Permanent link">#</a></h3>
-<p>The <a href="autoware-interfaces/">Autoware interfaces page</a> describes in detail the interface of each module that makes up Autoware. Readers (intermediate developers) will learn how to add new functionality to Autoware and how to integrate their own modules with Autoware.</p>
-<h3 id="configuration-management">Configuration management<a class="headerlink" href="#configuration-management" title="Permanent link">#</a></h3>
-<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">#</a></h2>
+<h3 id="autoware_1">Autowareの概念<a class="headerlink" href="#autoware_1" title="Permanent link">#</a></h3>
+<p><a href="autoware-concepts/">Autowareの概念ページ</a>ではAutowareの設計哲学について説明します。読者(サービスプロバイダーおよびすべてのAutowareユーザー)は、マイクロオートノミーやCore/Universeアーキテクチャなど、Autoware開発の基礎となる基本概念を学びます。 </p>
+<h3 id="autoware_2">Autowareのアーキテクチャ<a class="headerlink" href="#autoware_2" title="Permanent link">#</a></h3>
+<p><a href="autoware-architecture/">Autowareアーキテクチャのページ</a>では、Autowareを構成する各モジュールの概要について説明します。読者(すべてのAutowareユーザー)は、Autowareを構成する各モジュールがどのように機能するかの概要を理解できます。</p>
+<h3 id="autoware_3">Autowareのインターフェイス<a class="headerlink" href="#autoware_3" title="Permanent link">#</a></h3>
+<p><a href="autoware-interfaces/">Autowareインターフェイスのページ</a>Autowareを構成する各モジュールのインターフェイスについて詳しく説明します。読者(中級開発者)は、Autowareに新しい機能を追加する方法と、独自のモジュールをAutowareに統合する方法を学びます。</p>
+<h3 id="_4">構成管理<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<h2 id="_5">結論<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
 <!-- prettier-ignore --></div>
 
 
