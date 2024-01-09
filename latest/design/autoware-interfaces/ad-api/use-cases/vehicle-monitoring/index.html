@@ -21,7 +21,7 @@
     
     
       
-        <title>Vehicle monitoring - Autoware Documentation</title>
+        <title>車両監視 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#vehicle-monitoring" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Vehicle monitoring
+              車両監視
             
           </span>
         </div>
@@ -6561,22 +6561,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#vehicle-status" class="md-nav__link">
-    Vehicle status
+  <a href="#_2" class="md-nav__link">
+    車両状態
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#planning-factors" class="md-nav__link">
-    Planning factors
+  <a href="#_3" class="md-nav__link">
+    計画要素
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#detected-objects" class="md-nav__link">
-    Detected objects
+  <a href="#_4" class="md-nav__link">
+    検出されたオブジェクト
   </a>
   
 </li>
@@ -6599,28 +6599,20 @@
   
 
 
-<div><p>車両監視
-AD API は、遠隔監視や乗員の可視化などのために、車両の現在の状態を提供します。監視したいデータに応じて、以下の API を使用してください。</p>
-<p>車両状態
-車両のステータスは、運動学、インジケーター、寸法などの基本情報を提供します。これにより、遠隔操作者は車両の位置と速度を知ることができます。<abbr title="Fleet Management System">FMS</abbr> などのアプリケーションの場合、スタックした車両や急ブレーキがかかった車両など、支援が必要な車両を見つけるのに役立ちます。車両の寸法から物体までの実際の距離を求めることも可能です。</p>
-<p>計画要素
-計画要素は、車両の計画ステータスを提供します。HMIはこれを利用して車両の急な動きを警告したり、停止理由を同乗者と共有したりすることで快適な運転を実現します。</p>
-<p>検出されたオブジェクト
-知覚は、 Autoware によって検出されたオブジェクトを提供します。<abbr title="Human Machine Interface">HMI</abbr> はこれを使用して、車両の周囲のオブジェクトを視覚化できます。</p>
-<h1 id="vehicle-monitoring">Vehicle monitoring<a class="headerlink" href="#vehicle-monitoring" title="Permanent link">#</a></h1>
-<p>AD API provides current vehicle status for remote monitoring, visualization for passengers, etc.
-Use the API below depending on the data you want to monitor.</p>
-<h2 id="vehicle-status">Vehicle status<a class="headerlink" href="#vehicle-status" title="Permanent link">#</a></h2>
-<p>The <a href="../../features/vehicle-status/">vehicle status</a> provides basic information such as kinematics, indicators, and dimensions.
-This allows a remote operator to know the position and velocity of the vehicle.
-For applications such as <abbr title="Fleet Management System">FMS</abbr>, it can help find vehicles that need assistance, such as vehicles that are stuck or brake suddenly.
-It is also possible to determine the actual distance to an object from the vehicle dimensions.</p>
-<h2 id="planning-factors">Planning factors<a class="headerlink" href="#planning-factors" title="Permanent link">#</a></h2>
-<p>The <a href="../../features/planning-factors/">planning factors</a> provides the planning status of the vehicle.
-<abbr title="Human Machine Interface">HMI</abbr> can use this to warn of sudden movements of the vehicle, and to share the stop reason with passengers for comfortable driving.</p>
-<h2 id="detected-objects">Detected objects<a class="headerlink" href="#detected-objects" title="Permanent link">#</a></h2>
-<p>The <a href="../../features/perception/">perception</a> provides the objects detected by Autoware.
-<abbr title="Human Machine Interface">HMI</abbr> can use this to visualize objects around the vehicle.</p>
+<div><h1 id="_1">車両監視<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<p>AD API は、遠隔監視や乗員の可視化などのために、車両の現在の状態を提供します。
+監視したいデータに応じて、以下のAPIを使用してください。</p>
+<h2 id="_2">車両状態<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p><a href="../../features/vehicle-status/">車両状態</a>は、運動学、インジケーター、寸法などの基本情報を提供します。
+これにより、遠隔操作者は車両の位置と速度を知ることができます。
+FMSなどのアプリケーションの場合、スタックした車両や急ブレーキがかかった車両など、支援が必要な車両を見つけるのに役立ちます。
+車両の寸法から物体までの実際の距離を求めることも可能です。</p>
+<h2 id="_3">計画要素<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p><a href="../../features/planning-factors/">計画要素</a>は、車両の計画ステータスを提供します。
+HMIはこれを利用して車両の急な動きを警告したり、停止理由を同乗者と共有したりすることで快適な運転を実現します。</p>
+<h2 id="_4">検出されたオブジェクト<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<p><a href="../../features/perception/">知覚</a>は、 Autoware によって検出されたオブジェクトを提供します。
+HMIはこれを使用して、車両の周囲のオブジェクトを視覚化できます。</p>
 <!-- prettier-ignore --></div>
 
 
