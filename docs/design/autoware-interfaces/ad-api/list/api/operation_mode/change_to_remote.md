@@ -1,18 +1,8 @@
-タイトル	状態	方法	タイプ
-/api/operation_mode/change_to_remote
-v1.0.0
-関数呼び出し
-名前	レス
-autoware_adapi_v1_msgs/srv/ChangeOperationMode
-名前	文章
-状態
-対応状況
-{% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %} {% ブロックの説明 %} 動作モードをリモートに変更します。詳細は動作モードを参照してください。{% エンドブロック %}
 ---
-title: /api/operation_mode/change_to_remote
-status: v1.0.0
-method: function call
-type:
+タイトル: /api/operation_mode/change_to_remote
+型: v1.0.0
+手法: function call
+型:
   name: autoware_adapi_v1_msgs/srv/ChangeOperationMode
   res:
     - name: status
@@ -21,6 +11,6 @@ type:
 
 {% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %}
 {% block description %}
-Change the operation mode to remote.
-For details, see the [operation mode](../../../features/operation_mode.md).
+動作モードをリモートに変更します。
+詳細については[動作モード](../../../features/operation_mode.md)を参照してください。
 {% endblock %}
