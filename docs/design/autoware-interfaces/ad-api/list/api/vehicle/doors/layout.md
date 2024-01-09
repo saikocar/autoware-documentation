@@ -1,8 +1,8 @@
 ---
-title: /api/vehicle/doors/layout
-status: not released
-method: function call
-type:
+タイトル: /api/vehicle/doors/layout
+ステータス: リリースされていません
+手法: 関数呼び出し
+型:
   name: autoware_adapi_v1_msgs/srv/GetDoorLayout
   res:
     - name: status
@@ -15,5 +15,5 @@ type:
 
 {% extends 'design/autoware-interfaces/templates/autoware-interface.jinja2' %}
 {% block description %}
-Get the door layout. It is an array of roles and descriptions for each door.
+ドアの配置を取得します。これはそれぞれのドアの役割と説明の配列です。
 {% endblock %}
