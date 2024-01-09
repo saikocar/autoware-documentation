@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>Autoware AD API - Autoware Documentation</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              Autoware AD API
             
           </span>
         </div>
@@ -6561,29 +6561,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#_1" class="md-nav__link">
+    概要
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#user-stories" class="md-nav__link">
-    User stories
+  <a href="#_2" class="md-nav__link">
+    ユーザーストーリー
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-cases" class="md-nav__link">
-    Use cases
+  <a href="#_3" class="md-nav__link">
+    ユースケース
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    Features
+  <a href="#_4" class="md-nav__link">
+    機能
   </a>
   
 </li>
@@ -6606,71 +6606,43 @@
   
 
 
-<div><p>オートウェア AD API
-概要
-Autoware AD APIは、自動運転システムの外部から車両を操作するためのインターフェースです。 Autoware の全体的なインターフェイス設計については、こちらを参照してください。</p>
-<p>ユーザーストーリー
-ユーザーストーリーは、AD APIが想定するサービスシナリオです。AD API はこれらのシナリオに基づいて設計されています。各シナリオは、後述するユースケースの組み合わせによって実現されます。カバーできないシナリオがある場合は、ユーザー ストーリーの追加についてご相談ください。</p>
-<p>バスサービス
-タクシーサービス
-ユースケース
-ユースケースは、ユーザーストーリーから派生し、一般的に設計された部分的なシナリオです。サービス プロバイダーは、これらのユース ケースを組み合わせてユーザー ストーリーを定義し、AD API を独自のシナリオに適用できるかどうかを確認できます。</p>
-<p>起動と終了
-ポーズを初期化する
-動作モードを変更する
-指定された位置まで運転します
-乗って降りる
-車両監視
-車両の運行
-特徴
-インターフェース
-動作モード
-ルーティング
-ローカリゼーション
-モーション
-企画
-感知
-フェイルセーフ
-車両状態
-車両ドア
-協力</p>
-<h1 id="autoware-ad-api">Autoware AD API<a class="headerlink" href="#autoware-ad-api" title="Permanent link">#</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<p>Autoware AD API is the interface for operating the vehicle from outside the autonomous driving system.
-<a href="../">See here for the overall interface design of Autoware.</a></p>
-<h2 id="user-stories">User stories<a class="headerlink" href="#user-stories" title="Permanent link">#</a></h2>
-<p>The user stories are service scenarios that AD API assumes. AD API is designed based on these scenarios.
-Each scenario is realized by a combination of use cases described later.
-If there are scenarios that cannot be covered, please discuss adding a user story.</p>
+<div><h1 id="autoware-ad-api">Autoware AD API<a class="headerlink" href="#autoware-ad-api" title="Permanent link">#</a></h1>
+<h2 id="_1">概要<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p>Autoware AD APIは、自動運転システムの外部から車両を操作するためのインターフェースです。
+<a href="../">Autowareの全体的なインターフェイス設計については、こちらを参照してください。</a></p>
+<h2 id="_2">ユーザーストーリー<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>ユーザーストーリーは、AD APIが想定するサービスシナリオです。AD APIはこれらのシナリオに基づいて設計されています。
+各シナリオは、後述するユースケースの組み合わせによって実現されます。
+カバーできないシナリオがある場合は、ユーザーストーリーの追加についてご相談ください。</p>
 <ul>
-<li><a href="stories/bus-service/">Bus service</a></li>
-<li><a href="stories/taxi-service/">Taxi service</a></li>
+<li><a href="stories/bus-service/">バスサービス</a></li>
+<li><a href="stories/taxi-service/">タクシーサービス</a></li>
 </ul>
-<h2 id="use-cases">Use cases<a class="headerlink" href="#use-cases" title="Permanent link">#</a></h2>
-<p>Use cases are partial scenarios derived from the user story and generically designed.
-Service providers can combine these use cases to define user stories and check if AD API can be applied to their own scenarios.</p>
+<h2 id="_3">ユースケース<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>ユースケースは、ユーザーストーリーから派生し、一般的に設計された部分的なシナリオです。
+サービスプロバイダーは、これらのユースケースを組み合わせてユーザーストーリーを定義し、AD APIを独自のシナリオに適用できるかどうかを確認できます。</p>
 <ul>
-<li><a href="use-cases/launch-terminate/">Launch and terminate</a></li>
-<li><a href="use-cases/initialize-pose/">Initialize the pose</a></li>
-<li><a href="use-cases/change-operation-mode/">Change the operation mode</a></li>
-<li><a href="use-cases/drive-designated-position/">Drive to the designated position</a></li>
-<li><a href="use-cases/get-on-off/">Get on and get off</a></li>
-<li><a href="use-cases/vehicle-monitoring/">Vehicle monitoring</a></li>
-<li><a href="use-cases/vehicle-operation/">Vehicle operation</a></li>
+<li><a href="use-cases/launch-terminate/">起動と終了</a></li>
+<li><a href="use-cases/initialize-pose/">ポーズを初期化する</a></li>
+<li><a href="use-cases/change-operation-mode/">動作モードを変更する</a></li>
+<li><a href="use-cases/drive-designated-position/">指定された位置まで運転します</a></li>
+<li><a href="use-cases/get-on-off/">乗降</a></li>
+<li><a href="use-cases/vehicle-monitoring/">車両監視</a></li>
+<li><a href="use-cases/vehicle-operation/">車両の運行</a></li>
 </ul>
-<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">#</a></h2>
+<h2 id="_4">機能<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <ul>
-<li><a href="features/interface/">Interface</a></li>
-<li><a href="features/operation_mode/">Operation Mode</a></li>
-<li><a href="features/routing/">Routing</a></li>
-<li><a href="features/localization/">Localization</a></li>
-<li><a href="features/motion/">Motion</a></li>
-<li><a href="features/planning-factors/">Planning</a></li>
-<li><a href="features/perception/">Perception</a></li>
-<li><a href="features/fail-safe/">Fail-safe</a></li>
-<li><a href="features/vehicle-status/">Vehicle status</a></li>
-<li><a href="features/vehicle-doors/">Vehicle doors</a></li>
-<li><a href="features/cooperation/">Cooperation</a></li>
+<li><a href="features/interface/">インターフェース</a></li>
+<li><a href="features/operation_mode/">動作モード</a></li>
+<li><a href="features/routing/">ルーティング</a></li>
+<li><a href="features/localization/">位置推定</a></li>
+<li><a href="features/motion/">動作</a></li>
+<li><a href="features/planning-factors/">計画</a></li>
+<li><a href="features/perception/">知覚</a></li>
+<li><a href="features/fail-safe/">フェイルセーフ</a></li>
+<li><a href="features/vehicle-status/">車両状態</a></li>
+<li><a href="features/vehicle-doors/">車両ドア</a></li>
+<li><a href="features/cooperation/">連携</a></li>
 </ul>
 <!-- prettier-ignore --></div>
 
