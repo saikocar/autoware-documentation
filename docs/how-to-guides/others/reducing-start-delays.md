@@ -1,184 +1,121 @@
-実車の始動遅れを軽減
-シミュレーションでは、自車両は Autoware によって生成された制御コマンドにほぼ瞬時に反応します。ただし、実際の車両では遅延が発生し、エゴの反応が鈍くなる可能性があります。
+# 実車の始動遅れを軽減
 
-このページでは、実車で Autoware を使用したときに発生する開始遅延を紹介します。開始遅延を、(a) Autoware が自車両を始動させることを決定したときと、(b) 車両が実際に動き始めるまでの時間として定義します。より正確に：
+シミュレーションでは、自車両はAutowareによって生成された制御コマンドにほぼ瞬時に反応します。
+ただし、実際の車両では遅延が発生し、エゴの反応が鈍くなる可能性があります。
 
-(a) は、Autoware によって出力された速度または加速度コマンドがゼロ以外の値に切り替わる時刻です。
-(b) は自車両の測定速度が正の値に切り替わる時刻です。
-手動運転時の発進遅れ
+このページでは、実車で Autoware を使用したときに発生する開始遅延を紹介します。
+開始遅延を、
+(a) Autoware が自車両を始動させることを決定したときと、
+(b) 車両が実際に動き始めるまでの時間として定義します。
+より正確に:
+
+- (a) は、Autoware によって出力された速度または加速度コマンドがゼロ以外の値に切り替わる時刻です。
+- (b) は自車両の測定速度が正の値に切り替わる時刻です。
+
+## 手動運転時の発進遅れ
+
 まず、人間が運転する場合の発進遅れを見てみましょう。
 
-次の図は、人間のドライバーがギアをパーキングからドライブに切り替え、すぐにブレーキを放してスロットル ペダルを押して車両の速度を上げたときの始動遅れを示しています。
+次の図は、人間のドライバーがギアを
+_パーキング_から_ドライブ_に切り替え、すぐにブレーキを放してスロットルペダルを押して車両の速度を上げたときの始動遅れを示しています。
 
-手動運転の遅れ
+![手動運転の遅れ](./images/start-delays/manual_driving.png)
 
 この図からは注目すべき点が複数あります。
 
-ブレーキ (赤): ドライバーが瞬時にブレーキ ペダルを放したにもかかわらず、測定されたブレーキはから まで150msかかることがわかります。100%0%
-ギア (オレンジ): ドライバーはブレーキ ペダルを放す前にギアを切り替えますが、ギアは ブレーキ ペダルを放した後に切り替わるように測定されます。
-スロットル (緑) と速度 (青): ドライバーがスロットル ペダルを押すと、車両が500ms後で動き始めることが測定されます。
-フィルター遅延
-乗客の快適性を保証するために、一部の Autoware モジュールは車両の急激な変化にフィルターを実装し、加速度の突然の変化を防ぎます。
+- ブレーキ (赤): ドライバーが瞬時にブレーキペダルを放したにもかかわらず、
+  測定されたブレーキは`100%`から`0%`まで`150ms`かかることがわかります。
+- ギア(オレンジ): ドライバーはブレーキペダルを放す_前_にギアを切り替えますが、ギアはブレーキペダルを放した_後_に切り替わるように測定されます。
+  the brake is released.
+- スロットル(緑)と速度(青): ドライバーがスロットルペダルを押すと、車両が`500ms`後で動き始めることが測定されます。
 
-たとえば、vehicle_cmd_gate コントローラによって生成された加速度コマンドをフィルタリングするため、以前は 加速度が負の停止コマンドと加速度が正の移動コマンドの間で移行するときに大幅な遅延が発生していました。ジャーク フィルターのため、負と正の間の遷移は瞬時ではなく、数百ミリ秒かかります。
+## フィルター遅延
 
-ギアディレイ
-多くの車両では、最初に車両を動かし始める前にギアを変更する必要があります。このギアチェンジを自律的に実行すると、かなりの時間がかかる場合があります。また、マニュアル運転で記録したデータからもわかるように、ギアの計測値が遅れる場合があります。
+乗客の快適性を保証するために、
+一部のAutowareモジュールは車両の急激な変化にフィルターを実装し、加速度の突然の変化を防ぎます。
 
-Autoware では、ギアがドライブ状態に変更されるまで、コントローラーは停止制御コマンドを送信します。これは、ギア変更の遅れとその報告値が始動遅れに大きな影響を与える可能性があることを意味します。これは、車両が最初にパーキングギアに入っている場合にのみ問題となることに注意してください。
+たとえば、
+[`vehicle_cmd_gate`](https://autowarefoundation.github.io/autoware.universe/main/control/vehicle_cmd_gate/)コントローラによって
+生成された加速度コマンドをフィルタリングするため、
+以前は加速度が負の停止コマンドと
+加速度が正の移動コマンドの間で移行するときに
+[大幅な遅延が発生していました](https://github.com/autowarefoundation/autoware.universe/pull/3385)。
+ジャークフィルターのため、負と正の間の遷移は瞬時ではなく、数百ミリ秒かかります。
 
-この遅延を減らす唯一の方法は、車両を調整してギアチェンジ速度を上げるか、ギアチェンジレポートの遅延を減らすことです。
+## ギアディレイ
 
-ブレーキの遅れ
-ブレーキ ペダルを備えた車両では、ブレーキ システムは多くの場合、瞬時に動かすことができない複数の可動部品で構成されています。したがって、Autoware が車両にブレーキ コマンドを送信する場合、車輪にかかる実際のブレーキにはある程度の遅延が予想されます。
+多くの車両では、最初に車両を動かし始める前にギアを変更する必要があります。
+このギアチェンジを自律的に実行すると、かなりの時間がかかる場合があります。
+また、マニュアル運転で記録したデータからもわかるように、ギアの計測値が遅れる場合があります。
 
-このブレーキが長引くと、自我車両の初期動作が妨げられたり、遅れたりする可能性があります。
+Autowareでは、ギアが_ドライブ_状態に変更されるまで、コントローラーは停止制御コマンドを送信します。
+これは、ギア変更の遅れとその報告値が始動遅れに大きな影響を与える可能性があることを意味します。
+これは、車両が最初に_パーキング_ギアに入っている場合にのみ問題となることに注意してください。
+
+この遅延を減らす唯一の方法は、車両を調整してギアチェンジ速度を上げるか、
+ギアチェンジレポートの遅延を減らすことです。
+
+## ブレーキの遅れ
+
+ブレーキペダルを備えた車両では、
+ブレーキシステムは多くの場合、瞬時に動かすことができない複数の可動部品で構成されています。
+したがって、Autowareが車両にブレーキコマンドを送信する場合、
+車輪にかかる実際のブレーキにはある程度の遅延が予想されます。
+
+このブレーキが長引くと、自己車両の初期動作が妨げられたり、遅れたりする可能性があります。
 
 この遅れは車両をチューニングすることで短縮できます。
 
-スロットルレスポンス
-スロットル制御を備えた車両の場合、始動遅延の主な原因の 1 つは車両のスロットル応答によるものです 。スロットル ペダルを踏んでも、車両の車輪はすぐには回転しません。これは部分的には車両の慣性によるものですが、ホイールにトルクを加え始めるまでにかなりの時間がかかるモーターも原因です。
+## スロットルレスポンス
 
-この遅延を減らすために車両側のパラメータの一部を調整することは可能かもしれませんが、多くの場合、エネルギー効率の低下を犠牲にして行われます。
+スロットル制御を備えた車両の場合、
+始動遅延の主な原因の1つは車両の
+[スロットル応答](https://en.wikipedia.org/wiki/Throttle_response)によるものです。
+スロットルペダルを踏んでも、車両の車輪はすぐには回転しません。
+これは部分的には車両の慣性によるものですが、
+ホイールにトルクを加え始めるまでにかなりの時間がかかる
+モーターも原因です。
 
-Autoware 側では、この遅延を減らす唯一の方法は初期スロットルを上げることですが、これにより初期加速が不快に高くなる可能性があります。
+この遅延を減らすために車両側のパラメータの一部を調整することは可能かもしれませんが、
+多くの場合、エネルギー効率の低下させて行われます。
 
-初期加速とスロットル
+Autoware側では、この遅延を減らす唯一の方法は初期スロットルを上げることですが、
+これにより初期加速が不快に高くなる可能性があります。
+
+## 初期加速とスロットル
+
 先ほど説明したように、スロットル制御を備えた車両の場合、初期スロットル値を大きくすると、始動遅れを減らすことができます。
 
-Autoware は加速値を出力するため、変換モジュールは raw_vehicle_cmd_converter Autoware からの加速値を車両に送信されるスロットル値にマッピングするために使用されます。このようなマッピングは通常、 accel_brake_map_calibratorモジュールを使用して自動的に調整されますが、初期スロットルが低くなり、始動遅延が大きくなる場合があります。
-
-初期スロットルを増やすには、Autoware によって初期加速出力を増やすか、加速とスロットルのマッピングを変更する 2 つのオプションがあります。
-
-Autoware による初期加速出力は、 motion_velocity_smoother パラメータengage_velocityとを使用して調整できますengage_acceleration。ただし、vehicle_cmd_gate 制御コマンドにフィルターを適用して、ジャークと加速度の急激な変化を防ぎ、自車両が停止している間の最大許容加速度を制限します。
-
-あるいは、加速度のマッピングを調整して、初期加速度に対応するスロットルを増加させることもできます。加速度マップの例を見ると 、次の変換が行われます。自我速度が0(最初の列) の場合、0.631(1 行目) と(2 行目) の間の加速度値はと の0.836間のスロットルに変換されます。これは、初期加速が発生してもスロットルが発生しないことを意味します。加速マップを調整した後は、 の更新も必要になる場合があることに注意してください 。0%10%0.631m/s²brake map
-
-デフォルト	0	1.39	2.78	4.17	5.56	6.94	8.33	9.72	11.11	12.5	13.89
-0	0.631	0.11	-0.04	-0.04	-0.041	-0.096	-0.137	-0.178	-0.234	-0.322	-0.456
-0.1	0.836	0.57	0.379	0.17	0.08	0.07	0.068	0.027	-0.03	-0.117	-0.251
-0.2	1.129	0.863	0.672	0.542	0.4	0.38	0.361	0.32	0.263	0.176	0.042
-0.3	1.559	1.293	1.102	0.972	0.887	0.832	0.791	0.75	0.694	0.606	0.472
-0.4	2.176	1.909	1.718	1.588	1.503	1.448	1.408	1.367	1.31	1.222	1.089
-0.5	3.027	2.76	2.57	2.439	2.354	2.299	2.259	2.218	2.161	2.074	1.94
-# Reducing start delays on real vehicles
-
-In simulation, the ego vehicle reacts nearly instantly to the control commands generated by Autoware.
-However, with a real vehicle, some delays occur that may make ego feel less responsive.
-
-This page presents start delays experienced when using Autoware on a real vehicle.
-We define the start delay as the time between
-(a) when Autoware decides to make the ego vehicle start and
-(b) when the vehicle actually starts moving.
-More precisely:
-
-- (a) is the time when the speed or acceleration command output by Autoware switches to a non-zero value.
-- (b) is the time when the measured velocity of the ego vehicle switches to a positive value.
-
-## Start delay with manual driving
-
-First, let us look at the start delay when a human is driving.
-
-The following figure shows the start delay when a human driver switches the gear
-from _parked_ to _drive_ and instantly releases the brake to push the throttle pedal and make the velocity of the vehicle increase.
-
-![Manual driving delays](./images/start-delays/manual_driving.png)
-
-There are multiple things to note from this figure.
-
-- Brake (red): despite the driver instantly releasing the brake pedal,
-  we see that the measured brake takes around `150ms` to go from `100%` to `0%`.
-- Gear (orange): the driver switches gear _before_ releasing the brake pedal, but the gear is measured to switch _after_
-  the brake is released.
-- Throttle (green) and velocity (blue): the driver pushes the throttle pedal and the vehicle is measured to start moving around `500ms` later.
-
-## Filter delay
-
-To guarantee passenger comfort,
-some Autoware modules implement filters on the jerk of the vehicle, preventing sudden changes in acceleration.
-
-For example,
-the [`vehicle_cmd_gate`](https://autowarefoundation.github.io/autoware.universe/main/control/vehicle_cmd_gate/)
-filters the acceleration command generated by the controller
-and [was previously introducing significant delays](https://github.com/autowarefoundation/autoware.universe/pull/3385)
-when transitioning between a stop command where the acceleration is negative,
-and a move command where the acceleration is positive.
-Because of the jerk filter, the transition between negative and positive was not instantaneous and would take several hundreds of milliseconds.
-
-## Gear delay
-
-In many vehicles, it is necessary to change gear before first starting to move the vehicle.
-When performed autonomously, this gear change can take some significant time.
-Moreover, as seen from the data recorded with manual driving, the measured gear value may be delayed.
-
-In Autoware, the controller sends a stopping control command until the gear is changed to the _drive_ state.
-This means that delays in the gear change and its reported value can greatly impact the start delay.
-Note that this is only an issue when the vehicle is initially in the _parked_ gear.
-
-The only way to reduce this delay is by tuning the vehicle to increase the gear change speed
-or to reduce the delay in the gear change report.
-
-## Brake delay
-
-In vehicles with a brake pedal,
-the braking system will often be made of several moving parts which cannot move instantly.
-Thus, when Autoware sends brake commands to a vehicle,
-some delays should be expected in the actual brake applied to the wheels.
-
-This lingering brake may prevent or delay the initial motion of the ego vehicle.
-
-This delay can be reduced by tuning the vehicle.
-
-## Throttle response
-
-For vehicles with throttle control,
-one of the main cause of start delays is due to the
-[throttle response](https://en.wikipedia.org/wiki/Throttle_response) of the vehicle.
-When pushing the throttle pedal, the wheels of the vehicle do not instantly start rotating.
-This is partly due to the inertia of the vehicle,
-but also to the motor which may take a significant time to start applying
-some torque to the wheels.
-
-It may be possible to tune some vehicle side parameters to reduce this delay,
-but it is often done at the cost of reduced energy efficiency.
-
-On the Autoware side, the only way to decrease this delay is to increase the initial throttle
-but this can cause uncomfortably high initial accelerations.
-
-## Initial acceleration and throttle
-
-As we just discussed, for vehicles with throttle control, an increased initial throttle value can reduce the start delay.
-
-Since Autoware outputs an acceleration value, the conversion module
+Autoware は加速値を出力するため、変換モジュール
 [`raw_vehicle_cmd_converter`](https://autowarefoundation.github.io/autoware.universe/main/vehicle/raw_vehicle_cmd_converter/)
-is used to map the acceleration value from Autoware to a throttle value to be sent to the vehicle.
-Such mapping is usually calibrated automatically using the
-[`accel_brake_map_calibrator`](https://autowarefoundation.github.io/autoware.universe/main/vehicle/accel_brake_map_calibrator/accel_brake_map_calibrator/) module,
-but it may produce a low initial throttle which leads to high start delays.
+はAutowareからの加速値を車両に送信されるスロットル値にマッピングするために使用されます。
+このようなマッピングは通常、
+[`accel_brake_map_calibrator`](https://autowarefoundation.github.io/autoware.universe/main/vehicle/accel_brake_map_calibrator/accel_brake_map_calibrator/)モジュールを使用して自動的に調整されますが、
+初期スロットルが低くなり、始動遅延が大きくなる場合があります。
 
-In order to increase the initial throttle, there are two options:
-increase the initial acceleration output by Autoware,
-or modify the acceleration to throttle mapping.
+初期スロットルを増やすには2つのオプションがあります:
+Autowareによって初期加速出力を増やすか、
+加速とスロットルのマッピングを変更する。
 
-The initial acceleration output by Autoware can be tuned in the
+Autoware による初期加速出力は、
 [`motion_velocity_smoother`](https://autowarefoundation.github.io/autoware.universe/main/planning/motion_velocity_smoother/)
-with parameters `engage_velocity` and `engage_acceleration`.
-However, the [`vehicle_cmd_gate`](https://autowarefoundation.github.io/autoware.universe/main/control/vehicle_cmd_gate/)
-applies a filter on the control command to prevent too sudden changes in jerk and acceleration,
-limiting the maximum allowed acceleration while the ego vehicle is stopped.
+の`engage_velocity`と`engage_acceleration`パラメータを使用して調整できます.
+ただし、[`vehicle_cmd_gate`](https://autowarefoundation.github.io/autoware.universe/main/control/vehicle_cmd_gate/)
+制御コマンドにフィルターを適用して、ジャークと加速度の急激な変化を防ぎ、
+自車両が停止している間の最大許容加速度を制限します。
 
-Alternatively, the mapping of acceleration can be tuned to increase the throttle corresponding to the initial acceleration.
-If we look at an example
-[acceleration map](https://github.com/tier4/autoware_individual_params/blob/main/individual_params/config/default/pacmod/accel_map.csv),
-it does the following conversion:
-when the ego velocity is `0` (first column), acceleration values between `0.631` (first row) and `0.836` (second row)
-are converted to a throttle between `0%` and `10%`.
-This means that any initial acceleration bellow `0.631m/s²` will not produce any throttle.
-Keep in mind that after tuning the acceleration map,
-it may be necessary to also update the
-[`brake map`](https://github.com/tier4/autoware_individual_params/blob/main/individual_params/config/default/pacmod/brake_map.csv).
+あるいは、加速度のマッピングを調整して、初期加速度に対応するスロットルを増加させることもできます。
+[加速度マップ](https://github.com/tier4/autoware_individual_params/blob/main/individual_params/config/default/pacmod/accel_map.csv)
+の例を見ると、
+次の変換が行われます:
+自己速度が`0` (最初の列) の場合、`0.631`(1 行目)と`0.836`(2 行目) の間の加速度値は
+`0%`と`10%`の間のスロットルに変換されます。
+これは、`0.631m/s²`以下の初期加速が発生してもスロットルが発生しないことを意味します。
+加速マップを調整した後は、
+[`ブレーキマップ`](https://github.com/tier4/autoware_individual_params/blob/main/individual_params/config/default/pacmod/brake_map.csv)
+の更新も必要になる場合があることに注意してください。
 
-| default | _0_     | 1.39  | 2.78  | 4.17  | 5.56   | 6.94   | 8.33   | 9.72   | 11.11  | 12.5   | 13.89  |
+| デフォルト | _0_     | 1.39  | 2.78  | 4.17  | 5.56   | 6.94   | 8.33   | 9.72   | 11.11  | 12.5   | 13.89  |
 | ------- | ------- | ----- | ----- | ----- | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
 | 0       | _0.631_ | 0.11  | -0.04 | -0.04 | -0.041 | -0.096 | -0.137 | -0.178 | -0.234 | -0.322 | -0.456 |
 | 0.1     | _0.836_ | 0.57  | 0.379 | 0.17  | 0.08   | 0.07   | 0.068  | 0.027  | -0.03  | -0.117 | -0.251 |
