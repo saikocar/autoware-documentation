@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>スピードバンプ - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#speed-bump" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              スピードバンプ
             
           </span>
         </div>
@@ -6561,16 +6561,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#creating-a-speed-bump-element" class="md-nav__link">
-    Creating a speed bump element
+  <a href="#_2" class="md-nav__link">
+    スピードバンプ要素の作成
   </a>
   
-    <nav class="md-nav" aria-label="Creating a speed bump element">
+    <nav class="md-nav" aria-label="スピードバンプ要素の作成">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#testing-created-the-speed-bump-element-with-planning-simulator" class="md-nav__link">
-    Testing created the speed bump element with planning simulator
+  <a href="#_3" class="md-nav__link">
+    プランニングシミュレータを使用してスピードバンプ要素を作成したテスト
   </a>
   
 </li>
@@ -6598,115 +6598,67 @@
   
 
 
-<div><p>スピードバンプ
-行動速度プランナーのスピード バンプ モジュールは、快適で安全な運転のために、スピード バンプの前に速度が減速するように計画します。それを操作するために、lanelet2 マップにスピード バンプを追加します。</p>
-<p>スピードバンプ要素の作成
-ポイントクラウド マップにスピード バンプを作成するには、次の手順に従ってください。</p>
-<p>LinestringLanelet2Maps セクションから選択します。
-クリックして速度バンプの多角形を描画します。
-Linestring次に、 Lanelet2Maps セクションから無効にしてください。
-Change to PolygonパネルからクリックしますAction。
-speed_bumpこのポリゴンを選択し、タイプとして入力してください。
-次に、どのスピードバンプを追加するレーンレットをクリックしてください。
-選択するCreate General Regulatory ELement。
-この要素に移動し、speed_bumpサブタイプとして入力してください。
-クリックしてAdd refers、作成したスピード バンプ ポリゴン ID を入力します。
-スピード バンプ作成のデモ ビデオで次の手順を確認できます。</p>
-<p>タイプ:ビデオ</p>
-<p>プランニングシミュレータを使用してスピードバンプ要素を作成したテスト
-マップの作成が完了したら、マップを保存する必要があります。File--&gt;をクリックしExport Lanelet2Mapsてダウンロードしてください。</p>
-<p>ダウンロードが完了したら、lanelet2 マップと pointcloud マップを同じ場所に配置する必要があります。ディレクトリ構造は次のようになります。</p>
-<ul>
-<li><your-map-directory>/</your-map-directory></li>
-<li>├─ pointcloud_map.pcd</li>
-<li>
-<p>└─ lanelet2_map.osm
-.osm または .pcd マップ ファイルの名前がこれらの名前と異なる場合は、autoware.launch.xml を更新する必要があります。</p>
-<!-- Map -->
-</li>
-</ul>
-<ul>
-<li><arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"></arg></li>
-<li><arg name="lanelet2_map_file" default="\&lt;YOUR-LANELET-MAP-NAME&gt;.osm" description="lanelet2 map file name"></arg></li>
-<li><arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"></arg></li>
-<li><arg name="pointcloud_map_file" default="\&lt;YOUR-POINTCLOUD-MAP-NAME&gt;.pcd" description="pointcloud map file name"></arg></li>
-</ul>
-<div class="admonition 注記">
-<p class="admonition-title">注記</p>
-</div>
-<p>The speed bump module not enabled default. To enable that, please uncomment it your <a href="https://github.com/autowarefoundation/autoware_launch/blob/main/autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/behavior_velocity_planner.param.yaml">behavior_velocity_planner.param.yaml</a>.
-これで、計画シミュレーターを起動する準備が整いました。</p>
-<p>ros2 launch autoware_launch planning_simulator.launch.xml map_path:=<your-map-folder-dir> vehicle_model:=<your-vehicle-model> sensor_model:=<your-sensor-kit>
-チュートリアル_車両の例:</your-sensor-kit></your-vehicle-model></your-map-folder-dir></p>
-<p>ros2 launch autoware_launch planning_simulator.launch.xml map_path:=$HOME/Files/autoware_map/tutorial_map/ vehicle_model:=tutorial_vehicle sensor_model:=tutorial_vehicle_sensor_kit vehicle_id:=tutorial_vehicle
-2D Pose Estimaterviz の ボタンをクリックするか、 を押してPポーズを与えると初期化されます。
-2D Goal Poserviz のボタンをクリックするか、 を押してGゴールポイントのポーズをとります。
-rviz 画面にスピード バンプ マーカーが表示されます。
-rviz のスピード バンプ マーカー:</p>
-<p><img align="center" alt="speed-bump-test" src="images/speed-bump-test.png"> 作成したマップ上でスピードバンプテストを行います。
-次のデモンストレーション ビデオのように、計画シミュレーターでスピード バンプ要素を確認できます。</p>
-<p>タイプ:ビデオ</p>
-<h1 id="speed-bump">Speed bump<a class="headerlink" href="#speed-bump" title="Permanent link">#</a></h1>
-<p>Behavior velocity planner's <a href="https://autowarefoundation.github.io/autoware.universe/main/planning/behavior_velocity_crosswalk_module/">speed bump module</a> plans velocity
-to slow down before speed bump for comfortable and safety driving.
-In order to operate that, we will add speed bumps to our lanelet2 map.</p>
-<h2 id="creating-a-speed-bump-element">Creating a speed bump element<a class="headerlink" href="#creating-a-speed-bump-element" title="Permanent link">#</a></h2>
-<p>In order to create a speed bump on your pointcloud map, please follow these steps:</p>
+<div><h1 id="_1">スピードバンプ<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<p>行動速度プランナーの<a href="https://autowarefoundation.github.io/autoware.universe/main/planning/behavior_velocity_crosswalk_module/">スピードバンプモジュール</a>は、快適で安全な運転のために、
+スピードバンプの前に速度が減速するように計画します。
+それを操作するために、lanelet2 マップにスピードバンプを追加します。</p>
+<h2 id="_2">スピードバンプ要素の作成<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>ポイントクラウドマップにスピードバンプを作成するには、次の手順に従ってください:</p>
 <ol>
-<li>Select <code>Linestring</code> from Lanelet2Maps section.</li>
-<li>Click and draw polygon for speed bump.</li>
-<li>Then please disable <code>Linestring</code> from Lanelet2Maps section.</li>
-<li>CLick <code>Change to Polygon</code> from the <code>Action</code> panel.</li>
-<li>Please select this Polygon and enter <code>speed_bump</code> as the type.</li>
-<li>Then, please click lanelet which speed bump to be added.</li>
-<li>Select <code>Create General Regulatory ELement</code>.</li>
-<li>Go to this element, and please enter <code>speed_bump</code> as subtype.</li>
-<li>Click <code>Add refers</code> and type your created speed bump polygon ID.</li>
+<li>Lanelet2Mapsセクションから<code>Linestring</code>を選択します。</li>
+<li>クリックして速度バンプのポリゴンを描画します</li>
+<li>次に、Lanelet2Mapsセクションから<code>Linestring</code>を無効にしてください。</li>
+<li><code>Action</code>パネルから<code>Change to Polygon</code>をクリックします。</li>
+<li>このポリゴンを選択し、タイプとして<code>speed_bump</code>を入力してください。</li>
+<li>次に、スピードバンプを追加するレーンレットをクリックしてください。</li>
+<li><code>Create General Regulatory ELement</code>を選択する。</li>
+<li>この要素に移動し、<code>speed_bump</code>サブタイプとして入力してください。</li>
+<li><code>Add refers</code>をクリックして作成したスピードバンプポリゴンIDを入力します。</li>
 </ol>
-<p>You can see these steps in the speed bump creating demonstration video:</p>
+<p>スピードバンプ作成のデモビデオで次の手順を確認できます:</p>
 <p><div class="video-container"><iframe src="https://youtube.com/embed/EenccStyZVg" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
-<h3 id="testing-created-the-speed-bump-element-with-planning-simulator">Testing created the speed bump element with planning simulator<a class="headerlink" href="#testing-created-the-speed-bump-element-with-planning-simulator" title="Permanent link">#</a></h3>
-<p>After the completing of creating the map, we need to save it.
-To that please click <code>File</code> --&gt; <code>Export Lanelet2Maps</code> then download.</p>
-<p>After the download is finished,
-we need to put lanelet2 map and pointcloud map on the same location.
-The directory structure should be like this:</p>
+<h3 id="_3">プランニングシミュレータを使用してスピードバンプ要素を作成したテスト<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
+<p>マップの作成が完了したら、マップを保存する必要があります。
+<code>File</code> --&gt; <code>Export Lanelet2Maps</code>をクリックしてダウンロードしてください。</p>
+<p>ダウンロードが完了したら、
+lanelet2マップとpointcloudマップを同じ場所に配置する必要があります。
+ディレクトリ構造は次のようになります:</p>
 <div class="highlight"><pre><span></span><code><span class="gi">+ &lt;YOUR-MAP-DIRECTORY&gt;/</span>
 <span class="gi">+  ├─ pointcloud_map.pcd</span>
 <span class="gi">+  └─ lanelet2_map.osm</span>
 </code></pre></div>
-<p>If your .osm or .pcd map file's name is different from these names,
-you need to update autoware.launch.xml:</p>
+<p>.osmまたは.pcdマップファイルの名前がこれらの名前と異なる場合は、
+autoware.launch.xml を更新する必要があります:</p>
 <div class="highlight"><pre><span></span><code><span class="w"> </span> &lt;!-- Map --&gt;
 <span class="gd">-  &lt;arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/&gt;</span>
 <span class="gi">+  &lt;arg name="lanelet2_map_file" default="&lt;YOUR-LANELET-MAP-NAME&gt;.osm" description="lanelet2 map file name"/&gt;</span>
 <span class="gd">-  &lt;arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/&gt;</span>
 <span class="gi">+  &lt;arg name="pointcloud_map_file" default="&lt;YOUR-POINTCLOUD-MAP-NAME&gt;.pcd" description="pointcloud map file name"/&gt;</span>
 </code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The speed bump module not enabled default. To enable that, please uncomment it your <a href="https://github.com/autowarefoundation/autoware_launch/blob/main/autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/behavior_velocity_planner.param.yaml">behavior_velocity_planner.param.yaml</a>.</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+<p>スピードバンプモジュールはデフォルトでは有効化されていません。有効化するには、<a href="https://github.com/autowarefoundation/autoware_launch/blob/main/autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/behavior_velocity_planner.param.yaml">behavior_velocity_planner.param.yaml</a>をコメントから外してください。</p>
 </div>
-<p>Now we are ready to launch the planning simulator:</p>
+<p>これで、計画シミュレーターを起動する準備が整いました:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>planning_simulator.launch.xml<span class="w"> </span>map_path:<span class="o">=</span>&lt;YOUR-MAP-FOLDER-DIR&gt;<span class="w"> </span>vehicle_model:<span class="o">=</span>&lt;YOUR-VEHICLE-MODEL&gt;<span class="w"> </span>sensor_model:<span class="o">=</span>&lt;YOUR-SENSOR-KIT&gt;
 </code></pre></div>
-<p>Example for tutorial_vehicle:</p>
+<p>チュートリアル車両の例:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>planning_simulator.launch.xml<span class="w"> </span>map_path:<span class="o">=</span><span class="nv">$HOME</span>/Files/autoware_map/tutorial_map/<span class="w"> </span>vehicle_model:<span class="o">=</span>tutorial_vehicle<span class="w"> </span>sensor_model:<span class="o">=</span>tutorial_vehicle_sensor_kit<span class="w"> </span>vehicle_id:<span class="o">=</span>tutorial_vehicle
 </code></pre></div>
 <ol>
-<li>Click <code>2D Pose Estimate</code> button on rviz or press <code>P</code> and give a pose for initialization.</li>
-<li>Click <code>2D Goal Pose</code> button on rviz or press <code>G</code> and give a pose for goal point.</li>
-<li>You can see the speed bump marker on the rviz screen.</li>
+<li>rvizの<code>2D Pose Estimate</code>ボタンをクリックするか、<code>P</code>を押してポーズを与えると初期化されます。</li>
+<li>rvizの<code>2D Goal Pose</code>ボタンをクリックするか、 <code>G</code>を押してゴールポイントのポーズを与えます。</li>
+<li>rviz 画面にスピード バンプ マーカーが表示されます。</li>
 </ol>
-<p>Speed bump markers on rviz:</p>
+<p>rviz のスピードバンプマーカー:</p>
 <figure>
 <p><img align="center" alt="speed-bump-test" src="images/speed-bump-test.png">
   </p>
 <figcaption>
-    Speed bump test on the created map.
+    作成したマップ上でスピードバンプテストを行います。
   </figcaption>
 </figure>
-<p>You can check your speed bump elements in the planning simulator as this demonstration video:</p>
+<p>次のデモンストレーションビデオのように、計画シミュレーターでスピードバンプ要素を確認できます:</p>
 <p><div class="video-container"><iframe src="https://youtube.com/embed/rg_a-ipdNAY" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
 <!-- prettier-ignore --></div>
 
