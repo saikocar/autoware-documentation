@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>レーンレットの作成 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#creating-a-lanelet" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              レーンレットの作成
             
           </span>
         </div>
@@ -6561,44 +6561,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#creating-a-lanelet2" class="md-nav__link">
-    Creating a Lanelet2
+  <a href="#2" class="md-nav__link">
+    レーンレット2の作成
   </a>
   
-    <nav class="md-nav" aria-label="Creating a Lanelet2">
+    <nav class="md-nav" aria-label="レーンレット2の作成">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#creating-a-simple-lanelet" class="md-nav__link">
-    Creating a simple lanelet
+  <a href="#_2" class="md-nav__link">
+    簡単なレーンレットの作成
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#join-two-lanelets" class="md-nav__link">
-    Join two lanelets
+  <a href="#2_1" class="md-nav__link">
+    2つのレーンレットを結合する
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#join-multiple-lanelets" class="md-nav__link">
-    Join Multiple lanelets
+  <a href="#_3" class="md-nav__link">
+    複数のレーンレットを結合する
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#change-speed-limit-of-lanelet" class="md-nav__link">
-    Change Speed Limit Of Lanelet
+  <a href="#_4" class="md-nav__link">
+    レーンレットの制限速度を変更する
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#test-lanelets-with-planning-simulator" class="md-nav__link">
-    Test lanelets with planning simulator
+  <a href="#_5" class="md-nav__link">
+    計画シミュレーターを使用してレーンレットをテストする
   </a>
   
 </li>
@@ -6626,172 +6626,106 @@
   
 
 
-<div><p>レーンレットの作成
-このページでは、点群マップ上に簡単なレーンレットを作成する方法を説明します。これまで点群マップを持っていなかった場合は、LIO-SAM マッピング ページの Autoware 用の点群マップの作成方法を確認して手順に従ってください。</p>
-<p>レーンレットの作成2
-まず、点群マップを Vector Map Builder ツールにインポートする必要があります。</p>
-<p>クリックしてくださいFile。
-次に、 をクリックしますImport <abbr title="Point Cloud Data">PCD</abbr>。
-Browse.pcd ファイルをクリックして選択します。
-アップロードが完了したら、Vector Map Builder ツールに点群を表示します。</p>
-<p><img align="center" alt="pointcloud-map" src="images/pointcloud-map.png"> Vector Map Builder にアップロードされた pointcloud マップ ファイル
-これで、点群マップ上に LANELET2 マップを作成する準備が整いました。</p>
-<p>クリックしてくださいCreate。
-次に、 をクリックしますCreate Lanelet2Maps。
-マップ名を入力してください
-MGRS ゾーンを埋めてください。（tutorial_vehicleにて、MGRSグリッドゾーン：35T～MGRS10万メートル四方：PF）
-クリックCreate。
-簡単なレーンレットの作成
-マップ上に単純なレーンレットを作成するには、次の手順に従ってください。</p>
-<p>Lanelet2Mapsバーをクリックします
-を選択して Lanelet モードを有効にしますLanelet。
-次に、点群マップをクリックしてレーンレットを作成できます。
-レーンレットが終了した場合は、 を無効にすることができますLanelet。
-レーンレットの幅を変更したい場合は、lanelet--&gt;をクリックしてChange Lanelet Width、レーンレットの幅を入力できます。
-ビデオデモンストレーション:</p>
-<p>タイプ:ビデオ</p>
-<p>2 つのレーンレットを結合する
-2 つのレーンレットを結合するには、次の手順に従ってください。</p>
-<p>2 つの異なるレーンレットを作成してください。
-レーンレットを選択し、 を押してShift他のレーンレットを選択します。
-ボタンが表示されるのでJoin Lanelets、それを押してください。
-これらのレーンレットは結合されます。
-ビデオデモンストレーション:</p>
-<p>タイプ:ビデオ</p>
-<p>複数のレーンレットに参加する
-2 つ以上のレーンレットを別のレーンレットに追加 (結合) するには、次の手順に従ってください。</p>
-<p>複数のレーンレットを作成します。
-前の手順と同様に、最初の 2 つのレーンレットを結合できます。
-最初のレーンレットのエンドポイント ID を確認してください。
-次に、これらの ID を 3 番目のレーンレットの開始点に変更する必要があります。(レーンレットの折れ線選択で変更してください)
-最初のレーンレットの次の 2 つのレーンが表示されることがわかります。
-ビデオデモンストレーション:</p>
-<p>タイプ:ビデオ</p>
-<p>レーンレットの制限速度を変更する
-レーンレットの制限速度を変更するには、次の手順に従ってください。</p>
-<p>制限速度を変更するレーンレットを選択してください
-speed limit右パネルで設定します。
-計画シミュレーターを使用してレーンレットをテストする
-レーンレットの作成が完了したら、保存する必要があります。File--&gt;をクリックしExport Lanelet2Mapsてダウンロードしてください。</p>
-<p>ダウンロードが完了したら、lanelet2 マップと pointcloud マップを同じ場所に配置する必要があります。ディレクトリ構造は次のようになります。</p>
-<p><your-map-directory>/
- ├─ pointcloud_map.pcd
- └─ lanelet2_map.osm
-.osm または .pcd マップ ファイルの名前がこれらの名前と異なる場合は、autoware.launch.xml を更新する必要があります。</your-map-directory></p>
-<!-- Map -->
-<ul>
-<li><arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"></arg></li>
-<li><arg name="lanelet2_map_file" default="\&lt;YOUR-LANELET-MAP-NAME&gt;.osm" description="lanelet2 map file name"></arg></li>
-<li><arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"></arg></li>
-<li><arg name="pointcloud_map_file" default="\&lt;YOUR-POINTCLOUD-MAP-NAME&gt;.pcd" description="pointcloud map file name"></arg>
-これで、計画シミュレーターを起動する準備が整いました。</li>
-</ul>
-<p>ros2 launch autoware_launch planning_simulator.launch.xml map_path:=<your-map-folder-dir> vehicle_model:=<your-vehicle-model> sensor_model:=<your-sensor-kit>
-チュートリアル_車両の例:</your-sensor-kit></your-vehicle-model></your-map-folder-dir></p>
-<p>ros2 launch autoware_launch planning_simulator.launch.xml map_path:=$HOME/Files/autoware_map/tutorial_map/ vehicle_model:=tutorial_vehicle sensor_model:=tutorial_vehicle_sensor_kit vehicle_id:=tutorial_vehicle
-2D Pose Estimaterviz の ボタンをクリックするか、 を押してPポーズを与えると初期化されます。
-2D Goal Poserviz のボタンをクリックするか、 を押してGゴールポイントのポーズをとります。
-<img align="center" alt="planning-simulator-test" src="images/planning-simulator-map-test.png"> 作成したベクトル マップを計画シミュレーターでテストする</p>
-<h1 id="creating-a-lanelet">Creating a Lanelet<a class="headerlink" href="#creating-a-lanelet" title="Permanent link">#</a></h1>
-<p>At this page, we will explain how to create a simple lanelet on your point cloud map.
-If you didn't have a point cloud map before,
-please check
-and follow the steps on the <a href="../../open-source-slam/lio-sam">LIO-SAM mapping page</a>
-for how to create a point cloud map for Autoware.</p>
-<h2 id="creating-a-lanelet2">Creating a Lanelet2<a class="headerlink" href="#creating-a-lanelet2" title="Permanent link">#</a></h2>
-<p>Firstly, we need to import our pointcloud map to Vector Map Builder tool:</p>
+<div><h1 id="_1">レーンレットの作成<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<p>このページでは、点群マップ上に簡単なレーンレットを作成する方法を説明します。
+これまで点群マップを持っていなかった場合は、
+<a href="../../open-source-slam/lio-sam">LIO-SAMマッピング ページ</a>の
+Autoware用の点群マップの作成方法を
+確認して手順に従ってください。</p>
+<h2 id="2">レーンレット2の作成<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
+<p>まず、点群マップを Vector Map Builder toolにインポートする必要があります:</p>
 <ol>
-<li>Please click <code>File</code>.</li>
-<li>Then, click <code>Import PCD</code>.</li>
-<li>Click <code>Browse</code> and select your .pcd file.</li>
+<li><code>File</code>をクリックしてください。</li>
+<li>次に、<code>Import PCD</code> をクリックします。</li>
+<li><code>Browse</code>をクリックして.pcdファイルを選択します。</li>
 </ol>
-<p>You will display the point cloud on your Vector Map Builder tool after the upload is complete:</p>
+<p>アップロードが完了したら、Vector Map Builderツールに点群を表示します:</p>
 <figure>
 <p><img align="center" alt="pointcloud-map" src="images/pointcloud-map.png">
   </p>
 <figcaption>
-    Uploaded pointcloud map file on Vector Map Builder
+    Vector Map Builderにアップロードされたpointcloudマップファイル
   </figcaption>
 </figure>
-<p>Now, we are ready to create lanelet2 map on our pointcloud map:</p>
+<p>これで、点群マップ上にlanelet2マップを作成する準備が整いました:</p>
 <ol>
-<li>Please click <code>Create</code>.</li>
-<li>Then, click <code>Create Lanelet2Maps</code>.</li>
-<li>Please fill your map name</li>
-<li>Please fill your MGRS zone. (At tutorial_vehicle, MGRS grid zone: 35T - MGRS 100,000-meter square: PF)</li>
-<li>Click <code>Create</code>.</li>
+<li><code>Create</code>クリックをしてください。</li>
+<li>次に、<code>Create Lanelet2Maps</code>をクリックします。</li>
+<li>マップ名を入力してください。</li>
+<li>MGRSゾーンを入力してください。 (チュートリアル車両では, MGRS grid zone: 35T - MGRS 100,000-meter square: PF)</li>
+<li>Click <code>Create</code>をクリックしてください。</li>
 </ol>
-<h3 id="creating-a-simple-lanelet">Creating a simple lanelet<a class="headerlink" href="#creating-a-simple-lanelet" title="Permanent link">#</a></h3>
-<p>In order to create a simple lanelet on your map, please follow these steps:</p>
+<h3 id="_2">簡単なレーンレットの作成<a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
+<p>マップ上に単純なレーンレットを作成するには、次の手順に従ってください:</p>
 <ol>
-<li>CLick <code>Lanelet2Maps</code> on the bar</li>
-<li>Enable Lanelet mode via selecting <code>Lanelet</code>.</li>
-<li>Then, you can click the pointcloud map to create lanelet.</li>
-<li>If your lanelet is finished, you can disable <code>Lanelet</code>.</li>
-<li>If you want to change your lanelet width, click <code>lanelet</code> --&gt; <code>Change Lanelet Width</code>, then you can enter the lanelet width.</li>
+<li>バーの<code>Lanelet2Maps</code>をクリックします。</li>
+<li><code>Lanelet</code>を選択してLaneletモードを有効にします。</li>
+<li>次に、点群マップをクリックしてレーンレットを作成できます。</li>
+<li>レーンレットが終了した場合は、<code>Lanelet</code>を無効にすることができます。</li>
+<li>レーンレットの幅を変更したい場合は、<code>lanelet</code> --&gt; <code>Change Lanelet Width</code>をクリックして、レーンレットの幅を入力できます。</li>
 </ol>
-<p>Video Demonstration:</p>
+<p>ビデオデモンストレーション:</p>
 <p><div class="video-container"><iframe src="https://youtube.com/embed/183PHi84AeU" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
-<h3 id="join-two-lanelets">Join two lanelets<a class="headerlink" href="#join-two-lanelets" title="Permanent link">#</a></h3>
-<p>In order to join two lanelets, please follow these steps:</p>
+<h3 id="2_1">2つのレーンレットを結合する<a class="headerlink" href="#2_1" title="Permanent link">#</a></h3>
+<p>2つのレーンレットを結合するには、次の手順に従ってください:</p>
 <ol>
-<li>Please create two distinct lanelet.</li>
-<li>Select a Lanelet, then press <code>Shift</code> and select other lanelet.</li>
-<li>Now, you can see <code>Join Lanelets</code> button, just press it.</li>
-<li>These lanelets will be joined.</li>
+<li>2つの異なるレーンレットを作成してください。</li>
+<li>レーンレットを選択し、<code>Shift</code>を押して他のレーンレットを選択します。</li>
+<li><code>Join Lanelets</code>ボタンが表示されるので、それを押してください。</li>
+<li>これらのレーンレットは結合されます。</li>
 </ol>
-<p>Video Demonstration:</p>
+<p>ビデオデモンストレーション:</p>
 <p><div class="video-container"><iframe src="https://youtube.com/embed/_tHilFUKDQc" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
-<h3 id="join-multiple-lanelets">Join Multiple lanelets<a class="headerlink" href="#join-multiple-lanelets" title="Permanent link">#</a></h3>
-<p>In order to add (join) two or more lanelets to another lanelet, please follow these steps:</p>
+<h3 id="_3">複数のレーンレットを結合する<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
+<p>2つ以上のレーンレットを別のレーンレットに追加(結合)するには、次の手順に従ってください:</p>
 <ol>
-<li>Create multiple lanelets.</li>
-<li>You can join the first two lanelets like the steps before.</li>
-<li>Please check end points ids of first lanelet.</li>
-<li>Then you need to change these ids with third lanelet's start point. (Please change with selecting linestring of lanelet)</li>
-<li>You will see two next lanes of the first lanelet will be appeared.</li>
+<li>複数のレーンレットを作成します。</li>
+<li>前の手順と同様に、最初の2つのレーンレットを結合できます。</li>
+<li>最初のレーンレットのエンドポイントIDを確認してください.</li>
+<li>次に、これらのIDを3番目のレーンレットの開始点に変更する必要があります。(レーンレットの折れ線選択で変更してください)</li>
+<li>最初のレーンレットの次の2つのレーンが表示されることがわかります。</li>
 </ol>
-<p>Video Demonstration:</p>
+<p>ビデオデモンストレーション:</p>
 <p><div class="video-container"><iframe src="https://youtube.com/embed/l5ZnL0Cjmnk" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
-<h3 id="change-speed-limit-of-lanelet">Change Speed Limit Of Lanelet<a class="headerlink" href="#change-speed-limit-of-lanelet" title="Permanent link">#</a></h3>
-<p>In order to change the speed limit of lanelet, please follow these steps:</p>
+<h3 id="_4">レーンレットの制限速度を変更する<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<p>レーンレットの制限速度を変更するには、次の手順に従ってください:</p>
 <ol>
-<li>Select the lanelet where the speed limit will be changed</li>
-<li>Set <code>speed limit</code> on the right panel.</li>
+<li>制限速度を変更するレーンレットを選択してください。</li>
+<li>右の<code>speed limit</code>パネルで設定します。</li>
 </ol>
-<h3 id="test-lanelets-with-planning-simulator">Test lanelets with planning simulator<a class="headerlink" href="#test-lanelets-with-planning-simulator" title="Permanent link">#</a></h3>
-<p>After the completing of creating lanelets, we need to save it.
-To that please click <code>File</code> --&gt; <code>Export Lanelet2Maps</code> then download.</p>
-<p>After the download is finished,
-we need to put lanelet2 map and pointcloud map on the same location.
-The directory structure should be like this:</p>
+<h3 id="_5">計画シミュレーターを使用してレーンレットをテストする<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
+<p>レーンレットの作成が完了したら、保存する必要があります。
+File<code>--&gt;</code>Export Lanelet2Maps` をクリックしてダウンロードしてください。</p>
+<p>ダウンロードが完了したら、
+lanelet2 マップと pointcloud マップを同じ場所に配置する必要があります。
+ディレクトリ構造は次のようになります:</p>
 <div class="highlight"><pre><span></span><code>&lt;YOUR-MAP-DIRECTORY&gt;/
 <span class="w"> </span>├─ pointcloud_map.pcd
 <span class="w"> </span>└─ lanelet2_map.osm
 </code></pre></div>
-<p>If your .osm or .pcd map file's name is different from these names,
-you need to update autoware.launch.xml:</p>
+<p>.osmまたは.pcdマップファイルの名前がこれらの名前と異なる場合は、
+autoware.launch.xmlを更新する必要があります:</p>
 <div class="highlight"><pre><span></span><code><span class="w"> </span> &lt;!-- Map --&gt;
 <span class="gd">-  &lt;arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/&gt;</span>
 <span class="gi">+  &lt;arg name="lanelet2_map_file" default="&lt;YOUR-LANELET-MAP-NAME&gt;.osm" description="lanelet2 map file name"/&gt;</span>
 <span class="gd">-  &lt;arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/&gt;</span>
 <span class="gi">+  &lt;arg name="pointcloud_map_file" default="&lt;YOUR-POINTCLOUD-MAP-NAME&gt;.pcd" description="pointcloud map file name"/&gt;</span>
 </code></pre></div>
-<p>Now we are ready to launch the planning simulator:</p>
+<p>これで、計画シミュレーターを起動する準備が整いました:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>planning_simulator.launch.xml<span class="w"> </span>map_path:<span class="o">=</span>&lt;YOUR-MAP-FOLDER-DIR&gt;<span class="w"> </span>vehicle_model:<span class="o">=</span>&lt;YOUR-VEHICLE-MODEL&gt;<span class="w"> </span>sensor_model:<span class="o">=</span>&lt;YOUR-SENSOR-KIT&gt;
 </code></pre></div>
-<p>Example for tutorial_vehicle:</p>
+<p>チュートリアル車輛の例:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>planning_simulator.launch.xml<span class="w"> </span>map_path:<span class="o">=</span><span class="nv">$HOME</span>/Files/autoware_map/tutorial_map/<span class="w"> </span>vehicle_model:<span class="o">=</span>tutorial_vehicle<span class="w"> </span>sensor_model:<span class="o">=</span>tutorial_vehicle_sensor_kit<span class="w"> </span>vehicle_id:<span class="o">=</span>tutorial_vehicle
 </code></pre></div>
 <ol>
-<li>Click <code>2D Pose Estimate</code> button on rviz or press <code>P</code> and give a pose for initialization.</li>
-<li>Click <code>2D Goal Pose</code> button on rviz or press <code>G</code> and give a pose for goal point.</li>
+<li>rvizの<code>2D Pose Estimate</code>ボタンをクリックするか、<code>P</code>を押してポーズを与えると初期化されます。</li>
+<li><code>2D Goal Pose</code>のボタンをクリックするか、<code>G</code>を押してゴールポイントのポーズをとります。</li>
 </ol>
 <figure>
 <p><img align="center" alt="planning-simulator-test" src="images/planning-simulator-map-test.png">
   </p>
 <figcaption>
-    Testing our created vector map with planning simulator
+    作成したベクターップを計画シミュレーターでテストする
   </figcaption>
 </figure>
 <!-- prettier-ignore --></div>
