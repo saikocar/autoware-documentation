@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>点群マップのダウンサンプリング - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pointcloud-map-downsampling" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              点群マップのダウンサンプリング
             
           </span>
         </div>
@@ -6561,22 +6561,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#_2" class="md-nav__link">
+    概要
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing-cloudcompare" class="md-nav__link">
-    Installing CloudCompare
+  <a href="#cloudcompare" class="md-nav__link">
+    CloudCompareのインストール
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#downsampling-a-pointcloud-map" class="md-nav__link">
-    Downsampling a pointcloud map
+  <a href="#_3" class="md-nav__link">
+    点群マップのダウンサンプリング
   </a>
   
 </li>
@@ -6599,45 +6599,27 @@
   
 
 
-<div><p>点群マップのダウンサンプリング
-概要
-作成した点群マップが密すぎるか大きすぎる場合 (つまり、300 MB を超える場合)、計算効率とメモリ効率を向上させるためにダウンサンプリングすることができます。また、部分読み込みを伴う動的マップ読み込みの使用を検討することもできます。詳細については、map_loader パッケージを確認してください。</p>
-<p>tutorial_vehicle の実装ではマップ全体を使用するため、CloudCompare を使用してダウンサンプリングします。</p>
-<p>CloudCompareのインストール
-スナップでインストールできます。</p>
-<p>sudo snap install cloudcompare
-オプションの取り付けについては公式ページをご確認ください 。</p>
-<p>点群マップのダウンサンプリング
-CloudCompare には3 つのサブサンプリング メソッドがあり、ここではサブサンプリングのメソッドを使用していますSpaceが、必要に応じて他のメソッドを使用することもできます。</p>
-<p>CloudCompare を開いてポイントクラウドをここにドラッグすると、DB ツリー パネルでマップをクリックするだけでポイントクラウド マップを選択できます。
-subsample次に、トップパネルの ボタンをクリックします。
-<img align="center" alt="db-tree-panel" src="images/select-map.png"> CloudCompare
-サブサンプル方法を選択してください。tutorial_vehicle 用のスペースが使用されます。
-次に、オプションを選択できます。たとえば、点間の最小スペースを決定する必要があります。(このセクションでは注意してください。サブサンプリングはマップ サイズ、コンピューターのパフォーマンスなどに依存します。)tutorial_vehicle のマップにはこの値 0.2 を設定します。
-<img align="center" alt="space-subsampling" src="images/space-subsampling.png" width="512"> 点群のサブサンプリング
-サブサンプリング プロセスが完了したら、[DB ツリー] パネルでもポイントクラウドを選択する必要があります。
-<img align="center" alt="db-tree-panel" src="images/subsampled-map.png" width="360"> ダウンサンプリングされた点群を選択します
-これで、ダウンサンプリングされた点群を保存するctrl + s か、バーから保存ボタンをクリックすることができますFile。その後、この点群は Autoware で使用できるようになります。</p>
-<h1 id="pointcloud-map-downsampling">Pointcloud map downsampling<a class="headerlink" href="#pointcloud-map-downsampling" title="Permanent link">#</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<p>When your created point cloud map is either too dense or too large (i.e., exceeding 300 MB),
-you may want to downsample it for improved computational and memory efficiency.
-Also, you can consider using dynamic map loading with partial loading,
-please check <a href="https://github.com/autowarefoundation/autoware.universe/tree/main/map/map_loader">map_loader package</a> for more information.</p>
-<p>At tutorial_vehicle implementation we will use the whole map,
-so we will downsample it with using <a href="https://www.cloudcompare.org/main.html">CloudCompare</a>.</p>
-<h2 id="installing-cloudcompare">Installing CloudCompare<a class="headerlink" href="#installing-cloudcompare" title="Permanent link">#</a></h2>
-<p>You can install it by snap:</p>
+<div><h1 id="_1">点群マップのダウンサンプリング<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">概要<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>作成した点群マップが密すぎるか大きすぎる場合 (つまり、300 MB を超える場合)、
+計算効率とメモリ効率を向上させるためにダウンサンプリングすることができます。
+また、部分読み込みを伴う動的マップ読み込みの使用を検討することもできます。
+詳細については、<a href="https://github.com/autowarefoundation/autoware.universe/tree/main/map/map_loader">map_loaderパッケージ</a>を確認してください。</p>
+<p>tutorial_vehicle の実装ではマップ全体を使用するため、
+<a href="https://www.cloudcompare.org/main.html">CloudCompare</a>を使用してダウンサンプリングします。</p>
+<h2 id="cloudcompare">CloudCompareのインストール<a class="headerlink" href="#cloudcompare" title="Permanent link">#</a></h2>
+<p>スナップでインストールできます:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>snap<span class="w"> </span>install<span class="w"> </span>cloudcompare
 </code></pre></div>
-<p>Please check the <a href="https://www.cloudcompare.org/release/index.html#CloudCompare">official page</a>
-for installing options.</p>
-<h2 id="downsampling-a-pointcloud-map">Downsampling a pointcloud map<a class="headerlink" href="#downsampling-a-pointcloud-map" title="Permanent link">#</a></h2>
-<p>There are three <a href="https://www.cloudcompare.org/doc/wiki/index.php/Edit%5CSubsample">subsampling methods on CloudCompare</a>,
-we are using <code>Space</code> method for subsampling, but you can use other methods if you want.</p>
+<p>オプションのインストールについては<a href="https://www.cloudcompare.org/release/index.html#CloudCompare">公式ページ</a>を
+ご確認ください。</p>
+<h2 id="_3">点群マップのダウンサンプリング<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>CloudCompare には3 つのサブサンプリング メソッドがあり、ここではサブサンプリングのメソッドを使用していますSpaceが、必要に応じて他のメソッドを使用することもできます。</p>
+<p>CloudCompareには3つの<a href="https://www.cloudcompare.org/doc/wiki/index.php/Edit%5CSubsample">サブサンプリング メソッド</a>あり、
+ここではサブサンプリングの<code>Space</code> メソッドを使用していますが、必要に応じて他のメソッドを使用することもできます。</p>
 <ol>
-<li>Please open CloudCompare and drag your pointcloud to here, then you can select your pointcloud map by just clicking on the map at the DB tree panel.</li>
-<li>Then you can click <code>subsample</code> button on the top panel.</li>
+<li>CloudCompareを開いてポイントクラウドをここにドラッグすると、DBツリーパネルでマップをクリックするだけでポイントクラウドマップを選択できます。</li>
+<li><code>subsample</code>次に、トップパネルの<code>subsample</code>ボタンをクリックします。</li>
 </ol>
 <figure>
 <p><img align="center" alt="db-tree-panel" src="images/select-map.png">
@@ -6647,31 +6629,31 @@ we are using <code>Space</code> method for subsampling, but you can use other me
   </figcaption>
 </figure>
 <ol>
-<li>Please select on your subsample method, we will use space for tutorial_vehicle.</li>
-<li>Then you can select options. For example, we need to determine minimum space between points. (Please be careful in this section, subsampling is depending on your map size, computer performance, etc.) We will set this value 0.2 for tutorial_vehicle's map.</li>
+<li>サブサンプル方法を選択してください。tutorial_vehicle用のスペースを使用します。</li>
+<li>次に、オプションを選択できます。たとえば、点間の最小スペースを決定する必要があります。(このセクションは注意してください。サブサンプリングはマップサイズ、コンピューターのパフォーマンスなどに依存します。)tutorial_vehicle のマップにはこの値 0.2 を設定します。</li>
 </ol>
 <figure>
 <p><img align="center" alt="space-subsampling" src="images/space-subsampling.png" width="512">
   </p>
 <figcaption>
-    Pointcloud subsampling
+    点群のサブサンプリング
   </figcaption>
 </figure>
 <ul>
-<li>After the subsampling process is finished,
-  you should select pointcloud on the DB Tree panel as well.</li>
+<li>サブサンプリング プロセスが完了したら、
+  DBツリーパネルでもポイントクラウドを選択する必要があります。</li>
 </ul>
 <figure>
 <p><img align="center" alt="db-tree-panel" src="images/subsampled-map.png" width="360">
   </p>
 <figcaption>
-    Select your downsampled pointcloud
+    ダウンサンプリングされた点群を選択します
   </figcaption>
 </figure>
-<p>Now,
-you can save your downsampled pointcloud with <code>ctrl + s</code>
-or you can click save button from <code>File</code> bar.
-Then, this pointcloud can be used by autoware.</p>
+<p>これで、
+ダウンサンプリングされた点群を<code>ctrl + s</code>で保存する
+か、<code>File</code>バーから保存ボタンをクリックすることができます。
+その後、この点群はAutowareで使用できるようになります。</p>
 <!-- prettier-ignore --></div>
 
 
