@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>横断歩道属性 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#crosswalk-attribute" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              横断歩道属性
             
           </span>
         </div>
@@ -6561,16 +6561,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#creating-a-crosswalk-attribute" class="md-nav__link">
-    Creating a crosswalk attribute
+  <a href="#_2" class="md-nav__link">
+    横断歩道属性の作成
   </a>
   
-    <nav class="md-nav" aria-label="Creating a crosswalk attribute">
+    <nav class="md-nav" aria-label="横断歩道属性の作成">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#testing-created-crosswalk-with-planning-simulator" class="md-nav__link">
-    Testing created crosswalk with planning simulator
+  <a href="#_3" class="md-nav__link">
+    計画シミュレータで作成した横断歩道のテスト
   </a>
   
 </li>
@@ -6598,99 +6598,59 @@
   
 
 
-<div><p>横断歩道アトリビュート
-行動速度プランナーの横断歩道モジュールは、横断歩道に近づいたり歩いたりする歩行者に対して停止または減速する速度を計画します。これを操作するために、lanelet2 マップに横断歩道属性を追加します。</p>
-<p>横断歩道属性の作成
-地図上に横断歩道を作成するには、次の手順に従ってください。</p>
-<p>トップパネルの ボタンをクリックしますAbstraction。
-Crosswalkパネルから選択します。
-ポイントクラウド マップ上で横断歩道をクリックして描画します。
-横断歩道作成のデモンストレーション ビデオで次の手順を確認できます。</p>
-<p>タイプ:ビデオ</p>
-<p>計画シミュレータで作成した横断歩道のテスト
-マップの作成が完了したら、マップを保存する必要があります。File--&gt;をクリックしExport Lanelet2Mapsてダウンロードしてください。</p>
-<p>ダウンロードが完了したら、lanelet2 マップと pointcloud マップを同じ場所に配置する必要があります。ディレクトリ構造は次のようになります。</p>
-<ul>
-<li><your-map-directory>/</your-map-directory></li>
-<li>├─ pointcloud_map.pcd</li>
-<li>
-<p>└─ lanelet2_map.osm
-.osm または .pcd マップ ファイルの名前がこれらの名前と異なる場合は、autoware.launch.xml を更新する必要があります。</p>
-<!-- Map -->
-</li>
-</ul>
-<ul>
-<li><arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"></arg></li>
-<li><arg name="lanelet2_map_file" default="\&lt;YOUR-LANELET-MAP-NAME&gt;.osm" description="lanelet2 map file name"></arg></li>
-<li><arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"></arg></li>
-<li><arg name="pointcloud_map_file" default="\&lt;YOUR-POINTCLOUD-MAP-NAME&gt;.pcd" description="pointcloud map file name"></arg>
-これで、計画シミュレーターを起動する準備が整いました。</li>
-</ul>
-<p>ros2 launch autoware_launch planning_simulator.launch.xml map_path:=<your-map-folder-dir> vehicle_model:=<your-vehicle-model> sensor_model:=<your-sensor-kit>
-チュートリアル_車両の例:</your-sensor-kit></your-vehicle-model></your-map-folder-dir></p>
-<p>ros2 launch autoware_launch planning_simulator.launch.xml map_path:=$HOME/Files/autoware_map/tutorial_map/ vehicle_model:=tutorial_vehicle sensor_model:=tutorial_vehicle_sensor_kit vehicle_id:=tutorial_vehicle
-2D Pose Estimaterviz の ボタンをクリックするか、 を押してPポーズを与えると初期化されます。
-2D Goal Poserviz のボタンをクリックするか、 を押してGゴールポイントのポーズをとります。
-横断歩道に歩行者を追加する必要があるため、Tool Propertiesrviz のパネルからインタラクティブな歩行者をアクティブにします。
-その後、 を押しShift、右クリックボタンをクリックして歩行者を挿入してください。
-挿入された歩行者を右クリックでドラッグして制御できます。
-rviz の横断歩道マーカー:</p>
-<p><img align="center" alt="crosswalk-test" src="images/crosswalk-test.png"> 作成した地図上で横断歩道テストを行います。
-次のデモ ビデオのように、計画シミュレーターで横断歩道要素を確認できます。</p>
-<p>タイプ:ビデオ</p>
-<h1 id="crosswalk-attribute">Crosswalk attribute<a class="headerlink" href="#crosswalk-attribute" title="Permanent link">#</a></h1>
-<p>Behavior velocity planner's <a href="https://autowarefoundation.github.io/autoware.universe/main/planning/behavior_velocity_crosswalk_module/">crosswalk module</a> plans velocity
-to stop or decelerate for pedestrians approaching or walking on a crosswalk.
-In order to operate that, we will add crosswalk attribute to our lanelet2 map.</p>
-<h2 id="creating-a-crosswalk-attribute">Creating a crosswalk attribute<a class="headerlink" href="#creating-a-crosswalk-attribute" title="Permanent link">#</a></h2>
-<p>In order to create a crosswalk on your map, please follow these steps:</p>
+<div><h1 id="_1">横断歩道属性<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<p>行動速度プランナーの<a href="https://autowarefoundation.github.io/autoware.universe/main/planning/behavior_velocity_crosswalk_module/">横断歩道モジュール</a>は、
+横断歩道に近づいたり歩いたりする歩行者に対して停止または減速する速度を計画します。
+これを操作するために、lanelet2マップに横断歩道属性を追加します。</p>
+<h2 id="_2">横断歩道属性の作成<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>地図上に横断歩道を作成するには、次の手順に従ってください:</p>
 <ol>
-<li>Click <code>Abstraction</code> button on top panel.</li>
-<li>Select <code>Crosswalk</code> from the panel.</li>
-<li>Click and draw crosswalk on your pointcloud map.</li>
+<li>トップパネルの<code>Abstraction</code>ボタンをクリックします。</li>
+<li><code>Crosswalk</code>パネルから選択します。</li>
+<li>ポイントクラウドマップ上で横断歩道をクリックして描画します。</li>
 </ol>
-<p>You can see these steps in the crosswalk creating demonstration video:</p>
+<p>横断歩道作成のデモンストレーションビデオで次の手順を確認できます:</p>
 <p><div class="video-container"><iframe src="https://youtube.com/embed/J6WrL8dkFhI" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
-<h3 id="testing-created-crosswalk-with-planning-simulator">Testing created crosswalk with planning simulator<a class="headerlink" href="#testing-created-crosswalk-with-planning-simulator" title="Permanent link">#</a></h3>
-<p>After the completing of creating the map, we need to save it.
-To that please click <code>File</code> --&gt; <code>Export Lanelet2Maps</code> then download.</p>
-<p>After the download is finished,
-we need to put lanelet2 map and pointcloud map on the same location.
-The directory structure should be like this:</p>
+<h3 id="_3">計画シミュレータで作成した横断歩道のテスト<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
+<p>マップの作成が完了したら、マップを保存する必要があります。
+<code>File</code> --&gt; <code>Export Lanelet2Maps</code>をクリックしてダウンロードしてください。</p>
+<p>ダウンロードが完了したら、
+lanelet2マップとpointcloudマップを同じ場所に配置する必要があります。
+ディレクトリ構造は次のようになります:</p>
 <div class="highlight"><pre><span></span><code><span class="gi">+ &lt;YOUR-MAP-DIRECTORY&gt;/</span>
 <span class="gi">+  ├─ pointcloud_map.pcd</span>
 <span class="gi">+  └─ lanelet2_map.osm</span>
 </code></pre></div>
-<p>If your .osm or .pcd map file's name is different from these names,
-you need to update autoware.launch.xml:</p>
+<p>.osm または .pcd マップ ファイルの名前がこれらの名前と異なる場合は、
+autoware.launch.xmlを更新する必要があります:</p>
 <div class="highlight"><pre><span></span><code><span class="w"> </span> &lt;!-- Map --&gt;
 <span class="gd">-  &lt;arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/&gt;</span>
 <span class="gi">+  &lt;arg name="lanelet2_map_file" default="&lt;YOUR-LANELET-MAP-NAME&gt;.osm" description="lanelet2 map file name"/&gt;</span>
 <span class="gd">-  &lt;arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/&gt;</span>
 <span class="gi">+  &lt;arg name="pointcloud_map_file" default="&lt;YOUR-POINTCLOUD-MAP-NAME&gt;.pcd" description="pointcloud map file name"/&gt;</span>
 </code></pre></div>
-<p>Now we are ready to launch the planning simulator:</p>
+<p>これで、計画シミュレーターを起動する準備が整いました:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>planning_simulator.launch.xml<span class="w"> </span>map_path:<span class="o">=</span>&lt;YOUR-MAP-FOLDER-DIR&gt;<span class="w"> </span>vehicle_model:<span class="o">=</span>&lt;YOUR-VEHICLE-MODEL&gt;<span class="w"> </span>sensor_model:<span class="o">=</span>&lt;YOUR-SENSOR-KIT&gt;
 </code></pre></div>
-<p>Example for tutorial_vehicle:</p>
+<p>チュートリアル車両の例:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>planning_simulator.launch.xml<span class="w"> </span>map_path:<span class="o">=</span><span class="nv">$HOME</span>/Files/autoware_map/tutorial_map/<span class="w"> </span>vehicle_model:<span class="o">=</span>tutorial_vehicle<span class="w"> </span>sensor_model:<span class="o">=</span>tutorial_vehicle_sensor_kit<span class="w"> </span>vehicle_id:<span class="o">=</span>tutorial_vehicle
 </code></pre></div>
 <ol>
-<li>Click <code>2D Pose Estimate</code> button on rviz or press <code>P</code> and give a pose for initialization.</li>
-<li>Click <code>2D Goal Pose</code> button on rviz or press <code>G</code> and give a pose for goal point.</li>
-<li>We need to add pedestrians to crosswalk, so activate interactive pedestrians from <code>Tool Properties</code> panel on rviz.</li>
-<li>After that, please press <code>Shift</code>, then click right click button for inserting pedestrians.</li>
-<li>You can control inserted pedestrian via dragging right click.</li>
+<li><code>2D Pose Estimate</code>のボタンをクリックするか、<code>P</code>を押してポーズを与えると初期化されます。</li>
+<li><code>2D Goal Pose</code>のボタンをクリックするか、<code>G</code>を押してゴールポイントのポーズを与えます。</li>
+<li>横断歩道に歩行者を追加する必要があるため、<code>Tool Properties</code>のパネルからインタラクティブな歩行者をアクティブにします。</li>
+<li>その後、<code>Shift</code>を押し、右クリックボタンをクリックして歩行者を挿入してください。</li>
+<li>挿入された歩行者を右クリックでドラッグして制御できます。</li>
 </ol>
-<p>Crosswalk markers on rviz:</p>
+<p>rvizの横断歩道マーカー:</p>
 <figure>
 <p><img align="center" alt="crosswalk-test" src="images/crosswalk-test.png">
   </p>
 <figcaption>
-    Crosswalk test on the created map.
+    作成した地図上で横断歩道テストを行います。
   </figcaption>
 </figure>
-<p>You can check your crosswalk elements in the planning simulator as this demonstration video:</p>
+<p>次のデモビデオのように、計画シミュレーターで横断歩道要素を確認できます:</p>
 <p><div class="video-container"><iframe src="https://youtube.com/embed/hhwBku_1qmA" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
 <!-- prettier-ignore --></div>
 
