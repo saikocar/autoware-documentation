@@ -1,6 +1,6 @@
 # 信号機
 
-行動速度プランナーの信号機モジュール](https://autowarefoundation.github.io/autoware.universe/main/planning/behavior_velocity_traffic_light_module/)は、
+行動速度プランナーの[信号機モジュール](https://autowarefoundation.github.io/autoware.universe/main/planning/behavior_velocity_traffic_light_module/)は、
 信号機の状態に従って速度を計画します。
 これを操作するために、lanelet2マップに信号属性を追加します。
 
