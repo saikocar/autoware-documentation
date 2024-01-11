@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>信号機 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#traffic-light" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              信号機
             
           </span>
         </div>
@@ -6561,16 +6561,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#creating-a-traffic-light-regulatory-element" class="md-nav__link">
-    Creating a traffic light regulatory element
+  <a href="#_2" class="md-nav__link">
+    信号機規制要素の作成
   </a>
   
-    <nav class="md-nav" aria-label="Creating a traffic light regulatory element">
+    <nav class="md-nav" aria-label="信号機規制要素の作成">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#testing-created-the-traffic-light-element-with-planning-simulator" class="md-nav__link">
-    Testing created the traffic light element with planning simulator
+  <a href="#_3" class="md-nav__link">
+    計画シミュレータを使用して信号機要素を作成したテスト
   </a>
   
 </li>
@@ -6598,103 +6598,61 @@
   
 
 
-<div><p>信号機
-行動速度プランナーの信号機モジュールは、信号機の状態に従って速度を計画します。これを操作するために、lanelet2 マップに信号属性を追加します。</p>
-<p>信号機規制要素の作成
-ポイントクラウド マップ上に信号機を作成するには、次の手順に従ってください。</p>
-<p>どの信号機を追加するレーンレットを選択してください。
-トップパネルの ボタンをクリックしますAbstraction。
-Traffic Lightパネルから選択します。
-信号機を挿入する目的の領域をクリックします。
-これらの手順は、信号機作成のデモンストレーション ビデオで見ることができます。</p>
-<p>タイプ:ビデオ</p>
-<p>計画シミュレータを使用して信号機要素を作成したテスト
-マップの作成が完了したら、マップを保存する必要があります。File--&gt;をクリックしExport Lanelet2Mapsてダウンロードしてください。</p>
-<p>ダウンロードが完了したら、lanelet2 マップと pointcloud マップを同じ場所に配置する必要があります。ディレクトリ構造は次のようになります。</p>
-<ul>
-<li><your-map-directory>/</your-map-directory></li>
-<li>├─ pointcloud_map.pcd</li>
-<li>
-<p>└─ lanelet2_map.osm
-.osm または .pcd マップ ファイルの名前がこれらの名前と異なる場合は、autoware.launch.xml を更新する必要があります。</p>
-<!-- Map -->
-</li>
-</ul>
-<ul>
-<li><arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"></arg></li>
-<li><arg name="lanelet2_map_file" default="\&lt;YOUR-LANELET-MAP-NAME&gt;.osm" description="lanelet2 map file name"></arg></li>
-<li><arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"></arg></li>
-<li><arg name="pointcloud_map_file" default="\&lt;YOUR-POINTCLOUD-MAP-NAME&gt;.pcd" description="pointcloud map file name"></arg>
-これで、計画シミュレーターを起動する準備が整いました。</li>
-</ul>
-<p>ros2 launch autoware_launch planning_simulator.launch.xml map_path:=<your-map-folder-dir> vehicle_model:=<your-vehicle-model> sensor_model:=<your-sensor-kit>
-チュートリアル_車両の例:</your-sensor-kit></your-vehicle-model></your-map-folder-dir></p>
-<p>ros2 launch autoware_launch planning_simulator.launch.xml map_path:=$HOME/Files/autoware_map/tutorial_map/ vehicle_model:=tutorial_vehicle sensor_model:=tutorial_vehicle_sensor_kit vehicle_id:=tutorial_vehicle
-2D Pose Estimaterviz の ボタンをクリックするか、 を押してPポーズを与えると初期化されます。
-Panels-&gt;をクリックしAdd new panel、 を選択しTrafficLightPublishPanel、 を押しますOK。
-TrafficLightPublishPanel で、信号機の ID と色を設定します。
-次に、SETとPUBLISHボタンをクリックします。
-2D Goal Poserviz のボタンをクリックするか、 を押してGゴールポイントのポーズをとります。
-信号機の色を に設定すると、rviz 画面に信号機マーカーが表示されますRED。
-rviz の信号マーカー:</p>
-<p><img align="center" alt="traffic-light-test" src="images/traffic-light-test.png"> 作成した地図上の信号機テスト。
-次のデモビデオのように、計画シミュレーターで信号機の要素を確認できます。</p>
-<p>タイプ:ビデオ</p>
-<h1 id="traffic-light">Traffic light<a class="headerlink" href="#traffic-light" title="Permanent link">#</a></h1>
-<p>Behavior velocity planner's <a href="https://autowarefoundation.github.io/autoware.universe/main/planning/behavior_velocity_traffic_light_module/">traffic light module</a> plans velocity
-according to the traffic light status.
-In order to operate that, we will add traffic light attribute to our lanelet2 map.</p>
-<h2 id="creating-a-traffic-light-regulatory-element">Creating a traffic light regulatory element<a class="headerlink" href="#creating-a-traffic-light-regulatory-element" title="Permanent link">#</a></h2>
-<p>In order to create a traffic light on your pointcloud map, please follow these steps:</p>
+<div><h1 id="_1">信号機<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<p>行動速度プランナーの信号機モジュール](https://autowarefoundation.github.io/autoware.universe/main/planning/behavior_velocity_traffic_light_module/)は、
+信号機の状態に従って速度を計画します。
+これを操作するために、lanelet2マップに信号属性を追加します。</p>
+<h2 id="_2">信号機規制要素の作成<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>ポイントクラウド マップ上に信号機を作成するには、次の手順に従ってください:</p>
 <ol>
-<li>Please select lanelet which traffic light to be added.</li>
-<li>Click <code>Abstraction</code> button on top panel.</li>
-<li>Select <code>Traffic Light</code> from the panel.</li>
-<li>Click on the desired area for inserting traffic light.</li>
+<li>どの信号機を追加するレーンレットを選択してください。</li>
+<li>上部パネルの<code>Abstraction</code>ボタンをクリックします。</li>
+<li>パネルから<code>Traffic Light</code>を選択します。</li>
+<li>信号機を挿入する目的の領域をクリックします。</li>
 </ol>
-<p>You can see these steps in the traffic-light creating demonstration video:</p>
+<p>これらの手順は、信号機作成のデモンストレーション ビデオで見ることができます:</p>
 <p><div class="video-container"><iframe src="https://youtube.com/embed/P3xcayPkTOg" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
-<h3 id="testing-created-the-traffic-light-element-with-planning-simulator">Testing created the traffic light element with planning simulator<a class="headerlink" href="#testing-created-the-traffic-light-element-with-planning-simulator" title="Permanent link">#</a></h3>
-<p>After the completing of creating the map, we need to save it.
-To that please click <code>File</code> --&gt; <code>Export Lanelet2Maps</code> then download.</p>
-<p>After the download is finished,
-we need to put lanelet2 map and pointcloud map on the same location.
-The directory structure should be like this:</p>
+<h3 id="_3">計画シミュレータを使用して信号機要素を作成したテスト<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
+<p>マップの作成が完了したら、マップを保存する必要があります。
+<code>File</code> --&gt; <code>Export Lanelet2Maps</code>をクリックしてダウンロードしてください。</p>
+<p>ダウンロードが完了したら、
+lanelet2マップとpointcloudマップを同じ場所に配置する必要があります。
+ディレクトリ構造は次のようになります:</p>
 <div class="highlight"><pre><span></span><code><span class="gi">+ &lt;YOUR-MAP-DIRECTORY&gt;/</span>
 <span class="gi">+  ├─ pointcloud_map.pcd</span>
 <span class="gi">+  └─ lanelet2_map.osm</span>
 </code></pre></div>
-<p>If your .osm or .pcd map file's name is different from these names,
-you need to update autoware.launch.xml:</p>
+<p>.osmまたは.pcdマップファイルの名前がこれらの名前と異なる場合は、
+autoware.launch.xml を更新する必要があります:</p>
 <div class="highlight"><pre><span></span><code><span class="w"> </span> &lt;!-- Map --&gt;
 <span class="gd">-  &lt;arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/&gt;</span>
 <span class="gi">+  &lt;arg name="lanelet2_map_file" default="&lt;YOUR-LANELET-MAP-NAME&gt;.osm" description="lanelet2 map file name"/&gt;</span>
 <span class="gd">-  &lt;arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/&gt;</span>
 <span class="gi">+  &lt;arg name="pointcloud_map_file" default="&lt;YOUR-POINTCLOUD-MAP-NAME&gt;.pcd" description="pointcloud map file name"/&gt;</span>
 </code></pre></div>
-<p>Now we are ready to launch the planning simulator:</p>
+<p>これで、計画シミュレーターを起動する準備が整いました:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>planning_simulator.launch.xml<span class="w"> </span>map_path:<span class="o">=</span>&lt;YOUR-MAP-FOLDER-DIR&gt;<span class="w"> </span>vehicle_model:<span class="o">=</span>&lt;YOUR-VEHICLE-MODEL&gt;<span class="w"> </span>sensor_model:<span class="o">=</span>&lt;YOUR-SENSOR-KIT&gt;
 </code></pre></div>
-<p>Example for tutorial_vehicle:</p>
+<p>チュートリアル車両の例:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>planning_simulator.launch.xml<span class="w"> </span>map_path:<span class="o">=</span><span class="nv">$HOME</span>/Files/autoware_map/tutorial_map/<span class="w"> </span>vehicle_model:<span class="o">=</span>tutorial_vehicle<span class="w"> </span>sensor_model:<span class="o">=</span>tutorial_vehicle_sensor_kit<span class="w"> </span>vehicle_id:<span class="o">=</span>tutorial_vehicle
 </code></pre></div>
 <ol>
-<li>Click <code>2D Pose Estimate</code> button on rviz or press <code>P</code> and give a pose for initialization.</li>
-<li>Click <code>Panels</code> -&gt; <code>Add new panel</code>, select <code>TrafficLightPublishPanel</code>, and then press <code>OK</code>.</li>
-<li>In TrafficLightPublishPanel, set the ID and color of the traffic light.</li>
-<li>Then, Click <code>SET</code> and <code>PUBLISH</code> button.</li>
-<li>Click <code>2D Goal Pose</code> button on rviz or press <code>G</code> and give a pose for goal point.</li>
-<li>You can see the traffic light marker on the rviz screen if you set the traffic light color as <code>RED</code>.</li>
+<li>rvizの<code>2D Pose Estimate</code>ボタンをクリックするか、<code>P</code>を押してポーズを与えると初期化されます。</li>
+<li><code>Panels</code> -&gt; <code>Add new panel</code>をクリックし、<code>TrafficLightPublishPanel</code>を選択し、<code>OK</code>を押します。</li>
+<li>TrafficLightPublishPanelで、信号機のIDと色を設定します。</li>
+<li><code>SET</code>と<code>PUBLISH</code>ボタンをクリックします。</li>
+<li>rvizの<code>2D Goal Pose</code>ボタンをクリックするか、<code>G</code>を押してゴールポイントのポーズを与えます。</li>
+<li>信号機の色を<code>RED</code>に設定すると、rviz 画面に信号機マーカーが表示されます。</li>
 </ol>
-<p>Traffic Light markers on rviz:</p>
+<p>rvizの信号マーカー:</p>
 <figure>
 <p><img align="center" alt="traffic-light-test" src="images/traffic-light-test.png">
   </p>
 <figcaption>
-    Traffic light test on the created map.
+    作成した地図上の信号機テスト。
   </figcaption>
 </figure>
-<p>You can check your traffic light elements in the planning simulator as this demonstration video:</p>
+<p>次のデモビデオのように、計画シミュレーターで信号機の要素を確認できます:</p>
 <p><div class="video-container"><iframe src="https://youtube.com/embed/AaFT24uqbJk" style="position:relative;width:100%;height:22.172vw" frameborder="0" allowfullscreen alt="type:video"></iframe></div></p>
 <!-- prettier-ignore --></div>
 
