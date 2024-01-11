@@ -21,7 +21,7 @@
     
     
       
-        <title>Debug autoware - Autoware Documentation</title>
+        <title>Autowareのデバッグ - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#or-like-with-an-output-file" class="md-skip">
+        <a href="#autoware" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Debug autoware
+              Autowareのデバッグ
             
           </span>
         </div>
@@ -3737,9 +3737,95 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Autowareのデバッグ
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
-        Debug autoware
+        Autowareのデバッグ
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    デバッグメッセージを出力する
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros-autoware" class="md-nav__link">
+    ROSツールを使用して Autowareをデバッグする
+  </a>
+  
+    <nav class="md-nav" aria-label="ROSツールを使用して Autowareをデバッグする">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    コマンドラインツールの使用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rviz2" class="md-nav__link">
+    rviz2の使用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rqt" class="md-nav__link">
+    rqtツールの使用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ros2_graph" class="md-nav__link">
+    ros2_graphの使用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ros2doctor" class="md-nav__link">
+    ros2doctorの使用
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    ブレークポイントを使用したデバッガの使用
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -6564,6 +6650,76 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    デバッグメッセージを出力する
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros-autoware" class="md-nav__link">
+    ROSツールを使用して Autowareをデバッグする
+  </a>
+  
+    <nav class="md-nav" aria-label="ROSツールを使用して Autowareをデバッグする">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    コマンドラインツールの使用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rviz2" class="md-nav__link">
+    rviz2の使用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rqt" class="md-nav__link">
+    rqtツールの使用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ros2_graph" class="md-nav__link">
+    ros2_graphの使用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ros2doctor" class="md-nav__link">
+    ros2doctorの使用
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    ブレークポイントを使用したデバッガの使用
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -6580,128 +6736,76 @@
   
 
 
-<div><p>オートウェアのデバッグ
-このページでは、Autoware をデバッグするためのいくつかの方法を説明します。</p>
-<p>デバッグメッセージを出力する
-デバッグに不可欠なことは、プログラムの動作を迅速に判断し、問題を特定できるように、プログラム情報を明確に出力することです。Autoware は、<abbr title="Robot Operating System">ROS</abbr> 2 ログ ツールを使用してデバッグ メッセージを出力します。コンソール ログの設計方法については、チュートリアル「コンソール ログ」を参照してください。</p>
-<p><abbr title="Robot Operating System">ROS</abbr> ツールを使用して Autoware をデバッグする
-コマンドラインツールの使用
-<abbr title="Robot Operating System">ROS</abbr> 2 には、<abbr title="Robot Operating System">ROS</abbr> 2 システムをイントロスペクトするための一連のコマンドライン ツールが含まれています。ツールの主なエントリ ポイントは command です。ros2このコマンド自体には、ノード、トピック、サービスなどをイントロスペクトして操作するためのさまざまなサブコマンドがあります。<abbr title="Robot Operating System">ROS</abbr> 2 コマンド ライン ツールの使用方法については、チュートリアルCLI ツールを参照してください。</p>
-<p>rviz2 の使用
-Rviz2 は、Rviz を <abbr title="Robot Operating System">ROS</abbr> 2 に移植したものです。ユーザーがロボット、センサー データ、マップなどを表示するためのグラフィカル インターフェイスを提供します。Rviz2 ツールは次の方法で簡単に実行できます。</p>
-<p>rviz2
-Autoware がシミュレーターを起動すると、デフォルトで Rviz2 ツールが開き、オートパイロットのグラフィック情報が視覚化されます。</p>
-<p>RQT ツールの使用
-RQt は、プラグインの形式でさまざまなツールやインターフェイスを実装するグラフィカル ユーザー インターフェイス フレームワークです。RQt ツール/プラグインは次の方法で簡単に実行できます。</p>
-<p>rqt
-この GUI を使用すると、システム上で利用可能なプラグインを選択できます。スタンドアロン ウィンドウでプラグインを実行することもできます。たとえば、RQt コンソール:</p>
-<p>ros2 run rqt_console rqt_console
-一般的な RQt ツール
-rqt_graph: ノードの相互作用を表示する</p>
-<p>複雑なアプリケーションでは、<abbr title="Robot Operating System">ROS</abbr> ノードの相互作用を視覚的に表現すると役立つ場合があります。</p>
-<p>ros2 run rqt_graph rqt_graph
-rqt_console: メッセージの表示</p>
-<p>rqt_console は、<abbr title="Robot Operating System">ROS</abbr> トピックを表示するための優れた GUI です。</p>
-<p>ros2 run rqt_console rqt_console
-rqt_plot: データプロットを表示する</p>
-<p>rqt_plot は、<abbr title="Robot Operating System">ROS</abbr> データをリアルタイムでプロットする簡単な方法です。</p>
-<p>ros2 run rqt_plot rqt_plot
-ros2_graphの使用
-ros2_graphマークダウン ファイルに追加する <abbr title="Robot Operating System">ROS</abbr> 2 グラフのマーメイド記述を生成するために使用できます。</p>
-<p>rqt_graph生成された人魚図をレンダリングするために何らかのツールが必要になる場合でも、カラフルな代替手段として使用することもできます。</p>
-<p>以下でインストールできます。</p>
-<p>pip install ros2-graph
-次に、次のようにしてグラフの人魚の説明を生成できます。</p>
-<p>ros2_graph your_node</p>
-<h1 id="or-like-with-an-output-file">or like with an output file<a class="headerlink" href="#or-like-with-an-output-file" title="Permanent link">#</a></h1>
-<p>ros2_graph /turtlesim -o turtle_diagram.md</p>
-<h1 id="or-multiple-nodes">or multiple nodes<a class="headerlink" href="#or-multiple-nodes" title="Permanent link">#</a></h1>
-<p>ros2_graph /turtlesim /teleop_turtle
-次に、これらのグラフを次のように視覚化できます。</p>
-<p>マーメイドライブエディター
-Visual Studio Code 拡張機能マーメイド プレビュー
-ネイティブサポートを備えたJetBrains IDE
-ros2doctorの使用
-<abbr title="Robot Operating System">ROS</abbr> 2 セットアップが期待どおりに実行されない場合は、ros2doctorツールを使用してその設定を確認できます。</p>
-<p>ros2doctorプラットフォーム、バージョン、ネットワーク、環境、実行中のシステムなどを含む <abbr title="Robot Operating System">ROS</abbr> 2 のあらゆる側面をチェックし、考えられるエラーや問題の理由について警告します。</p>
-<p>ros2 doctorターミナルで実行するだけで簡単です。</p>
-<p>システム内のすべてのトピックについて「パブリッシャーのないサブスクライバー」をリストする機能があります。</p>
-<p>この情報は、必要なノードが実行中でないかどうかを見つけるのに役立ちます。</p>
-<p>詳細については、「 ros2doctor を使用して問題を特定する 」に関する次の公式ドキュメントを参照してください。</p>
-<p>ブレークポイントを使用したデバッガの使用
-多くの IDE (Visual Studio Code、CLion など) は、Linux プラットフォーム上の GBD を使用した C/C++ 実行可能ファイルのデバッグをサポートしています。以下に、デバッガーの使用に関する参考資料をいくつか示します。</p>
-<p>https://code.visualstudio.com/docs/cpp/cpp-debug
-https://www.jetbrains.com/help/clion/debugging-code.html#useful-debugger-shortcuts</p>
-<h1 id="debug-autoware">Debug Autoware<a class="headerlink" href="#debug-autoware" title="Permanent link">#</a></h1>
-<p>This page provides some methods for debugging Autoware.</p>
-<h2 id="print-debug-messages">Print debug messages<a class="headerlink" href="#print-debug-messages" title="Permanent link">#</a></h2>
-<p>The essential thing for debug is to print the program information clearly, which can quickly judge the program operation and locate the problem. Autoware uses <abbr title="Robot Operating System">ROS</abbr> 2 logging tool to print debug messages, how to design console logging refer to tutorial <a href="../../../contributing/coding-guidelines/ros-nodes/console-logging/">Console logging</a>.</p>
-<h2 id="using-ros-tools-debug-autoware">Using <abbr title="Robot Operating System">ROS</abbr> tools debug Autoware<a class="headerlink" href="#using-ros-tools-debug-autoware" title="Permanent link">#</a></h2>
-<h3 id="using-command-line-tools">Using command line tools<a class="headerlink" href="#using-command-line-tools" title="Permanent link">#</a></h3>
-<p><abbr title="Robot Operating System">ROS</abbr> 2 includes a suite of command-line tools for introspecting a <abbr title="Robot Operating System">ROS</abbr> 2 system. The main entry point for the tools is the command <code>ros2</code>, which itself has various sub-commands for introspecting and working with nodes, topics, services, and more. How to use the <abbr title="Robot Operating System">ROS</abbr> 2 command line tool refer to tutorial <a href="http://docs.ros.org/en/galactic/Tutorials/Beginner-CLI-Tools.html">CLI tools</a>.</p>
-<h3 id="using-rviz2">Using rviz2<a class="headerlink" href="#using-rviz2" title="Permanent link">#</a></h3>
-<p>Rviz2 is a port of Rviz to <abbr title="Robot Operating System">ROS</abbr> 2. It provides a graphical interface for users to view their robot, sensor data, maps, and more. You can run Rviz2 tool easily by:</p>
+<div><h1 id="autoware">Autowareのデバッグ<a class="headerlink" href="#autoware" title="Permanent link">#</a></h1>
+<p>このページでは、Autowareをデバッグするためのいくつかの方法を説明します。</p>
+<h2 id="_1">デバッグメッセージを出力する<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p>デバッグに不可欠なことは、プログラムの動作を迅速に判断し、問題を特定できるように、プログラム情報を明確に出力することです。Autowareは、<abbr title="Robot Operating System">ROS</abbr> 2ログツールを使用してデバッグメッセージを出力します。コンソールログの設計方法については、チュートリアル<a href="../../../contributing/coding-guidelines/ros-nodes/console-logging/">コンソールログ</a>を参照してください。</p>
+<h2 id="ros-autoware">ROSツールを使用して Autowareをデバッグする<a class="headerlink" href="#ros-autoware" title="Permanent link">#</a></h2>
+<h3 id="_2">コマンドラインツールの使用<a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
+<p>ROS2には、ROS2システムをイントロスペクトするための一連のコマンドラインツールが含まれています。ツールの主なエントリポイントは<code>ros2</code>コマンドです。このコマンド自体には、ノード、トピック、サービスなどをイントロスペクトして操作するためのさまざまなサブコマンドがあります。<abbr title="Robot Operating System">ROS</abbr> 2 コマンド ライン ツールの使用方法については、チュートリア<a href="http://docs.ros.org/en/galactic/Tutorials/Beginner-CLI-Tools.html">CLIツール</a>を参照してください。</p>
+<h3 id="rviz2">rviz2の使用<a class="headerlink" href="#rviz2" title="Permanent link">#</a></h3>
+<p>Rviz2は、RvizをROS2に移植したものです。ユーザーがロボット、センサーデータ、マップなどを表示するためのグラフィカルインターフェイスを提供します。Rviz2ツールは次の方法で簡単に実行できます:</p>
 <div class="highlight"><pre><span></span><code><span class="go">rviz2</span>
 </code></pre></div>
-<p>When Autoware launch the simulators, the Rviz2 tool is opened by default to visualize the autopilot graphic information.</p>
-<h3 id="using-rqt-tools">Using rqt tools<a class="headerlink" href="#using-rqt-tools" title="Permanent link">#</a></h3>
-<p>RQt is a graphical user interface framework that implements various tools and interfaces in the form of plugins. You can run any RQt tools/plugins easily by:</p>
+<p>Autowareがシミュレーターを起動すると、デフォルトでRviz2ツールが開き、オートパイロットのグラフィック情報が視覚化されます。</p>
+<h3 id="rqt">rqtツールの使用<a class="headerlink" href="#rqt" title="Permanent link">#</a></h3>
+<p>RQtは、プラグインの形式でさまざまなツールやインターフェイスを実装するグラフィカルユーザーインターフェイスフレームワークです。RQt ツール/プラグインは次の方法で簡単に実行できます:</p>
 <div class="highlight"><pre><span></span><code><span class="go">rqt</span>
 </code></pre></div>
-<p>This GUI allows you to choose any available plugins on your system. You can also run plugins in standalone windows. For example, RQt Console:</p>
+<p>このGUIを使用すると、システム上で利用可能なプラグインを選択できます。スタンドアロンウィンドウでプラグインを実行することもできます。たとえば、RQtコンソール:</p>
 <div class="highlight"><pre><span></span><code><span class="go">ros2 run rqt_console rqt_console</span>
 </code></pre></div>
-<h4 id="common-rqt-tools">Common RQt tools<a class="headerlink" href="#common-rqt-tools" title="Permanent link">#</a></h4>
+<h4 id="rqt_1">一般的なRQtツール<a class="headerlink" href="#rqt_1" title="Permanent link">#</a></h4>
 <ol>
 <li>
-<p>rqt_graph: view node interaction</p>
-<p>In complex applications, it may be helpful to get a visual representation of the <abbr title="Robot Operating System">ROS</abbr> node interactions.</p>
+<p>rqt_graph: ノードの相互作用を表示する</p>
+<p>複雑なアプリケーションでは、ROSノードの相互作用を視覚的に表現すると役立つ場合があります。</p>
 <div class="highlight"><pre><span></span><code><span class="go">ros2 run rqt_graph rqt_graph</span>
 </code></pre></div>
 </li>
 <li>
-<p>rqt_console: view messages</p>
-<p>rqt_console is a great gui for viewing <abbr title="Robot Operating System">ROS</abbr> topics.</p>
+<p>rqt_console: メッセージの表示</p>
+<p>rqt_consoleは、ROSトピックを表示するための優れたGUIです。</p>
 <div class="highlight"><pre><span></span><code><span class="go">ros2 run rqt_console rqt_console</span>
 </code></pre></div>
 </li>
 <li>
-<p>rqt_plot: view data plots</p>
-<p>rqt_plot is an easy way to plot <abbr title="Robot Operating System">ROS</abbr> data in real time.</p>
+<p>rqt_plot: データプロットを表示する</p>
+<p>rqt_plotは、ROSデータをリアルタイムでプロットする簡単な方法です。</p>
 <div class="highlight"><pre><span></span><code><span class="go">ros2 run rqt_plot rqt_plot</span>
 </code></pre></div>
 </li>
 </ol>
-<h3 id="using-ros2_graph">Using ros2_graph<a class="headerlink" href="#using-ros2_graph" title="Permanent link">#</a></h3>
-<p><a href="https://github.com/kiwicampus/ros2_graph"><code>ros2_graph</code></a> can be used to generate <a href="https://mermaid.js.org/#/">mermaid</a> description of <abbr title="Robot Operating System">ROS</abbr> 2 graphs to add on your markdown files.</p>
-<p>It can also be used as a colorful alternative to <code>rqt_graph</code> even though it would require some tool to render the generated mermaid diagram.</p>
-<p>It can be installed with:</p>
+<h3 id="ros2_graph">ros2_graphの使用<a class="headerlink" href="#ros2_graph" title="Permanent link">#</a></h3>
+<p><a href="https://github.com/kiwicampus/ros2_graph"><code>ros2_graph</code></a>はマークダウンファイルに追加するROS 2 グラフの<a href="https://mermaid.js.org/#/">マーメイド</a>記述を生成するために使用できます。</p>
+<p>生成されたマーメイド図をレンダリングするために何らかのツールが必要になる場合でも、<code>rqt_graph</code>のカラフルな代替手段として使用することもできます。</p>
+<p>以下でインストールできます:</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>ros2-graph
 </code></pre></div>
-<p>Then you can generate a mermaid description of the graph with:</p>
+<p>次に、次のようにしてグラフのマーメイドの説明を生成できます:</p>
 <div class="highlight"><pre><span></span><code>ros2_graph<span class="w"> </span>your_node
 
-<span class="c1"># or like with an output file</span>
+<span class="c1"># またはファイル出力による</span>
 ros2_graph<span class="w"> </span>/turtlesim<span class="w"> </span>-o<span class="w"> </span>turtle_diagram.md
 
-<span class="c1"># or multiple nodes</span>
+<span class="c1"># または複数のノードに渡る</span>
 ros2_graph<span class="w"> </span>/turtlesim<span class="w"> </span>/teleop_turtle
 </code></pre></div>
-<p>You can then visualize these graphs with:</p>
+<p>次に、これらのグラフを以下のツールで視覚化できます:</p>
 <ul>
 <li><a href="https://mermaid-js.github.io/mermaid-live-editor/">Mermaid Live Editor</a></li>
 <li>Visual Studio Code extension <a href="https://marketplace.visualstudio.com/items?itemName=vstirbu.vscode-mermaid-preview">mermaid preview</a></li>
-<li>JetBrains IDEs <a href="https://www.jetbrains.com/go/guide/tips/mermaid-js-support-in-markdown/">with native support</a></li>
+<li>JetBrains IDEsの<a href="https://www.jetbrains.com/go/guide/tips/mermaid-js-support-in-markdown/">ネイティブサポート</a></li>
 </ul>
-<h3 id="using-ros2doctor">Using ros2doctor<a class="headerlink" href="#using-ros2doctor" title="Permanent link">#</a></h3>
-<p>When your <abbr title="Robot Operating System">ROS</abbr> 2 setup is not running as expected, you can check its settings with the <code>ros2doctor</code> tool.</p>
-<p><code>ros2doctor</code> checks all aspects of <abbr title="Robot Operating System">ROS</abbr> 2, including platform, version, network, environment, running systems and more, and warns you about possible errors and reasons for issues.</p>
-<p>It's as simple as just running <code>ros2 doctor</code> in your terminal.</p>
-<p>It has the ability to list "Subscribers without publishers" for all topics in the system.</p>
-<p>And this information can help you find if a necessary node isn't running.</p>
-<p>For more details, see the following official documentation for <a href="https://docs.ros.org/en/rolling/Tutorials/Beginner-Client-Libraries/Getting-Started-With-Ros2doctor.html">Using ros2doctor to identify issues</a>.</p>
-<h2 id="using-a-debugger-with-breakpoints">Using a debugger with breakpoints<a class="headerlink" href="#using-a-debugger-with-breakpoints" title="Permanent link">#</a></h2>
-<p>Many IDE(e.g. Visual Studio Code, CLion) supports debugging C/C++ executable with GBD on linux platform. The following lists some references for using the debugger:</p>
+<h3 id="ros2doctor">ros2doctorの使用<a class="headerlink" href="#ros2doctor" title="Permanent link">#</a></h3>
+<p><abbr title="Robot Operating System">ROS</abbr> 2 セットアップが期待どおりに実行されない場合は、<code>ros2doctor</code>ツールを使用してその設定を確認できます。</p>
+<p><code>ros2doctor</code>はプラットフォーム、バージョン、ネットワーク、環境、実行中のシステムなどを含む <abbr title="Robot Operating System">ROS</abbr> 2 のあらゆる側面をチェックし、考えられるエラーや問題の理由について警告します。</p>
+<p><code>ros2 doctor</code>ターミナルで<code>ros2 doctor</code>を実行するだけで簡単です。</p>
+<p>システム内のすべてのトピックについて"パブリッシャーのないサブスクライバー"をリストする機能があります。</p>
+<p>この情報は、必要なノードが実行中でないかどうかを見つけるのに役立ちます。</p>
+<p>詳細については、<a href="https://docs.ros.org/en/rolling/Tutorials/Beginner-Client-Libraries/Getting-Started-With-Ros2doctor.html">ros2doctorを使用して問題を特定する</a>に関する次の公式ドキュメントを参照してください。</p>
+<h2 id="_3">ブレークポイントを使用したデバッガの使用<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>多くのIDE(Visual Studio Code、CLion など)は、Linuxプラットフォーム上のGBDを使用したC/C++実行可能ファイルのデバッグをサポートしています。以下に、デバッガーの使用に関する参考資料をいくつか示します:</p>
 <ul>
 <li><a href="https://code.visualstudio.com/docs/cpp/cpp-debug">https://code.visualstudio.com/docs/cpp/cpp-debug</a></li>
 <li><a href="https://www.jetbrains.com/help/clion/debugging-code.html#useful-debugger-shortcuts">https://www.jetbrains.com/help/clion/debugging-code.html#useful-debugger-shortcuts</a></li>
