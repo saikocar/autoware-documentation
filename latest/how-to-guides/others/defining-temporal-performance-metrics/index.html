@@ -3839,8 +3839,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#detailed-temporal-performance-metrics-for-paths-between-obstacle-segmentation-and-planning" class="md-nav__link">
-    Detailed temporal performance metrics for Paths between Obstacle segmentation and Planning
+  <a href="#_8" class="md-nav__link">
+    障害物のセグメンテーションと計画の間のパスに関する詳細な時間パフォーマンスメトリクス
   </a>
   
 </li>
@@ -6733,8 +6733,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#detailed-temporal-performance-metrics-for-paths-between-obstacle-segmentation-and-planning" class="md-nav__link">
-    Detailed temporal performance metrics for Paths between Obstacle segmentation and Planning
+  <a href="#_8" class="md-nav__link">
+    障害物のセグメンテーションと計画の間のパスに関する詳細な時間パフォーマンスメトリクス
   </a>
   
 </li>
@@ -6851,61 +6851,61 @@ AWOV-013    CPA #26 と車両間のメッセージ レート  Autoware と Vehic
 <tbody>
 <tr>
 <td>AWOV-001</td>
-<td><strong>メッセージ頻度</strong> from CPA #9 to CPA #18</td>
-<td>Update rate of result from Prediction to Planning.</td>
-<td>Perception</td>
+<td>CPA #9 から CPA #18 までの<strong>メッセージ頻度</strong></td>
+<td>予測から計画への結果の更新速度。</td>
+<td>知覚</td>
 <td>10 Hz</td>
-<td>Planning relies on fresh and up-to-date perceived data from Perception for creating accurate trajectory.</td>
+<td>計画は、正確な軌道を作成するために、知覚からの新鮮で最新の知覚データに依存します。</td>
 <td></td>
 </tr>
 <tr>
 <td>AWOV-002</td>
-<td><strong>応答時間</strong> from CPA #0 to CPA #20 via CPA #18</td>
+<td>CPA #0 から CPA #18 を経由したCPA #20 までの<strong>応答時間</strong></td>
 <td>Response time in main body of Perception.</td>
-<td>Perception</td>
-<td>N/A</td>
+<td>知覚</td>
+<td>該当なし</td>
 <td>Planning relies on fresh and up-to-date perceived data from Perception for creating accurate trajectory.</td>
 <td>The metric is used if delay compensation is disabled in Tracking.</td>
 </tr>
 <tr>
 <td>AWOV-003</td>
-<td><strong>応答時間</strong> from CPA #7 to CPA #20</td>
+<td>CPA #7 から CPA #20 までの<strong>応答時間</strong></td>
 <td>Response time from Tracking output of Tracking to its data consumption in Planning.</td>
-<td>Perception</td>
-<td>N/A</td>
+<td>知覚</td>
+<td>該当なし</td>
 <td>Planning relies on fresh and up-to-date perceived data from Perception for creating accurate trajectory.</td>
 <td>The metric is used if delay compensation is enabled in Tracking.</td>
 </tr>
 <tr>
 <td>AWOV-004</td>
-<td><strong>応答時間</strong> from CPA #0 to CPA #6</td>
+<td>CPA #0 から CPA #6 までの<strong>応答時間</strong></td>
 <td>Duration to process pointcloud data in Sensing and Detection.</td>
-<td>Perception</td>
-<td>N/A</td>
+<td>知覚</td>
+<td>該当なし</td>
 <td>Tracking relies on detection to provide real-time and up-to-date sensed data for accurate tracking.</td>
 <td>The metric is used if delay compensation is enabled in Tracking.</td>
 </tr>
 <tr>
 <td>AWOV-005</td>
-<td><strong>メッセージ頻度</strong> from CPA #4 to CPA #5</td>
+<td>CPA #4 から CPA #5 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of Detection result received by Tracking.</td>
-<td>Perception</td>
+<td>知覚</td>
 <td>10 Hz</td>
 <td>Tracking relies on detection to provide real-time and up-to-date sensed data for accurate tracking.</td>
 <td></td>
 </tr>
 <tr>
 <td>AWOV-006</td>
-<td><strong>応答時間</strong> from CPA #0 to CPA #14</td>
+<td>CPA #0 から CPA #14 までの<strong>応答時間</strong></td>
 <td>Response time from output of observed data from LiDARs to its consumption in EKF Localizer via NDT Scan Matcher.</td>
 <td>Localization</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>EKF Localizer relies on fresh and up-to-date observed data from sensors for accurate estimation of self pose.</td>
 <td></td>
 </tr>
 <tr>
 <td>AWOV-007</td>
-<td><strong>メッセージ頻度</strong> from CPA #11 to CPA #13</td>
+<td>CPA #11 から CPA #13 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of pose estimated by NDT Scan Matcher.</td>
 <td>Localization</td>
 <td>10 Hz</td>
@@ -6914,7 +6914,7 @@ AWOV-013    CPA #26 と車両間のメッセージ レート  Autoware と Vehic
 </tr>
 <tr>
 <td>AWOV-008</td>
-<td><strong>メッセージ頻度</strong> from CPA #15 to CPA #12</td>
+<td>CPA #15 から CPA #12 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of feed backed pose estimated by EKF Localizer.</td>
 <td>Localization</td>
 <td>50 Hz</td>
@@ -6923,7 +6923,7 @@ AWOV-013    CPA #26 と車両間のメッセージ レート  Autoware と Vehic
 </tr>
 <tr>
 <td>AWOV-009</td>
-<td><strong>メッセージ頻度</strong> from CPA #17 to CPA #19</td>
+<td>CPA #17 から CPA #19 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of Localization result received by Planning.</td>
 <td>Localization</td>
 <td>50 Hz</td>
@@ -6932,16 +6932,16 @@ AWOV-013    CPA #26 と車両間のメッセージ レート  Autoware と Vehic
 </tr>
 <tr>
 <td>AWOV-010</td>
-<td><strong>応答時間</strong> from CPA #20 to CPA #23</td>
+<td>CPA #20 から CPA #23 までの<strong>応答時間</strong></td>
 <td>Processing time from beginning of Planning to consumption of Trajectory message in Control.</td>
 <td>Planning</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>A vehicle relies on Planning to update trajectory within a short time frame to achieve safe driving behavior.</td>
 <td></td>
 </tr>
 <tr>
 <td>AWOV-011</td>
-<td><strong>メッセージ頻度</strong> from CPA #21 to CPA #22</td>
+<td>CPA #21 から CPA #22 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of Trajectory message from Planning.</td>
 <td>Planning</td>
 <td>10 Hz</td>
@@ -6950,7 +6950,7 @@ AWOV-013    CPA #26 と車両間のメッセージ レート  Autoware と Vehic
 </tr>
 <tr>
 <td>AWOV-012</td>
-<td><strong>メッセージ頻度</strong> from CPA #24 to CPA #25</td>
+<td>CPA #24 から CPA #25 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of Control command.</td>
 <td>Control</td>
 <td>33 Hz</td>
@@ -6959,10 +6959,10 @@ AWOV-013    CPA #26 と車両間のメッセージ レート  Autoware と Vehic
 </tr>
 <tr>
 <td>AWOV-013</td>
-<td><strong>メッセージ頻度</strong> between CPA #26 and Vehicle</td>
+<td>between CPA #26 と 車両 の間の<strong>メッセージ頻度</strong></td>
 <td>Communication rate between Autoware and Vehicle.</td>
 <td>Vehicle Interface</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>A vehicle requires Autoware to communicate with each other at predetermined frequency.</td>
 <td>Temporal performance requirement varies depending on vehicle type.</td>
 </tr>
@@ -7025,7 +7025,7 @@ The diagram below introduces the model for temporal performance metrics for Perc
 <tbody>
 <tr>
 <td>APER-001</td>
-<td><strong>メッセージ頻度</strong> from CPP #2 to CPP #26</td>
+<td>CPP #2 から CPP #26  までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of Traffic Light Recognition.</td>
 <td>Traffic Light Recognition</td>
 <td>10 Hz</td>
@@ -7034,16 +7034,16 @@ The diagram below introduces the model for temporal performance metrics for Perc
 </tr>
 <tr>
 <td>APER-002</td>
-<td><strong>応答時間</strong> from CPP #0 to CPP #30</td>
+<td>CPP #0 から CPP #30 までの<strong>応答時間</strong></td>
 <td>Response time from camera input to consumption of the result in Planning.</td>
 <td>Traffic Light Recognition</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>Planning relies on fresh and up-to-date perceived data from Traffic Light Recognition for making precise decisions.</td>
 <td></td>
 </tr>
 <tr>
 <td>APER-003</td>
-<td><strong>メッセージ頻度</strong> from CPP #25 to CPP #28</td>
+<td>CPP #25 から CPP #28 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of result from Prediction (Object Recognition) to Planning.</td>
 <td>Object Recognition</td>
 <td>10 Hz</td>
@@ -7052,34 +7052,34 @@ The diagram below introduces the model for temporal performance metrics for Perc
 </tr>
 <tr>
 <td>APER-004</td>
-<td><strong>応答時間</strong> from CPP #6 to CPP #30</td>
+<td>CPP #6 から CPP #30 までの<strong>応答時間</strong></td>
 <td>Response time from Tracking output of Tracking to its data consumption in Planning.</td>
 <td>Object Recognition</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>Planning relies on fresh and up-to-date perceived data from Perception for creating accurate trajectory.</td>
 <td>The metric is same as AWOV-002 and used if delay compensation is disabled in Tracking.</td>
 </tr>
 <tr>
 <td>APER-005</td>
-<td><strong>応答時間</strong> from CPP #23 to CPP #30</td>
+<td>CPP #23 から CPP #30 までの<strong>応答時間</strong></td>
 <td>Response time from Tracking output of Tracking to its data consumption in Planning.</td>
 <td>Object Recognition</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>Planning relies on fresh and up-to-date perceived data from Perception for creating accurate trajectory.</td>
 <td>The metric is same as AWOV-003 and used if delay compensation is enabled in Tracking.</td>
 </tr>
 <tr>
 <td>APER-006</td>
-<td><strong>応答時間</strong> from CPP #6 to CPP #21</td>
+<td>CPP #6 から CPP #21 までの<strong>応答時間</strong></td>
 <td>Duration to process pointcloud data in Sensing and Detection.</td>
 <td>Object Recognition</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>Tracking relies on Detection to provide real-time and up-to-date perceived data.</td>
 <td>The metrics is same as AWOV-004 and used if delay compensation is enabled in Tracking.</td>
 </tr>
 <tr>
 <td>APER-007</td>
-<td><strong>メッセージ頻度</strong> from CPP #20 to CPP #21</td>
+<td>CPP #20 から CPP #21 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of Detection result received by Tracking.</td>
 <td>Object Recognition</td>
 <td>10 Hz</td>
@@ -7088,7 +7088,7 @@ The diagram below introduces the model for temporal performance metrics for Perc
 </tr>
 <tr>
 <td>APER-008</td>
-<td><strong>メッセージ頻度</strong> from CPP #14 to CPP #19</td>
+<td>CPP #14 から CPP #19 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of data sent from Sensor Fusion.</td>
 <td>Object Recognition</td>
 <td>10 Hz</td>
@@ -7097,7 +7097,7 @@ The diagram below introduces the model for temporal performance metrics for Perc
 </tr>
 <tr>
 <td>APER-009</td>
-<td><strong>メッセージ頻度</strong> from CPP #16 to CPP #19</td>
+<td>CPP #16 から CPP #19 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of data sent from Detection by Tracker.</td>
 <td>Object Recognition</td>
 <td>10 Hz</td>
@@ -7106,7 +7106,7 @@ The diagram below introduces the model for temporal performance metrics for Perc
 </tr>
 <tr>
 <td>APER-010</td>
-<td><strong>メッセージ頻度</strong> from CPP #18 to CPP #19</td>
+<td>CPP #18 から CPP #19 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of data sent from Validation</td>
 <td>Object Recognition.</td>
 <td>10 Hz</td>
@@ -7115,34 +7115,34 @@ The diagram below introduces the model for temporal performance metrics for Perc
 </tr>
 <tr>
 <td>APER-011</td>
-<td><strong>応答時間</strong> from CPP #6 to CPP #19 via CPP #14</td>
+<td>CPP #6 から CPP #14 を経由したCPP #19<strong>応答時間</strong></td>
 <td>Response time to consume data sent from Sensor Fusion after LiDARs output pointcloud.</td>
 <td>Object Recognition</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>Association Merger relies on fresh and up-to-date data for data synchronization.</td>
 <td></td>
 </tr>
 <tr>
 <td>APER-012</td>
-<td><strong>応答時間</strong> from CPP #6 to CPP #19 via CPP #16</td>
+<td>CPP #6 から CPP #16 を経由したCPP #19 までの<strong>応答時間</strong></td>
 <td>Response time to consume data sent from Detection by Tracker after LiDARs output pointcloud.</td>
 <td>Object Recognition</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>Association Merger relies on fresh and up-to-date data for data synchronization.</td>
 <td></td>
 </tr>
 <tr>
 <td>APER-013</td>
-<td><strong>応答時間</strong> from CPP #6 to CPP #19 via CPP #18</td>
+<td>CPP #6 から CPP #18 を経由したCPP #19<strong>応答時間</strong></td>
 <td>Response time to consume data sent from Validator after LiDARs output pointcloud.</td>
 <td>Object Recognition</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>Association Merger relies on fresh and up-to-date data for data synchronization.</td>
 <td></td>
 </tr>
 <tr>
 <td>APER-014</td>
-<td><strong>メッセージ頻度</strong> from CPP #10 to CPP #13</td>
+<td>CPP #10 から CPP #13 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of data sent from Clustering.</td>
 <td>Object Recognition</td>
 <td>10 Hz</td>
@@ -7151,7 +7151,7 @@ The diagram below introduces the model for temporal performance metrics for Perc
 </tr>
 <tr>
 <td>APER-015</td>
-<td><strong>メッセージ頻度</strong> from CPP #5 to CPP #13</td>
+<td>CPP #5 から CPP #13 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of data sent from Camera-based Object detection.</td>
 <td>Object Recognition</td>
 <td>10 Hz</td>
@@ -7160,25 +7160,25 @@ The diagram below introduces the model for temporal performance metrics for Perc
 </tr>
 <tr>
 <td>APER-016</td>
-<td><strong>応答時間</strong> from CPP #6 to CPP #13</td>
+<td>CPP #6 から CPP #13 までの<strong>応答時間</strong></td>
 <td>Response time to consume data sent from Clustering after LiDARs output pointcloud.</td>
 <td>Object Recognition</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>Sensor Fusion relies on fresh and up-to-date data for data synchronization.</td>
 <td></td>
 </tr>
 <tr>
 <td>APER-017</td>
-<td><strong>応答時間</strong> from CPP #3 to CPP #13</td>
+<td>CPP #3 から CPP #13 までの<strong>応答時間</strong></td>
 <td>Response time to consume data sent from Camera-based Object detection after Cameras output images.</td>
 <td>Object Recognition</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>Sensor Fusion relies on fresh and up-to-date data for data synchronization.</td>
 <td></td>
 </tr>
 <tr>
 <td>APER-018</td>
-<td><strong>メッセージ頻度</strong> from CPP #10 to CPP #17</td>
+<td>CPP #10 から CPP #17 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of data sent from Clustering.</td>
 <td>Object Recognition</td>
 <td>10 Hz</td>
@@ -7187,7 +7187,7 @@ The diagram below introduces the model for temporal performance metrics for Perc
 </tr>
 <tr>
 <td>APER-019</td>
-<td><strong>メッセージ頻度</strong> from CPP #12 to CPP #17</td>
+<td>CPP #12 から CPP #17 までの<strong>メッセージ頻度</strong></td>
 <td>Update rate of data sent from DNN-based Object Recognition.</td>
 <td>Object Recognition</td>
 <td>10 Hz</td>
@@ -7196,92 +7196,79 @@ The diagram below introduces the model for temporal performance metrics for Perc
 </tr>
 <tr>
 <td>APER-020</td>
-<td><strong>応答時間</strong> from CPP #6 to CPP #17 via CPP #10</td>
+<td>CPP #6 から CPP #10 を経由したCPP #17 までの<strong>応答時間</strong></td>
 <td>Response time to consume data sent from Clustering after LiDARs output pointcloud.</td>
 <td>Object Recognition</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>Validator relies on fresh and update-date data for data synchronization.</td>
 <td>It seems similar to APER-015, but the topic message is different.</td>
 </tr>
 <tr>
 <td>APER-021</td>
-<td><strong>応答時間</strong> from CPP #6 to CPP #17 via CPP #12</td>
+<td>CPP #6 から CPP #12 を経由したCPP #17 までの<strong>応答時間</strong></td>
 <td>Response time to consume data sent from DNN-based Object Recognition after LiDARs output pointcloud.</td>
 <td>Object Recognition</td>
-<td>N/A</td>
+<td>該当なし</td>
 <td>Validator relies on fresh and update-date data for data synchronization.</td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<h3 id="detailed-temporal-performance-metrics-for-paths-between-obstacle-segmentation-and-planning">Detailed temporal performance metrics for Paths between Obstacle segmentation and Planning<a class="headerlink" href="#detailed-temporal-performance-metrics-for-paths-between-obstacle-segmentation-and-planning" title="Permanent link">#</a></h3>
-<p>障害物のセグメンテーションと計画の間のパスに関する詳細な時間パフォーマンス メトリクス
-Perception の重要な部分である障害物のセグメンテーションは、データを Planning に送信します。以下の図は、障害物のセグメンテーションと計画に関連するパフォーマンス メトリックを考慮したモデルを示しています。</p>
-<p>障害物セグメンテーションの時間パフォーマンス指標のモデル</p>
+<h3 id="_8">障害物のセグメンテーションと計画の間のパスに関する詳細な時間パフォーマンスメトリクス<a class="headerlink" href="#_8" title="Permanent link">#</a></h3>
+<p>知覚の重要な部分である障害物のセグメンテーションは、データを計画に送信します。以下の図は、障害物のセグメンテーションと計画に関連するパフォーマンスメトリックを考慮したモデルを示しています。</p>
+<p><img alt="障害物セグメンテーションの時間パフォーマンス指標のモデル" src="../images/important-temporal-performance-metrics/model-for-obstacle-segmentation-metrics.svg"></p>
 <div class="admonition 注記">
 <p class="admonition-title">注記</p>
+<p>障害物グリッドマップと障害物セグメンテーションは両方とも、計画の複数のサブコンポーネントにデータを送信します。ただし、これらのサブコンポーネントのすべてがモデルに記述されているわけではありません。これは、私たちが主に焦点を当てているのは、LiDARから障害物セグメンテーションを介した計画へのパスであるためです。</p>
 </div>
-<p>Both the Obstacle grid map and Obstacle segmentation transmit data to multiple sub-components of Planning. However, not all of these sub-components are described in the model. This is because our primary focus is on the paths from LiDAR to Planning via Obstacle segmentation.
-次のリストは、障害物のセグメンテーションと計画に関する一時的なパフォーマンス メトリックを示しています。</p>
-<p>ID  モデルでの表現 メトリクスの意味    関連機能    基準値 指標として選択する理由 注記
-OSEG-001    CPS #4 から CPS #7 までのメッセージ レート   計画によって受信された占有グリッド マップの更新率 ( behavior_path_planner)  障害物のセグメンテーション   10Hz    計画は、正確な軌道を作成するために頻繁かつスムーズに更新される占有グリッド マップに依存します。  <br>
-OSEG-002    CPS #0 から CPS #7 を経由して CPS #9 までの応答時間   LiDAR がセンシング データを出力した後、占有グリッド マップを消費するまでの応答時間。  障害物のセグメンテーション   該当なし    計画は、正確な軌道を作成するために、占有グリッド マップからの新鮮で最新の認識データに依存します。 <br>
-OSEG-003    CPS #6 から CPS #11 までのメッセージ レート  計画によって受信された障害物セグメント化の更新レート ( behavior_velocity_planner)。    障害物のセグメンテーション   10Hz    計画は、正確な軌道を作成するために頻繁かつスムーズに更新される障害物セグメンテーションに依存しています。  <br>
-OSEG-004    CPS #0 から CPS #11 を経由して CPS #13 までの応答時間 LiDAR がセンシング データを出力した後、障害物セグメンテーションを消費するまでの応答時間。    障害物のセグメンテーション   該当なし    計画は、正確な軌道を作成するために、障害物セグメンテーションからの新鮮で最新の知覚データに依存します。
-Obstacle segmentation, which is a crucial part of Perception, transmits data to Planning. The figure below illustrates the model that takes into account performance metrics related to Obstacle segmentation and Planning.</p>
-<p><img alt="Model for Obstacle segmentation temporal performance metrics" src="../images/important-temporal-performance-metrics/model-for-obstacle-segmentation-metrics.svg"></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Both the Obstacle grid map and Obstacle segmentation transmit data to multiple sub-components of Planning. However, not all of these sub-components are described in the model. This is because our primary focus is on the paths from LiDAR to Planning via Obstacle segmentation.</p>
-</div>
-<p>The following list shows the temporal performance metrics around Obstacle segmentation and Planning.</p>
+<p>次のリストは、障害物のセグメンテーションと計画に関する一時的なパフォーマンスメトリックを示しています。</p>
 <table>
 <thead>
 <tr>
 <th>ID</th>
-<th>Representation in the model</th>
-<th>Metric meaning</th>
-<th>Related functionality</th>
-<th>Reference value</th>
-<th>Reason to choose it as a metric</th>
-<th>Note</th>
+<th>モデルでの表現</th>
+<th>メトリクスの意味</th>
+<th>関連機能</th>
+<th>基準値</th>
+<th>指標として選択する理由</th>
+<th>注記</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>OSEG-001</td>
-<td><strong>メッセージ頻度</strong> from CPS #4 to CPS #7</td>
-<td>Update rate of Occupancy grid map received by Planning (<code>behavior_path_planner</code>)</td>
-<td>Obstacle segmentation</td>
+<td>CPS #4 から CPS #7 までの<strong>メッセージ頻度</strong></td>
+<td>計画によって受信された占有グリッドマップの更新率(<code>behavior_path_planner</code>)。</td>
+<td>障害物のセグメンテーション</td>
 <td>10 Hz</td>
-<td>Planning relies on Occupancy grid map to be updated frequently and smoothly for creating accurate trajectory.</td>
+<td>計画は、正確な軌道を作成するために頻繁かつスムーズに更新される占有グリッド マップに依存します。</td>
 <td></td>
 </tr>
 <tr>
 <td>OSEG-002</td>
-<td><strong>応答時間</strong> from CPS #0 to CPS #9 via CPS #7</td>
-<td>Response time to consume Occupancy grid map after LiDARs output sensing data.</td>
-<td>Obstacle segmentation</td>
-<td>N/A</td>
-<td>Planning relies on fresh and up-to-date perceived data from Occupancy grid map for creating accurate trajectory..</td>
+<td>CPS #0 から CPS #7 を経由したCPS #9 までの<strong>応答時間</strong></td>
+<td>LiDARが計測データを出力した後、占有グリッド マップを消費するまでの応答時間。</td>
+<td>障害物のセグメンテーション</td>
+<td>該当なし</td>
+<td>計画は、正確な軌道を作成するために、占有グリッド マップからの新鮮で最新の認識データに依存します。.</td>
 <td></td>
 </tr>
 <tr>
 <td>OSEG-003</td>
-<td><strong>メッセージ頻度</strong> from CPS #6 to CPS #11</td>
-<td>Update rate of obstacle segmentation received by Planning (<code>behavior_velocity_planner</code>).</td>
-<td>Obstacle segmentation</td>
+<td>CPS #6 から CPS #11 までの<strong>メッセージ頻度</strong></td>
+<td>計画によって受信された障害物セグメント化の更新レート<code>behavior_velocity_planner</code>)。</td>
+<td>障害物のセグメンテーション</td>
 <td>10 Hz</td>
-<td>Planning relies on Obstacle segmentation to be updated frequently and smoothly for creating accurate trajectory.</td>
+<td>計画は、正確な軌道を作成するために頻繁かつスムーズに更新される障害物セグメンテーションに依存しています。</td>
 <td></td>
 </tr>
 <tr>
 <td>OSEG-004</td>
-<td><strong>応答時間</strong> from CPS #0 to CPS #13 via CPS #11</td>
-<td>Response time to consume Obstacle segmentation after LiDARs output sensing data.</td>
-<td>Obstacle segmentation</td>
-<td>N/A</td>
-<td>Planning relies on fresh and up-to-date perceived data from Obstacle segmentation for creating accurate trajectory..</td>
+<td>CPS #0 から CPS #11 を経由したCPS #13 までの<strong>応答時間</strong></td>
+<td>LiDARが計測データを出力した後、障害物セグメンテーションを消費するまでの応答時間。</td>
+<td>障害物のセグメンテーション</td>
+<td>該当なし</td>
+<td>計画は、正確な軌道を作成するために、障害物セグメンテーションからの新鮮で最新の知覚データに依存します。.</td>
 <td></td>
 </tr>
 </tbody>
