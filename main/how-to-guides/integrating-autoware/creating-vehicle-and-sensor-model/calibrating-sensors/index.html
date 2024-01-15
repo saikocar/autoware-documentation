@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>センサーを調整する - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#calibrating-your-sensors" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              センサーを調整する
             
           </span>
         </div>
@@ -6561,44 +6561,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#_2" class="md-nav__link">
+    概要
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#other-packages-you-can-check-out" class="md-nav__link">
-    Other packages you can check out
+  <a href="#_3" class="md-nav__link">
+    チェックアウトできるその他のパッケージ
   </a>
   
-    <nav class="md-nav" aria-label="Other packages you can check out">
+    <nav class="md-nav" aria-label="チェックアウトできるその他のパッケージ">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#camera-calibration" class="md-nav__link">
-    Camera calibration
+  <a href="#_4" class="md-nav__link">
+    カメラのキャリブレーション
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#lidar-lidar-calibration" class="md-nav__link">
-    Lidar-lidar calibration
+  <a href="#_6" class="md-nav__link">
+    ライダー間のキャリブレーション
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#lidar-camera-calibration" class="md-nav__link">
-    Lidar-camera calibration
+  <a href="#lidar-" class="md-nav__link">
+    Lidar-カメラキャリブレーション
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#lidar-imu-calibration" class="md-nav__link">
-    Lidar-IMU calibration
+  <a href="#lidar-imu" class="md-nav__link">
+    Lidar-IMUキャリブレーション
   </a>
   
 </li>
@@ -6626,63 +6626,41 @@
   
 
 
-<div><p>センサーを調整する
-概要
-Autoware は、知覚、位置特定、計画スタックへの入力として複数のセンサーが車両に取り付けられることを期待しています。Autoware は、フュージョン技術を使用して、複数のセンサーからの情報を結合します。これを効果的に機能させるには、すべてのセンサーを適切にキャリブレーションして座標系を揃える必要があり、センサーの位置を urdf ファイル ( sample_sensor_kitなど) または tf 起動ファイルのいずれかを使用して定義する必要があります。このドキュメントでは、キャリブレーション プロセス用のTIER IV のCalibrationToolsリポジトリについて説明します。このツールのインストールと使用方法については、TIER IV の CalibrationTools のページを参照してください。</p>
+<div><h1 id="_1">センサーを調整する<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">概要<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>Autoware は、知覚、位置特定、計画スタックへの入力として複数のセンサーが車両に取り付けられることを期待しています。
+Autoware は、フュージョン技術を使用して、複数のセンサーからの情報を結合します。
+これを効果的に機能させるには、
+すべてのセンサーを適切にキャリブレーションして座標系を揃える必要があり、センサーの位置を urdf ファイル
+(<a href="https://github.com/autowarefoundation/sample_sensor_kit_launch/tree/main/sample_sensor_kit_description">sample_sensor_kit</a>など)
+または tf 起動ファイルのいずれかを使用して定義する必要があります。
+このドキュメントでは、
+キャリブレーション プロセス用のTIER IV の<a href="https://github.com/tier4/CalibrationTools">CalibrationTools</a>リポジトリについて説明します。
+このツールのインストールと使用方法については、
+<a href="./calibration-tools">STIER IV の CalibrationTools のページ</a>を参照してください。</p>
 <p>他のキャリブレーション パッケージとメソッドを確認したい場合は、次のパッケージをチェックアウトできます。</p>
-<p>チェックアウトできるその他のパッケージ
-カメラのキャリブレーション
-固有の校正
-Navigation2 は、カメラの内部キャリブレーションに関する優れたチュートリアルを提供します。
-AutoCore は軽量ツールを提供します。
-ライダー間のキャリブレーション
-Autocore の Lidar-Lidar キャリブレーション ツール
-AutoCoreによって提供されるGitHub の LL-Calib は、オンライン/オフラインの 3D LiDAR 間キャリブレーション用の軽量ツールキットです。これは、ローカル マッピングと「GICP」手法に基づいて、メイン LIDAR とサブ LIDAR 間の関係を導き出します。ツールの使用方法、トラブルシューティングのヒント、および rosbag の例に関する情報は、上記のリンクで参照できます。</p>
-<p>LiDAR カメラのキャリブレーション
-MathWorks によって開発された Lidar Camera Calibrator アプリを使用すると、LIDAR センサーとカメラ間の剛体変換を対話的に推定できます。</p>
-<p>https://ww2.mathworks.cn/help/lidar/ug/get-started-lidar-camera-calibrator.html</p>
-<p>SensorsCalibration ツールボックス v0.1: Lidar カメラ キャリブレーション用のもう 1 つのオープン ソース メソッド。これは、自動キャリブレーションと手動キャリブレーションを含む、LiDAR からカメラへのキャリブレーションのプロジェクトです。</p>
-<p>https://github.com/PJLab-ADG/SensorsCalibration/blob/master/lidar2camera/README.md</p>
-<p>AutoCoreによって開発された、Lidar カメラ キャリブレーション用の使いやすい軽量ツールキットが提案されています。わずか 3 つのステップで、完全自動キャリブレーションが実行されます。</p>
-<p>https://github.com/autocore-ai/calibration_tools/tree/main/lidar-cam-calib-関連</p>
-<p>Lidar-<abbr title="Inertial Measurement Unit">IMU</abbr> キャリブレーション
-中国の浙江大学のAPRIL Labによって開発されたLI-Calib キャリブレーション ツールは、連続時間バッチ最適化に基づいて、6DoF 剛体変換と 3D LiDAR と <abbr title="Inertial Measurement Unit">IMU</abbr> の間の時間オフセットをキャリブレーションするためのツールキットです。<abbr title="Inertial Measurement Unit">IMU</abbr> ベースのコストと LiDAR のポイントからサーフェル (サーフェル = 表面要素) までの距離が同時に最小化されるため、一般的なシナリオでキャリブレーションの問題が十分に制約されます。</p>
-<p>AutoCore は、オリジナルの LI-Calib ツールをフォークし、より一般的な用途のために Lidar 入力を上書きしました。このツールの使用方法、トラブルシューティングのヒント、および rosbag の例に関する情報は、GitHub の LI-Calib フォークで見つけることができます。</p>
-<h1 id="calibrating-your-sensors">Calibrating your sensors<a class="headerlink" href="#calibrating-your-sensors" title="Permanent link">#</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<p>Autoware expects to have multiple sensors attached to the vehicle as input to perception, localization, and planning stack.
-Autoware uses fusion techniques to combine information from multiple sensors.
-For this to work effectively,
-all sensors must be calibrated properly to align their coordinate systems, and their positions must be defined using either urdf files
-(as in <a href="https://github.com/autowarefoundation/sample_sensor_kit_launch/tree/main/sample_sensor_kit_description">sample_sensor_kit</a>)
-or as tf launch files.
-In this documentation,
-we will explain TIER IV's <a href="https://github.com/tier4/CalibrationTools">CalibrationTools</a> repository for the calibration process.
-Please look
-at <a href="./calibration-tools">Starting with TIER IV's CalibrationTools page</a> for installation and usage of this tool.</p>
-<p>If you want to look at other calibration packages and methods, you can check out the following packages.</p>
-<h2 id="other-packages-you-can-check-out">Other packages you can check out<a class="headerlink" href="#other-packages-you-can-check-out" title="Permanent link">#</a></h2>
-<h3 id="camera-calibration">Camera calibration<a class="headerlink" href="#camera-calibration" title="Permanent link">#</a></h3>
-<h4 id="intrinsic-calibration">Intrinsic Calibration<a class="headerlink" href="#intrinsic-calibration" title="Permanent link">#</a></h4>
+<h2 id="_3">チェックアウトできるその他のパッケージ<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h3 id="_4">カメラのキャリブレーション<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<h4 id="_5">固有の校正<a class="headerlink" href="#_5" title="Permanent link">#</a></h4>
 <ul>
-<li>Navigation2 provides a <a href="https://navigation.ros.org/tutorials/docs/camera_calibration.html">good tutorial for camera internal calibration</a>.</li>
-<li><a href="https://autocore.ai/">AutoCore</a> provides a <a href="https://github.com/autocore-ai/calibration_tools/tree/main/camera_intrinsic_calib">light-weight tool</a>.</li>
+<li>Navigation2は、<a href="https://navigation.ros.org/tutorials/docs/camera_calibration.html">カメラの内部キャリブレーションに関する優れたチュートリアル</a>を提供します。</li>
+<li><a href="https://autocore.ai/">AutoCore</a>は<a href="https://github.com/autocore-ai/calibration_tools/tree/main/camera_intrinsic_calib">軽量ツール</a>を提供します。</li>
 </ul>
-<h3 id="lidar-lidar-calibration">Lidar-lidar calibration<a class="headerlink" href="#lidar-lidar-calibration" title="Permanent link">#</a></h3>
-<h4 id="lidar-lidar-calibration-tool-from-autocore">Lidar-Lidar Calibration tool from Autocore<a class="headerlink" href="#lidar-lidar-calibration-tool-from-autocore" title="Permanent link">#</a></h4>
-<p><a href="https://github.com/autocore-ai/calibration_tools/tree/main/lidar-lidar-calib">LL-Calib on GitHub</a>, provided by <a href="https://autocore.ai/">AutoCore</a>, is a lightweight toolkit for online/offline 3D LiDAR to LiDAR calibration. It's based on local mapping and "GICP" method to derive the relation between main and sub lidar. Information on how to use the tool, troubleshooting tips and example rosbags can be found at the above link.</p>
-<h3 id="lidar-camera-calibration">Lidar-camera calibration<a class="headerlink" href="#lidar-camera-calibration" title="Permanent link">#</a></h3>
-<p>Developed by MathWorks, The Lidar Camera Calibrator app enables you to interactively estimate the rigid transformation between a lidar sensor and a camera.</p>
+<h3 id="_6">ライダー間のキャリブレーション<a class="headerlink" href="#_6" title="Permanent link">#</a></h3>
+<h4 id="autocore-lidar-lidar">Autocore の Lidar-lidarキャリブレーション ツール<a class="headerlink" href="#autocore-lidar-lidar" title="Permanent link">#</a></h4>
+<p><a href="https://autocore.ai/">AutoCore</a>によって提供される<a href="https://github.com/autocore-ai/calibration_tools/tree/main/lidar-lidar-calib">GitHub の LL-Calib</a>は、オンライン/オフラインの 3D LiDAR 間キャリブレーション用の軽量ツールキットです。これは、ローカル マッピングと"GICP"手法に基づいて、メイン LIDAR とサブ LIDAR 間の関係を導き出します。ツールの使用方法、トラブルシューティングのヒント、および rosbag の例に関する情報は、上記のリンクで参照できます。</p>
+<h3 id="lidar-">Lidar-カメラキャリブレーション<a class="headerlink" href="#lidar-" title="Permanent link">#</a></h3>
+<p>MathWorks によって開発された Lidar Camera Calibrator アプリを使用すると、LIDAR センサーとカメラ間の剛体変換を対話的に推定できます。</p>
 <p><a href="https://ww2.mathworks.cn/help/lidar/ug/get-started-lidar-camera-calibrator.html">https://ww2.mathworks.cn/help/lidar/ug/get-started-lidar-camera-calibrator.html</a></p>
-<p>SensorsCalibration toolbox v0.1: One more open source method for Lidar-camera calibration.
-This is a project for LiDAR to camera calibration,including automatic calibration and manual calibration</p>
+<p>SensorsCalibration toolbox v0.1: Lidar カメラ キャリブレーション用のもう 1 つのオープン ソース メソッド。
+これは、自動キャリブレーションと手動キャリブレーションを含む、LiDAR からカメラへのキャリブレーションのプロジェクトです</p>
 <p><a href="https://github.com/PJLab-ADG/SensorsCalibration/blob/master/lidar2camera/README.md">https://github.com/PJLab-ADG/SensorsCalibration/blob/master/lidar2camera/README.md</a></p>
-<p>Developed by <a href="https://autocore.ai/">AutoCore</a>, an easy-to-use lightweight toolkit for Lidar-camera-calibration is proposed. Only in three steps, a fully automatic calibration will be done.</p>
+<p><a href="https://autocore.ai/">AutoCore</a>によって開発された、Lidar カメラ キャリブレーション用の使いやすい軽量ツールキットが提案されています。わずか 3 つのステップで、完全自動キャリブレーションが実行されます。</p>
 <p><a href="https://github.com/autocore-ai/calibration_tools/tree/main/lidar-cam-calib-related">https://github.com/autocore-ai/calibration_tools/tree/main/lidar-cam-calib-related</a></p>
-<h3 id="lidar-imu-calibration">Lidar-<abbr title="Inertial Measurement Unit">IMU</abbr> calibration<a class="headerlink" href="#lidar-imu-calibration" title="Permanent link">#</a></h3>
-<p>Developed by <a href="https://github.com/APRIL-ZJU">APRIL Lab</a> at Zhejiang University in China, the LI-Calib calibration tool is a toolkit for calibrating the 6DoF rigid transformation and the time offset between a 3D LiDAR and an <abbr title="Inertial Measurement Unit">IMU</abbr>, based on continuous-time batch optimization.
-<abbr title="Inertial Measurement Unit">IMU</abbr>-based cost and LiDAR point-to-surfel (surfel = surface element) distance are minimized jointly, which renders the calibration problem well-constrained in general scenarios.</p>
-<p><a href="https://autocore.ai/">AutoCore</a> has forked the original LI-Calib tool and overwritten the Lidar input for more general usage. Information on how to use the tool, troubleshooting tips and example rosbags can be found at the <a href="https://github.com/autocore-ai/calibration_tools/tree/main/li_calib">LI-Calib fork on GitHub</a>.</p>
+<h3 id="lidar-imu">Lidar-IMUキャリブレーション<a class="headerlink" href="#lidar-imu" title="Permanent link">#</a></h3>
+<p>中国の浙江大学の<a href="https://github.com/APRIL-ZJU">APRIL Lab</a>によって開発されたLI-Calib キャリブレーション ツールは、連続時間バッチ最適化に基づいて、6DoF 剛体変換と 3D LiDAR と <abbr title="Inertial Measurement Unit">IMU</abbr> の間の時間オフセットをキャリブレーションするためのツールキットです。
+<abbr title="Inertial Measurement Unit">IMU</abbr> ベースのコストと LiDAR のポイントからサーフェル (サーフェル = 表面要素) までの距離が同時に最小化されるため、一般的なシナリオでキャリブレーションの問題が十分に制約されます。</p>
+<p><a href="https://autocore.ai/">AutoCore</a>は、オリジナルの LI-Calib ツールをフォークし、より一般的な用途のために Lidar 入力を上書きしました。このツールの使用方法、トラブルシューティングのヒント、および rosbag の例に関する情報は、<a href="https://github.com/autocore-ai/calibration_tools/tree/main/li_calib">GitHub の LI-Calib フォーク</a>で見つけることができます。</p>
 <!-- prettier-ignore --></div>
 
 
