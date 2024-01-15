@@ -25,57 +25,7 @@ git clone https://github.com/YOUR_NAME/autoware.git
 複数の種類の車両を設定する場合は"autoware.vehicle_A"や"autoware.vehicle_B"のようなサフィックスを追加することをお勧めします
 
 ## 2. 車両とセンサーの説明を作成する
-2. 車両とセンサーの説明を作成する
-次に、車両と車両のセンサー構成を定義する記述パッケージを作成する必要があります。
 
-次の 2 つのパッケージを作成します。
-
-YOUR_VEHICLE_launch (例はここを参照)
-YOUR_SENSOR_KIT_launch (例はここを参照)
-autoware.repos作成したら、クローンされた Autoware リポジトリのファイルを更新して、これら 2 つの説明パッケージを参照する必要があります。
-
--  # sensor_kit
--  sensor_kit/sample_sensor_kit_launch:
--    type: git
--    url: https://github.com/autowarefoundation/sample_sensor_kit_launch.git
--    version: main
--  # vehicle
--  vehicle/sample_vehicle_launch:
--    type: git
--    url: https://github.com/autowarefoundation/sample_vehicle_launch.git
--    version: main
-+  # sensor_kit
-+  sensor_kit/YOUR_SENSOR_KIT_launch:
-+    type: git
-+    url: https://github.com/YOUR_NAME/YOUR_SENSOR_KIT_launch.git
-+    version: main
-+  # vehicle
-+  vehicle/YOUR_VEHICLE_launch:
-+    type: git
-+    url: https://github.com/YOUR_NAME/YOUR_VEHICLE_launch.git
-+    version: main
-YOUR_VEHICLE_launch を Autoware 起動システムに適応させる
-YOUR_VEHICLE_description で
-車両記述パッケージで URDF とパラメータを定義します (例については、サンプル車両記述パッケージを参照してください)。
-
-YOUR_VEHICLE_launch 時
-起動ファイルを作成します (たとえば、サンプル車両起動パッケージを参照してください)。同じハードウェア設定の車両が複数ある場合は、vehicle_idそれらを区別するために指定できます。
-
-YOUR_SENSOR_KIT_description を Autoware 起動システムに適合させる
-YOUR_SENSOR_KIT_description にあります
-ここですべてのセンサーの URDF および外部パラメーターを定義します (たとえば、サンプル センサー キットの説明パッケージを参照してください)。事前にすべてのセンサーの外部パラメーターを調整する必要があることに注意してください。
-
-YOUR_SENSOR_KIT_launch 時
-launch/sensing.launch.xml車両上のすべてのセンサーのインターフェイスを起動する作成。(たとえば、サンプル センサー キットの起動パッケージを参照してください)。
-
-!!! 注記
-
-At this point, you are now able to run Autoware's Planning Simulator to do a basic test of your vehicle and sensing packages.
-To do so, you need to build and install Autoware using your cloned repository. Follow the [steps for either Docker or source installation](../installation/) (starting from the dependency installation step) and then run the following command:
-
-```bash
-ros2 launch autoware_launch planning_simulator.launch.xml vehicle_model:=YOUR_VEHICLE sensor_kit:=YOUR_SENSOR_KIT map_path:=/PATH/TO/YOUR/MAP
-```
 次に、車両と車両のセンサー構成を定義する記述パッケージを作成する必要があります。
 
 次の2つのパッケージを作成します:
@@ -119,16 +69,16 @@ ros2 launch autoware_launch planning_simulator.launch.xml vehicle_model:=YOUR_VE
 起動ファイルを作成します(例については[車両起動パッケージのサンプル](https://github.com/autowarefoundation/sample_vehicle_launch/tree/main/sample_vehicle_launch)を参照してください)。
 同じハードウェア設定の車両が複数ある場合は`vehicle_id`をそれらを区別するために指定できます。
 
-### Adapt YOUR_SENSOR_KIT_description for autoware launching system
+### YOUR_SENSOR_KIT_description を Autoware 起動システムに適合させる
 
 #### YOUR_SENSOR_KIT_descriptionで
 
-Define URDF and extrinsic parameters for all the sensors here (refer to the [sample sensor kit description package](https://github.com/autowarefoundation/sample_sensor_kit_launch/tree/main/sample_sensor_kit_description) for example).
-Note that you need to calibrate extrinsic parameters for all the sensors beforehand.
+ここですべてのセンサーの URDF および外部パラメーターを定義します(たとえば[サンプル センサー キットの説明パッケージ](https://github.com/autowarefoundation/sample_sensor_kit_launch/tree/main/sample_sensor_kit_description)を参照してください)。
+事前にすべてのセンサーの外部パラメーターを調整する必要があることに注意してください。
 
 #### YOUR_SENSOR_KIT_launchで
 
-Create `launch/sensing.launch.xml` that launches the interfaces of all the sensors on the vehicle. (refer to the [sample sensor kit launch package](https://github.com/autowarefoundation/sample_sensor_kit_launch/tree/main/sample_sensor_kit_launch) for example).
+車両上のすべてのセンサーのインターフェイスを起動する`launch/sensing.launch.xml`を作成します。(たとえば、[サンプル センサー キットの起動パッケージ](https://github.com/autowarefoundation/sample_sensor_kit_launch/tree/main/sample_sensor_kit_launch)を参照してください)。
 
 !!! 注記
 
