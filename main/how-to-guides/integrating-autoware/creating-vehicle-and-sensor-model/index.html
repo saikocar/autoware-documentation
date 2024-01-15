@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>車両とセンサーのモデルの作成 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#creating-vehicle-and-sensor-models" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              車両とセンサーのモデルの作成
             
           </span>
         </div>
@@ -6561,23 +6561,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#_2" class="md-nav__link">
+    概要
   </a>
   
-    <nav class="md-nav" aria-label="Overview">
+    <nav class="md-nav" aria-label="概要">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#sensor-model" class="md-nav__link">
-    Sensor Model
+  <a href="#_3" class="md-nav__link">
+    センサーモデル
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#vehicle-model" class="md-nav__link">
-    Vehicle Model
+  <a href="#_4" class="md-nav__link">
+    車両モデル
   </a>
   
 </li>
@@ -6605,93 +6605,65 @@
   
 
 
-<div><p>車両とセンサーのモデルの作成
-概要
-センサーモデル
-目的:センサー モデルには、自動運転車で使用されるセンサーの校正 (変換) ファイルと起動ファイルが含まれています。これには、LiDAR、カメラ、レーダー、<abbr title="Inertial Measurement Unit">IMU</abbr> (慣性測定ユニット)、GPS ユニットなどのさまざまなセンサーが含まれます。</p>
-<p>重要:正確なセンサー モデリングは知覚タスクに不可欠です。正確なキャリブレーション値は、物体の検出、距離の推定、周囲の 3D 表現の作成などのセンサー データを処理することにより、環境を理解するのに役立ちます。</p>
-<p>使用法:センサー モデルは、センサーの起動、パイプラインの構成、およびキャリブレーション値の記述のために Autoware で利用されます。</p>
-<p>センサーモデル（センサーキット）は以下の3つのパッケージで構成されています。</p>
-<p>common_sensor_launch
-<your_vehicle_name>_sensor_kit_description
-<your_vehicle_name>_sensor_kit_launch
-個別のセンサー モデルの作成については、センサー モデルの作成ページを参照してください。</your_vehicle_name></your_vehicle_name></p>
-<p>参考として、 Autoware のsample_sensor_kit_launchパッケージのフォルダー構造を次に示します。</p>
-<p>sample_sensor_kit_launch/
-├─ common_sensor_launch/
-├─ sample_sensor_kit_description/
-└─ sample_sensor_kit_launch/
-車両型式
-目的:車両モデルには、寸法を含む個々の車両仕様、車両の 3D モデル (.fbx または .dae 形式) などが含まれます。</p>
-<p>重要:正確な車両モデルは、動作計画と制御にとって非常に重要です。</p>
-<p>使用法:車両モデルは、車両の 3D モデルを含む Autoware の車両情報を提供するために Autoware で使用されます。</p>
-<p>車両モデルは次の 2 つのパッケージで構成されます。</p>
-<p><your_vehicle_name>_vehicle_description
-<your_vehicle_name>_vehicle_launch
-個別の車両モデルの作成については、車両モデルの作成ページを参照してください。</your_vehicle_name></your_vehicle_name></p>
-<p>参考として、Autoware のsample_vehicle_launchパッケージのフォルダー構造を次に示します。</p>
-<p>sample_vehicle_launch/
-├─ sample_vehicle_description/
-└─ sample_vehicle_launch/</p>
-<h1 id="creating-vehicle-and-sensor-models">Creating vehicle and sensor models<a class="headerlink" href="#creating-vehicle-and-sensor-models" title="Permanent link">#</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<h3 id="sensor-model">Sensor Model<a class="headerlink" href="#sensor-model" title="Permanent link">#</a></h3>
+<div><h1 id="_1">車両とセンサーのモデルの作成<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">概要<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<h3 id="_3">センサーモデル<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
 <ul>
-<li><strong>Purpose:</strong> The sensor model includes the calibration (transformation) and launch files of the
-  sensors used in the autonomous vehicle.
-  This includes various sensors like LiDARs, cameras,
-  radars, IMUs (Inertial Measurement Units), GPS units, etc.</li>
+<li><strong>目的:</strong> センサー モデルには、自動運転車で使用されるセンサーの校正 (変換) ファイルと
+  起動ファイルが含まれています。
+  これには、LiDAR、カメラ、レーダー、<abbr title="Inertial Measurement Unit">IMU</abbr> (慣性測定ユニット)、
+  GPS ユニットなどのさまざまなセンサーが含まれます。</li>
 </ul>
 <ul>
-<li><strong>Importance:</strong> Accurate sensor modeling is essential for perception tasks.
-  Precise calibration values help understand the environment by processing sensor data,
-  such as detecting objects, estimating distances,
-  and creating a 3D representation of the surroundings.</li>
+<li><strong>重要:</strong> 正確なセンサー モデリングは知覚タスクに不可欠です。
+  正確なキャリブレーション値は、物体の検出、距離の推定、周囲の 3D 表現の作成などの
+  センサー データを処理することにより、
+  環境を理解するのに役立ちます。</li>
 </ul>
 <ul>
-<li><strong>Usage:</strong> The sensor model is utilized in Autoware for launching sensors,
-  configuring their pipeline, and describing calibration values.</li>
+<li><strong>使用法:</strong> センサー モデルは、センサーの起動、パイプラインの構成、
+  およびキャリブレーション値の記述のために Autoware で利用されます。</li>
 </ul>
 <ul>
-<li>The sensor model (sensor kit) consists of the following three packages:<ul>
+<li>センサーモデル（センサーキット）は以下の3つのパッケージで構成されています:<ul>
 <li><code>common_sensor_launch</code></li>
 <li><code>&lt;YOUR_VEHICLE_NAME&gt;_sensor_kit_description</code></li>
 <li><code>&lt;YOUR_VEHICLE_NAME&gt;_sensor_kit_launch</code></li>
 </ul>
 </li>
 </ul>
-<p>Please refer to the <a href="./creating-sensor-model">creating sensor model</a> page
-for creating your individual sensor model.</p>
-<p>For reference,
-here is the folder structure for the <a href="https://github.com/autowarefoundation/sample_sensor_kit_launch">sample_sensor_kit_launch</a> package in Autoware:</p>
+<p>個別のセンサー モデルの作成については、<a href="./creating-sensor-model">センサー モデルの作成</a>ページを
+参照してください。</p>
+<p>参考として、
+Autowareの<a href="https://github.com/autowarefoundation/sample_sensor_kit_launch">sample_sensor_kit_launch</a>パッケージのフォルダー構造を次に示します:</p>
 <div class="highlight"><pre><span></span><code>sample_sensor_kit_launch/
 ├─ common_sensor_launch/
 ├─ sample_sensor_kit_description/
 └─ sample_sensor_kit_launch/
 </code></pre></div>
-<h3 id="vehicle-model">Vehicle Model<a class="headerlink" href="#vehicle-model" title="Permanent link">#</a></h3>
+<h3 id="_4">車両モデル<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
 <ul>
-<li><strong>Purpose:</strong> The vehicle model includes individual vehicle specifications with dimensions,
-  a 3D model of the vehicle (in .fbx or .dae format), etc.</li>
+<li><strong>目的</strong> 車両モデルには、寸法を含む個々の車両仕様、
+  車両の 3D モデル (.fbx または .dae 形式) などが含まれます。</li>
 </ul>
 <ul>
-<li><strong>Importance:</strong> An accurate vehicle model is crucial for motion planning and control.</li>
+<li><strong>重要:</strong> 正確な車両モデルは、動作計画と制御にとって非常に重要です。</li>
 </ul>
 <ul>
-<li><strong>Usage:</strong> The vehicle model is employed in Autoware to provide vehicle information for Autoware,
-  including the 3D model of the vehicle.</li>
+<li><strong>使用法:</strong> T車両モデルは、車両の 3D モデルを含む Autoware の
+  車両情報を提供するために Autoware で使用されます。</li>
 </ul>
 <ul>
-<li>The vehicle model comprises the following two packages:<ul>
+<li>車両モデルは次の 2 つのパッケージで構成されます:<ul>
 <li><code>&lt;YOUR_VEHICLE_NAME&gt;_vehicle_description</code></li>
 <li><code>&lt;YOUR_VEHICLE_NAME&gt;_vehicle_launch</code></li>
 </ul>
 </li>
 </ul>
-<p>Please consult the <a href="./creating-vehicle-model">creating vehicle model</a> page
-for creating your individual vehicle model.</p>
-<p>As a reference,
-here is the folder structure for the <a href="https://github.com/autowarefoundation/sample_vehicle_launch">sample_vehicle_launch</a> package in Autoware:</p>
+<p>個別の車両モデルの作成については、<a href="./creating-vehicle-model">車両モデルの作成</a>
+ページを参照してください。</p>
+<p>参考として、
+Autoware の<a href="https://github.com/autowarefoundation/sample_vehicle_launch">sample_vehicle_launch</a>パッケージのフォルダー構造を次に示します。:</p>
 <div class="highlight"><pre><span></span><code>sample_vehicle_launch/
 ├─ sample_vehicle_description/
 └─ sample_vehicle_launch/
