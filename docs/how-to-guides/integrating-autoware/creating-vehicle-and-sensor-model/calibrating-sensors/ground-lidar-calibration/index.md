@@ -51,170 +51,6 @@ touch ground_plane.launch.xml ground_plane_sensor_kit.launch.xml
 
 ### センサーキットに応じて起動ファイルを変更する
 
-ground_plane.launch.xml ファイルが完成したら、独自のセンサー モデルに ground_plane_sensor_kit.launch.xml を実装する準備が整います。
-
-オプションで (これらのパラメータは起動引数によってオーバーライドされることを忘れないでください)、ground_plane.launch.xml次の XML スニペットのように sensor_kit と vehicle_id を変更できます: (rviz 構成をビデオとして保存した後、rviz_profile パスを変更できます。ページ）
-
-+ <?xml version="1.0" encoding="UTF-8"?>
-+ <launch>
--   <arg name="vehicle_id" default="default"/>
-+   <arg name="vehicle_id" default="<YOUR_VEHICLE_ID>"/>
--   <arg name="sensor_model" default="aip_x1"/>
-+   <let name="sensor_model" value="<YOUR_SENSOR_KIT_NAME>"/>
-    <let name="base_frame" value="base_link"/>
-    <let name="parent_frame" value="sensor_kit_base_link"/>
-地上 LIDAR キャリブレーション プロセスのために前に rviz 設定ファイルを保存した場合:
-
-- <let name="rviz_profile" value="$(find-pkg-share extrinsic_ground_plane_calibrator)/rviz/velodyne_top.rviz"/>
-+ <let name="rviz_profile" value="$(find-pkg-share extrinsic_ground_plane_calibrator)/rviz/<YOUR-RVIZ-CONFIG>.rviz"/>
-次に、すべてのセンサー フレームを子フレームとして extrinsic_calibration_manager に追加します。
-
-    <!-- extrinsic_calibration_manager -->
--   <node pkg="extrinsic_calibration_manager" exec="extrinsic_calibration_manager" name="extrinsic_calibration_manager" output="screen">
--     <param name="parent_frame" value="$(var parent_frame)"/>
--     <param name="child_frames" value="
--     [velodyne_top_base_link,
--     livox_front_left_base_link,
--     livox_front_center_base_link,
--     livox_front_right_base_link]"/>
--   </node>
-+   <node pkg="extrinsic_calibration_manager" exec="extrinsic_calibration_manager" name="extrinsic_calibration_manager" output="screen">
-+     <param name="parent_frame" value="$(var parent_frame)"/>
-+     <!-- add your sensor frames here -->
-+     <param name="child_frames" value="
-+     [<YOUE_SENSOR_BASE_LINK>,
-+     YOUE_SENSOR_BASE_LINK,
-+     YOUE_SENSOR_BASE_LINK,
-+     YOUE_SENSOR_BASE_LINK
-+     ...]"/>
-+   </node>
-tutorial_vehicle には 2 つの LIDAR センサー (rs_helios_top と rs_bpearl_front) があるため、次のようになります。
-
-??? 注「つまり、tutorial_vehicle の extrinsic_calibration_manager child_frames」
-
-```xml
-+   <!-- extrinsic_calibration_manager -->
-+   <node pkg="extrinsic_calibration_manager" exec="extrinsic_calibration_manager" name="extrinsic_calibration_manager" output="screen">
-+     <param name="parent_frame" value="$(var parent_frame)"/>
-+     <!-- add your sensor frames here -->
-+     <param name="child_frames" value="
-+     [rs_helios_top_base_link,
-+     rs_bpearl_front_base_link]"/>
-+   </node>
-```
-その後、地上ベースのキャリブレーターに LIDAR センサー構成を追加します。そのために、次の行をground_plane_sensor_kit.launch.xmlファイルに追加します。
-
--  <group>
--    <include file="$(find-pkg-share extrinsic_ground_plane_calibrator)/launch/calibrator.launch.xml">
--      <arg name="ns" value="$(var parent_frame)/velodyne_top_base_link"/>
--      <arg name="base_frame" value="$(var base_frame)"/>
--      <arg name="parent_frame" value="$(var parent_frame)"/>
--      <arg name="child_frame" value="velodyne_top_base_link"/>
--      <arg name="pointcloud_topic" value="/sensing/lidar/top/pointcloud_raw"/>
--    </include>
--  </group>
-+  <group>
-+   <include file="$(find-pkg-share extrinsic_ground_plane_calibrator)/launch/calibrator.launch.xml">
-+     <arg name="ns" value="$(var parent_frame)/YOUR_SENSOR_BASE_LINK"/>
-+     <arg name="base_frame" value="$(var base_frame)"/>
-+     <arg name="parent_frame" value="$(var parent_frame)"/>
-+     <arg name="child_frame" value="YOUR_SENSOR_BASE_LINK"/>
-+     <arg name="pointcloud_topic" value="<YOUR_SENSOR_TOPIC_NAME>"/>
-+   </include>
-+ </group>
-+  ...
-+  ...
-+  ...
-+  ...
-+  ...
-+
-??? 注「つまり、tutorial_vehicle の LIDAR ごとに calibrator.launch.xml を起動します」
-
-```xml
-  <!-- rs_helios_top_base_link: extrinsic_ground_plane_calibrator -->
-  <group>
-    <include file="$(find-pkg-share extrinsic_ground_plane_calibrator)/launch/calibrator.launch.xml">
-      <arg name="ns" value="$(var parent_frame)/rs_helios_top_base_link"/>
-      <arg name="base_frame" value="$(var base_frame)"/>
-      <arg name="parent_frame" value="$(var parent_frame)"/>
-      <arg name="child_frame" value="rs_helios_top_base_link"/>
-      <arg name="pointcloud_topic" value="/sensing/lidar/top/pointcloud_raw"/>
-    </include>
-  </group>
-
-  <!-- rs_bpearl_front_base_link: extrinsic_ground_plane_calibrator -->
-  <group>
-    <include file="$(find-pkg-share extrinsic_ground_plane_calibrator)/launch/calibrator.launch.xml">
-      <arg name="ns" value="$(var parent_frame)/rs_bpearl_front_base_link"/>
-      <arg name="base_frame" value="$(var base_frame)"/>
-      <arg name="parent_frame" value="$(var parent_frame)"/>
-      <arg name="child_frame" value="rs_bpearl_front_base_link"/>
-      <arg name="pointcloud_topic" value="/sensing/lidar/front/pointcloud_raw"/>
-    </include>
-  </group>
-
-  <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" args="-d $(var rviz_profile)" if="$(var calibration_rviz)"/>
-</launch>
-
-```
-tutorial_vehicle の ground_plane_sensor_kit.launch.xml 起動ファイルは次のようになります。
-
-??? 注「ground_plane_sensor_kit.launch.xmltutorial_vehicle のサンプル」
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<launch>
-<arg name="vehicle_id" default="tutorial_vehicle"/>
-<let name="sensor_model" value="tutorial_vehicle_sensor_kit"/>
-<let name="base_frame" value="base_link"/>
-<let name="parent_frame" value="sensor_kit_base_link"/>
-<let name="rviz_profile" value="$(find-pkg-share extrinsic_ground_plane_calibrator)/rviz/velodyne_top.rviz"/>
-<arg name="calibration_rviz" default="true"/>
-
-  <!-- extrinsic_calibration_client -->
-  <arg name="src_yaml" default="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(var sensor_model)/sensor_kit_calibration.yaml"/>
-  <arg name="dst_yaml" default="$(env HOME)/sensor_kit_calibration.yaml"/>
-
-  <node pkg="extrinsic_calibration_client" exec="extrinsic_calibration_client" name="extrinsic_calibration_client" output="screen">
-    <param name="src_path" value="$(var src_yaml)"/>
-    <param name="dst_path" value="$(var dst_yaml)"/>
-  </node>
-
-  <!-- extrinsic_calibration_manager -->
-  <node pkg="extrinsic_calibration_manager" exec="extrinsic_calibration_manager" name="extrinsic_calibration_manager" output="screen">
-    <param name="parent_frame" value="$(var parent_frame)"/>
-    <param name="child_frames" value="
-    [rs_helios_top_base_link,
-    rs_bpearl_front_base_link]"/>
-  </node>
-
-  <!-- rs_helios_top_base_link: extrinsic_ground_plane_calibrator -->
-  <group>
-    <include file="$(find-pkg-share extrinsic_ground_plane_calibrator)/launch/calibrator.launch.xml">
-      <arg name="ns" value="$(var parent_frame)/rs_helios_top_base_link"/>
-      <arg name="base_frame" value="$(var base_frame)"/>
-      <arg name="parent_frame" value="$(var parent_frame)"/>
-      <arg name="child_frame" value="rs_helios_top_base_link"/>
-      <arg name="pointcloud_topic" value="/sensing/lidar/top/pointcloud_raw"/>
-    </include>
-  </group>
-
-  <!-- rs_bpearl_front_base_link: extrinsic_ground_plane_calibrator -->
-  <group>
-    <include file="$(find-pkg-share extrinsic_ground_plane_calibrator)/launch/calibrator.launch.xml">
-      <arg name="ns" value="$(var parent_frame)/rs_bpearl_front_base_link"/>
-      <arg name="base_frame" value="$(var base_frame)"/>
-      <arg name="parent_frame" value="$(var parent_frame)"/>
-      <arg name="child_frame" value="rs_bpearl_front_base_link"/>
-      <arg name="pointcloud_topic" value="/sensing/lidar/front/pointcloud_raw"/>
-    </include>
-  </group>
-
-  <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" args="-d $(var rviz_profile)" if="$(var calibration_rviz)"/>
-</launch>
-
-```
-
 (オプション) vehicle_id とセンサーのモデル名を追加することから始めましょう:
  (値は重要ではありません。これらのパラメーターは起動引数によってオーバーライドされます)
 
@@ -250,13 +86,13 @@ tutorial_vehicle のファイル (ground_plane.launch.xml) の最終バージョ
 
     ```
 
-After the completing of ground_plane.launch.xml file,
-we will be ready to implement ground_plane_sensor_kit.launch.xml for the own sensor model.
+ground_plane.launch.xmlファイルが完成したら、
+独自のセンサー モデルに ground_plane_sensor_kit.launch.xml を実装する準備が整います。
 
-Optionally, (don't forget, these parameters will be overridden by launch arguments.)
-you can modify sensor_kit and vehicle_id as `ground_plane.launch.xml`over this xml snippet:
-(You can change rviz_profile path after the saving rviz config as video
-which included at the end of the page)
+オプションで (これらのパラメータは起動引数によってオーバーライドされることを忘れないでください)、
+次のXMLスニペットのようにsensor_kitとvehicle_idを`ground_plane.launch.xml`として変更できます:
+(rviz 構成をビデオとして保存した後、
+ページの最後にあるrviz_profile パスを変更できます。）
 
 ```diff
 + <?xml version="1.0" encoding="UTF-8"?>
@@ -270,14 +106,14 @@ which included at the end of the page)
 
 ```
 
-If you save rviz config file before for the ground-lidar calibration process:
+地上LIDARキャリブレーションプロセスのために前にrviz設定ファイルを保存した場合:
 
 ```diff
 - <let name="rviz_profile" value="$(find-pkg-share extrinsic_ground_plane_calibrator)/rviz/velodyne_top.rviz"/>
 + <let name="rviz_profile" value="$(find-pkg-share extrinsic_ground_plane_calibrator)/rviz/<YOUR-RVIZ-CONFIG>.rviz"/>
 ```
 
-Then, we will add all our sensor frames on extrinsic_calibration_manager as child frames:
+次に、すべてのセンサー フレームを子フレームとして extrinsic_calibration_manager に追加します:
 
 ```diff
     <!-- extrinsic_calibration_manager -->
@@ -301,10 +137,10 @@ Then, we will add all our sensor frames on extrinsic_calibration_manager as chil
 +   </node>
 ```
 
-For tutorial_vehicle there are two lidar sensors (rs_helios_top and rs_bpearl_front),
-so it will be like this:
+tutorial_vehicleには2つのLIDARセンサー(rs_helios_topとrs_bpearl_front)があるため、
+次のようになります:
 
-??? note "i.e extrinsic_calibration_manager child_frames for tutorial_vehicle"
+??? 注記"つまり、tutorial_vehicle の extrinsic_calibration_manager child_frames"
 
     ```xml
     +   <!-- extrinsic_calibration_manager -->
@@ -317,8 +153,8 @@ so it will be like this:
     +   </node>
     ```
 
-After that we will add our lidar sensor configurations on ground-based calibrator,
-to do that we will add these lines our `ground_plane_sensor_kit.launch.xml` file:
+その後、地上ベースのキャリブレーターにLIDARセンサー構成を追加します。
+そのために、次の行を`ground_plane_sensor_kit.launch.xml`ファイルに追加します:
 
 ```diff
 -  <group>
@@ -347,7 +183,7 @@ to do that we will add these lines our `ground_plane_sensor_kit.launch.xml` file
 +
 ```
 
-??? note "i.e., launch calibrator.launch.xml for each tutorial_vehicle's lidar"
+??? 注記"つまり、tutorial_vehicleのLIDARごとにcalibrator.launch.xml を起動します"
 
     ```xml
       <!-- rs_helios_top_base_link: extrinsic_ground_plane_calibrator -->
@@ -377,9 +213,9 @@ to do that we will add these lines our `ground_plane_sensor_kit.launch.xml` file
 
     ```
 
-The ground_plane_sensor_kit.launch.xml launch file for tutorial_vehicle should be this:
+tutorial_vehicle の ground_plane_sensor_kit.launch.xml 起動ファイルは次のようになります:
 
-??? note "Sample [`ground_plane_sensor_kit.launch.xml`](https://github.com/leo-drive/tutorial_vehicle_calibration_tools/blob/tutorial_vehicle/sensor/extrinsic_calibration_manager/launch/tutorial_vehicle_sensor_kit/ground_plane_sensor_kit.launch.xml) for tutorial_vehicle"
+??? 注記 "tutorial_vehicle の[`ground_plane_sensor_kit.launch.xml`](https://github.com/leo-drive/tutorial_vehicle_calibration_tools/blob/tutorial_vehicle/sensor/extrinsic_calibration_manager/launch/tutorial_vehicle_sensor_kit/ground_plane_sensor_kit.launch.xml)のサンプル"
 
     ```xml
     <?xml version="1.0" encoding="UTF-8"?>
@@ -435,57 +271,34 @@ The ground_plane_sensor_kit.launch.xml launch file for tutorial_vehicle should b
 
     ```
 
-### Ground plane-lidar calibration process with extrinsic ground-plane calibrator
-外部地表面キャリブレータを使用した地表面 LIDAR キャリブレーション プロセス
-mapping_based.launch.xml および Mapping_based_sensor_kit.launch.xml を完了したら、独自のセンサー キット用のファイルを起動します。これで、LIDAR を調整する準備が整いました。まず最初に、extrinsic_calibration_manager パッケージをビルドする必要があります。
+### 外部地表面キャリブレータを使用した地表面 LIDAR キャリブレーション プロセス
 
+mapping_based.launch.xml および Mapping_based_sensor_kit.launch.xml を完了したら、独自のセンサー キット用のファイルを起動します;
+これで、LIDAR を調整する準備が整いました。
+まず最初に、extrinsic_calibration_manager パッケージをビルドする必要があります:
+
+```bash
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select extrinsic_calibration_manager
+```
+
 これで、地上ベースの LIDAR-地上校正器を起動して使用する準備が整いました。
 
+```bash
 ros2 launch extrinsic_calibration_manager calibration.launch.xml mode:=ground_plane sensor_model:=<OWN-SENSOR-KIT> vehicle_model:=<OWN-VEHICLE-MODEL> vehicle_id:=<VEHICLE-ID>
+```
+
 チュートリアル車両の場合:
 
-ros2 launch extrinsic_calibration_manager calibration.launch.xml mode:=ground_plane sensor_model:=tutorial_vehicle_sensor_kit vehicle_model:=tutorial_vehicle vehicle_id:=tutorial_vehicle
-いくつかの設定を含む rviz2 画面を表示します。ドキュメントの最後にあるビデオのように、センサー情報トピック、sensor_frames、pointcloud_inlier_topics で画面を更新する必要があります。また、rviz2 設定を rviz ディレクトリに保存できるため、後で を変更して使用できますmapping_based_sensor_kit.launch.xml。
-
-extrinsic_mapping_based_calibrator/
-   └─ rviz/
-+        └─ tutorial_vehicle_sensor_kit.rviz
-次に、ROS 2 バッグ ファイルを再生すると、キャリブレーション プロセスが開始されます。
-
-ros2 bag play <rosbag_path> --clock -l -r 0.2 \
---remap /tf:=/null/tf /tf_static:=/null/tf_static # if tf is recorded
-調整プロセスは自動的に行われるため、調整プロセスが完了すると、$HOME ディレクトリに sensor_kit_calibration.yaml が表示されます。
-
-グランドプレーンの前 - LIDAR キャリブレーション	グラウンドプレーン後 - LIDAR キャリブレーション
-before-ground-plane.png	画像/after-ground-plane.png
-これは、tutorial_vehicle での地表 - LIDAR キャリブレーション プロセスをデモンストレーションするビデオです。 タイプ:ビデオ
-After completing mapping_based.launch.xml and mapping_based_sensor_kit.launch.xml launch files for own sensor kit;
-now we are ready to calibrate our lidars.
-First of all, we need to build extrinsic_calibration_manager package:
-
-```bash
-colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select extrinsic_calibration_manager
-```
-
-So, we are ready to launch and use ground-based lidar-ground calibrator.
-
-```bash
-ros2 launch extrinsic_calibration_manager calibration.launch.xml mode:=ground_plane sensor_model:=<OWN-SENSOR-KIT> vehicle_model:=<OWN-VEHICLE-MODEL> vehicle_id:=<VEHICLE-ID>
-```
-
-For tutorial vehicle:
-
 ```bash
 ros2 launch extrinsic_calibration_manager calibration.launch.xml mode:=ground_plane sensor_model:=tutorial_vehicle_sensor_kit vehicle_model:=tutorial_vehicle vehicle_id:=tutorial_vehicle
 ```
 
-You will show the rviz2 screen with several configurations,
-you need
-to update it with your sensor information topics, sensor_frames and pointcloud_inlier_topics like the video,
-which included an end of the document.
-Also, you can save the rviz2 config on rviz directory,
-so you can use it later with modifying `mapping_based_sensor_kit.launch.xml`.
+いくつかの設定を含む rviz2 画面を表示します。
+ドキュメントの最後にあるビデオのように、
+センサー情報トピック、sensor_frames、pointcloud_inlier_topics で
+画面を更新する必要があります。
+また、rviz2 設定を rviz ディレクトリに保存できるため、
+後で`mapping_based_sensor_kit.launch.xml`を変更して使用できます。
 
 ```diff
 extrinsic_mapping_based_calibrator/
@@ -493,19 +306,19 @@ extrinsic_mapping_based_calibrator/
 +        └─ tutorial_vehicle_sensor_kit.rviz
 ```
 
-Then play ROS 2 bag file, the calibration process will be started:
+次に、ROS 2 バッグ ファイルを再生すると、キャリブレーション プロセスが開始されます:
 
 ```bash
 ros2 bag play <rosbag_path> --clock -l -r 0.2 \
 --remap /tf:=/null/tf /tf_static:=/null/tf_static # if tf is recorded
 ```
 
-Since the calibration process is done automatically,
-you can see the sensor_kit_calibration.yaml in your $HOME directory after the calibration process is complete.
+調整プロセスは自動的に行われるため、
+調整プロセスが完了すると、$HOME ディレクトリに sensor_kit_calibration.yaml が表示されます。
 
-|          Before Ground Plane - Lidar Calibration           |             After Ground Plane - Lidar Calibration              |
+|          グランドプレーン前 - LIDAR キャリブレーション           |             グラウンドプレーン後 - LIDAR キャリブレーション              |
 | :--------------------------------------------------------: | :-------------------------------------------------------------: |
 | ![before-ground-plane.png](images/before-ground-plane.png) | ![images/after-ground-plane.png](images/after-ground-plane.png) |
 
-Here is the video for demonstrating the ground plane - lidar calibration process on tutorial_vehicle:
+これは、tutorial_vehicle での地表 - LIDAR キャリブレーション プロセスをデモンストレーションするビデオです:
 ![type:video](https://youtube.com/embed/EqaF1fufjUc)
