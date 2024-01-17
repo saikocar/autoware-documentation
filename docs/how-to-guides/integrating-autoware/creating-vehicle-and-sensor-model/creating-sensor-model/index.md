@@ -1,12 +1,22 @@
-Autoware のセンサー モデルの作成
-導入
-このページでは、センサー モデル用の次のパッケージを紹介します。
+# Autowareのセンサーモデルの作成
 
-common_sensor_launch
-<YOUR-VEHICLE-NAME>_sensor_kit_description
-<YOUR-VEHICLE-NAME>_sensor_kit_launch
-以前は、 Autoware リポジトリの作成ページのステップで車両モデルをフォークしました。たとえば、 上記のステップの実装例として、tutorial_vehicle_launchを作成しました。以下のディレクトリ構造に従って、_vehicle_launch リポジトリが Autoware に含まれていることを確認してください。
+## 導入
 
+このページでは、センサー モデル用の次のパッケージを紹介します:
+
+1. `common_sensor_launch`
+2. `<YOUR-VEHICLE-NAME>_sensor_kit_description`
+3. `<YOUR-VEHICLE-NAME>_sensor_kit_launch`
+
+以前は、
+[Autowareリポジトリの作成](../../creating-your-autoware-repositories/creating-autoware-repositories.md)ページのステップで車両モデルをフォークしました。
+たとえば、
+上記のステップの実装例として、[tutorial_vehicle_launch](https://github.com/leo-drive/tutorial_vehicle_launch)を
+作成しました。
+以下のディレクトリ構造に従って<YOUR-VEHICLE-NAME>\_vehicle_launchリポジトリが
+Autowareに含まれていることを確認してください:
+
+```diff
 <YOUR-OWN-AUTOWARE-DIR>/
   └─ src/
        └─ sensor_kit/
@@ -14,20 +24,35 @@ common_sensor_launch
                  ├─ common_sensor_launch/
                  ├─ <YOUR-VEHICLE-NAME>_sensor_kit_description/
                  └─ <YOUR-VEHICLE-NAME>_sensor_kit_launch/
-<YOUR-VEHICLE-NAME>_vehicle_launchフォークされた Autoware メタ リポジトリに上記のような正しいフォルダー構造が含まれていない場合は、フォークされた<YOUR-VEHICLE-NAME>_vehicle_launchリポジトリを autoware.repos ファイルに追加し、ターミナルで vcs import src < autoware.repos コマンドを実行して、新しく組み込まれたメタ リポジトリをインポートしてください。 autoware.repos ファイルのリポジトリ。
+```
 
-これで、車両用に次のセンサー モデル パッケージを変更する準備ができました。まず、説明の名前を変更してパッケージを起動する必要があります。
+フォークされた Autoware メタ リポジトリに、上記のような正しいフォルダー構造を持つ
+`<YOUR-VEHICLE-NAME>_vehicle_launch`が含まれていない場合は、
+フォークされた `<YOUR-VEHICLE-NAME>_vehicle_launch`リポジトリを autoware.reposファイルに追加し
+ターミナルでvcs import src < autoware.reposコマンドを実行して、
+新しく組み込まれたリポジトリを autoware.repos ファイルにインポートしてください。
 
+これで、車両用に次のセンサー モデル パッケージを変更する準備ができました。
+まず、説明の名前を変更してパッケージを起動する必要があります:
+
+```diff
 <YOUR-VEHICLE-NAME>_sensor_kit_launch/
   ├─ common_sensor_launch/
 - ├─ sample_sensor_kit_description/
 + ├─ <YOUR-VEHICLE-NAME>_sensor_kit_description/
 - └─ sample_sensor_kit_launch/
 + └─ <YOUR-VEHICLE-NAME>_sensor_kit_launch/
-その後、sample_sensor_kit_description パッケージと Sample_sensor_kit_launch パッケージの package.xml ファイルと CMakeLists.txt ファイルのパッケージ名を変更します。そのため、任意のテキスト エディターまたは IDE で package.xml ファイルと CMakeLists.txt ファイルを開き、次の変更を実行します。
+```
 
-<name>ファイルの属性を変更しますpackage.xml。
+その後、
+sample_sensor_kit_description パッケージと Sample_sensor_kit_launch パッケージの package.xml ファイルと CMakeLists.txt ファイルのパッケージ名を変更します。
+そのため、
+任意のテキスト エディターまたは IDE で 
+package.xml ファイルと CMakeLists.txt ファイルを開き、次の変更を実行します:
 
+`package.xml`ファイルの`<name>`属性を変更します:
+
+```diff
 <package format="3">
 - <name>sample_sensor_kit_description</name>
 + <name><YOUR-VEHICLE-NAME>_sensor_kit_description</name>
@@ -35,8 +60,11 @@ common_sensor_launch
   <description>The sensor_kit_description package</description>
   ...
   ...
-project()ファイルのメソッドを変更しますCmakeList.txt。
+```
 
+`CmakeList.txt`ファイルの`project()`メソッドを変更します。
+
+```diff
   cmake_minimum_required(VERSION 3.5)
 - project(sample_sensor_kit_description)
 + project(<YOUR-VEHICLE-NAME>_sensor_kit_description)
@@ -44,15 +72,25 @@ project()ファイルのメソッドを変更しますCmakeList.txt。
   find_package(ament_cmake_auto REQUIRED)
 ...
 ...
-名前の変更とプロジェクト メソッドを、TH パッケージ <YOUR-VEHICLE-NAME>_vehicle_descriptionと<YOUR-VEHICLE-NAME>_vehicle_launchROS 2 パッケージの両方に忘れずに適用してください。完了したら、上記のパッケージのビルドに進むことができます。
+```
 
+名前の変更とプロジェクトメソッドを、`<YOUR-VEHICLE-NAME>_vehicle_description`と`<YOUR-VEHICLE-NAME>_vehicle_launch`ROS 2パッケージの
+**両方に**に忘れずに適用してください。
+完了したら、上記のパッケージのビルドに進むことができます:
+
+```bash
 cd <YOUR-AUTOWARE-DIR>
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to <YOUR-VEHICLE-NAME>_sensor_kit_description <YOUR-VEHICLE-NAME>_sensor_kit_launch
-センサーの説明
-このパッケージの主な目的は、センサー フレーム ID、すべてのセンサーのキャリブレーション パラメーター、および urdf ファイルとのリンクを記述することです。
+```
 
-sensor_kit_description パッケージのフォルダー構造は次のとおりです。
+## センサーの記述
 
+このパッケージの主な目的は、センサー フレーム ID、
+すべてのセンサーのキャリブレーション パラメーター、および urdf ファイルとのリンクを記述することです。
+
+sensor_kit_description パッケージのフォルダー構造は次のとおりです:
+
+```diff
 <YOUR-VEHICLE-NAME>_sensor_kit_description/
    ├─ config/
    │     ├─ sensor_kit_calibration.yaml
@@ -60,15 +98,24 @@ sensor_kit_description パッケージのフォルダー構造は次のとおり
    └─ urdf/
          ├─ sensor_kit.xacro
          └─ sensors.xacro
+```
+
 ここで、センサーの設計に従ってこれらのファイルを変更します。
 
-センサーキットキャリブレーション.yaml
-sensor_kit_base_linkこのファイルは、親フレームとしてセンサーの取り付け位置と向きを定義します。sensor_kit_base_linkフレームがメイン LiDAR センサーの下部にあると想定できます。このファイルはオイラー形式 [x, y, z, roll,itch, yaw] で作成する必要があります。また、キャリブレーションステップまでは、これらの値を「0」として設定します。
+### sensor_kit_calibration.yaml
 
-このファイルに新しいフレームを定義し、それらの.xacroファイルを接続します。LIDAR センサー フレームに「velodyne_top」のような名前を付けることをお勧めします。キャリブレーション .yaml ファイルに「_base_link」を追加できます。
+このファイルは、`sensor_kit_base_link`を親フレームとしてセンサーの取り付け位置と向きを定義します。
+`sensor_kit_base_link`フレームがメイン LiDAR センサーの下部にあると想定できます。
+このファイルはオイラー形式 [x, y, z, roll, pitch, yaw]で作成する必要があります。
+[キャリブレーションの段階](../calibrating-sensors)までは、これらの値を"0"として設定します。
 
-したがって、サンプル ファイルは次のようにする必要があります。
+このファイルに新しいフレームを定義し、それらの`.xacro`ファイルを接続します。
+LIDARセンサーフレームに"velodyne_top"のような名前を付けることとをお勧めします。
+またcalibration.yaml ファイルに"\_base_link"を追加できます。
 
+したがって、サンプル ファイルは次のようにする必要があります:
+
+```yaml
 sensor_kit_base_link:
   velodyne_top_base_link:
     x: 0.000000
@@ -86,44 +133,54 @@ sensor_kit_base_link:
     yaw: 0.000000
   ...
   ...
-このファイルは、tutorial_vehicle1 台のカメラ、2 台の LIDAR、および 1 台の GNSS/INS センサー用に作成されました。
+```
 
-??? 注「sensor_kit_calibration.yamltutorial_vehicle_sensor_kit_description」
+このファイルは、`tutorial_vehicle`の1 台のカメラ、2 台の LIDAR、および 1 台の GNSS/INS センサー用に作成されました。
+
+??? 注記 "tutorial_vehicle_sensor_kit_description向け`sensor_kit_calibration.yaml`"
+
+    ```yaml
+    sensor_kit_base_link:
+      camera0/camera_link: # Camera
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        roll: 0.0
+        pitch: 0.0
+        yaw: 0.0
+      rs_helios_top_base_link: # Lidar
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        roll: 0.0
+        pitch: 0.0
+        yaw: 0.0
+      rs_bpearl_front_base_link: # Lidar
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        roll: 0.0
+        pitch: 0.0
+        yaw: 0.0
+      GNSS_INS/gnss_ins_link: # GNSS/INS
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        roll: 0.0
+        pitch: 0.0
+        yaw: 0.0
+    ```
+
+### sensors_calibration.yaml
+
+このファイルは、`base_link`を親フレームとして
+`sensor_kit_base_link`(子フレーム)の取り付け位置と向きを定義します。
+Autowareでは、base_link`はリアアクスルの中心を地面に投影しています。
+詳細については、
+[車両寸法](../../../../design/autoware-interfaces/components/vehicle-dimensions.md)ページを確認してください。
+これには CAD 値を使用できますが、ここでは値を`0`で埋めます。You can use CAD values for this, but we will fill the values with `0` for now.
 
 ```yaml
-sensor_kit_base_link:
-  camera0/camera_link: # Camera
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    roll: 0.0
-    pitch: 0.0
-    yaw: 0.0
-  rs_helios_top_base_link: # Lidar
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    roll: 0.0
-    pitch: 0.0
-    yaw: 0.0
-  rs_bpearl_front_base_link: # Lidar
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    roll: 0.0
-    pitch: 0.0
-    yaw: 0.0
-  GNSS_INS/gnss_ins_link: # GNSS/INS
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    roll: 0.0
-    pitch: 0.0
-    yaw: 0.0
-```
-センサー_キャリブレーション.yaml
-このファイルは、親フレームsensor_kit_base_link（子フレーム）の取り付け位置と向きを定義します。base_linkAutoware では、base_linkリアアクスルの中心を地面に投影しています。詳細については、車両寸法ページを確認してください。0これには CAD 値を使用できますが、ここでは値を入力します。
-
 base_link:
   sensor_kit_base_link:
     x: 0.000000
@@ -132,11 +189,21 @@ base_link:
     roll: 0.000000
     pitch: 0.000000
     yaw: 0.000000
-これで、.xacro ファイルを実装する準備が整いました。これらのファイルは、センサー フレームのリンクとセンサー urdf ファイルの追加を提供します。
+```
 
-センサーキット.xacro
-センサーを追加し、このファイルから不要な xacros を削除します。たとえば、センサー ドライバーからフレームを備えた LIDAR センサーを追加したい場合はvelodyne_top、次の xacro を sensor_kit.xacro ファイルに追加します。このファイルにセンサーを追加し、不要なセンサーの xacros を削除してください。
+これで.xacro ファイルを実装する準備が整いました。
+これらのファイルは、センサー フレームのリンクとセンサー urdf ファイルの追加を提供します。
 
+### sensor_kit.xacro
+
+センサーを追加し、このファイルから不要な xacros を削除します。
+たとえば、
+センサー ドライバーから`velodyne_top`フレームを備えた
+ LIDAR センサーを追加したい場合は、
+次の xacro を sensor_kit.xacro ファイルに追加します。
+このファイルにセンサーを追加し、不要なセンサーの xacros を削除してください。
+
+```xml
     <!-- lidar -->
     <xacro:VLS-128 parent="sensor_kit_base_link" name="velodyne_top" topic="/points_raw" hz="10" samples="220" gpu="$(arg gpu)">
         <origin
@@ -148,98 +215,105 @@ base_link:
                  ${calibration['sensor_kit_base_link']['velodyne_top_base_link']['yaw']}"
         />
     </xacro:VLS-128>
+```
+
 これは、1 台のカメラ、2 台の LIDAR、および 1 台の GNSS/INS センサーを備えた、tutorial_vehicle のサンプル xacro ファイルです。
 
-??? 注「sensor_kit.xacrotutorial_vehicle_sensor_kit_description」
+??? 注記 "tutorial_vehicle_sensor_kit_description用の`sensor_kit.xacro`"
+
+    ```xml
+    <?xml version="1.0"?>
+    <robot xmlns:xacro="http://ros.org/wiki/xacro">
+      <xacro:macro name="sensor_kit_macro" params="parent x y z roll pitch yaw">
+        <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+        <xacro:include filename="$(find vls_description)/urdf/VLS-128.urdf.xacro"/>
+        <xacro:include filename="$(find camera_description)/urdf/monocular_camera.xacro"/>
+        <xacro:include filename="$(find imu_description)/urdf/imu.xacro"/>
+
+        <xacro:arg name="gpu" default="false"/>
+        <xacro:arg name="config_dir" default="$(find tutorial_vehicle_sensor_kit_description)/config"/>
+
+        <xacro:property name="sensor_kit_base_link" default="sensor_kit_base_link"/>
+
+        <joint name="${sensor_kit_base_link}_joint" type="fixed">
+          <origin rpy="${roll} ${pitch} ${yaw}" xyz="${x} ${y} ${z}"/>
+          <parent link="${parent}"/>
+          <child link="${sensor_kit_base_link}"/>
+        </joint>
+        <link name="${sensor_kit_base_link}">
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+        </link>
+
+        <!-- sensor -->
+        <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensor_kit_calibration.yaml')}"/>
+
+        <!-- lidar -->
+        <xacro:VLS-128 parent="sensor_kit_base_link" name="rs_helios_top" topic="/points_raw" hz="10" samples="220" gpu="$(arg gpu)">
+          <origin
+            xyz="${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['x']}
+                 ${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['y']}
+                 ${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['z']}"
+            rpy="${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['roll']}
+                 ${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['pitch']}
+                 ${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['yaw']}"
+          />
+        </xacro:VLS-128>
+        <xacro:VLP-16 parent="sensor_kit_base_link" name="rs_bpearl_front" topic="/points_raw" hz="10" samples="220" gpu="$(arg gpu)">
+          <origin
+            xyz="${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['x']}
+                 ${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['y']}
+                 ${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['z']}"
+            rpy="${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['roll']}
+                 ${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['pitch']}
+                 ${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['yaw']}"
+          />
+        </xacro:VLP-16>
+
+        <!-- camera -->
+        <xacro:monocular_camera_macro
+          name="camera0/camera"
+          parent="sensor_kit_base_link"
+          namespace=""
+          x="${calibration['sensor_kit_base_link']['camera0/camera_link']['x']}"
+          y="${calibration['sensor_kit_base_link']['camera0/camera_link']['y']}"
+          z="${calibration['sensor_kit_base_link']['camera0/camera_link']['z']}"
+          roll="${calibration['sensor_kit_base_link']['camera0/camera_link']['roll']}"
+          pitch="${calibration['sensor_kit_base_link']['camera0/camera_link']['pitch']}"
+          yaw="${calibration['sensor_kit_base_link']['camera0/camera_link']['yaw']}"
+          fps="30"
+          width="800"
+          height="400"
+          fov="1.3"
+        />
+
+        <!-- gnss -->
+        <xacro:imu_macro
+          name="gnss"
+          parent="sensor_kit_base_link"
+          namespace=""
+          x="${calibration['sensor_kit_base_link']['gnss_link']['x']}"
+          y="${calibration['sensor_kit_base_link']['gnss_link']['y']}"
+          z="${calibration['sensor_kit_base_link']['gnss_link']['z']}"
+          roll="${calibration['sensor_kit_base_link']['gnss_link']['roll']}"
+          pitch="${calibration['sensor_kit_base_link']['gnss_link']['pitch']}"
+          yaw="${calibration['sensor_kit_base_link']['gnss_link']['yaw']}"
+          fps="100"
+        />
+
+      </xacro:macro>
+    </robot>
+
+    ```
+
+### sensors.xacro
+
+このファイルは、sensor_kitのメインフレーム(`sensor_kit_base_link`) をbase_linkにリンクします。
+また、base_link に直接調整されるセンサーがあるので、ここに追加できます。
+
+これは、sample_sensor_kit_description パッケージの sensors.xacro ファイルです:
+(velodyne_rear 変換は、base_link で直接使用されます)
 
 ```xml
-<?xml version="1.0"?>
-<robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:macro name="sensor_kit_macro" params="parent x y z roll pitch yaw">
-    <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
-    <xacro:include filename="$(find vls_description)/urdf/VLS-128.urdf.xacro"/>
-    <xacro:include filename="$(find camera_description)/urdf/monocular_camera.xacro"/>
-    <xacro:include filename="$(find imu_description)/urdf/imu.xacro"/>
-
-    <xacro:arg name="gpu" default="false"/>
-    <xacro:arg name="config_dir" default="$(find tutorial_vehicle_sensor_kit_description)/config"/>
-
-    <xacro:property name="sensor_kit_base_link" default="sensor_kit_base_link"/>
-
-    <joint name="${sensor_kit_base_link}_joint" type="fixed">
-      <origin rpy="${roll} ${pitch} ${yaw}" xyz="${x} ${y} ${z}"/>
-      <parent link="${parent}"/>
-      <child link="${sensor_kit_base_link}"/>
-    </joint>
-    <link name="${sensor_kit_base_link}">
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-    </link>
-
-    <!-- sensor -->
-    <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensor_kit_calibration.yaml')}"/>
-
-    <!-- lidar -->
-    <xacro:VLS-128 parent="sensor_kit_base_link" name="rs_helios_top" topic="/points_raw" hz="10" samples="220" gpu="$(arg gpu)">
-      <origin
-        xyz="${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['x']}
-             ${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['y']}
-             ${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['z']}"
-        rpy="${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['roll']}
-             ${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['pitch']}
-             ${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['yaw']}"
-      />
-    </xacro:VLS-128>
-    <xacro:VLP-16 parent="sensor_kit_base_link" name="rs_bpearl_front" topic="/points_raw" hz="10" samples="220" gpu="$(arg gpu)">
-      <origin
-        xyz="${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['x']}
-             ${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['y']}
-             ${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['z']}"
-        rpy="${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['roll']}
-             ${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['pitch']}
-             ${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['yaw']}"
-      />
-    </xacro:VLP-16>
-
-    <!-- camera -->
-    <xacro:monocular_camera_macro
-      name="camera0/camera"
-      parent="sensor_kit_base_link"
-      namespace=""
-      x="${calibration['sensor_kit_base_link']['camera0/camera_link']['x']}"
-      y="${calibration['sensor_kit_base_link']['camera0/camera_link']['y']}"
-      z="${calibration['sensor_kit_base_link']['camera0/camera_link']['z']}"
-      roll="${calibration['sensor_kit_base_link']['camera0/camera_link']['roll']}"
-      pitch="${calibration['sensor_kit_base_link']['camera0/camera_link']['pitch']}"
-      yaw="${calibration['sensor_kit_base_link']['camera0/camera_link']['yaw']}"
-      fps="30"
-      width="800"
-      height="400"
-      fov="1.3"
-    />
-
-    <!-- gnss -->
-    <xacro:imu_macro
-      name="gnss"
-      parent="sensor_kit_base_link"
-      namespace=""
-      x="${calibration['sensor_kit_base_link']['gnss_link']['x']}"
-      y="${calibration['sensor_kit_base_link']['gnss_link']['y']}"
-      z="${calibration['sensor_kit_base_link']['gnss_link']['z']}"
-      roll="${calibration['sensor_kit_base_link']['gnss_link']['roll']}"
-      pitch="${calibration['sensor_kit_base_link']['gnss_link']['pitch']}"
-      yaw="${calibration['sensor_kit_base_link']['gnss_link']['yaw']}"
-      fps="100"
-    />
-
-  </xacro:macro>
-</robot>
-
-```
-センサー.xacro
-このファイルは、sensor_kit メイン フレーム ( sensor_kit_base_link) を Base_link にリンクします。また、base_link に直接調整されるセンサーがあるので、ここに追加できます。
-
-これは、sample_sensor_kit_description パッケージの sensors.xacro ファイルです: (velodyne_rear 変換は、base_link で直接使用されます)
-
 <?xml version="1.0"?>
 <robot name="vehicle" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:arg name="config_dir" default="$(find sample_sensor_kit_description)/config"/>
@@ -270,32 +344,40 @@ base_link:
     />
   </xacro:VLP-16>
 </robot>
-チュートリアルの車両では、base_link に対する直接のセンサー変換はありません。したがって、sensors.xacro ファイルにはbase_linkとsensor_kit_base_linkリンクのみが含まれます。
-
-??? 注「sensors.xacrotutorial_vehicle_sensor_kit_description」
-
-```xml
-<?xml version="1.0"?>
-<robot name="vehicle" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:arg name="config_dir" default="$(find tutorial_vehicle_sensor_kit_description)/config"/>
-  <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensors_calibration.yaml')}"/>
-
-  <!-- sensor kit -->
-  <xacro:include filename="sensor_kit.xacro"/>
-  <xacro:sensor_kit_macro
-    parent="base_link"
-    x="${calibration['base_link']['sensor_kit_base_link']['x']}"
-    y="${calibration['base_link']['sensor_kit_base_link']['y']}"
-    z="${calibration['base_link']['sensor_kit_base_link']['z']}"
-    roll="${calibration['base_link']['sensor_kit_base_link']['roll']}"
-    pitch="${calibration['base_link']['sensor_kit_base_link']['pitch']}"
-    yaw="${calibration['base_link']['sensor_kit_base_link']['yaw']}"
-  />
-</robot>
-
 ```
-sensor_kit_calibration.yaml、sensors_calibration.yaml、sensor_kit.xacro およびファイルを完成させた後sensors.xacro、センサー記述パッケージが完成し、パッケージの変更を続けます<YOUR-VEHICLE-NAME>_sensor_kit_launch。
 
+チュートリアルの車両では、
+base_link に対する直接のセンサー変換はありません。
+したがって、sensors.xacro ファイルには`base_link`と`sensor_kit_base_link`リンクのみが含まれます。
+
+??? 注記 "tutorial_vehicle_sensor_kit_description用の`sensors.xacro`"
+
+    ```xml
+    <?xml version="1.0"?>
+    <robot name="vehicle" xmlns:xacro="http://ros.org/wiki/xacro">
+      <xacro:arg name="config_dir" default="$(find tutorial_vehicle_sensor_kit_description)/config"/>
+      <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensors_calibration.yaml')}"/>
+
+      <!-- sensor kit -->
+      <xacro:include filename="sensor_kit.xacro"/>
+      <xacro:sensor_kit_macro
+        parent="base_link"
+        x="${calibration['base_link']['sensor_kit_base_link']['x']}"
+        y="${calibration['base_link']['sensor_kit_base_link']['y']}"
+        z="${calibration['base_link']['sensor_kit_base_link']['z']}"
+        roll="${calibration['base_link']['sensor_kit_base_link']['roll']}"
+        pitch="${calibration['base_link']['sensor_kit_base_link']['pitch']}"
+        yaw="${calibration['base_link']['sensor_kit_base_link']['yaw']}"
+      />
+    </robot>
+
+    ```
+
+`sensor_kit_calibration.yaml`, `sensors_calibration.yaml`, `sensor_kit.xacro`
+および`sensors.xacro`ファイルを完成させた後, センサー記述パッケージが完成し、
+`<YOUR-VEHICLE-NAME>_sensor_kit_launch`パッケージの変更を続けます
+
+## Sensor launch
 センサー起動
 このパッケージ ( <YOUR-VEHICLE-NAME>_sensor_kit_launch) では、センサーとそのパイプラインを起動します。common_sensor_launchしたがって、 LIDAR センシング パイプラインを起動するためのパッケージも使用します。以下の画像は、このセクションで構築するセンサー パイプラインを示しています。
 
@@ -324,6 +406,65 @@ sensing.launch.xmlまた、メッセージを gyro_odometer ノード用にvehic
       <arg name="output_twist_with_covariance" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
     </include>
     ...
+At this package (`<YOUR-VEHICLE-NAME>_sensor_kit_launch`),
+we will launch our sensors and their pipelines.
+So, we will also use `common_sensor_launch` package for launching the lidar sensing pipeline.
+This image below demonstrates our sensor pipeline, which we will construct in this section.
+
+<figure markdown>
+  ![sensor_launch_design](images/sensor_launch_design.svg){ align=center }
+  <figcaption>
+    Sample Launch workflow for sensing design.
+  </figcaption>
+</figure>
+
+The `<YOUR-VEHICLE-NAME>_sensor_kit_launch` package folder structure like this:
+
+```diff
+<YOUR-VEHICLE-NAME>_sensor_kit_launch/
+      ├─ config/
+      ├─ data/
+      └─ launch/
++           ├─ camera.launch.xml
++           ├─ gnss.launch.xml
++           ├─ imu.launch.xml
++           ├─ lidar.launch.xml
++           ├─ pointcloud_preprocessor.launch.py
++           └─ sensing.launch.xml
+```
+
+So,
+we will modify the launch files
+which located the `launch` folder for launching and manipulating our sensors.
+The main launch file is `sensing.launch.xml`.
+This launch file launches other sensing launch files.
+The current autoware sensing launch files design for `sensor_kit_launch` package is the diagram below.
+
+<figure markdown>
+  ![sensing_launch_files_design](images/sensing_launch_files.svg){ align=center }
+  <figcaption>
+    Launch file flows over sensing.launch.xml launch file.
+  </figcaption>
+</figure>
+
+The `sensing.launch.xml` also launches `vehicle_velocity_converter` package
+for converting `autoware_auto_vehicle_msgs::msg::VelocityReport` message to `geometry_msgs::msg::TwistWithCovarianceStamped` for gyro_odometer node.
+So,
+be sure
+your vehicle_interface publishes `/vehicle/status/velocity_status` topic with `autoware_auto_vehicle_msgs::msg::VelocityReport` type,
+or you must update `input_vehicle_velocity_topic` at `sensing.launch.xml`.
+
+```diff
+    ...
+    <include file="$(find-pkg-share vehicle_velocity_converter)/launch/vehicle_velocity_converter.launch.xml">
+-     <arg name="input_vehicle_velocity_topic" value="/vehicle/status/velocity_status"/>
++     <arg name="input_vehicle_velocity_topic" value="<YOUR-VELOCITY-STATUS-TOPIC>"/>
+      <arg name="output_twist_with_covariance" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
+    </include>
+    ...
+```
+
+### Lidar Launching
 ライダーの打ち上げ
 まず、lidar.launch.xmlAutoware で LIDAR センサー ドライバーを起動するためのファイルを変更します。GitHub リポジトリの nebula ドライバーでサポートされている LIDAR センサーを確認してください。
 
@@ -395,7 +536,102 @@ nebula_node_container.pyはautoware 用の Lidar パイプラインを作成し�
         )
     )
 tutorial_vehicle にはデフォルトの pointcloud_preprocessor パイプラインを使用するため、nebula_node_container.pyは変更しません。
+Let's
+start with modifying `lidar.launch.xml` file for launching our lidar sensor driver with autoware.
+Please check supported lidar sensors over the nebula driver in the [GitHub repository](https://github.com/tier4/nebula).
 
+If you are using [Velodyne Lidar](https://velodynelidar.com/) sensor,
+you can use the [sample_sensor_kit_launch template](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/sample_sensor_kit_launch/launch/lidar.launch.xml),
+but you need to update `sensor_id`, `data_port`, `sensor_frame` and other necessary changes
+(`max_range`, `scan_phase`, etc.).
+
+```diff
+    <group>
+-     <push-ros-namespace namespace="left"/>
++     <push-ros-namespace namespace="<YOUR-SENSOR-NAMESPACE>"/>
+      <include file="$(find-pkg-share common_sensor_launch)/launch/velodyne_VLP16.launch.xml">
+        <arg name="max_range" value="5.0"/>
+-       <arg name="sensor_frame" value="velodyne_left"/>
++       <arg name="sensor_frame" value="<YOUR-SENSOR-FRAME>"/>
+-       <arg name="sensor_ip" value="192.168.1.202"/>
++       <arg name="sensor_ip" value="<YOUR-SENSOR-IP>"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+-       <arg name="data_port" value="2369"/>
++       <arg name="data_port" value=<YOUR-DATA-PORT>/>
+        <arg name="scan_phase" value="180.0"/>
+        <arg name="cloud_min_angle" value="300"/>
+        <arg name="cloud_max_angle" value="60"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+```
+
+Please add similar launch groups according to your sensor architecture.
+For example, we use Robosense Lidars for our `tutorial_vehicle`,
+so the lidar group for Robosense Lidar should be like this structure:
+
+!!! warning
+
+    under construction
+
+If you are using a Hesai lidar (i.e. PandarQT64,
+please check [nebula](https://github.com/tier4/nebula) driver page for supported sensors),
+you can add the group like this structure at `lidar.launch.xml`:
+
+```xml
+    <group>
+      <push-ros-namespace namespace="<YOUR-SENSOR-NAMESPACE>"/>
+      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_PandarQT64.launch.xml">
+        <arg name="max_range" value="100"/>
+        <arg name="sensor_frame" value="<YOUR-HESAI-SENSOR-FRAME>"/>
+        <arg name="sensor_ip" value="<YOUR-HESAI-SENSOR-IP>"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="<YOUR-HESAI-SENSOR-DATA-PORT>"/>
+        <arg name="scan_phase" value="0.0"/>
+        <arg name="cloud_min_angle" value="0"/>
+        <arg name="cloud_max_angle" value="360"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+```
+
+You can create <YOUR-LIDAR-MODEL>.launch.xml for common sensor launch,
+please check [`hesai_PandarQT64.launch.xml`](https://github.com/leo-drive/tutorial_vehicle_sensor_kit_launch/blob/main/common_sensor_launch/launch/hesai_PandarQT64.launch.xml) as an example.
+
+The [nebula_node_container.py](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/common_sensor_launch/launch/nebula_node_container.launch.py) creates the Lidar pipeline for autoware,
+the pointcloud preprocessing pipeline is constructed for each lidar please check [pointcloud_preprocessor](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/pointcloud_preprocessor) package for filters information as well.
+
+For example, If you want to change your `outlier_filter` method,
+you can modify the pipeline components like this way:
+
+```diff
+
+    nodes.append(
+        ComposableNode(
+            package="pointcloud_preprocessor",
+-           plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
+-           name="ring_outlier_filter",
++           plugin="pointcloud_preprocessor::DualReturnOutlierFilterComponent",
++           name="dual_return_outlier_filter",
+            remappings=[
+                ("input", "rectified/pointcloud_ex"),
+                ("output", "outlier_filtered/pointcloud"),
+            ],
+            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
+        )
+    )
+```
+
+We will use the default pointcloud_preprocessor pipeline for our tutorial_vehicle,
+thus we will not modify [nebula_node_container.py](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/common_sensor_launch/launch/nebula_node_container.launch.py).
+
+### Camera Launching
 カメラの起動
 このセクションでは、tutorial_vehicle の Autoware 用のカメラ ドライバーと 2D 検出パイプラインを起動します。これを行う理由は、tutorial_vehicle 用のコンピューターが 1 台あるためです。Autoware に 2 台以上のコンピューターを使用している場合は、カメラと 2D 検出パイプラインを個別に起動できます。たとえば、src/sensor_component/externalフォルダーにカメラ ドライバーのクローンを作成できます (このドライバーをファイルに追加することを忘れないでくださいautoware.repos)。
 
@@ -686,685 +922,6 @@ colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --package
 ros2 launch <YOUR-SENSOR-KIT-LAUNCH> camera.launch.xml
 # example for tutorial_vehicle: ros2 launch tutorial_vehicle_sensor_kit_launch camera.launch.xml
 すると rois トピックが表示されるので、 rviz2 またはrqtでデバッグイメージを確認できます。
-
-GNSS/INSの起動
-で起動する GNSS/INS センサーをセットアップしますgnss.launch.xml。u-blox およびseptentrioのデフォルトの GNSS センサー オプションはに含まれているsample_sensor_kit_launchため、他のセンサーを GNSS/INS 受信機として使用する場合は、ここに追加する必要があります。さらに、ここでgnss_poserパッケージが起動します。ローカリゼーションの初期化時に車両のポーズ ソースとしてこのパッケージを使用しますが、sensor_driver はこのノードにautoware gnss 方向メッセージを提供する必要があることに注意してください。GNSS/INS ドライバーの準備ができている場合は、この起動ファイルでgnss_poser引数の変数を設定する必要があります。たとえば、必要な変更は次のようになります。gnss.launch.xmlnavsatfix_topic_nameorientation_topic_name
-
-  ...
-- <arg name="gnss_receiver" default="ublox" description="ublox(default) or septentrio"/>
-+ <arg name="gnss_receiver" default="<YOUR-GNSS-SENSOR>" description="ublox(default), septentrio or <YOUR-GNSS-SENSOR>"/>
-
-  <group>
-    <push-ros-namespace namespace="gnss"/>
-
-    <!-- Switch topic name -->
-    <let name="navsatfix_topic_name" value="ublox/nav_sat_fix" if="$(eval &quot;'$(var gnss_receiver)'=='ublox'&quot;)"/>
-    <let name="navsatfix_topic_name" value="septentrio/nav_sat_fix" if="$(eval &quot;'$(var gnss_receiver)'=='septentrio'&quot;)"/>
-+   <let name="navsatfix_topic_name" value="<YOUR-SENSOR>/nav_sat_fix" if="$(eval &quot;'$(var gnss_receiver)'=='<YOUR-GNSS-SENSOR>'&quot;)"/>
-    <let name="orientation_topic_name" value="/autoware_orientation"/>
-
-    ...
-
-+   <!-- YOUR GNSS Driver -->
-+   <group if="$(eval &quot;'$(var launch_driver)' and '$(var gnss_receiver)'=='<YOUR-GNSS-SENSOR>'&quot;)">
-+     <include file="$(find-pkg-share <YOUR-GNSS-SENSOR-DRIVER-PKG>)/launch/<YOUR-GNSS-SENSOR>.launch.xml"/>
-+   </group>
-    ...
--   <arg name="gnss_frame" value="gnss_link"/>
-+   <arg name="gnss_frame" value="<YOUR-GNSS-SENSOR-FRAME>"/>
-    ...
-また、依存関係と未使用のセンサー起動ファイルを で削除できますgnss.launch.xml。たとえば、Clap B7 センサーをGNSS/INS および IMU センサーとして使用し、 RTK にはnrtip_client_rosを使用します。また、これらのパッケージをautoware.reposファイルに追加します。
-
-+ sensor_component/external/clap_b7_driver:
-+   type: git
-+   url: https://github.com/Robeff-Technology/clap_b7_driver.git
-+   version: release/autoware
-+ sensor_component/external/ntrip_client_ros :
-+   type: git
-+   url: https://github.com/Robeff-Technology/ntrip_client_ros.git
-+   version: release/humble
-したがって、gnss.launch.xmlチュートリアル用の車両は次のファイルのようになります (Clap B7 には IMU も含まれているため、このファイルに imu_corrector を追加します)。
-
-??? 注「gnss.launch.xmltutorial_vehicle」
-
-```xml
-<launch>
-  <arg name="launch_driver" default="true"/>
-
-  <group>
-    <push-ros-namespace namespace="gnss"/>
-
-    <!-- Switch topic name -->
-    <let name="navsatfix_topic_name" value="/clap/ros/gps_nav_sat_fix"/>
-    <let name="orientation_topic_name" value="/clap/autoware_orientation"/>
-
-    <!-- CLAP GNSS Driver -->
-    <group if="$(eval &quot;'$(var launch_driver)'">
-      <node pkg="clap_b7_driver" exec="clap_b7_driver_node" name="clap_b7_driver" output="screen">
-        <param from="$(find-pkg-share clap_b7_driver)/config/clap_b7_driver.param.yaml"/>
-      </node>
-      <!-- ntrip Client -->
-      <include file="$(find-pkg-share ntrip_client_ros)/launch/ntrip_client_ros.launch.py"/>
-    </group>
-
-    <!-- NavSatFix to MGRS Pose -->
-    <include file="$(find-pkg-share gnss_poser)/launch/gnss_poser.launch.xml">
-      <arg name="input_topic_fix" value="$(var navsatfix_topic_name)"/>
-      <arg name="input_topic_orientation" value="$(var orientation_topic_name)"/>
-
-      <arg name="output_topic_gnss_pose" value="pose"/>
-      <arg name="output_topic_gnss_pose_cov" value="pose_with_covariance"/>
-      <arg name="output_topic_gnss_fixed" value="fixed"/>
-
-      <arg name="use_gnss_ins_orientation" value="true"/>
-      <!-- Please enter your gnss frame here -->
-      <arg name="gnss_frame" value="GNSS_INS/gnss_ins_link"/>
-    </include>
-  </group>
-
-  <!-- IMU corrector -->
-  <group>
-    <push-ros-namespace namespace="imu"/>
-    <include file="$(find-pkg-share imu_corrector)/launch/imu_corrector.launch.xml">
-      <arg name="input_topic" value="/sensing/gnss/clap/ros/imu"/>
-      <arg name="output_topic" value="imu_data"/>
-      <arg name="param_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/robione_sensor_kit/imu_corrector.param.yaml"/>
-    </include>
-    <include file="$(find-pkg-share imu_corrector)/launch/gyro_bias_estimator.launch.xml">
-      <arg name="input_imu_raw" value="/sensing/gnss/clap/ros/imu"/>
-      <arg name="input_twist" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
-      <arg name="imu_corrector_param_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/robione_sensor_kit/imu_corrector.param.yaml"/>
-    </include>
-  </group>
-</launch>
-```
-IMUの打ち上げ
-ファイルに IMU センサー起動ファイルを追加できますimu.launch.xml。Sample_sensor_kitでは、 IMU センサーとして玉川 IMU センサーが使用されています。Tamakawa IMU ドライバーの代わりに IMU ドライバーを追加できます。また、ファイルでgyro_bias_estimatorと imu_correctorを起動しますimu.launch.xml。詳細については、これらのドキュメントを参照してください (imu_corrector と gyro_bias_estimator を、tutorial_vehicle の gnss.launch.xml に追加しました。そのため、imu.launch.xmltutorial_vehicle 用の作成と使用は行いません)。imu_raw_nameraw imu トピックを説明するために引数を変更することを忘れないでください。
-
-imu.launch.xmlAutoware のサンプル起動ファイルを次に示します。
-
-<launch>
-  <arg name="launch_driver" default="true"/>
-
-  <group>
-    <push-ros-namespace namespace="imu"/>
-
--     <group>
--       <push-ros-namespace namespace="tamagawa"/>
--       <node pkg="tamagawa_imu_driver" name="tag_serial_driver" exec="tag_serial_driver" if="$(var launch_driver)">
--         <remap from="imu/data_raw" to="imu_raw"/>
--         <param name="port" value="/dev/imu"/>
--         <param name="imu_frame_id" value="tamagawa/imu_link"/>
--       </node>
--     </group>
-
-+     <group>
-+       <push-ros-namespace namespace="<YOUR-IMU_MODEL>"/>
-+       <node pkg="<YOUR-IMU-DRIVER-PACKAGE>" name="<YOUR-IMU-DRIVER>" exec="<YOUR-IMU-DRIVER-EXECUTIBLE>" if="$(var launch_driver)">
-+       <!-- Add necessary params here -->
-+       </node>
-+     </group>
-
--   <arg name="imu_raw_name" default="tamagawa/imu_raw"/>
-+   <arg name="imu_raw_name" default="<YOUR-IMU_MODEL/YOUR-RAW-IMU-TOPIC>"/>
-    <arg name="imu_corrector_param_file" default="$(find-pkg-share individual_params)/config/$(var vehicle_id)/sample_sensor_kit/imu_corrector.param.yaml"/>
-    <include file="$(find-pkg-share imu_corrector)/launch/imu_corrector.launch.xml">
-      <arg name="input_topic" value="$(var imu_raw_name)"/>
-      <arg name="output_topic" value="imu_data"/>
-      <arg name="param_file" value="$(var imu_corrector_param_file)"/>
-    </include>
-
-    <include file="$(find-pkg-share imu_corrector)/launch/gyro_bias_estimator.launch.xml">
-      <arg name="input_imu_raw" value="$(var imu_raw_name)"/>
-      <arg name="input_twist" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
-      <arg name="imu_corrector_param_file" value="$(var imu_corrector_param_file)"/>
-    </include>
-  </group>
-</launch>
-IMU ドライバーに応じて、このファイルに必要な変更を加えてください。tutorial_vehicle には専用の IMU センサーがないため、それらの起動を で削除しますsensing.launch.xml。
-
--   <!-- IMU Driver -->
--   <include file="$(find-pkg-share tutorial_vehicle_sensor_kit_launch)/launch/imu.launch.xml">
--     <arg name="launch_driver" value="$(var launch_driver)"/>
--   </include>
-sensing.launch.xmlセンサーのアーキテクチャに応じて起動ファイルを追加または削除できます。
-# Creating a sensor model for Autoware
-
-## Introduction
-
-This page introduces the following packages for the sensor model:
-
-1. `common_sensor_launch`
-2. `<YOUR-VEHICLE-NAME>_sensor_kit_description`
-3. `<YOUR-VEHICLE-NAME>_sensor_kit_launch`
-
-Previously,
-we forked our vehicle model at the [creating autoware repositories](../../creating-your-autoware-repositories/creating-autoware-repositories.md) page step.
-For instance,
-we created [tutorial_vehicle_launch](https://github.com/leo-drive/tutorial_vehicle_launch)
-as an implementation example for the said step.
-Please ensure that the <YOUR-VEHICLE-NAME>\_vehicle_launch repository is included in Autoware,
-following the directory structure below:
-
-```diff
-<YOUR-OWN-AUTOWARE-DIR>/
-  └─ src/
-       └─ sensor_kit/
-            └─ <YOUR-VEHICLE-NAME>_sensor_kit_launch/
-                 ├─ common_sensor_launch/
-                 ├─ <YOUR-VEHICLE-NAME>_sensor_kit_description/
-                 └─ <YOUR-VEHICLE-NAME>_sensor_kit_launch/
-```
-
-If your forked Autoware meta-repository doesn't include `<YOUR-VEHICLE-NAME>_vehicle_launch` with the correct folder structure
-as shown above,
-please add your forked `<YOUR-VEHICLE-NAME>_vehicle_launch` repository to the autoware.repos file
-and run the vcs import src < autoware.repos command in your terminal
-to import the newly included repositories at autoware.repos file.
-
-Now, we are ready to modify the following sensor model packages for our vehicle.
-Firstly, we need to rename the description and launch packages:
-
-```diff
-<YOUR-VEHICLE-NAME>_sensor_kit_launch/
-  ├─ common_sensor_launch/
-- ├─ sample_sensor_kit_description/
-+ ├─ <YOUR-VEHICLE-NAME>_sensor_kit_description/
-- └─ sample_sensor_kit_launch/
-+ └─ <YOUR-VEHICLE-NAME>_sensor_kit_launch/
-```
-
-After that,
-we will change our package names in the package.xml file and CMakeLists.txt file of the sample_sensor_kit_description and sample_sensor_kit_launch packages.
-So,
-open the package.xml file and CMakeLists.txt file with any text editor or IDE of your preference
-and perform the following changes:
-
-Change the `<name>` attribute at `package.xml` file:
-
-```diff
-<package format="3">
-- <name>sample_sensor_kit_description</name>
-+ <name><YOUR-VEHICLE-NAME>_sensor_kit_description</name>
-  <version>0.1.0</version>
-  <description>The sensor_kit_description package</description>
-  ...
-  ...
-```
-
-Change the `project()` method at `CmakeList.txt` file.
-
-```diff
-  cmake_minimum_required(VERSION 3.5)
-- project(sample_sensor_kit_description)
-+ project(<YOUR-VEHICLE-NAME>_sensor_kit_description)
-
-  find_package(ament_cmake_auto REQUIRED)
-...
-...
-```
-
-Remember to apply the name changes and project method for **BOTH**
-`<YOUR-VEHICLE-NAME>_vehicle_description`and `<YOUR-VEHICLE-NAME>_vehicle_launch` ROS 2 packages.
-Once finished, we can proceed to build said packages:
-
-```bash
-cd <YOUR-AUTOWARE-DIR>
-colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to <YOUR-VEHICLE-NAME>_sensor_kit_description <YOUR-VEHICLE-NAME>_sensor_kit_launch
-```
-
-## Sensor description
-
-The main purpose of this package is to describe the sensor frame IDs,
-calibration parameters of all sensors, and their links with urdf files.
-
-The folder structure of sensor_kit_description package is:
-
-```diff
-<YOUR-VEHICLE-NAME>_sensor_kit_description/
-   ├─ config/
-   │     ├─ sensor_kit_calibration.yaml
-   │     └─ sensors_calibration.yaml
-   └─ urdf/
-         ├─ sensor_kit.xacro
-         └─ sensors.xacro
-```
-
-Now, we will modify these files according to our sensor design.
-
-### sensor_kit_calibration.yaml
-
-This file defines the mounting positions and orientations of sensors with `sensor_kit_base_link` as the parent frame.
-We can assume `sensor_kit_base_link` frame is bottom of your main Lidar sensor.
-We must create this file with euler format as [x, y, z, roll, pitch, yaw].
-Also, we will set these values with "0" until the [calibration steps](../calibrating-sensors).
-
-We will define new frames for this file, and we will connect them `.xacro` files.
-We recommend naming as if your lidar sensor frame as "velodyne_top",
-you can add "\_base_link" to our calibration .yaml file.
-
-So, the sample file must be like:
-
-```yaml
-sensor_kit_base_link:
-  velodyne_top_base_link:
-    x: 0.000000
-    y: 0.000000
-    z: 0.000000
-    roll: 0.000000
-    pitch: 0.000000
-    yaw: 0.000000
-  camera0/camera_link:
-    x: 0.000000
-    y: 0.000000
-    z: 0.000000
-    roll: 0.000000
-    pitch: 0.000000
-    yaw: 0.000000
-  ...
-  ...
-```
-
-This file for `tutorial_vehicle` was created for one camera, two lidars and one GNSS/INS sensors.
-
-??? note "`sensor_kit_calibration.yaml` for tutorial_vehicle_sensor_kit_description"
-
-    ```yaml
-    sensor_kit_base_link:
-      camera0/camera_link: # Camera
-        x: 0.0
-        y: 0.0
-        z: 0.0
-        roll: 0.0
-        pitch: 0.0
-        yaw: 0.0
-      rs_helios_top_base_link: # Lidar
-        x: 0.0
-        y: 0.0
-        z: 0.0
-        roll: 0.0
-        pitch: 0.0
-        yaw: 0.0
-      rs_bpearl_front_base_link: # Lidar
-        x: 0.0
-        y: 0.0
-        z: 0.0
-        roll: 0.0
-        pitch: 0.0
-        yaw: 0.0
-      GNSS_INS/gnss_ins_link: # GNSS/INS
-        x: 0.0
-        y: 0.0
-        z: 0.0
-        roll: 0.0
-        pitch: 0.0
-        yaw: 0.0
-    ```
-
-### sensors_calibration.yaml
-
-This file defines the mounting positions and orientations of `sensor_kit_base_link` (child frame)
-with `base_link` as the parent frame.
-At Autoware, `base_link` is on projection of the rear-axle center onto the ground surface.
-For more information,
-you can check [vehicle dimension](../../../../design/autoware-interfaces/components/vehicle-dimensions.md) page.
-You can use CAD values for this, but we will fill the values with `0` for now.
-
-```yaml
-base_link:
-  sensor_kit_base_link:
-    x: 0.000000
-    y: 0.000000
-    z: 0.000000
-    roll: 0.000000
-    pitch: 0.000000
-    yaw: 0.000000
-```
-
-Now, we are ready to implement .xacro files.
-These files provide linking our sensor frames and adding sensor urdf files
-
-### sensor_kit.xacro
-
-We will add our sensors and remove unnecessary xacros from this file.
-For example,
-we want
-to add our lidar sensor with `velodyne_top` frame from the sensor driver,
-we will add the following xacro to our sensor_kit.xacro file.
-Please add your sensors to this file and remove unnecessary sensor's xacros.
-
-```xml
-    <!-- lidar -->
-    <xacro:VLS-128 parent="sensor_kit_base_link" name="velodyne_top" topic="/points_raw" hz="10" samples="220" gpu="$(arg gpu)">
-        <origin
-                xyz="${calibration['sensor_kit_base_link']['velodyne_top_base_link']['x']}
-                 ${calibration['sensor_kit_base_link']['velodyne_top_base_link']['y']}
-                 ${calibration['sensor_kit_base_link']['velodyne_top_base_link']['z']}"
-                rpy="${calibration['sensor_kit_base_link']['velodyne_top_base_link']['roll']}
-                 ${calibration['sensor_kit_base_link']['velodyne_top_base_link']['pitch']}
-                 ${calibration['sensor_kit_base_link']['velodyne_top_base_link']['yaw']}"
-        />
-    </xacro:VLS-128>
-```
-
-Here is the sample xacro file for tutorial_vehicle with one camera, two lidars and one GNSS/INS sensors.
-
-??? note "`sensor_kit.xacro` for tutorial_vehicle_sensor_kit_description"
-
-    ```xml
-    <?xml version="1.0"?>
-    <robot xmlns:xacro="http://ros.org/wiki/xacro">
-      <xacro:macro name="sensor_kit_macro" params="parent x y z roll pitch yaw">
-        <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
-        <xacro:include filename="$(find vls_description)/urdf/VLS-128.urdf.xacro"/>
-        <xacro:include filename="$(find camera_description)/urdf/monocular_camera.xacro"/>
-        <xacro:include filename="$(find imu_description)/urdf/imu.xacro"/>
-
-        <xacro:arg name="gpu" default="false"/>
-        <xacro:arg name="config_dir" default="$(find tutorial_vehicle_sensor_kit_description)/config"/>
-
-        <xacro:property name="sensor_kit_base_link" default="sensor_kit_base_link"/>
-
-        <joint name="${sensor_kit_base_link}_joint" type="fixed">
-          <origin rpy="${roll} ${pitch} ${yaw}" xyz="${x} ${y} ${z}"/>
-          <parent link="${parent}"/>
-          <child link="${sensor_kit_base_link}"/>
-        </joint>
-        <link name="${sensor_kit_base_link}">
-          <origin rpy="0 0 0" xyz="0 0 0"/>
-        </link>
-
-        <!-- sensor -->
-        <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensor_kit_calibration.yaml')}"/>
-
-        <!-- lidar -->
-        <xacro:VLS-128 parent="sensor_kit_base_link" name="rs_helios_top" topic="/points_raw" hz="10" samples="220" gpu="$(arg gpu)">
-          <origin
-            xyz="${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['x']}
-                 ${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['y']}
-                 ${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['z']}"
-            rpy="${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['roll']}
-                 ${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['pitch']}
-                 ${calibration['sensor_kit_base_link']['rs_helios_top_base_link']['yaw']}"
-          />
-        </xacro:VLS-128>
-        <xacro:VLP-16 parent="sensor_kit_base_link" name="rs_bpearl_front" topic="/points_raw" hz="10" samples="220" gpu="$(arg gpu)">
-          <origin
-            xyz="${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['x']}
-                 ${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['y']}
-                 ${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['z']}"
-            rpy="${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['roll']}
-                 ${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['pitch']}
-                 ${calibration['sensor_kit_base_link']['rs_bpearl_front_base_link']['yaw']}"
-          />
-        </xacro:VLP-16>
-
-        <!-- camera -->
-        <xacro:monocular_camera_macro
-          name="camera0/camera"
-          parent="sensor_kit_base_link"
-          namespace=""
-          x="${calibration['sensor_kit_base_link']['camera0/camera_link']['x']}"
-          y="${calibration['sensor_kit_base_link']['camera0/camera_link']['y']}"
-          z="${calibration['sensor_kit_base_link']['camera0/camera_link']['z']}"
-          roll="${calibration['sensor_kit_base_link']['camera0/camera_link']['roll']}"
-          pitch="${calibration['sensor_kit_base_link']['camera0/camera_link']['pitch']}"
-          yaw="${calibration['sensor_kit_base_link']['camera0/camera_link']['yaw']}"
-          fps="30"
-          width="800"
-          height="400"
-          fov="1.3"
-        />
-
-        <!-- gnss -->
-        <xacro:imu_macro
-          name="gnss"
-          parent="sensor_kit_base_link"
-          namespace=""
-          x="${calibration['sensor_kit_base_link']['gnss_link']['x']}"
-          y="${calibration['sensor_kit_base_link']['gnss_link']['y']}"
-          z="${calibration['sensor_kit_base_link']['gnss_link']['z']}"
-          roll="${calibration['sensor_kit_base_link']['gnss_link']['roll']}"
-          pitch="${calibration['sensor_kit_base_link']['gnss_link']['pitch']}"
-          yaw="${calibration['sensor_kit_base_link']['gnss_link']['yaw']}"
-          fps="100"
-        />
-
-      </xacro:macro>
-    </robot>
-
-    ```
-
-### sensors.xacro
-
-This files links our sensor_kit main frame (`sensor_kit_base_link`) to base_link.
-Also, you have sensors which will be calibrated directly to base_link, you can add it to here.
-
-Here is the sensors.xacro file for sample_sensor_kit_description package:
-(velodyne_rear transformation is directly used with base_link)
-
-```xml
-<?xml version="1.0"?>
-<robot name="vehicle" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:arg name="config_dir" default="$(find sample_sensor_kit_description)/config"/>
-  <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensors_calibration.yaml')}"/>
-
-  <!-- sensor kit -->
-  <xacro:include filename="sensor_kit.xacro"/>
-  <xacro:sensor_kit_macro
-    parent="base_link"
-    x="${calibration['base_link']['sensor_kit_base_link']['x']}"
-    y="${calibration['base_link']['sensor_kit_base_link']['y']}"
-    z="${calibration['base_link']['sensor_kit_base_link']['z']}"
-    roll="${calibration['base_link']['sensor_kit_base_link']['roll']}"
-    pitch="${calibration['base_link']['sensor_kit_base_link']['pitch']}"
-    yaw="${calibration['base_link']['sensor_kit_base_link']['yaw']}"
-  />
-
-  <!-- embedded sensors -->
-  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
-  <xacro:VLP-16 parent="base_link" name="velodyne_rear" topic="velodyne_rear/velodyne_points" hz="10" samples="220" gpu="false">
-    <origin
-      xyz="${calibration['base_link']['velodyne_rear_base_link']['x']}
-           ${calibration['base_link']['velodyne_rear_base_link']['y']}
-           ${calibration['base_link']['velodyne_rear_base_link']['z']}"
-      rpy="${calibration['base_link']['velodyne_rear_base_link']['roll']}
-           ${calibration['base_link']['velodyne_rear_base_link']['pitch']}
-           ${calibration['base_link']['velodyne_rear_base_link']['yaw']}"
-    />
-  </xacro:VLP-16>
-</robot>
-```
-
-At out tutorial vehicle,
-there is no directly sensor transformation for base_link,
-thus our sensors.xacro file includes only `base_link` and `sensor_kit_base_link` link.
-
-??? note "`sensors.xacro` for tutorial_vehicle_sensor_kit_description"
-
-    ```xml
-    <?xml version="1.0"?>
-    <robot name="vehicle" xmlns:xacro="http://ros.org/wiki/xacro">
-      <xacro:arg name="config_dir" default="$(find tutorial_vehicle_sensor_kit_description)/config"/>
-      <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensors_calibration.yaml')}"/>
-
-      <!-- sensor kit -->
-      <xacro:include filename="sensor_kit.xacro"/>
-      <xacro:sensor_kit_macro
-        parent="base_link"
-        x="${calibration['base_link']['sensor_kit_base_link']['x']}"
-        y="${calibration['base_link']['sensor_kit_base_link']['y']}"
-        z="${calibration['base_link']['sensor_kit_base_link']['z']}"
-        roll="${calibration['base_link']['sensor_kit_base_link']['roll']}"
-        pitch="${calibration['base_link']['sensor_kit_base_link']['pitch']}"
-        yaw="${calibration['base_link']['sensor_kit_base_link']['yaw']}"
-      />
-    </robot>
-
-    ```
-
-After the completing `sensor_kit_calibration.yaml`, `sensors_calibration.yaml`, `sensor_kit.xacro`
-and `sensors.xacro` file, our sensor description package is finished,
-we will continue with modifying `<YOUR-VEHICLE-NAME>_sensor_kit_launch` package.
-
-## Sensor launch
-
-At this package (`<YOUR-VEHICLE-NAME>_sensor_kit_launch`),
-we will launch our sensors and their pipelines.
-So, we will also use `common_sensor_launch` package for launching the lidar sensing pipeline.
-This image below demonstrates our sensor pipeline, which we will construct in this section.
-
-<figure markdown>
-  ![sensor_launch_design](images/sensor_launch_design.svg){ align=center }
-  <figcaption>
-    Sample Launch workflow for sensing design.
-  </figcaption>
-</figure>
-
-The `<YOUR-VEHICLE-NAME>_sensor_kit_launch` package folder structure like this:
-
-```diff
-<YOUR-VEHICLE-NAME>_sensor_kit_launch/
-      ├─ config/
-      ├─ data/
-      └─ launch/
-+           ├─ camera.launch.xml
-+           ├─ gnss.launch.xml
-+           ├─ imu.launch.xml
-+           ├─ lidar.launch.xml
-+           ├─ pointcloud_preprocessor.launch.py
-+           └─ sensing.launch.xml
-```
-
-So,
-we will modify the launch files
-which located the `launch` folder for launching and manipulating our sensors.
-The main launch file is `sensing.launch.xml`.
-This launch file launches other sensing launch files.
-The current autoware sensing launch files design for `sensor_kit_launch` package is the diagram below.
-
-<figure markdown>
-  ![sensing_launch_files_design](images/sensing_launch_files.svg){ align=center }
-  <figcaption>
-    Launch file flows over sensing.launch.xml launch file.
-  </figcaption>
-</figure>
-
-The `sensing.launch.xml` also launches `vehicle_velocity_converter` package
-for converting `autoware_auto_vehicle_msgs::msg::VelocityReport` message to `geometry_msgs::msg::TwistWithCovarianceStamped` for gyro_odometer node.
-So,
-be sure
-your vehicle_interface publishes `/vehicle/status/velocity_status` topic with `autoware_auto_vehicle_msgs::msg::VelocityReport` type,
-or you must update `input_vehicle_velocity_topic` at `sensing.launch.xml`.
-
-```diff
-    ...
-    <include file="$(find-pkg-share vehicle_velocity_converter)/launch/vehicle_velocity_converter.launch.xml">
--     <arg name="input_vehicle_velocity_topic" value="/vehicle/status/velocity_status"/>
-+     <arg name="input_vehicle_velocity_topic" value="<YOUR-VELOCITY-STATUS-TOPIC>"/>
-      <arg name="output_twist_with_covariance" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
-    </include>
-    ...
-```
-
-### Lidar Launching
-
-Let's
-start with modifying `lidar.launch.xml` file for launching our lidar sensor driver with autoware.
-Please check supported lidar sensors over the nebula driver in the [GitHub repository](https://github.com/tier4/nebula).
-
-If you are using [Velodyne Lidar](https://velodynelidar.com/) sensor,
-you can use the [sample_sensor_kit_launch template](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/sample_sensor_kit_launch/launch/lidar.launch.xml),
-but you need to update `sensor_id`, `data_port`, `sensor_frame` and other necessary changes
-(`max_range`, `scan_phase`, etc.).
-
-```diff
-    <group>
--     <push-ros-namespace namespace="left"/>
-+     <push-ros-namespace namespace="<YOUR-SENSOR-NAMESPACE>"/>
-      <include file="$(find-pkg-share common_sensor_launch)/launch/velodyne_VLP16.launch.xml">
-        <arg name="max_range" value="5.0"/>
--       <arg name="sensor_frame" value="velodyne_left"/>
-+       <arg name="sensor_frame" value="<YOUR-SENSOR-FRAME>"/>
--       <arg name="sensor_ip" value="192.168.1.202"/>
-+       <arg name="sensor_ip" value="<YOUR-SENSOR-IP>"/>
-        <arg name="host_ip" value="$(var host_ip)"/>
--       <arg name="data_port" value="2369"/>
-+       <arg name="data_port" value=<YOUR-DATA-PORT>/>
-        <arg name="scan_phase" value="180.0"/>
-        <arg name="cloud_min_angle" value="300"/>
-        <arg name="cloud_max_angle" value="60"/>
-        <arg name="launch_driver" value="$(var launch_driver)"/>
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
-        <arg name="container_name" value="$(var pointcloud_container_name)"/>
-      </include>
-    </group>
-```
-
-Please add similar launch groups according to your sensor architecture.
-For example, we use Robosense Lidars for our `tutorial_vehicle`,
-so the lidar group for Robosense Lidar should be like this structure:
-
-!!! warning
-
-    under construction
-
-If you are using a Hesai lidar (i.e. PandarQT64,
-please check [nebula](https://github.com/tier4/nebula) driver page for supported sensors),
-you can add the group like this structure at `lidar.launch.xml`:
-
-```xml
-    <group>
-      <push-ros-namespace namespace="<YOUR-SENSOR-NAMESPACE>"/>
-      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_PandarQT64.launch.xml">
-        <arg name="max_range" value="100"/>
-        <arg name="sensor_frame" value="<YOUR-HESAI-SENSOR-FRAME>"/>
-        <arg name="sensor_ip" value="<YOUR-HESAI-SENSOR-IP>"/>
-        <arg name="host_ip" value="$(var host_ip)"/>
-        <arg name="data_port" value="<YOUR-HESAI-SENSOR-DATA-PORT>"/>
-        <arg name="scan_phase" value="0.0"/>
-        <arg name="cloud_min_angle" value="0"/>
-        <arg name="cloud_max_angle" value="360"/>
-        <arg name="launch_driver" value="$(var launch_driver)"/>
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
-        <arg name="container_name" value="$(var pointcloud_container_name)"/>
-      </include>
-    </group>
-```
-
-You can create <YOUR-LIDAR-MODEL>.launch.xml for common sensor launch,
-please check [`hesai_PandarQT64.launch.xml`](https://github.com/leo-drive/tutorial_vehicle_sensor_kit_launch/blob/main/common_sensor_launch/launch/hesai_PandarQT64.launch.xml) as an example.
-
-The [nebula_node_container.py](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/common_sensor_launch/launch/nebula_node_container.launch.py) creates the Lidar pipeline for autoware,
-the pointcloud preprocessing pipeline is constructed for each lidar please check [pointcloud_preprocessor](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/pointcloud_preprocessor) package for filters information as well.
-
-For example, If you want to change your `outlier_filter` method,
-you can modify the pipeline components like this way:
-
-```diff
-
-    nodes.append(
-        ComposableNode(
-            package="pointcloud_preprocessor",
--           plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
--           name="ring_outlier_filter",
-+           plugin="pointcloud_preprocessor::DualReturnOutlierFilterComponent",
-+           name="dual_return_outlier_filter",
-            remappings=[
-                ("input", "rectified/pointcloud_ex"),
-                ("output", "outlier_filtered/pointcloud"),
-            ],
-            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-        )
-    )
-```
-
-We will use the default pointcloud_preprocessor pipeline for our tutorial_vehicle,
-thus we will not modify [nebula_node_container.py](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/common_sensor_launch/launch/nebula_node_container.launch.py).
-
-### Camera Launching
 
 In this section,
 we will launch our camera driver and 2D detection pipeline for Autoware for tutorial_vehicle.
@@ -1726,7 +1283,97 @@ Then the rois topics will appear,
 you can check debug image with rviz2 or [rqt](http://wiki.ros.org/rqt).
 
 ### GNSS/INS Launching
+GNSS/INSの起動
+で起動する GNSS/INS センサーをセットアップしますgnss.launch.xml。u-blox およびseptentrioのデフォルトの GNSS センサー オプションはに含まれているsample_sensor_kit_launchため、他のセンサーを GNSS/INS 受信機として使用する場合は、ここに追加する必要があります。さらに、ここでgnss_poserパッケージが起動します。ローカリゼーションの初期化時に車両のポーズ ソースとしてこのパッケージを使用しますが、sensor_driver はこのノードにautoware gnss 方向メッセージを提供する必要があることに注意してください。GNSS/INS ドライバーの準備ができている場合は、この起動ファイルでgnss_poser引数の変数を設定する必要があります。たとえば、必要な変更は次のようになります。gnss.launch.xmlnavsatfix_topic_nameorientation_topic_name
 
+  ...
+- <arg name="gnss_receiver" default="ublox" description="ublox(default) or septentrio"/>
++ <arg name="gnss_receiver" default="<YOUR-GNSS-SENSOR>" description="ublox(default), septentrio or <YOUR-GNSS-SENSOR>"/>
+
+  <group>
+    <push-ros-namespace namespace="gnss"/>
+
+    <!-- Switch topic name -->
+    <let name="navsatfix_topic_name" value="ublox/nav_sat_fix" if="$(eval &quot;'$(var gnss_receiver)'=='ublox'&quot;)"/>
+    <let name="navsatfix_topic_name" value="septentrio/nav_sat_fix" if="$(eval &quot;'$(var gnss_receiver)'=='septentrio'&quot;)"/>
++   <let name="navsatfix_topic_name" value="<YOUR-SENSOR>/nav_sat_fix" if="$(eval &quot;'$(var gnss_receiver)'=='<YOUR-GNSS-SENSOR>'&quot;)"/>
+    <let name="orientation_topic_name" value="/autoware_orientation"/>
+
+    ...
+
++   <!-- YOUR GNSS Driver -->
++   <group if="$(eval &quot;'$(var launch_driver)' and '$(var gnss_receiver)'=='<YOUR-GNSS-SENSOR>'&quot;)">
++     <include file="$(find-pkg-share <YOUR-GNSS-SENSOR-DRIVER-PKG>)/launch/<YOUR-GNSS-SENSOR>.launch.xml"/>
++   </group>
+    ...
+-   <arg name="gnss_frame" value="gnss_link"/>
++   <arg name="gnss_frame" value="<YOUR-GNSS-SENSOR-FRAME>"/>
+    ...
+また、依存関係と未使用のセンサー起動ファイルを で削除できますgnss.launch.xml。たとえば、Clap B7 センサーをGNSS/INS および IMU センサーとして使用し、 RTK にはnrtip_client_rosを使用します。また、これらのパッケージをautoware.reposファイルに追加します。
+
++ sensor_component/external/clap_b7_driver:
++   type: git
++   url: https://github.com/Robeff-Technology/clap_b7_driver.git
++   version: release/autoware
++ sensor_component/external/ntrip_client_ros :
++   type: git
++   url: https://github.com/Robeff-Technology/ntrip_client_ros.git
++   version: release/humble
+したがって、gnss.launch.xmlチュートリアル用の車両は次のファイルのようになります (Clap B7 には IMU も含まれているため、このファイルに imu_corrector を追加します)。
+
+??? 注「gnss.launch.xmltutorial_vehicle」
+
+```xml
+<launch>
+  <arg name="launch_driver" default="true"/>
+
+  <group>
+    <push-ros-namespace namespace="gnss"/>
+
+    <!-- Switch topic name -->
+    <let name="navsatfix_topic_name" value="/clap/ros/gps_nav_sat_fix"/>
+    <let name="orientation_topic_name" value="/clap/autoware_orientation"/>
+
+    <!-- CLAP GNSS Driver -->
+    <group if="$(eval &quot;'$(var launch_driver)'">
+      <node pkg="clap_b7_driver" exec="clap_b7_driver_node" name="clap_b7_driver" output="screen">
+        <param from="$(find-pkg-share clap_b7_driver)/config/clap_b7_driver.param.yaml"/>
+      </node>
+      <!-- ntrip Client -->
+      <include file="$(find-pkg-share ntrip_client_ros)/launch/ntrip_client_ros.launch.py"/>
+    </group>
+
+    <!-- NavSatFix to MGRS Pose -->
+    <include file="$(find-pkg-share gnss_poser)/launch/gnss_poser.launch.xml">
+      <arg name="input_topic_fix" value="$(var navsatfix_topic_name)"/>
+      <arg name="input_topic_orientation" value="$(var orientation_topic_name)"/>
+
+      <arg name="output_topic_gnss_pose" value="pose"/>
+      <arg name="output_topic_gnss_pose_cov" value="pose_with_covariance"/>
+      <arg name="output_topic_gnss_fixed" value="fixed"/>
+
+      <arg name="use_gnss_ins_orientation" value="true"/>
+      <!-- Please enter your gnss frame here -->
+      <arg name="gnss_frame" value="GNSS_INS/gnss_ins_link"/>
+    </include>
+  </group>
+
+  <!-- IMU corrector -->
+  <group>
+    <push-ros-namespace namespace="imu"/>
+    <include file="$(find-pkg-share imu_corrector)/launch/imu_corrector.launch.xml">
+      <arg name="input_topic" value="/sensing/gnss/clap/ros/imu"/>
+      <arg name="output_topic" value="imu_data"/>
+      <arg name="param_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/robione_sensor_kit/imu_corrector.param.yaml"/>
+    </include>
+    <include file="$(find-pkg-share imu_corrector)/launch/gyro_bias_estimator.launch.xml">
+      <arg name="input_imu_raw" value="/sensing/gnss/clap/ros/imu"/>
+      <arg name="input_twist" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
+      <arg name="imu_corrector_param_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/robione_sensor_kit/imu_corrector.param.yaml"/>
+    </include>
+  </group>
+</launch>
+```
 We will set up the GNSS/INS sensor launches at `gnss.launch.xml`.
 The default GNSS sensor options at [`sample_sensor_kit_launch`](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/sample_sensor_kit_launch/launch/gnss.launch.xml) for [u-blox](https://www.u-blox.com/en/)
 and [septentrio](https://www.septentrio.com/en) is included in `gnss.launch.xml`,
@@ -1840,7 +1487,56 @@ our `gnss.launch.xml` for tutorial vehicle should be like this file
     ```
 
 ### IMU Launching
+IMUの打ち上げ
+ファイルに IMU センサー起動ファイルを追加できますimu.launch.xml。Sample_sensor_kitでは、 IMU センサーとして玉川 IMU センサーが使用されています。Tamakawa IMU ドライバーの代わりに IMU ドライバーを追加できます。また、ファイルでgyro_bias_estimatorと imu_correctorを起動しますimu.launch.xml。詳細については、これらのドキュメントを参照してください (imu_corrector と gyro_bias_estimator を、tutorial_vehicle の gnss.launch.xml に追加しました。そのため、imu.launch.xmltutorial_vehicle 用の作成と使用は行いません)。imu_raw_nameraw imu トピックを説明するために引数を変更することを忘れないでください。
 
+imu.launch.xmlAutoware のサンプル起動ファイルを次に示します。
+
+<launch>
+  <arg name="launch_driver" default="true"/>
+
+  <group>
+    <push-ros-namespace namespace="imu"/>
+
+-     <group>
+-       <push-ros-namespace namespace="tamagawa"/>
+-       <node pkg="tamagawa_imu_driver" name="tag_serial_driver" exec="tag_serial_driver" if="$(var launch_driver)">
+-         <remap from="imu/data_raw" to="imu_raw"/>
+-         <param name="port" value="/dev/imu"/>
+-         <param name="imu_frame_id" value="tamagawa/imu_link"/>
+-       </node>
+-     </group>
+
++     <group>
++       <push-ros-namespace namespace="<YOUR-IMU_MODEL>"/>
++       <node pkg="<YOUR-IMU-DRIVER-PACKAGE>" name="<YOUR-IMU-DRIVER>" exec="<YOUR-IMU-DRIVER-EXECUTIBLE>" if="$(var launch_driver)">
++       <!-- Add necessary params here -->
++       </node>
++     </group>
+
+-   <arg name="imu_raw_name" default="tamagawa/imu_raw"/>
++   <arg name="imu_raw_name" default="<YOUR-IMU_MODEL/YOUR-RAW-IMU-TOPIC>"/>
+    <arg name="imu_corrector_param_file" default="$(find-pkg-share individual_params)/config/$(var vehicle_id)/sample_sensor_kit/imu_corrector.param.yaml"/>
+    <include file="$(find-pkg-share imu_corrector)/launch/imu_corrector.launch.xml">
+      <arg name="input_topic" value="$(var imu_raw_name)"/>
+      <arg name="output_topic" value="imu_data"/>
+      <arg name="param_file" value="$(var imu_corrector_param_file)"/>
+    </include>
+
+    <include file="$(find-pkg-share imu_corrector)/launch/gyro_bias_estimator.launch.xml">
+      <arg name="input_imu_raw" value="$(var imu_raw_name)"/>
+      <arg name="input_twist" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
+      <arg name="imu_corrector_param_file" value="$(var imu_corrector_param_file)"/>
+    </include>
+  </group>
+</launch>
+IMU ドライバーに応じて、このファイルに必要な変更を加えてください。tutorial_vehicle には専用の IMU センサーがないため、それらの起動を で削除しますsensing.launch.xml。
+
+-   <!-- IMU Driver -->
+-   <include file="$(find-pkg-share tutorial_vehicle_sensor_kit_launch)/launch/imu.launch.xml">
+-     <arg name="launch_driver" value="$(var launch_driver)"/>
+-   </include>
+sensing.launch.xmlセンサーのアーキテクチャに応じて起動ファイルを追加または削除できます。
 You can add your IMU sensor launch file at `imu.launch.xml` file.
 At the [sample_sensor_kit](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/sample_sensor_kit_launch/launch/imu.launch.xml),
 there is [Tamagawa IMU sensor](https://mems.tamagawa-seiki.com/en/) used as a IMU sensor.
