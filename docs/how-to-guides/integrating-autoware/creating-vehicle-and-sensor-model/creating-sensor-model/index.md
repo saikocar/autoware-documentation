@@ -377,48 +377,21 @@ base_link に対する直接のセンサー変換はありません。
 および`sensors.xacro`ファイルを完成させた後, センサー記述パッケージが完成し、
 `<YOUR-VEHICLE-NAME>_sensor_kit_launch`パッケージの変更を続けます
 
-## Sensor launch
-センサー起動
-このパッケージ ( <YOUR-VEHICLE-NAME>_sensor_kit_launch) では、センサーとそのパイプラインを起動します。common_sensor_launchしたがって、 LIDAR センシング パイプラインを起動するためのパッケージも使用します。以下の画像は、このセクションで構築するセンサー パイプラインを示しています。
+## センサー起動
 
-![sensor_launch_design](images/sensor_launch_design.svg){ align=center } センシング設計のサンプル起動ワークフロー。
-パッケージ<YOUR-VEHICLE-NAME>_sensor_kit_launchのフォルダー構造は次のようになります。
-
-<YOUR-VEHICLE-NAME>_sensor_kit_launch/
-      ├─ config/
-      ├─ data/
-      └─ launch/
-+           ├─ camera.launch.xml
-+           ├─ gnss.launch.xml
-+           ├─ imu.launch.xml
-+           ├─ lidar.launch.xml
-+           ├─ pointcloud_preprocessor.launch.py
-+           └─ sensing.launch.xml
-launchそこで、センサーを起動して操作するためのフォルダーを配置した起動ファイルを変更します。メインの起動ファイルはsensing.launch.xml. この起動ファイルは他のセンシング起動ファイルを起動します。現在の Autoware Sensing 起動ファイルのsensor_kit_launchパッケージ設計は次の図です。
-
-![sensing_launch_files_design](images/sensing_launch_files.svg){ align=center } 起動ファイルは、sensing.launch.xml 起動ファイル上に流れます。
-sensing.launch.xmlまた、メッセージを gyro_odometer ノード用にvehicle_velocity_converter変換するためのパッケージも起動します。したがって、 vehicle_interface がtypeでトピックを公開していることを確認してください。そうでない場合は、で更新する必要があります。autoware_auto_vehicle_msgs::msg::VelocityReportgeometry_msgs::msg::TwistWithCovarianceStamped/vehicle/status/velocity_statusautoware_auto_vehicle_msgs::msg::VelocityReportinput_vehicle_velocity_topicsensing.launch.xml
-
-    ...
-    <include file="$(find-pkg-share vehicle_velocity_converter)/launch/vehicle_velocity_converter.launch.xml">
--     <arg name="input_vehicle_velocity_topic" value="/vehicle/status/velocity_status"/>
-+     <arg name="input_vehicle_velocity_topic" value="<YOUR-VELOCITY-STATUS-TOPIC>"/>
-      <arg name="output_twist_with_covariance" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
-    </include>
-    ...
-At this package (`<YOUR-VEHICLE-NAME>_sensor_kit_launch`),
-we will launch our sensors and their pipelines.
-So, we will also use `common_sensor_launch` package for launching the lidar sensing pipeline.
-This image below demonstrates our sensor pipeline, which we will construct in this section.
+このパッケージ(`<YOUR-VEHICLE-NAME>_sensor_kit_launch`)では、
+センサーとそのパイプラインを起動します。
+したがって、 LIDAR センシング パイプラインを起動するための`common_sensor_launch`パッケージも使用します。
+以下の画像は、このセクションで構築するセンサー パイプラインを示しています。
 
 <figure markdown>
   ![sensor_launch_design](images/sensor_launch_design.svg){ align=center }
   <figcaption>
-    Sample Launch workflow for sensing design.
+    計測設計のサンプル起動ワークフロー。
   </figcaption>
 </figure>
 
-The `<YOUR-VEHICLE-NAME>_sensor_kit_launch` package folder structure like this:
+`<YOUR-VEHICLE-NAME>_sensor_kit_launch`パッケージのフォルダー構造は次のようになります:
 
 ```diff
 <YOUR-VEHICLE-NAME>_sensor_kit_launch/
@@ -433,26 +406,26 @@ The `<YOUR-VEHICLE-NAME>_sensor_kit_launch` package folder structure like this:
 +           └─ sensing.launch.xml
 ```
 
-So,
-we will modify the launch files
-which located the `launch` folder for launching and manipulating our sensors.
-The main launch file is `sensing.launch.xml`.
-This launch file launches other sensing launch files.
-The current autoware sensing launch files design for `sensor_kit_launch` package is the diagram below.
+そこで、
+センサーを起動して操作するための`launch`フォルダーを
+配置した起動ファイルを変更します。
+メインの起動ファイルは`sensing.launch.xml`です。
+この起動ファイルは他の計測起動ファイルを起動します。
+現在のAutoware計測起動ファイルの`sensor_kit_launch`パッケージ設計は次の図です。
 
 <figure markdown>
   ![sensing_launch_files_design](images/sensing_launch_files.svg){ align=center }
   <figcaption>
-    Launch file flows over sensing.launch.xml launch file.
+    起動ファイルは、sensing.launch.xml 起動ファイル上に流れます。
   </figcaption>
 </figure>
 
-The `sensing.launch.xml` also launches `vehicle_velocity_converter` package
-for converting `autoware_auto_vehicle_msgs::msg::VelocityReport` message to `geometry_msgs::msg::TwistWithCovarianceStamped` for gyro_odometer node.
-So,
-be sure
-your vehicle_interface publishes `/vehicle/status/velocity_status` topic with `autoware_auto_vehicle_msgs::msg::VelocityReport` type,
-or you must update `input_vehicle_velocity_topic` at `sensing.launch.xml`.
+`sensing.launch.xml`もまたgyro_odometerノード用にv`vehicle_velocity_converter`パッケージを
+`autoware_auto_vehicle_msgs::msg::VelocityReport`メッセージから`geometry_msgs::msg::TwistWithCovarianceStamped`へ変換するために起動します。 for gyro_odometer node.
+したがって、
+vehicle_interfaceが
+your vehicle_interface publishes `/vehicle/status/velocity_status`トピックを`autoware_auto_vehicle_msgs::msg::VelocityReport`タイプで公開していることを確認してください。
+そうでない場合は`sensing.launch.xml`の`input_vehicle_velocity_topic`を更新する必要があります。
 
 ```diff
     ...
@@ -464,12 +437,18 @@ or you must update `input_vehicle_velocity_topic` at `sensing.launch.xml`.
     ...
 ```
 
-### Lidar Launching
-ライダーの打ち上げ
-まず、lidar.launch.xmlAutoware で LIDAR センサー ドライバーを起動するためのファイルを変更します。GitHub リポジトリの nebula ドライバーでサポートされている LIDAR センサーを確認してください。
+### Lidarの起動
 
-Velodyne Lidarセンサーを使用している場合は、 sample_sensor_kit_launch テンプレートを使用できますが、 、 、およびその他の必要な変更 ( 、 など) を更新するsensor_id必要data_portがsensor_frameありmax_rangeますscan_phase。
+まず、
+Autoware で LIDAR センサー ドライバーを起動するための`lidar.launch.xml`ファイルを変更します。
+[GitHubリポジトリ](https://github.com/tier4/nebula)の nebula ドライバーでサポートされている LIDAR センサーを確認してください。
 
+[Velodyne Lidar](https://velodynelidar.com/)センサーを使用している場合は、
+[sample_sensor_kit_launch template](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/sample_sensor_kit_launch/launch/lidar.launch.xml)テンプレートを使用できますが、
+`sensor_id`, `data_port`, `sensor_frame`およびその他の必要な変更(`max_range`, `scan_phase`など)を
+を更新する必要があります。
+
+```diff
     <group>
 -     <push-ros-namespace namespace="left"/>
 +     <push-ros-namespace namespace="<YOUR-SENSOR-NAMESPACE>"/>
@@ -491,95 +470,19 @@ Velodyne Lidarセンサーを使用している場合は、 sample_sensor_kit_la
         <arg name="container_name" value="$(var pointcloud_container_name)"/>
       </include>
     </group>
-センサーのアーキテクチャに応じて同様の起動グループを追加してください。たとえば、 には Robosense Lidar を使用するためtutorial_vehicle、Robosense Lidar の LIDAR グループは次の構造のようになります。
+```
+
+センサーのアーキテクチャに応じて同様の起動グループを追加してください。
+たとえば、 we use Robosense Lidars for our `tutorial_vehicle`には Robosense Lidar を使用するため
+Robosense Lidar の LIDAR グループは次の構造のようになります:
 
 !!! 警告
 
-under construction
-Hesai LIDAR (つまり、PandarQT64、サポートされているセンサーについては星雲ドライバーのページを確認してください) を使用している場合は、次の構造のようなグループを追加できますlidar.launch.xml。
+    構築中
 
-    <group>
-      <push-ros-namespace namespace="<YOUR-SENSOR-NAMESPACE>"/>
-      <include file="$(find-pkg-share common_sensor_launch)/launch/hesai_PandarQT64.launch.xml">
-        <arg name="max_range" value="100"/>
-        <arg name="sensor_frame" value="<YOUR-HESAI-SENSOR-FRAME>"/>
-        <arg name="sensor_ip" value="<YOUR-HESAI-SENSOR-IP>"/>
-        <arg name="host_ip" value="$(var host_ip)"/>
-        <arg name="data_port" value="<YOUR-HESAI-SENSOR-DATA-PORT>"/>
-        <arg name="scan_phase" value="0.0"/>
-        <arg name="cloud_min_angle" value="0"/>
-        <arg name="cloud_max_angle" value="360"/>
-        <arg name="launch_driver" value="$(var launch_driver)"/>
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
-        <arg name="container_name" value="$(var pointcloud_container_name)"/>
-      </include>
-    </group>
-共通センサー起動用の.launch.xmlを作成できますので、hesai_PandarQT64.launch.xml例としてご確認ください。
-
-nebula_node_container.pyはautoware 用の Lidar パイプラインを作成します。pointcloud 前処理パイプラインは LIDAR ごとに構築されます。フィルター情報についてはpointcloud_preprocessorパッケージも確認してください。
-
-たとえば、outlier_filterメソッドを変更したい場合は、次のようにパイプライン コンポーネントを変更できます。
-
-    nodes.append(
-        ComposableNode(
-            package="pointcloud_preprocessor",
--           plugin="pointcloud_preprocessor::RingOutlierFilterComponent",
--           name="ring_outlier_filter",
-+           plugin="pointcloud_preprocessor::DualReturnOutlierFilterComponent",
-+           name="dual_return_outlier_filter",
-            remappings=[
-                ("input", "rectified/pointcloud_ex"),
-                ("output", "outlier_filtered/pointcloud"),
-            ],
-            extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-        )
-    )
-tutorial_vehicle にはデフォルトの pointcloud_preprocessor パイプラインを使用するため、nebula_node_container.pyは変更しません。
-Let's
-start with modifying `lidar.launch.xml` file for launching our lidar sensor driver with autoware.
-Please check supported lidar sensors over the nebula driver in the [GitHub repository](https://github.com/tier4/nebula).
-
-If you are using [Velodyne Lidar](https://velodynelidar.com/) sensor,
-you can use the [sample_sensor_kit_launch template](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/sample_sensor_kit_launch/launch/lidar.launch.xml),
-but you need to update `sensor_id`, `data_port`, `sensor_frame` and other necessary changes
-(`max_range`, `scan_phase`, etc.).
-
-```diff
-    <group>
--     <push-ros-namespace namespace="left"/>
-+     <push-ros-namespace namespace="<YOUR-SENSOR-NAMESPACE>"/>
-      <include file="$(find-pkg-share common_sensor_launch)/launch/velodyne_VLP16.launch.xml">
-        <arg name="max_range" value="5.0"/>
--       <arg name="sensor_frame" value="velodyne_left"/>
-+       <arg name="sensor_frame" value="<YOUR-SENSOR-FRAME>"/>
--       <arg name="sensor_ip" value="192.168.1.202"/>
-+       <arg name="sensor_ip" value="<YOUR-SENSOR-IP>"/>
-        <arg name="host_ip" value="$(var host_ip)"/>
--       <arg name="data_port" value="2369"/>
-+       <arg name="data_port" value=<YOUR-DATA-PORT>/>
-        <arg name="scan_phase" value="180.0"/>
-        <arg name="cloud_min_angle" value="300"/>
-        <arg name="cloud_max_angle" value="60"/>
-        <arg name="launch_driver" value="$(var launch_driver)"/>
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
-        <arg name="container_name" value="$(var pointcloud_container_name)"/>
-      </include>
-    </group>
-```
-
-Please add similar launch groups according to your sensor architecture.
-For example, we use Robosense Lidars for our `tutorial_vehicle`,
-so the lidar group for Robosense Lidar should be like this structure:
-
-!!! warning
-
-    under construction
-
-If you are using a Hesai lidar (i.e. PandarQT64,
-please check [nebula](https://github.com/tier4/nebula) driver page for supported sensors),
-you can add the group like this structure at `lidar.launch.xml`:
+Hesai LIDAR (つまり、PandarQT64、
+サポートされているセンサーについては[nebula](https://github.com/tier4/nebula)のページを確認してください)を使用している場合は、
+次の構造のようなグループをlidar.launch.xml`に追加できます:
 
 ```xml
     <group>
@@ -601,14 +504,14 @@ you can add the group like this structure at `lidar.launch.xml`:
     </group>
 ```
 
-You can create <YOUR-LIDAR-MODEL>.launch.xml for common sensor launch,
-please check [`hesai_PandarQT64.launch.xml`](https://github.com/leo-drive/tutorial_vehicle_sensor_kit_launch/blob/main/common_sensor_launch/launch/hesai_PandarQT64.launch.xml) as an example.
+共通センサー起動用の<YOUR-LIDAR-MODEL>.launch.xmlを作成できますので、
+例として[`hesai_PandarQT64.launch.xml`](https://github.com/leo-drive/tutorial_vehicle_sensor_kit_launch/blob/main/common_sensor_launch/launch/hesai_PandarQT64.launch.xml)をご確認ください。
 
-The [nebula_node_container.py](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/common_sensor_launch/launch/nebula_node_container.launch.py) creates the Lidar pipeline for autoware,
-the pointcloud preprocessing pipeline is constructed for each lidar please check [pointcloud_preprocessor](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/pointcloud_preprocessor) package for filters information as well.
+[nebula_node_container.py](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/common_sensor_launch/launch/nebula_node_container.launch.py) はautoware 用の Lidar パイプラインを作成します。
+pointcloud 前処理パイプラインは LIDAR ごとに構築されます。フィルター情報については[pointcloud前処理](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/pointcloud_preprocessor)パッケージも確認してください。
 
-For example, If you want to change your `outlier_filter` method,
-you can modify the pipeline components like this way:
+たとえば、`outlier_filter`ソッドを変更したい場合は、
+次のようにパイプライン コンポーネントを変更できます:
 
 ```diff
 
@@ -628,310 +531,20 @@ you can modify the pipeline components like this way:
     )
 ```
 
-We will use the default pointcloud_preprocessor pipeline for our tutorial_vehicle,
-thus we will not modify [nebula_node_container.py](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/common_sensor_launch/launch/nebula_node_container.launch.py).
+tutorial_vehicle にはデフォルトの pointcloud_preprocessor パイプラインを使用するため、
+[nebula_node_container.py](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/common_sensor_launch/launch/nebula_node_container.launch.py)は変更しません。
 
-### Camera Launching
-カメラの起動
-このセクションでは、tutorial_vehicle の Autoware 用のカメラ ドライバーと 2D 検出パイプラインを起動します。これを行う理由は、tutorial_vehicle 用のコンピューターが 1 台あるためです。Autoware に 2 台以上のコンピューターを使用している場合は、カメラと 2D 検出パイプラインを個別に起動できます。たとえば、src/sensor_component/externalフォルダーにカメラ ドライバーのクローンを作成できます (このドライバーをファイルに追加することを忘れないでくださいautoware.repos)。
+### カメラの起動
 
-<YOUR-AUTOWARE-DIR>
-   └─ src/
-         └─ sensor_component/
-            └─ external/
-                └─ YOUR-CAMERA-DRIVER
-その後、次の場所にカメラ ドライバーを追加するだけですcamera.launch.xml。
-
-    ...
-+   <include file="$(find-pkg-share <YOUR-SENSOR-DRIVER>)/launch/YOUR-CAMERA-LAUNCH-FILE">
-    ...
-次に、次のようにデザインに yolo.launch.xml を追加して、tensorrt_yolo ノードを起動できます: (つまり、autwoare.universe の tier4_perception_launchimage_numberパッケージに含まれています)引数でカメラ番号を定義します。
-
-  <include file="$(find-pkg-share tensorrt_yolo)/launch/yolo.launch.xml">
-    <arg name="image_raw0" value="$(var image_raw0)"/>
-    <arg name="image_raw1" value="$(var image_raw1)"/>
-    <arg name="image_raw2" value="$(var image_raw2)"/>
-    <arg name="image_raw3" value="$(var image_raw3)"/>
-    <arg name="image_raw4" value="$(var image_raw4)"/>
-    <arg name="image_raw5" value="$(var image_raw5)"/>
-    <arg name="image_raw6" value="$(var image_raw6)"/>
-    <arg name="image_raw7" value="$(var image_raw7)"/>
-    <arg name="image_number" value="$(var image_number)"/>
-  </include>
-2D 検出パイプラインとすべての Autoware ノードに同じコンピューターを使用しているため、コンポーザブル ノードとコンテナー 構造を使用してカメラと 2D 検出パイプラインを設計します。したがって、ネットワーク インターフェイスの使用量が減少します。まず、カメラセンサーから始めましょう: Lucid Vision TRIO54S。autowarefoundation組織では、このセンサーをlucid_vision_driverとともに使用します。このドライバーフォルダーのクローンも作成できます。クローン作成とカメラドライバーの構築が完了したら、同じコンテナ内でカメラと tensorrt_yolo ノードを起動するための「camera_node_container.launch.py​​」を作成します。src/sensor_component/external
-
-??? 注「camera_node_container.launch.pytutorial_vehicle の起動ファイル」
-
-```py
-  import launch
-  from launch.actions import DeclareLaunchArgument
-  from launch.actions import SetLaunchConfiguration
-  from launch.conditions import IfCondition
-  from launch.conditions import UnlessCondition
-  from launch.substitutions.launch_configuration import LaunchConfiguration
-  from launch_ros.actions import ComposableNodeContainer
-  from launch_ros.descriptions import ComposableNode
-  from launch_ros.substitutions import FindPackageShare
-  from launch.actions import OpaqueFunction
-  import yaml
-
-  def launch_setup(context, *args, **kwargs):
-
-  output_topic= LaunchConfiguration("output_topic").perform(context)
-
-  image_name = LaunchConfiguration("input_image").perform(context)
-  camera_container_name = LaunchConfiguration("camera_container_name").perform(context)
-  camera_namespace = "/lucid_vision/" + image_name
-
-  # tensorrt params
-  gpu_id = int(LaunchConfiguration("gpu_id").perform(context))
-  mode = LaunchConfiguration("mode").perform(context)
-  calib_image_directory = FindPackageShare("tensorrt_yolo").perform(context) + "/calib_image/"
-  tensorrt_config_path = FindPackageShare('tensorrt_yolo').perform(context)+ "/config/" + LaunchConfiguration("yolo_type").perform(context) + ".param.yaml"
-
-  with open(tensorrt_config_path, "r") as f:
-      tensorrt_yaml_param = yaml.safe_load(f)["/**"]["ros__parameters"]
-
-  camera_param_path=FindPackageShare("lucid_vision_driver").perform(context)+"/param/"+image_name+".param.yaml"
-  with open(camera_param_path, "r") as f:
-    camera_yaml_param = yaml.safe_load(f)["/**"]["ros__parameters"]
-
-
-  container = ComposableNodeContainer(
-    name=camera_container_name,
-    namespace="/perception/object_detection",
-    package="rclcpp_components",
-    executable=LaunchConfiguration("container_executable"),
-    output="screen",
-    composable_node_descriptions=[
-        ComposableNode(
-            package="lucid_vision_driver",
-            plugin="ArenaCameraNode",
-            name="arena_camera_node",
-            parameters=[{
-                "camera_name": camera_yaml_param['camera_name'],
-                "frame_id": camera_yaml_param['frame_id'],
-                "pixel_format": camera_yaml_param['pixel_format'],
-                "serial_no": camera_yaml_param['serial_no'],
-                "camera_info_url": camera_yaml_param['camera_info_url'],
-                "fps": camera_yaml_param['fps'],
-                "horizontal_binning": camera_yaml_param['horizontal_binning'],
-                "vertical_binning": camera_yaml_param['vertical_binning'],
-                "use_default_device_settings": camera_yaml_param['use_default_device_settings'],
-                "exposure_auto": camera_yaml_param['exposure_auto'],
-                "exposure_target": camera_yaml_param['exposure_target'],
-                "gain_auto": camera_yaml_param['gain_auto'],
-                "gain_target": camera_yaml_param['gain_target'],
-                "gamma_target": camera_yaml_param['gamma_target'],
-                "enable_compressing": camera_yaml_param['enable_compressing'],
-                "enable_rectifying": camera_yaml_param['enable_rectifying'],
-            }],
-            remappings=[
-            ],
-            extra_arguments=[
-                {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-            ],
-        ),
-
-        ComposableNode(
-            namespace='/perception/object_recognition/detection',
-            package="tensorrt_yolo",
-            plugin="object_recognition::TensorrtYoloNodelet",
-            name="tensorrt_yolo",
-            parameters=[
-                {
-                    "mode": mode,
-                    "gpu_id": gpu_id,
-                    "onnx_file": FindPackageShare("tensorrt_yolo").perform(context) +  "/data/" + LaunchConfiguration("yolo_type").perform(context) + ".onnx",
-                    "label_file": FindPackageShare("tensorrt_yolo").perform(context) + "/data/" + LaunchConfiguration("label_file").perform(context),
-                    "engine_file": FindPackageShare("tensorrt_yolo").perform(context) + "/data/"+ LaunchConfiguration("yolo_type").perform(context) + ".engine",
-                    "calib_image_directory": calib_image_directory,
-                    "calib_cache_file": FindPackageShare("tensorrt_yolo").perform(context) + "/data/" + LaunchConfiguration("yolo_type").perform(context) + ".cache",
-                    "num_anchors": tensorrt_yaml_param['num_anchors'],
-                    "anchors": tensorrt_yaml_param['anchors'],
-                    "scale_x_y": tensorrt_yaml_param['scale_x_y'],
-                    "score_threshold": tensorrt_yaml_param['score_threshold'],
-                    "iou_thresh": tensorrt_yaml_param['iou_thresh'],
-                    "detections_per_im": tensorrt_yaml_param['detections_per_im'],
-                    "use_darknet_layer": tensorrt_yaml_param['use_darknet_layer'],
-                    "ignore_thresh": tensorrt_yaml_param['ignore_thresh'],
-                }
-            ],
-            remappings=[
-                ("in/image", camera_namespace + "/image_rect"),
-                ("out/objects", output_topic),
-                ("out/image", output_topic + "/debug/image"),
-            ],
-            extra_arguments=[
-                {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-            ],
-        ),
-    ],
-
-  )
-  return [container]
-defgenerate_launch_description(): launch_arguments = []
-
-def add_launch_arg(name: str, default_value=None, description=None):
-    # a default_value of None is equivalent to not passing that kwarg at all
-    launch_arguments.append(
-        DeclareLaunchArgument(name, default_value=default_value, description=description)
-    )
-add_launch_arg("mode","")
-add_launch_arg("input_image","", description="input camera topic")
-add_launch_arg("camera_container_name","")
-add_launch_arg("yolo_type","", description="yolo model type")
-add_launch_arg("label_file","" ,description="tensorrt node label file")
-add_launch_arg("gpu_id","", description="gpu setting")
-add_launch_arg("use_intra_process", "", "use intra process")
-add_launch_arg("use_multithread", "", "use multithread")
-
-set_container_executable = SetLaunchConfiguration(
-    "container_executable",
-    "component_container",
-    condition=UnlessCondition(LaunchConfiguration("use_multithread")),
-)
-
-set_container_mt_executable = SetLaunchConfiguration(
-    "container_executable",
-    "component_container_mt",
-    condition=IfCondition(LaunchConfiguration("use_multithread")),
-)
-
-return launch.LaunchDescription(
-    launch_arguments
-    + [set_container_executable, set_container_mt_executable]
-    + [OpaqueFunction(function=launch_setup)]
-)
-
-```
-camera_node_container.launch.py 2D 検出パイプラインにコンテナーを使用する場合に作成する重要なポイントは次のとおりです。
-
-デザインには注意してください。複数のカメラを使用している場合、デザインはこれに適応できる必要があります。
-tensorrt_yolo ノードの入力は入力として修正された画像を期待するため、sensor_driver が画像修正をサポートしていない場合は、image_procパッケージを使用できます。
-修正画像を取得するためにパイプラインに次のようなものを追加できます。
-        ...
-        ComposableNode(
-        namespace=camera_ns,
-        package='image_proc',
-        plugin='image_proc::RectifyNode',
-        name='rectify_camera_image_node',
-        # Remap subscribers and publishers
-        remappings=[
-        ('image', camera_ns+"/image"),
-        ('camera_info', input_camera_info),
-        ('image_rect', 'image_rect')
-        ],
-        extra_arguments=[
-        {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-        ],
-        ),
-        ...
-lucid_vision_driver はimage_rectification をサポートしているため、tutorial_vehicle に image_proc を追加する必要はありません。
-名前空間には注意してください。たとえば、/perception/object_detectiontensorrt_yolo ノードの名前空間として使用します。これについては autoware の使用セクションで説明します。詳細については、image_projection_based_fusionパッケージを確認してください。
-camera_node_container.launch.pyフォークされたパッケージの準備が完了したらcommon_sensor_launch、パッケージをビルドする必要があります。
-
-colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to common_sensor_launch
-次に、camera_node_container.launch.py​​ を に追加しますcamera.launch.xml。必要な tensorrt_yolo パラメータを次のように定義する必要があります。
-
-+  <!--    common parameters -->
-+  <arg name="image_0" default="camera_0" description="image raw topic name"/>
-+  <arg name="image_1" default="camera_1" description="image raw topic name"/>
-   ...
-
-+  <!--    tensorrt params -->
-+  <arg name="mode" default="FP32"/>
-+  <arg name="yolo_type" default="yolov3" description="choose image raw number(0-7)"/>
-+  <arg name="label_file" default="coco.names" description="yolo label file"/>
-+  <arg name="gpu_id" default="0" description="choose your gpu id for inference"/>
-+  <arg name="use_intra_process" default="true"/>
-+  <arg name="use_multithread" default="true"/>
-次に、これらの引数を使用してカメラ ノードを起動します。2 つ以上のカメラがある場合は、次のように含めることもできます。
-
-+  <group>
-+    <push-ros-namespace namespace="camera"/>
-+    <include file="$(find-pkg-share common_sensor_launch)/launch/camera_node_container.launch.py">
-+      <arg name="mode" value="$(var mode)"/>
-+      <arg name="input_image" value="$(var image_0)"/>
-+      <arg name="camera_container_name" value="front_camera_container"/>
-+      <arg name="yolo_type" value="$(var yolo_type)"/>
-+      <arg name="label_file" value="$(var label_file)"/>
-+      <arg name="gpu_id" value="$(var gpu_id)"/>
-+      <arg name="use_intra_process" value="$(var use_intra_process)"/>
-+      <arg name="use_multithread" value="$(var use_multithread)"/>
-+      <arg name="output_topic" value="camera0/rois0"/>
-+    </include>
-+    <include file="$(find-pkg-share common_sensor_launch)/launch/camera_node_container.launch.py">
-+      <arg name="mode" value="$(var mode)"/>
-+      <arg name="input_image" value="$(var image_1)"/>
-+      <arg name="camera_container_name" value="front_camera_container"/>
-+      <arg name="yolo_type" value="$(var yolo_type)"/>
-+      <arg name="label_file" value="$(var label_file)"/>
-+      <arg name="gpu_id" value="$(var gpu_id)"/>
-+      <arg name="use_intra_process" value="$(var use_intra_process)"/>
-+      <arg name="use_multithread" value="$(var use_multithread)"/>
-+      <arg name="output_topic" value="camera1/rois1"/>
-+    </include>
-+    ...
-+  </group>
-tutorial_vehicle にはカメラが 1 つあるため、camera.launch.xml次のようになります。
-
-??? 注「camera.launch.xmltutorial_vehicle」
-
-```xml
-<launch>
-  <arg name="launch_driver" default="true"/>
-  <!--    common parameters -->
-  <arg name="image_0" default="camera_0" description="image raw topic name"/>
-
-  <!--    tensorrt params -->
-  <arg name="mode" default="FP32"/>
-  <arg name="yolo_type" default="yolov3" description="choose image raw number(0-7)"/>
-  <arg name="label_file" default="coco.names" description="choose image raw number(0-7)"/>
-  <arg name="gpu_id" default="0" description="choose image raw number(0-7)"/>
-  <arg name="use_intra_process" default="true"/>
-  <arg name="use_multithread" default="true"/>
-
-  <group>
-    <push-ros-namespace namespace="camera"/>
-    <include file="$(find-pkg-share common_sensor_launch)/launch/camera_node_container.launch.py">
-      <arg name="mode" value="$(var mode)"/>
-      <arg name="input_image" value="$(var image_0)"/>
-      <arg name="camera_container_name" value="front_camera_container"/>
-      <arg name="yolo_type" value="$(var yolo_type)"/>
-      <arg name="label_file" value="$(var label_file)"/>
-      <arg name="gpu_id" value="$(var gpu_id)"/>
-      <arg name="use_intra_process" value="$(var use_intra_process)"/>
-      <arg name="use_multithread" value="$(var use_multithread)"/>
-      <arg name="output_topic" value="camera0/rois0"/>
-    </include>
-  </group>
-</launch>
-```
-Camera.launch.xml を起動すると 2D 検出パイプラインを確認できますが、最初にドライバーと tensorrt_yolo パッケージをビルドする必要があります。センサー ドライバーを sensor_kit_launch の依存関係に追加しますpackage.xml。
-
-+ <exec_depend><YOUR-CAMERA-DRIVER-PACKAGE></exec_depend>
-(optionally, if you will launch tensorrt_yolo at here)
-+ <exec_depend>tensorrt_yolo</exec_depend>
-以下を使用して必要なパッケージをビルドします。
-
-cd <YOUR-AUTOWARE-DIR>
-colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to common_sensor_launch <YOUR-VEHICLE-NAME>_sensor_kit_launch
-次に、カメラ パイプラインをテストできます。
-
-ros2 launch <YOUR-SENSOR-KIT-LAUNCH> camera.launch.xml
-# example for tutorial_vehicle: ros2 launch tutorial_vehicle_sensor_kit_launch camera.launch.xml
-すると rois トピックが表示されるので、 rviz2 またはrqtでデバッグイメージを確認できます。
-
-In this section,
-we will launch our camera driver and 2D detection pipeline for Autoware for tutorial_vehicle.
-The reason we do this is that there is a one computer for tutorial_vehicle.
-If you are using two or more computers for Autoware,
-you can launch the camera and 2D detection pipeline separately.
-For example,
-you can clone your camera driver
-at `src/sensor_component/external` folder
-(please don't forget adding this driver to `autoware.repos` file):
+このセクションでは、
+tutorial_vehicle の Autoware 用のカメラ ドライバーと 2D 検出パイプラインを起動します。
+これを行う理由は、tutorial_vehicle 用のコンピューターが 1 台あるためです。
+Autoware に 2 台以上のコンピューターを使用している場合は、
+カメラと 2D 検出パイプラインを個別に起動できます。
+たとえば、
+`src/sensor_component/external`フォルダーに
+カメラ ドライバーのクローンを作成できます
+(このドライバーを`autoware.repos`ファイルに追加することを忘れないでください):
 
 ```diff
 <YOUR-AUTOWARE-DIR>
@@ -941,7 +554,7 @@ at `src/sensor_component/external` folder
                 └─ YOUR-CAMERA-DRIVER
 ```
 
-After that, you can just add your camera driver at `camera.launch.xml`:
+その後、`camera.launch.xml`にカメラドライバーを追加すします:
 
 ```diff
     ...
@@ -949,10 +562,10 @@ After that, you can just add your camera driver at `camera.launch.xml`:
     ...
 ```
 
-Then, you can launch tensorrt_yolo node via adding yolo.launch.xml on your design like that:
-(i.e.,
-it is included in [tier4_perception_launch](https://github.com/autowarefoundation/autoware.universe/blob/ad69c2851b7b84e12c9f0c3b177fb6a9032bf284/launch/tier4_perception_launch/launch/object_recognition/detection/camera_lidar_fusion_based_detection.launch.xml#L49-L59) package in autwoare.universe)
-`image_number` argument defines your camera number
+次に、次のようにデザインに yolo.launch.xml を追加して、tensorrt_yolo ノードを起動できます:
+(つまり、
+autwoare.universeの[tier4_perception_launch](https://github.com/autowarefoundation/autoware.universe/blob/ad69c2851b7b84e12c9f0c3b177fb6a9032bf284/launch/tier4_perception_launch/launch/object_recognition/detection/camera_lidar_fusion_based_detection.launch.xml#L49-L59)パッケージに含まれています)
+`image_number`引数でカメラ番号を定義します。
 
 ```xml
   <include file="$(find-pkg-share tensorrt_yolo)/launch/yolo.launch.xml">
@@ -968,20 +581,20 @@ it is included in [tier4_perception_launch](https://github.com/autowarefoundatio
   </include>
 ```
 
-Since we are using the same computer for 2D detection pipeline and all Autoware nodes,
-we will design our camera and 2D detection pipeline
-using [composable nodes and container](https://docs.ros.org/en/humble/How-To-Guides/Launching-composable-nodes.html)
-structure.
-So, it will decrease our network interface usage.
-First of all, let's start with our camera sensor:
+2D 検出パイプラインとすべての Autoware ノードに同じコンピューターを使用しているため、
+[コンポーザブル ノードとコンテナー](https://docs.ros.org/en/humble/How-To-Guides/Launching-composable-nodes.html)構造を使用して
+カメラと 2D 検出パイプラインを
+設計します。
+したがって、ネットワーク インターフェイスの使用量が減少します。
+カメラセンサーから始めましょう:
 [Lucid Vision TRIO54S](https://thinklucid.com/product/triton-5-mp-imx490/).
-We will use this sensor with [lucid_vision_driver](https://github.com/autowarefoundation/lucid_vision_driver) at the [autowarefoundation](https://github.com/autowarefoundation) organization.
-We can clone this driver `src/sensor_component/external` folder as well.
-After the cloning and the building camera driver,
-we will create "camera_node_container.launch.py"
-for launching camera and tensorrt_yolo node in same container.
+[autowarefoundation](https://github.com/autowarefoundation)組織ではこのセンサーを[lucid_vision_driver](https://github.com/autowarefoundation/lucid_vision_driver)で使用します。
+この`src/sensor_component/external`ドライバーフォルダーのクローンも作成できます。
+クローン作成とカメラドライバーの構築が完了したら、
+同じコンテナ内でカメラと tensorrt_yolo ノードを起動するための
+"camera_node_container.launch.py"を作成します。
 
-??? note "[`camera_node_container.launch.py`](https://github.com/leo-drive/tutorial_vehicle_sensor_kit_launch/blob/main/common_sensor_launch/launch/camera_node_container.launch.py) launch file for tutorial_vehicle"
+??? 注記 "tutorial_vehicle用の[`camera_node_container.launch.py`](https://github.com/leo-drive/tutorial_vehicle_sensor_kit_launch/blob/main/common_sensor_launch/launch/camera_node_container.launch.py)起動ファイル"
 
     ```py
       import launch
@@ -1129,12 +742,12 @@ launch_arguments = []
 
     ```
 
-The important points for creating `camera_node_container.launch.py`
-if you decided to use container for 2D detection pipeline are:
+2D 検出パイプラインにコンテナーを使用する場合に
+`camera_node_container.launch.py`を作成する重要なポイントは次のとおりです:
 
-- Please be careful with design, if you are using multiple cameras, the design must be adaptable for this
-- The tensorrt_yolo node input expects rectified image as input, so if your sensor_driver doesn't support image rectification, you can use [`image_proc`](https://github.com/ros-perception/image_pipeline/tree/humble/image_proc) package.
-  - You can add something like this in your pipeline for getting rectifying image:
+- 設計には注意してください。複数のカメラを使用している場合、設計はこれに適応できる必要があります。
+- tensorrt_yoloノードの入力は入力として修正された画像を期待するため、sensor_driver が画像修正をサポートしていない場合は、[`image_proc`](https://github.com/ros-perception/image_pipeline/tree/humble/image_proc)パッケージを使用できます。
+  - 修正画像を取得するためにパイプラインに次のようなものを追加できます:
 
 ```python
         ...
@@ -1156,22 +769,22 @@ if you decided to use container for 2D detection pipeline are:
         ...
 ```
 
-- Since [lucid_vision_driver](https://github.com/autowarefoundation/lucid_vision_driver) supports image_rectification, there is no need to add image_proc for tutorial_vehicle.
-- Please be careful with namespace,
-  for example, we will use `/perception/object_detection` as tensorrt_yolo node namespace,
-  it will be explained in autoware usage section.
-  For more information,
-  please check [image_projection_based_fusion](https://github.com/autowarefoundation/autoware.universe/tree/main/perception/image_projection_based_fusion) package.
+- [lucid_vision_driver](https://github.com/autowarefoundation/lucid_vision_driver)はimage_rectification をサポートしているため、tutorial_vehicle に image_proc を追加する必要はありません。
+- 名前空間には注意してください。
+  たとえば、`/perception/object_detection`をtensorrt_yolo ノードの名前空間として使用しますが
+  これについては autoware の使用セクションで説明します。
+  詳細については、
+  [image_projection_based_fusion](https://github.com/autowarefoundation/autoware.universe/tree/main/perception/image_projection_based_fusion)パッケージを確認してください。
 
-After the preparing `camera_node_container.launch.py` to our forked `common_sensor_launch` package,
-we need to build the package:
+フォークされた`common_sensor_launch`パッケージの`camera_node_container.launch.py`の準備が完了したら
+パッケージをビルドする必要があります:
 
 ```bash
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to common_sensor_launch
 ```
 
-Next, we will add camera_node_container.launch.py to `camera.launch.xml`,
-we must define necessary tensorrt_yolo parameters like this:
+次に、camera_node_container.launch.py​​ を`camera.launch.xml`に追加しますが、
+必要な tensorrt_yolo パラメータを次のように定義する必要があります:
 
 ```diff
 +  <!--    common parameters -->
@@ -1188,8 +801,8 @@ we must define necessary tensorrt_yolo parameters like this:
 +  <arg name="use_multithread" default="true"/>
 ```
 
-Then, launch camera nodes with these arguments,
-if you have two or more cameras, you can include it also like this:
+次に、これらの引数を使用してカメラ ノードを起動しますが、
+2 つ以上のカメラがある場合は、次のように含めることもできます:
 
 ```diff
 +  <group>
@@ -1220,9 +833,9 @@ if you have two or more cameras, you can include it also like this:
 +  </group>
 ```
 
-Since there is one camera for tutorial_vehicle, the `camera.launch.xml` should be like this:
+tutorial_vehicle にはカメラが 1 つあるため、は`camera.launch.xml`次のようになります:
 
-??? note "[`camera.launch.xml`](https://github.com/leo-drive/tutorial_vehicle_sensor_kit_launch/blob/main/tutorial_vehicle_sensor_kit_launch/launch/camera.launch.xml) for tutorial_vehicle"
+??? 注記 "tutorial_vehicle用の[`camera.launch.xml`](https://github.com/leo-drive/tutorial_vehicle_sensor_kit_launch/blob/main/tutorial_vehicle_sensor_kit_launch/launch/camera.launch.xml)"
 
     ```xml
     <launch>
@@ -1255,9 +868,9 @@ Since there is one camera for tutorial_vehicle, the `camera.launch.xml` should b
     </launch>
     ```
 
-You can check 2D detection pipeline with launching camera.launch.xml,
-but we need to build the driver and tensorrt_yolo package first.
-We will add our sensor driver to sensor_kit_launch's `package.xml` dependencies.
+camera.launch.xmlを起動すると 2D 検出パイプラインを確認できますが、
+最初にドライバーと tensorrt_yolo パッケージをビルドする必要があります。
+センサー ドライバーをsensor_kit_launch の`package.xml`の依存関係に追加します。
 
 ```bash
 + <exec_depend><YOUR-CAMERA-DRIVER-PACKAGE></exec_depend>
@@ -1265,125 +878,35 @@ We will add our sensor driver to sensor_kit_launch's `package.xml` dependencies.
 + <exec_depend>tensorrt_yolo</exec_depend>
 ```
 
-Build necessary packages with:
+以下を使用して必要なパッケージをビルドします:
 
 ```bash
 cd <YOUR-AUTOWARE-DIR>
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to common_sensor_launch <YOUR-VEHICLE-NAME>_sensor_kit_launch
 ```
 
-Then, you can test your camera pipeline:
+次に、カメラパイプラインをテストできます:
 
 ```bash
 ros2 launch <YOUR-SENSOR-KIT-LAUNCH> camera.launch.xml
 # example for tutorial_vehicle: ros2 launch tutorial_vehicle_sensor_kit_launch camera.launch.xml
 ```
 
-Then the rois topics will appear,
-you can check debug image with rviz2 or [rqt](http://wiki.ros.org/rqt).
+するとroisトピックが表示されるので、
+rviz2 または[rqt](http://wiki.ros.org/rqt)でデバッグイメージを確認できます。
 
-### GNSS/INS Launching
-GNSS/INSの起動
-で起動する GNSS/INS センサーをセットアップしますgnss.launch.xml。u-blox およびseptentrioのデフォルトの GNSS センサー オプションはに含まれているsample_sensor_kit_launchため、他のセンサーを GNSS/INS 受信機として使用する場合は、ここに追加する必要があります。さらに、ここでgnss_poserパッケージが起動します。ローカリゼーションの初期化時に車両のポーズ ソースとしてこのパッケージを使用しますが、sensor_driver はこのノードにautoware gnss 方向メッセージを提供する必要があることに注意してください。GNSS/INS ドライバーの準備ができている場合は、この起動ファイルでgnss_poser引数の変数を設定する必要があります。たとえば、必要な変更は次のようになります。gnss.launch.xmlnavsatfix_topic_nameorientation_topic_name
+### GNSS/INSの起動
 
-  ...
-- <arg name="gnss_receiver" default="ublox" description="ublox(default) or septentrio"/>
-+ <arg name="gnss_receiver" default="<YOUR-GNSS-SENSOR>" description="ublox(default), septentrio or <YOUR-GNSS-SENSOR>"/>
-
-  <group>
-    <push-ros-namespace namespace="gnss"/>
-
-    <!-- Switch topic name -->
-    <let name="navsatfix_topic_name" value="ublox/nav_sat_fix" if="$(eval &quot;'$(var gnss_receiver)'=='ublox'&quot;)"/>
-    <let name="navsatfix_topic_name" value="septentrio/nav_sat_fix" if="$(eval &quot;'$(var gnss_receiver)'=='septentrio'&quot;)"/>
-+   <let name="navsatfix_topic_name" value="<YOUR-SENSOR>/nav_sat_fix" if="$(eval &quot;'$(var gnss_receiver)'=='<YOUR-GNSS-SENSOR>'&quot;)"/>
-    <let name="orientation_topic_name" value="/autoware_orientation"/>
-
-    ...
-
-+   <!-- YOUR GNSS Driver -->
-+   <group if="$(eval &quot;'$(var launch_driver)' and '$(var gnss_receiver)'=='<YOUR-GNSS-SENSOR>'&quot;)">
-+     <include file="$(find-pkg-share <YOUR-GNSS-SENSOR-DRIVER-PKG>)/launch/<YOUR-GNSS-SENSOR>.launch.xml"/>
-+   </group>
-    ...
--   <arg name="gnss_frame" value="gnss_link"/>
-+   <arg name="gnss_frame" value="<YOUR-GNSS-SENSOR-FRAME>"/>
-    ...
-また、依存関係と未使用のセンサー起動ファイルを で削除できますgnss.launch.xml。たとえば、Clap B7 センサーをGNSS/INS および IMU センサーとして使用し、 RTK にはnrtip_client_rosを使用します。また、これらのパッケージをautoware.reposファイルに追加します。
-
-+ sensor_component/external/clap_b7_driver:
-+   type: git
-+   url: https://github.com/Robeff-Technology/clap_b7_driver.git
-+   version: release/autoware
-+ sensor_component/external/ntrip_client_ros :
-+   type: git
-+   url: https://github.com/Robeff-Technology/ntrip_client_ros.git
-+   version: release/humble
-したがって、gnss.launch.xmlチュートリアル用の車両は次のファイルのようになります (Clap B7 には IMU も含まれているため、このファイルに imu_corrector を追加します)。
-
-??? 注「gnss.launch.xmltutorial_vehicle」
-
-```xml
-<launch>
-  <arg name="launch_driver" default="true"/>
-
-  <group>
-    <push-ros-namespace namespace="gnss"/>
-
-    <!-- Switch topic name -->
-    <let name="navsatfix_topic_name" value="/clap/ros/gps_nav_sat_fix"/>
-    <let name="orientation_topic_name" value="/clap/autoware_orientation"/>
-
-    <!-- CLAP GNSS Driver -->
-    <group if="$(eval &quot;'$(var launch_driver)'">
-      <node pkg="clap_b7_driver" exec="clap_b7_driver_node" name="clap_b7_driver" output="screen">
-        <param from="$(find-pkg-share clap_b7_driver)/config/clap_b7_driver.param.yaml"/>
-      </node>
-      <!-- ntrip Client -->
-      <include file="$(find-pkg-share ntrip_client_ros)/launch/ntrip_client_ros.launch.py"/>
-    </group>
-
-    <!-- NavSatFix to MGRS Pose -->
-    <include file="$(find-pkg-share gnss_poser)/launch/gnss_poser.launch.xml">
-      <arg name="input_topic_fix" value="$(var navsatfix_topic_name)"/>
-      <arg name="input_topic_orientation" value="$(var orientation_topic_name)"/>
-
-      <arg name="output_topic_gnss_pose" value="pose"/>
-      <arg name="output_topic_gnss_pose_cov" value="pose_with_covariance"/>
-      <arg name="output_topic_gnss_fixed" value="fixed"/>
-
-      <arg name="use_gnss_ins_orientation" value="true"/>
-      <!-- Please enter your gnss frame here -->
-      <arg name="gnss_frame" value="GNSS_INS/gnss_ins_link"/>
-    </include>
-  </group>
-
-  <!-- IMU corrector -->
-  <group>
-    <push-ros-namespace namespace="imu"/>
-    <include file="$(find-pkg-share imu_corrector)/launch/imu_corrector.launch.xml">
-      <arg name="input_topic" value="/sensing/gnss/clap/ros/imu"/>
-      <arg name="output_topic" value="imu_data"/>
-      <arg name="param_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/robione_sensor_kit/imu_corrector.param.yaml"/>
-    </include>
-    <include file="$(find-pkg-share imu_corrector)/launch/gyro_bias_estimator.launch.xml">
-      <arg name="input_imu_raw" value="/sensing/gnss/clap/ros/imu"/>
-      <arg name="input_twist" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
-      <arg name="imu_corrector_param_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/robione_sensor_kit/imu_corrector.param.yaml"/>
-    </include>
-  </group>
-</launch>
-```
-We will set up the GNSS/INS sensor launches at `gnss.launch.xml`.
-The default GNSS sensor options at [`sample_sensor_kit_launch`](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/sample_sensor_kit_launch/launch/gnss.launch.xml) for [u-blox](https://www.u-blox.com/en/)
-and [septentrio](https://www.septentrio.com/en) is included in `gnss.launch.xml`,
-so If we use other sensors as GNSS/INS receiver, we need to add it here.
-Moreover, [gnss_poser](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/gnss_poser) package launches here,
-we will use this package for the pose source of our vehicle at localization initialization but remember,
-your sensor_driver must provide [autoware gnss orientation message](https://github.com/autowarefoundation/autoware_msgs/blob/main/autoware_sensing_msgs/msg/GnssInsOrientationStamped.msg) for this node.
-If you are ready with your GNSS/INS driver,
-you must set `navsatfix_topic_name` and `orientation_topic_name` variables at this launch file for [gnss_poser](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/gnss_poser) arguments.
-For Example, necessary modifications for <YOUR-GNSS-SENSOR> should be like this:
+`gnss.launch.xml`で起動する GNSS/INS センサーをセットアップします。
+[`sample_sensor_kit_launch`](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/sample_sensor_kit_launch/launch/gnss.launch.xml)のデフォルトの GNSS センサー オプションは [u-blox](https://www.u-blox.com/en/)と
+[septentrio](https://www.septentrio.com/en)を`gnss.launch.xml`で含んでいるため,
+他のセンサーを GNSS/INS 受信機として使用する場合は、ここに追加する必要があります。
+さらにここで[gnss_poser](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/gnss_poser)パッケージが起動します。
+位置推定の初期化時に車両のポーズ ソースとしてこのパッケージを使用しますが、
+sensor_driverはこのノードに[autoware gnss orientation message](https://github.com/autowarefoundation/autoware_msgs/blob/main/autoware_sensing_msgs/msg/GnssInsOrientationStamped.msg)を提供する必要があることに注意してください。
+GNSS/INS ドライバーの準備ができている場合は、
+この起動ファイルで[gnss_poser](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/gnss_poser)用に引数のnavsatfix_topic_name`、`orientation_topic_name`変数を設定する必要があります。
+たとえば、<YOUR-GNSS-SENSOR>に必要な変更は次のようになります:
 
 ```diff
   ...
@@ -1411,11 +934,11 @@ For Example, necessary modifications for <YOUR-GNSS-SENSOR> should be like this:
     ...
 ```
 
-Also, you can remove dependencies and unused sensor launch files at `gnss.launch.xml`.
-For example,
-we will use [Clap B7 sensor](https://en.unicorecomm.com/assets/upload/file/CLAP-B7_Product_Brief_En.pdf) as a GNSS/INS and IMU sensor,
-and we will use [nrtip_client_ros](https://github.com/Robeff-Technology/ntrip_client) for RTK.
-Also, we will add these packages to [autoware.repos](https://github.com/leo-drive/autoware.tutorial_vehicle/blob/main/autoware.repos) file.
+また、`gnss.launch.xml`の依存関係と未使用のセンサー起動ファイルを削除できます。
+たとえば、
+[Clap B7センサー](https://en.unicorecomm.com/assets/upload/file/CLAP-B7_Product_Brief_En.pdf) をGNSS/INS および IMU センサーとして使用し、
+RTK には[nrtip_client_ros](https://github.com/Robeff-Technology/ntrip_client)を使用します。
+また、これらのパッケージを[autoware.repos](https://github.com/leo-drive/autoware.tutorial_vehicle/blob/main/autoware.repos)ファイルに追加します。
 
 ```diff
 + sensor_component/external/clap_b7_driver:
@@ -1428,11 +951,11 @@ Also, we will add these packages to [autoware.repos](https://github.com/leo-driv
 +   version: release/humble
 ```
 
-So,
-our `gnss.launch.xml` for tutorial vehicle should be like this file
-(Clap B7 includes IMU also, so we will add imu_corrector at this file):
+したがって、
+チュートリアル車両用の`gnss.launch.xml`は次のようになります
+(Clap B7 には IMU も含まれているため、このファイルに imu_corrector を追加します):
 
-??? note " [`gnss.launch.xml`](https://github.com/leo-drive/tutorial_vehicle_sensor_kit_launch/blob/main/tutorial_vehicle_sensor_kit_launch/launch/gnss.launch.xml) for tutorial_vehicle"
+??? 注記 " tutorial_vehicle向け[`gnss.launch.xml`](https://github.com/leo-drive/tutorial_vehicle_sensor_kit_launch/blob/main/tutorial_vehicle_sensor_kit_launch/launch/gnss.launch.xml)"
 
     ```xml
     <launch>
@@ -1486,70 +1009,21 @@ our `gnss.launch.xml` for tutorial vehicle should be like this file
     </launch>
     ```
 
-### IMU Launching
-IMUの打ち上げ
-ファイルに IMU センサー起動ファイルを追加できますimu.launch.xml。Sample_sensor_kitでは、 IMU センサーとして玉川 IMU センサーが使用されています。Tamakawa IMU ドライバーの代わりに IMU ドライバーを追加できます。また、ファイルでgyro_bias_estimatorと imu_correctorを起動しますimu.launch.xml。詳細については、これらのドキュメントを参照してください (imu_corrector と gyro_bias_estimator を、tutorial_vehicle の gnss.launch.xml に追加しました。そのため、imu.launch.xmltutorial_vehicle 用の作成と使用は行いません)。imu_raw_nameraw imu トピックを説明するために引数を変更することを忘れないでください。
+### IMUの起動
 
-imu.launch.xmlAutoware のサンプル起動ファイルを次に示します。
+`imu.launch.xml`ファイルに IMU センサー起動ファイルを追加できます。
+[sample_sensor_kit](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/sample_sensor_kit_launch/launch/imu.launch.xml)では、
+IMU センサーとして[Tamagawa IMU sensor](https://mems.tamagawa-seiki.com/en/)が使用されています。
+Tamakawa IMU ドライバーの代わりに IMU ドライバーを追加できます。
+また、
+`imu.launch.xml`ファイルで[gyro_bias_estimator](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/imu_corrector#gyro_bias_estimator) と
+[imu_corrector](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/imu_corrector#imu_corrector)を起動します。
+詳細については、これらのドキュメントを参照してください 
+(tutorial_vehicleのgnss.launch.xmlにimu_correctorとgyro_bias_estimatorを追加しました。
+そのため、tutorial_vehicle 用の`imu.launch.xml`の作成と使用は行いません)。
+raw imu トピックを説明するために`imu_raw_name`引数を変更することを忘れないでください。
 
-<launch>
-  <arg name="launch_driver" default="true"/>
-
-  <group>
-    <push-ros-namespace namespace="imu"/>
-
--     <group>
--       <push-ros-namespace namespace="tamagawa"/>
--       <node pkg="tamagawa_imu_driver" name="tag_serial_driver" exec="tag_serial_driver" if="$(var launch_driver)">
--         <remap from="imu/data_raw" to="imu_raw"/>
--         <param name="port" value="/dev/imu"/>
--         <param name="imu_frame_id" value="tamagawa/imu_link"/>
--       </node>
--     </group>
-
-+     <group>
-+       <push-ros-namespace namespace="<YOUR-IMU_MODEL>"/>
-+       <node pkg="<YOUR-IMU-DRIVER-PACKAGE>" name="<YOUR-IMU-DRIVER>" exec="<YOUR-IMU-DRIVER-EXECUTIBLE>" if="$(var launch_driver)">
-+       <!-- Add necessary params here -->
-+       </node>
-+     </group>
-
--   <arg name="imu_raw_name" default="tamagawa/imu_raw"/>
-+   <arg name="imu_raw_name" default="<YOUR-IMU_MODEL/YOUR-RAW-IMU-TOPIC>"/>
-    <arg name="imu_corrector_param_file" default="$(find-pkg-share individual_params)/config/$(var vehicle_id)/sample_sensor_kit/imu_corrector.param.yaml"/>
-    <include file="$(find-pkg-share imu_corrector)/launch/imu_corrector.launch.xml">
-      <arg name="input_topic" value="$(var imu_raw_name)"/>
-      <arg name="output_topic" value="imu_data"/>
-      <arg name="param_file" value="$(var imu_corrector_param_file)"/>
-    </include>
-
-    <include file="$(find-pkg-share imu_corrector)/launch/gyro_bias_estimator.launch.xml">
-      <arg name="input_imu_raw" value="$(var imu_raw_name)"/>
-      <arg name="input_twist" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
-      <arg name="imu_corrector_param_file" value="$(var imu_corrector_param_file)"/>
-    </include>
-  </group>
-</launch>
-IMU ドライバーに応じて、このファイルに必要な変更を加えてください。tutorial_vehicle には専用の IMU センサーがないため、それらの起動を で削除しますsensing.launch.xml。
-
--   <!-- IMU Driver -->
--   <include file="$(find-pkg-share tutorial_vehicle_sensor_kit_launch)/launch/imu.launch.xml">
--     <arg name="launch_driver" value="$(var launch_driver)"/>
--   </include>
-sensing.launch.xmlセンサーのアーキテクチャに応じて起動ファイルを追加または削除できます。
-You can add your IMU sensor launch file at `imu.launch.xml` file.
-At the [sample_sensor_kit](https://github.com/autowarefoundation/sample_sensor_kit_launch/blob/main/sample_sensor_kit_launch/launch/imu.launch.xml),
-there is [Tamagawa IMU sensor](https://mems.tamagawa-seiki.com/en/) used as a IMU sensor.
-You can add your IMU driver instead of the Tamagawa IMU driver.
-Also,
-we will launch [gyro_bias_estimator](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/imu_corrector#gyro_bias_estimator) and
-[imu_corrector](https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/imu_corrector#imu_corrector) at `imu.launch.xml` file.
-Please refer these documentations for more information
-(We added imu_corrector and gyro_bias_estimator at gnss.launch.xml at tutorial_vehicle,
-so we will not create and use `imu.launch.xml` for tutorial_vehicle).
-Please don't forget changing `imu_raw_name` argument for describing the raw imu topic.
-
-Here is a sample `imu.launch.xml` launch file for autoware:
+Autoware のサンプルimu.launch.xml`起動ファイルを次に示します:
 
 ```diff
 <launch>
@@ -1592,9 +1066,9 @@ Here is a sample `imu.launch.xml` launch file for autoware:
 </launch>
 ```
 
-Please make necessary modifications on this file according to your IMU driver.
-Since there is no dedicated IMU sensor on tutorial_vehicle,
-we will remove their launch in `sensing.launch.xml`.
+IMU ドライバーに応じて、このファイルに必要な変更を加えてください。
+tutorial_vehicle には専用の IMU センサーがないため、
+それらの`sensing.launch.xml`の起動を削除します。
 
 ```diff
 -   <!-- IMU Driver -->
@@ -1603,4 +1077,4 @@ we will remove their launch in `sensing.launch.xml`.
 -   </include>
 ```
 
-You can add or remove launch files in `sensing.launch.xml` according to your sensor architecture.
+センサーのアーキテクチャに応じて`sensing.launch.xml`の起動ファイルを追加または削除できます。
