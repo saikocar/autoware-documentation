@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>Autoware 用の車両モデルの作成 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#creating-a-vehicle-model-for-autoware" class="md-skip">
+        <a href="#autoware" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              Autoware 用の車両モデルの作成
             
           </span>
         </div>
@@ -6561,18 +6561,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
+  <a href="#_1" class="md-nav__link">
+    導入
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#vehicle-description" class="md-nav__link">
-    Vehicle description
+  <a href="#_2" class="md-nav__link">
+    車両の説明
   </a>
   
-    <nav class="md-nav" aria-label="Vehicle description">
+    <nav class="md-nav" aria-label="車両の説明">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -6597,8 +6597,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3d-model-of-vehicle" class="md-nav__link">
-    3D model of vehicle
+  <a href="#3d" class="md-nav__link">
+    車両の3Dモデル
   </a>
   
 </li>
@@ -6611,15 +6611,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#launching-vehicle-interface" class="md-nav__link">
-    Launching vehicle interface
+  <a href="#_3" class="md-nav__link">
+    車両インターフェースの起動
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#launch-planning-simulator-with-your-own-vehicle" class="md-nav__link">
-    Launch planning simulator with your own vehicle
+  <a href="#_4" class="md-nav__link">
+    自分の車両で計画シミュレーターを起動
   </a>
   
 </li>
@@ -6647,164 +6647,20 @@
   
 
 
-<div><p>Autoware 用の車両モデルの作成
-導入
-このページでは、以下の車種向けのパッケージを紹介します。</p>
-<p><your-vehicle-name>_vehicle_description
-<your-vehicle-name>_vehicle_launch
-以前は、 Autoware リポジトリの作成ページのステップで車両モデルをフォークしました。たとえば、 上記のステップの実装例として、tutorial_vehicle_launchを作成しました。以下のディレクトリ構造に従って、_vehicle_launch リポジトリが Autoware に含まれていることを確認してください。</your-vehicle-name></your-vehicle-name></p>
-<p><your-own-autoware-dir>/
-  └─ src/
-       └─ vehicle/
-            └─ <your-vehicle-name>_vehicle_launch/
-                 ├─ <your-vehicle-name>_vehicle_description/
-                 └─ <your-vehicle-name>_vehicle_launch/
-<your-vehicle-name>_vehicle_launchフォークされた Autoware メタ リポジトリに上記のような正しいフォルダー構造が含まれていない場合は、フォークされた<your-vehicle-name>_vehicle_launchリポジトリを autoware.repos ファイルに追加し、ターミナルで vcs import src &lt; autoware.repos コマンドを実行して、新しく組み込まれたメタ リポジトリをインポートしてください。 autoware.repos ファイルのリポジトリ。</your-vehicle-name></your-vehicle-name></your-vehicle-name></your-vehicle-name></your-vehicle-name></your-own-autoware-dir></p>
-<p>これで、次の車両モデル パッケージを車両用に変更する準備が整いました。まず、説明の名前を変更してパッケージを起動する必要があります。</p>
-<p><your-vehicle-name>_vehicle_launch/
-- ├─ sample_vehicle_description/
-+ ├─ <your-vehicle-name>_vehicle_description/
-- └─ sample_vehicle_launch/
-+ └─ <your-vehicle-name>_vehicle_launch/
-その後、sample_vehicle_description パッケージと Sample_vehicle_launch パッケージの package.xml ファイルと CMakeLists.txt ファイルのパッケージ名を変更します。そのため、任意のテキスト エディターまたは IDE で package.xml ファイルと CMakeLists.txt ファイルを開き、次の変更を実行します。</your-vehicle-name></your-vehicle-name></your-vehicle-name></p>
-<p><name>ファイルの属性を変更しますpackage.xml。</name></p>
-<p><package format="3">
-- <name>sample_vehicle_description</name>
-+ <name><your-vehicle-name>_vehicle_description</your-vehicle-name></name>
-  <version>0.1.0</version>
-  <description>The vehicle_description package</description>
-  ...
-  ...
-project()ファイルのメソッドを変更しますCmakeList.txt。</package></p>
-<p>cmake_minimum_required(VERSION 3.5)
-- project(sample_vehicle_description)
-+ project(<your-vehicle-name>_vehicle_description)</your-vehicle-name></p>
-<p>find_package(ament_cmake_auto REQUIRED)
-...
-...
-名前の変更とプロジェクト メソッドを、TH パッケージ <your-vehicle-name>_vehicle_descriptionと<your-vehicle-name>_vehicle_launchROS 2 パッケージの両方に忘れずに適用してください。完了したら、上記のパッケージのビルドに進むことができます。</your-vehicle-name></your-vehicle-name></p>
-<p>colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to <your-vehicle-name>_vehicle_description <your-vehicle-name>_vehicle_launch
-車両の説明
-このパッケージの主な目的は、車両の寸法、車両の 3D モデル、車両のミラー寸法、シミュレータ モデル パラメータ、および車両の <abbr title="Universal Robotic Description Format">URDF</abbr> を記述することです。</your-vehicle-name></your-vehicle-name></p>
-<p>vehicle_description パッケージのフォルダー構造は次のとおりです。</p>
-<p><your-vehicle-name>_vehicle_description/
-   ├─ config/
-   │     ├─ mirror.param.yaml
-   │     ├─ simulator_model.param.yaml
-   │     └─ vehicle_info.param.yaml
-   ├─ mesh/
-   │     ├─ <your-vehicle-mesh-file>.dae (or .fbx)
-   │     ├─ ...
-   └─ urdf/
-         └─ vehicle.xacro
-次に、車両の設計に従ってこれらのファイルを変更します。</your-vehicle-mesh-file></your-vehicle-name></p>
-<p>ミラー.パラメータ.yaml
-このファイルは、 PointCloudPreprocessorのCropBox フィルターの車両ミラーの寸法を記述します 。これは、LIDAR の点群からミラーをトリミングする場合に重要です。</p>
-<p>mirror.param.yaml次のパラメータで構成されます。</p>
-<p>/**:
-  ros__parameters:
-    min_longitudinal_offset: 0.0
-    max_longitudinal_offset: 0.0
-    min_lateral_offset: 0.0
-    max_lateral_offset: 0.0
-    min_height_offset: 0.0
-    max_height_offset: 0.0
-ミラーパラメータファイルにはこの寸法情報を記入する必要があります。min_lateral_offsetパラメータには注意してください。以下のミラー寸法図のように負の値になる可能性があります。</p>
-<p><img align="center" alt="mirror_dimensions" src="images/mirror_dimensions.svg"> Mirror.param.yaml のディメンションのデモ</p>
-<div class="admonition 警告">
-<p class="admonition-title">警告</p>
-</div>
-<p>Since there is no mirror in <code>tutorial_vehicle</code>, all values set to 0.0.
-If your vehicle does not have mirror, you can set these values 0.0 as well.
-simulator_model.param.yaml
-このファイルはシミュレータ環境用の設定ファイルです。車両の仕様に応じてこれらのパラメータを更新してください。変数の詳細については、simple_planning_simulatorパッケージを確認してください。ファイルは次のパラメータで構成されます。</p>
-<p>/**:
-  ros__parameters:
-    simulated_frame_id: "base_link" # center of the rear axle.
-    origin_frame_id: "map"
-    vehicle_model_type: "DELAY_STEER_ACC_GEARED" # options: IDEAL_STEER_VEL / IDEAL_STEER_ACC / IDEAL_STEER_ACC_GEARED / DELAY_STEER_ACC / DELAY_STEER_ACC_GEARED
-    initialize_source: "INITIAL_POSE_TOPIC" #  options: ORIGIN / INITIAL_POSE_TOPIC
-    timer_sampling_time_ms: 25
-    add_measurement_noise: False # the Gaussian noise is added to the simulated results
-    vel_lim: 50.0 # limit of velocity
-    vel_rate_lim: 7.0 # limit of acceleration
-    steer_lim: 1.0 # limit of steering angle
-    steer_rate_lim: 5.0 # limit of steering angle change rate
-    acc_time_delay: 0.1 # dead time for the acceleration input
-    acc_time_constant: 0.1 # time constant of the 1st-order acceleration dynamics
-    steer_time_delay: 0.24 # dead time for the steering input
-    steer_time_constant: 0.27 # time constant of the 1st-order steering dynamics
-    x_stddev: 0.0001 # x standard deviation for dummy covariance in map coordinate
-    y_stddev: 0.0001 # y standard deviation for dummy covariance in map coordinate
-vehicle_info.param.yaml
-このファイルには、Autoware モジュールの車両の寸法が保存されます。車両情報を更新してください。詳細な寸法のデモンストレーションについては、車両の寸法ページを参照してください。これは、sample_vehiclevehicle_info.param.yamlの場合です。</p>
-<p>/**:
-  ros__parameters:
-    wheel_radius: 0.383 # The radius of the wheel, primarily used for dead reckoning.
-    wheel_width: 0.235 # The lateral width of a wheel tire, primarily used for dead reckoning.
-    wheel_base: 2.79 # between front wheel center and rear wheel center
-    wheel_tread: 1.64 # between left wheel center and right wheel center
-    front_overhang: 1.0 # between front wheel center and vehicle front
-    rear_overhang: 1.1 # between rear wheel center and vehicle rear
-    left_overhang: 0.128 # between left wheel center and vehicle left
-    right_overhang: 0.128 # between right wheel center and vehicle right
-    vehicle_height: 2.5
-    max_steer_angle: 0.70 # [rad]
-vehicle_info.param.yaml車両情報を更新してください。</p>
-<p>車両の3Dモデル
-Autoware では、.fbx または .dae 形式を 3D モデルとして使用できます。tutorial_vehicle の場合、3D モデルを .fbx ファイルとしてtutorial_vehicle_launchリポジトリにエクスポートしました。fileに .fbx ファイルのパスを設定しますvehicle.xacro。</p>
-<p>車両.xacro
-この .xacro ファイルは、車両の Base_link を 3D メッシュにリンクします。したがって、このファイルにいくつかの変更を加える必要があります。</p>
-<?xml version="1.0"?>
-<p><robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <!-- load parameter --></robot></p>
-<ul>
-<li><xacro:property name="vehicle_info" value="&lt;span class=" arithmatex>\({xacro.load_yaml('\)(find sample_vehicle_description)/config/vehicle_info.param.yaml')}"/&gt;</xacro:property></li>
-<li>
-<p><xacro:property name="vehicle_info" value="&lt;span class=" arithmatex>\({xacro.load_yaml('\)(find \<your-vehicle-name>_vehicle_description)/config/vehicle_info.param.yaml')}"/&gt;</your-vehicle-name></xacro:property></p>
-<!-- vehicle body -->
-<p><link name="base_link">
-  <visual>
-    <origin xyz="&lt;span class=" arithmatex>\({vehicle_info['/**']['ros__parameters']['wheel_base']/2.0} 0 0" rpy="\){pi/2.0} 0 ${pi}"/&gt;
-    <geometry>
--       <mesh filename="package://sample_vehicle_description/mesh/lexus.dae" scale="1 1 1"></mesh>
-+       <mesh filename="package://\&lt;YOUR-VEHICLE-NAME&gt;_vehicle_description/mesh/\&lt;YOUR-3D-MESH-FILE&gt;" scale="1 1 1"></mesh>
-    </geometry>
-  </origin></visual>
-
-
-車両の正しい位置と方向を得るために、ロール、ピッチ、ヨー、x、y、z およびスケールの値を変更することもできます。</p>
-</li>
-</ul>
-<p>_vehicle_description パッケージが完成したら、 vehicle_description パッケージをビルドしてください。</p>
-<p>cd <your-autoware-dir>
-colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to <your-vehicle-name>_vehicle_description <your-vehicle-name>_vehicle_launch
-打ち上げロケットインターフェース
-車両インターフェースの準備ができている場合は、 vehicle_interface 起動ファイルを に追加できますvehicle_interface.launch.xml。詳細については、車両インターフェースの作成ページをご確認ください。</your-vehicle-name></your-vehicle-name></your-autoware-dir></p>
-<p>自分の車両で計画シミュレーターを起動
-車両の sensor_model、 Individual_parametersおよび車両モデルを完了すると 、自分の車両でプランニング シミュレーターを起動する準備が整います。Autoware プロジェクト フォルダー内のすべてのカスタム パッケージがビルドされているかどうかわからない場合は、すべてのパッケージをビルドしてください。</p>
-<p>cd <your-autoware-dir>
-colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
-計画シミュレーターを起動するには、Autoware プロジェクト フォルダー内の install/setup.bash ファイルを取得し、ターミナルで次のコマンドを実行します。</your-autoware-dir></p>
-<p>ros2 launch autoware_launch planning_simulator.launch.xml map_path:=$HOME/Files/autoware_map/sample-map-planning/ vehicle_model:=<your-vehicle-model> sensor_model:=<your-sensor-kit> vehicle_id:=<your-vehicle-id>
-たとえば、tutorial_vehicle を使用して計画シミュレータを試してみると、次のようになります。</your-vehicle-id></your-sensor-kit></your-vehicle-model></p>
-<p>ros2 launch autoware_launch planning_simulator.launch.xml map_path:=$HOME/Files/autoware_map/sample-map-planning/ vehicle_model:=tutorial_vehicle sensor_model:=tutorial_vehicle_sensor_kit vehicle_id:=tutorial_vehicle
-プランニング シミュレータが開き、 ボタンを使用するかキーボードのキー2D Pose Estimateを押して、車両に初期ポーズを与えることができます。P車両の初期化のためにどこでもクリックできます。</p>
-<p><img align="center" alt="tutorial_vehicle" src="images/tutorial_vehicle.png"> TF データを使用した rviz 上のtutorial_vehicle</p>
-<h1 id="creating-a-vehicle-model-for-autoware">Creating a vehicle model for Autoware<a class="headerlink" href="#creating-a-vehicle-model-for-autoware" title="Permanent link">#</a></h1>
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h2>
-<p>This page introduces the following packages for the vehicle model:</p>
+<div><h1 id="autoware">Autoware 用の車両モデルの作成<a class="headerlink" href="#autoware" title="Permanent link">#</a></h1>
+<h2 id="_1">導入<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p>このページでは、以下の車両モデル向けのパッケージを紹介します:</p>
 <ol>
 <li><code>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_description</code></li>
 <li><code>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_launch</code></li>
 </ol>
-<p>Previously,
-we forked our vehicle model at the <a href="../../creating-your-autoware-repositories/creating-autoware-repositories/">creating autoware repositories</a> page step.
-For instance,
-we created <a href="https://github.com/leo-drive/tutorial_vehicle_launch">tutorial_vehicle_launch</a>
-as an implementation example for the said step.
-Please ensure that the <your-vehicle-name>_vehicle_launch repository is included in Autoware,
-following the directory structure below:</your-vehicle-name></p>
+<p>以前は、
+<a href="../../creating-your-autoware-repositories/creating-autoware-repositories/">Autoware リポジトリの作成</a> ページのステップで車両モデルをフォークしました
+たとえば、
+上記のステップの実装例として、<a href="https://github.com/leo-drive/tutorial_vehicle_launch">tutorial_vehicle_launch</a>を
+作成しました。
+以下のディレクトリ構造に従って、<your-vehicle-name>_vehicle_launchリポジトリが Autoware に
+含まれていることを確認してください。:</your-vehicle-name></p>
 <div class="highlight"><pre><span></span><code>&lt;YOUR-OWN-AUTOWARE-DIR&gt;/
 <span class="w"> </span> └─ src/
 <span class="w"> </span>      └─ vehicle/
@@ -6812,25 +6668,25 @@ following the directory structure below:</your-vehicle-name></p>
 <span class="w"> </span>                ├─ &lt;YOUR-VEHICLE-NAME&gt;_vehicle_description/
 <span class="w"> </span>                └─ &lt;YOUR-VEHICLE-NAME&gt;_vehicle_launch/
 </code></pre></div>
-<p>If your forked Autoware meta-repository doesn't include <code>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_launch</code> with the correct folder structure
-as shown above,
-please add your forked <code>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_launch</code> repository to the autoware.repos file
-and run the vcs import src &lt; autoware.repos command in your terminal
-to import the newly included repositories at autoware.repos file.</p>
-<p>Now, we are ready to modify the following vehicle model packages for our vehicle.
-Firstly, we need to rename the description and launch packages:</p>
+<p>フォークされた Autoware メタ リポジトリに上記のような
+<code>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_launch</code>の正しいフォルダー構造が含まれていない場合は、
+フォークされた<code>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_launch</code>リポジトリをautoware.repos ファイルに追加し、
+ターミナルでvcs import src &lt; autoware.reposコマンドを実行して
+新しく組み込まれたメタ リポジトリをautoware.repos ファイルのリポジトリにインポートしてください。</p>
+<p>これで、次の車両モデル パッケージを車両用に変更する準備が整いました。
+まず、説明の名前を変更してパッケージを起動する必要があります:</p>
 <div class="highlight"><pre><span></span><code>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_launch/
 <span class="gd">- ├─ sample_vehicle_description/</span>
 <span class="gi">+ ├─ &lt;YOUR-VEHICLE-NAME&gt;_vehicle_description/</span>
 <span class="gd">- └─ sample_vehicle_launch/</span>
 <span class="gi">+ └─ &lt;YOUR-VEHICLE-NAME&gt;_vehicle_launch/</span>
 </code></pre></div>
-<p>After that,
-we will change our package names in the package.xml file and CMakeLists.txt file of the sample_vehicle_description and sample_vehicle_launch packages.
-So,
-open the package.xml file and CMakeLists.txt file with any text editor or IDE of your preference
-and perform the following changes:</p>
-<p>Change the <code>&lt;name&gt;</code> attribute at <code>package.xml</code> file:</p>
+<p>その後、
+sample_vehicle_description パッケージと Sample_vehicle_launch パッケージの package.xml ファイルと CMakeLists.txt ファイルのパッケージ名を変更します。
+そのため、
+任意のテキスト エディターまたは IDE で package.xml ファイルと CMakeLists.txt ファイルを開き、
+次の変更を実行します:</p>
+<p><code>package.xml</code>ファイルの<code>&lt;name&gt;</code>属性を変更します:</p>
 <div class="highlight"><pre><span></span><code>&lt;package format="3"&gt;
 <span class="gd">- &lt;name&gt;sample_vehicle_description&lt;/name&gt;</span>
 <span class="gi">+ &lt;name&gt;&lt;YOUR-VEHICLE-NAME&gt;_vehicle_description&lt;/name&gt;</span>
@@ -6839,7 +6695,7 @@ and perform the following changes:</p>
 <span class="w"> </span> ...
 <span class="w"> </span> ...
 </code></pre></div>
-<p>Change the <code>project()</code> method at <code>CmakeList.txt</code> file.</p>
+<p><code>CmakeList.txt</code>ファイルの<code>project()</code>メソッドを変更します。</p>
 <div class="highlight"><pre><span></span><code><span class="w"> </span> cmake_minimum_required(VERSION 3.5)
 <span class="gd">- project(sample_vehicle_description)</span>
 <span class="gi">+ project(&lt;YOUR-VEHICLE-NAME&gt;_vehicle_description)</span>
@@ -6848,16 +6704,16 @@ and perform the following changes:</p>
 ...
 ...
 </code></pre></div>
-<p>Remember to apply the name changes and project method for <strong>BOTH</strong>
-<code>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_description</code>and <code>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_launch</code> <abbr title="Robot Operating System">ROS</abbr> 2 packages.
-Once finished, we can proceed to build said packages:</p>
+<p>名前の変更とプロジェクト メソッドを、
+<code>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_description</code>と<code>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_launch</code> <abbr title="Robot Operating System">ROS</abbr> 2パッケージの<strong>両方に</strong>に忘れずに適用してください。
+完了したら、上記のパッケージのビルドに進むことができます:</p>
 <div class="highlight"><pre><span></span><code>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<span class="w"> </span>--cmake-args<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>--packages-up-to<span class="w"> </span>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_description<span class="w"> </span>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_launch
 </code></pre></div>
-<h2 id="vehicle-description">Vehicle description<a class="headerlink" href="#vehicle-description" title="Permanent link">#</a></h2>
-<p>The main purpose of this package is to describe the vehicle dimensions,
-3D model of the vehicle, mirror_dimensions of the vehicle,
-simulator model parameters and <abbr title="Universal Robotic Description Format">URDF</abbr> of the vehicle.</p>
-<p>The folder structure of vehicle_description package is:</p>
+<h2 id="_2">車両の説明<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>このパッケージの主な目的は、車両の寸法、
+車両の 3D モデル、車両のミラー寸法、シミュレータ モデル パラメータ、
+および車両の <abbr title="Universal Robotic Description Format">URDF</abbr> を記述することです。</p>
+<p>vehicle_description パッケージのフォルダー構造は次のとおりです:</p>
 <div class="highlight"><pre><span></span><code>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_description/
 <span class="w"> </span>  ├─ config/
 <span class="w"> </span>  │     ├─ mirror.param.yaml
@@ -6869,12 +6725,12 @@ simulator model parameters and <abbr title="Universal Robotic Description Format
 <span class="w"> </span>  └─ urdf/
 <span class="w"> </span>        └─ vehicle.xacro
 </code></pre></div>
-<p>Now, we will modify these files according to our vehicle design.</p>
+<p>次に、車両の設計に従ってこれらのファイルを変更します。</p>
 <h3 id="mirrorparamyaml">mirror.param.yaml<a class="headerlink" href="#mirrorparamyaml" title="Permanent link">#</a></h3>
-<p>This file describes your vehicle mirror dimension for
-<a href="https://autowarefoundation.github.io/autoware.universe/main/sensing/pointcloud_preprocessor/docs/crop-box-filter/">CropBox filter</a> of <a href="../../../../design/autoware-architecture/sensing/data-types/point-cloud/">PointCloudPreprocessor</a>.
-This is important for cropping mirrors from your lidar's point cloud.</p>
-<p>The <code>mirror.param.yaml</code> consist of the following parameters:</p>
+<p>このファイルは<a href="../../../../design/autoware-architecture/sensing/data-types/point-cloud/">PointCloudPreprocessor</a>の
+<a href="https://autowarefoundation.github.io/autoware.universe/main/sensing/pointcloud_preprocessor/docs/crop-box-filter/">CropBox filter</a>の車両ミラーの寸法を記述します 。
+これは、lidarの点群からミラーをトリミングする場合に重要です。</p>
+<p><code>mirror.param.yaml</code>は次のパラメータで構成されます:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">/**</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">ros__parameters</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">min_longitudinal_offset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
@@ -6884,27 +6740,27 @@ This is important for cropping mirrors from your lidar's point cloud.</p>
 <span class="w">    </span><span class="nt">min_height_offset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
 <span class="w">    </span><span class="nt">max_height_offset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
 </code></pre></div>
-<p>The mirror param file should be filled with this dimension information,
-please be careful with <code>min_lateral_offset</code>parameter,
-it could be negative value like the mirror dimension figure below.</p>
+<p>ミラーパラメータファイルにはこの寸法情報を記入する必要がありますが、
+<code>min_lateral_offset</code>パラメータには注意してください。
+下のミラー寸法図のように負の値になる可能性があります。</p>
 <figure>
 <p><img align="center" alt="mirror_dimensions" src="images/mirror_dimensions.svg">
   </p>
 <figcaption>
-    Dimension demonstration for mirror.param.yaml
+    mirror.param.yamlのディメンションのデモ
   </figcaption>
 </figure>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Since there is no mirror in <code>tutorial_vehicle</code>, all values set to 0.0.
-If your vehicle does not have mirror, you can set these values 0.0 as well.</p>
+<div class="admonition 警告">
+<p class="admonition-title">警告</p>
+<p><code>tutorial_vehicle</code> にはミラーがないため、すべての値は 0.0 に設定されます。
+車両にミラーがない場合は、これらの値を 0.0 に設定することもできます。</p>
 </div>
 <h3 id="simulator_modelparamyaml">simulator_model.param.yaml<a class="headerlink" href="#simulator_modelparamyaml" title="Permanent link">#</a></h3>
-<p>This file is a configuration file for the <a href="https://autowarefoundation.github.io/autoware.universe/main/simulator/simple_planning_simulator/">simulator environment</a>.
-Please update these parameters according to your vehicle specifications.
-For detailed information about variables,
-please check the <a href="https://github.com/autowarefoundation/autoware.universe/tree/main/simulator/simple_planning_simulator">simple_planning_simulator</a> package.
-The file consists of these parameters:</p>
+<p>このファイルは<a href="https://autowarefoundation.github.io/autoware.universe/main/simulator/simple_planning_simulator/">シミュレータ環境</a>用の設定ファイルです。
+車両の仕様に応じてこれらのパラメータを更新してください。
+変数の詳細については、
+<a href="https://github.com/autowarefoundation/autoware.universe/tree/main/simulator/simple_planning_simulator">simple_planning_simulator</a>パッケージを確認してください。
+ファイルは次のパラメータで構成されます:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">/**</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">ros__parameters</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">simulated_frame_id</span><span class="p">:</span><span class="w"> </span><span class="s">"base_link"</span><span class="w"> </span><span class="c1"># center of the rear axle.</span>
@@ -6925,10 +6781,10 @@ The file consists of these parameters:</p>
 <span class="w">    </span><span class="nt">y_stddev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0001</span><span class="w"> </span><span class="c1"># y standard deviation for dummy covariance in map coordinate</span>
 </code></pre></div>
 <h3 id="vehicle_infoparamyaml">vehicle_info.param.yaml<a class="headerlink" href="#vehicle_infoparamyaml" title="Permanent link">#</a></h3>
-<p>This file stores the vehicle dimensions for Autoware modules.
-Please update it with your vehicle information.
-You can refer to the <a href="../../../../design/autoware-interfaces/components/vehicle-dimensions/">vehicle dimensions</a> page for detailed dimension demonstration.
-Here is the <code>vehicle_info.param.yaml</code> for <a href="https://github.com/autowarefoundation/sample_vehicle_launch/blob/main/sample_vehicle_description/config/vehicle_info.param.yaml">sample_vehicle</a>:</p>
+<p>このファイルには、Autoware モジュールの車両の寸法が保存されます。
+車両情報を更新してください。
+詳細な寸法のデモンストレーションについては、<a href="../../../../design/autoware-interfaces/components/vehicle-dimensions/">車両の寸法</a>ページを参照してください。
+これは<a href="https://github.com/autowarefoundation/sample_vehicle_launch/blob/main/sample_vehicle_description/config/vehicle_info.param.yaml">sample_vehicle</a>の<code>vehicle_info.param.yaml</code>です:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">/**</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">ros__parameters</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">wheel_radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.383</span><span class="w"> </span><span class="c1"># The radius of the wheel, primarily used for dead reckoning.</span>
@@ -6942,14 +6798,14 @@ Here is the <code>vehicle_info.param.yaml</code> for <a href="https://github.com
 <span class="w">    </span><span class="nt">vehicle_height</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.5</span>
 <span class="w">    </span><span class="nt">max_steer_angle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.70</span><span class="w"> </span><span class="c1"># [rad]</span>
 </code></pre></div>
-<p>Please update <code>vehicle_info.param.yaml</code> with your vehicle information.</p>
-<h3 id="3d-model-of-vehicle">3D model of vehicle<a class="headerlink" href="#3d-model-of-vehicle" title="Permanent link">#</a></h3>
-<p>You can use .fbx or .dae format as a 3D model with autoware.
-For the tutorial_vehicle,
-we exported our 3D model as a .fbx file in the <a href="https://github.com/leo-drive/tutorial_vehicle_launch/tree/main/tutorial_vehicle_description/mesh">tutorial_vehicle_launch</a> repository.
-We will set the .fbx file path at <code>vehicle.xacro</code> file.</p>
+<p><code>vehicle_info.param.yaml</code>の車両情報を更新してください。</p>
+<h3 id="3d">車両の3Dモデル<a class="headerlink" href="#3d" title="Permanent link">#</a></h3>
+<p>autoware では、.fbx または .dae 形式を 3D モデルとして使用できます。
+tutorial_vehicle の場合、
+tutorial_vehicle の場合、3D モデルを .fbx ファイルとして<a href="https://github.com/leo-drive/tutorial_vehicle_launch/tree/main/tutorial_vehicle_description/mesh">tutorial_vehicle_launch</a> リポジトリにエクスポートしました。
+<code>vehicle.xacro</code>ファイルに .fbx ファイルのパスを設定します。</p>
 <h3 id="vehiclexacro">vehicle.xacro<a class="headerlink" href="#vehiclexacro" title="Permanent link">#</a></h3>
-<p>This .xacro file links the base_link of the vehicle to the 3D mesh. Therefore, we need to make some modifications in this file.</p>
+<p>この.xacroファイルは、車両のbase_link を 3D メッシュにリンクします。したがって、このファイルにいくつかの変更を加える必要があります。</p>
 <div class="highlight"><pre><span></span><code>&lt;?xml version="1.0"?&gt;
 &lt;robot xmlns:xacro="http://ros.org/wiki/xacro"&gt;
 <span class="w"> </span> &lt;!-- load parameter --&gt;
@@ -6968,42 +6824,42 @@ We will set the .fbx file path at <code>vehicle.xacro</code> file.</p>
 <span class="w"> </span> &lt;/link&gt;
 &lt;/robot&gt;
 </code></pre></div>
-<p>You can also modify roll, pitch, yaw, x,
-y, z and scale values for the correct position and orientation of the vehicle.</p>
-<p>Please build vehicle_description package after the completion of your <your-vehicle-name>_vehicle_description package.</your-vehicle-name></p>
+<p>車両の正しい位置と方向を得るために、ロール、ピッチ、ヨー、x、
+y、z およびスケールの値を変更することもできます。</p>
+<p><your-vehicle-name>_vehicle_descriptionパッケージが完成したら、 vehicle_description パッケージをビルドしてください。</your-vehicle-name></p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>&lt;YOUR-AUTOWARE-DIR&gt;
 colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<span class="w"> </span>--cmake-args<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>--packages-up-to<span class="w"> </span>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_description<span class="w"> </span>&lt;YOUR-VEHICLE-NAME&gt;_vehicle_launch
 </code></pre></div>
-<h3 id="launching-vehicle-interface">Launching vehicle interface<a class="headerlink" href="#launching-vehicle-interface" title="Permanent link">#</a></h3>
-<p>If your vehicle interface is ready,
-then you can add your vehicle_interface launch file in <code>vehicle_interface.launch.xml</code>.
-Please check the <a href="../../creating-vehicle-interface-package/creating-a-vehicle-interface-for-an-ackermann-kinematic-model.md">creating vehicle interface</a> page for more info.</p>
-<h3 id="launch-planning-simulator-with-your-own-vehicle">Launch planning simulator with your own vehicle<a class="headerlink" href="#launch-planning-simulator-with-your-own-vehicle" title="Permanent link">#</a></h3>
-<p>After completing the <a href="../creating-sensor-model/">sensor_model</a>,
+<h3 id="_3">車両インターフェースの起動<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
+<p>車両インターフェースの準備ができている場合は、
+ vehicle_interface 起動ファイルを<code>vehicle_interface.launch.xml</code>に追加できます。
+詳細については、<a href="../../creating-vehicle-interface-package/creating-a-vehicle-interface-for-an-ackermann-kinematic-model.md">車両インターフェースの作成</a>ページをご確認ください。</p>
+<h3 id="_4">自分の車両で計画シミュレーターを起動<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<p><a href="../creating-sensor-model/">sensor_model</a>,
 <a href="../creating-individual-params/">individual_parameters</a>
-and vehicle model of your vehicle,
-you are ready to launch the planning simulator with your own vehicle.
-If you are not sure if every custom package in your Autoware project folder is built,
-please build all packages:</p>
+および車両モデルを完了すると 、
+自分の車両でプランニング シミュレーターを起動する準備が整います。
+Autoware プロジェクト フォルダー内のすべてのカスタム パッケージがビルドされているかどうかわからない場合は、
+すべてのパッケージをビルドしてください:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>&lt;YOUR-AUTOWARE-DIR&gt;
 colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install<span class="w"> </span>--cmake-args<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
 </code></pre></div>
-<p>To launch the planning simulator,
-source the install/setup.bash file in your Autoware project folder
-and run this command in your terminal:</p>
+<p>計画シミュレーターを起動するには、
+Autoware プロジェクト フォルダー内の install/setup.bash ファイルを実行し、
+ターミナルで次のコマンドを実行します:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>planning_simulator.launch.xml<span class="w"> </span>map_path:<span class="o">=</span><span class="nv">$HOME</span>/Files/autoware_map/sample-map-planning/<span class="w"> </span>vehicle_model:<span class="o">=</span>&lt;YOUR-VEHICLE-MODEL&gt;<span class="w"> </span>sensor_model:<span class="o">=</span>&lt;YOUR-SENSOR-KIT&gt;<span class="w"> </span>vehicle_id:<span class="o">=</span>&lt;YOUR-VEHICLE-ID&gt;
 </code></pre></div>
-<p>For example, if we try planning simulator with the tutorial_vehicle:</p>
+<p>たとえば、tutorial_vehicle を使用して計画シミュレータを試してみると、次のようになります:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>planning_simulator.launch.xml<span class="w"> </span>map_path:<span class="o">=</span><span class="nv">$HOME</span>/Files/autoware_map/sample-map-planning/<span class="w"> </span>vehicle_model:<span class="o">=</span>tutorial_vehicle<span class="w"> </span>sensor_model:<span class="o">=</span>tutorial_vehicle_sensor_kit<span class="w"> </span>vehicle_id:<span class="o">=</span>tutorial_vehicle
 </code></pre></div>
-<p>The planning simulator will open, and you can give an initial pose to your vehicle
-using <code>2D Pose Estimate</code> button or by pressing the <code>P</code> key on your keyboard.
-You can click everywhere for vehicle initialization.</p>
+<p>プランニング シミュレータが開き、
+<code>2D Pose Estimate</code>ボタンを使用するか<code>P</code>キーを押して、車両に初期ポーズを与えることができます。
+車両の初期化のためにどこでもクリックできます。</p>
 <figure>
 <p><img align="center" alt="tutorial_vehicle" src="images/tutorial_vehicle.png">
   </p>
 <figcaption>
-    Our tutorial_vehicle on rviz with TF data
+    TF データを使用した rviz 上のtutorial_vehicle
   </figcaption>
 </figure>
 <!-- prettier-ignore --></div>
