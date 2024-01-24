@@ -35,20 +35,8 @@ Autoware は、次のような制御コマンドを公開しています。
 
 自分の車両をこのように使用する場合 (つまり、アクセルとブレーキ ペダルを制御する)、raw_vehicle_cmd_converterパッケージを使用して autoware 出力制御 cmd をブレーキ、アクセル、ステアリング マップに変換する必要があります。そのためには、ブレーキ、ガソリン、ステアリングの調整が必要になります。したがって、accel_brake_map_calibratorパッケージを使用してキャリブレーションを取得できます。車両の作動を調整する手順に従ってください。
 
-これらの制御インターフェイスの選択は、設計と開発のプロセスに大きな影響を与えます。タイプ A を使用する予定の場合は、ドライブ バイ ワイヤ システムで速度または加速度を制御します。タイプ B の方が実装に適している場合は、車両のブレーキ ペダルとアクセル ペダルを制御する必要があります。
 
-車両インターフェースと車両の制御デバイス間の通信
-車両で Autoware を使用して運転することを計画している場合、車両はいくつかの要件を満たしている必要があります。
-タイプA	タイプB
-車両は、目標速度または加速度によって前後方向に制御できます。	車両は、特定のターゲット コマンドによって前後方向に制御できます。(つまり、ブレーキとアクセルペダル)
-目標ステアリング角度によって車両を横方向に制御できます。(オプションでステアリングレートも使用できます)	車両は、特定のターゲット コマンドによって横方向に制御できます。（操舵トルク）
-車両は、上記の車両ステータスのトピックで説明されている速度または加速度の情報とステアリング情報を提供する必要があります。	車両は、上記の車両ステータスのトピックで説明されている速度または加速度の情報とステアリング情報を提供する必要があります。
-また、横方向は操舵角で制御し、前後方向は特定の目標で制御したい場合など、タイプAとタイプBを混合して使用することもできます。これを行うには、ステアリング情報を取得するためにサブスクライブし/control/command/control_cmd、/control/command/actuation_cmdアクセル ペダルとブレーキ ペダルの作動コマンドをサブスクライブする必要があります。次に、これらのメッセージを独自の vehicle_interface 設計で処理する必要があります。
-Autoware で実行するには、車両の低レベル コントローラーを採用する必要があります。
-車両はターゲット シフト モードで制御できますが、Autoware にシフト情報を提供する必要もあります。
-車両で CAN 通信を使用している場合は、 Autoware のros2_socketcanパッケージを参照してください。
-車両でシリアル通信を使用している場合は、serial-portを確認できます。
-# Vehicle interface
+
 
 ## What is the vehicle interface?
 
@@ -103,34 +91,34 @@ the vehicle
 controlled to direct input from autoware actuation commands which output of the `raw_vehicle_cmd_converter`,
 allowing for a more intuitive and human-like driving experience.
 
-If you use your own vehicle like this way
-(i.e., controlling gas and brake pedal),
-you need
-to use [raw_vehicle_cmd_converter](https://github.com/autowarefoundation/autoware.universe/tree/main/vehicle/raw_vehicle_cmd_converter) package
-to convert autoware output control cmd to brake, gas and steer map.
-In order to do that, you will need brake, gas and steering calibration.
-So,
-you can get the calibration with using [accel_brake_map_calibrator](https://github.com/autowarefoundation/autoware.universe/tree/main/vehicle/accel_brake_map_calibrator/accel_brake_map_calibrator) package.
-Please follow the steps for calibration your vehicle actuation.
+自分の車両をこのように使用する場合 
+(つまり、アクセルとブレーキ ペダルを制御する)、
+[raw_vehicle_cmd_converter](https://github.com/autowarefoundation/autoware.universe/tree/main/vehicle/raw_vehicle_cmd_converter)パッケージを使用して
+autoware 出力制御 cmd をブレーキ、アクセル、ステアリング マップに変換する
+必要があります。
+そのためには、ブレーキ、ガソリン、ステアリングの調整が必要になります。
+したがって、
+[accel_brake_map_calibrator](https://github.com/autowarefoundation/autoware.universe/tree/main/vehicle/accel_brake_map_calibrator/accel_brake_map_calibrator)パッケージを使用してキャリブレーションを取得できます。
+車両の作動を調整する手順に従ってください。
 
-The choice between these control interfaces profoundly influences the design and development process.
-If you are planning to use Type A,
-then you will control velocity or acceleration over drive by-wire systems.
-If type B is more suitable for your implementation,
-then you will need to control your vehicle's brake and gas pedal.
+これらの制御インターフェイスの選択は、設計と開発のプロセスに大きな影響を与えます。
+タイプ A を使用する予定の場合は、
+ドライブ バイ ワイヤ システムで速度または加速度を制御します。
+タイプ B の方が実装に適している場合は、
+車両のブレーキ ペダルとアクセル ペダルを制御する必要があります。
 
-### Communication between the vehicle interface and your vehicle's control device
+### 車両インターフェースと車両の制御デバイス間の通信
 
-- If you are planning to drive by autoware with your vehicle, then your vehicle must satisfy some requirements:
+- 車両で Autoware を使用して運転することを計画している場合、車両はいくつかの要件を満たしている必要があります:
 
 | Type A                                                                                                                                         | Type B                                                                                                                                         |
 | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Your vehicle can be controlled in longitudinal direction by the target velocity or acceleration.                                               | Your vehicle can be controlled in longitudinal direction by the specific target commands. (i.e., brake and gas pedal)                          |
-| Your vehicle can be controlled in lateral direction by the target steering angle. (Optionally, you can use steering rate as well)              | Your vehicle can be controlled in lateral direction by the specific target commands. (i.e., steering torque)                                   |
-| Your vehicle must provide velocity or acceleration information and steering information which is described at the vehicle status topics above. | Your vehicle must provide velocity or acceleration information and steering information which is described at the vehicle status topics above. |
+| 車両は、目標速度または加速度によって前後方向に制御できます。                                               | 車両は、特定のターゲット コマンドによって前後方向に制御できます。(つまり、ブレーキとアクセルペダル)                          |
+| 目標ステアリング角度によって車両を横方向に制御できます。(オプションでステアリングレートも使用できます)              | 車両は、特定のターゲット コマンドによって横方向に制御できます。（すなわち操舵トルク）                                   |
+| 車両は、上記の車両ステータスのトピックで説明されている速度または加速度の情報とステアリング情報を提供する必要があります。 | 車両は、上記の車両ステータスのトピックで説明されている速度または加速度の情報とステアリング情報を提供する必要があります。 |
 
-- You can also use mixed Type A and Type B, for example, you want to use lateral controlling with a steering angle and longitudinal controlling with specific targets. In order to do that, you must subscribe `/control/command/control_cmd` for getting steering information, and you must subscribe `/control/command/actuation_cmd` for gas and brake pedal actuation commands. Then, you must handle these messages on your own vehicle_interface design.
-- You must adopt your vehicle low-level controller to run with autoware.
-- Your vehicle can be controlled by the target shift mode and also needs to provide Autoware with shift information.
-- If you are using CAN communication on your vehicle, please refer to [ros2_socketcan](https://github.com/autowarefoundation/ros2_socketcan) package by Autoware.
-- If you are using Serial communication on your vehicle, you can look at [serial-port](https://github.com/fedetft/serial-port/tree/master/3_async).
+- また、横方向は操舵角で制御し、前後方向は特定の目標で制御したい場合など、タイプAとタイプBを混合して使用することもできます。これを行うには、ステアリング情報を取得するために`/control/command/control_cmd`をサブスクライブし、アクセル ペダルとブレーキ ペダルの作動コマンドの`/control/command/actuation_cmd`をサブスクライブする必要があります。次に、これらのメッセージを独自の vehicle_interface 設計で処理する必要があります。
+- Autoware で実行するには、車両の低レベル コントローラーを採用する必要があります。
+- 車両はターゲット シフト モードで制御できますが、Autoware にシフト情報を提供する必要もあります。
+- 車両で CAN 通信を使用している場合は、 Autoware の[ros2_socketcan](https://github.com/autowarefoundation/ros2_socketcan)パッケージを参照してください。
+- 車両でシリアル通信を使用している場合は、[serial-port](https://github.com/fedetft/serial-port/tree/master/3_async)を確認できます。
