@@ -1,95 +1,57 @@
-車両インターフェース
-車両インターフェースとは何ですか?
-車両インターフェイス パッケージの目的は、オートウェアから計算された制御メッセージを車両が理解できる形式に変換して車両に送信し (CAN、シリアル メッセージなど)、車両から送信されるデータをデコードして、オートウェアが期待する ROS 2 トピックを通じて公開します。したがって、 vehicle_interface の目的は次のとおりであると言えます。
+# 車両インターフェース
 
-Autoware 制御コマンドを車両固有の形式に変換します。Autoware の制御コマンドの例:
+## 車両インターフェースとは何ですか?
 
-ラテラルコントロール: ステアリングタイヤ角度、ステアリングタイヤ回転速度
-縦方向のコントロール: 速度、加速度、ジャーク
-車両固有の形式の車両ステータス情報を Autoware メッセージに変換します。
+車両インターフェイス パッケージの目的は、オートウェアから計算された制御メッセージを車両が理解できる形式に変換して車両に送信し (CAN、シリアル メッセージなど)、車両から送信されるデータをデコードして、オートウェアが期待する ROS 2 トピックを通じて公開します。
+したがって、 vehicle_interface の目的は次のとおりであると言えます:
 
-Autoware は、次のような制御コマンドを公開しています。
+1. Autoware 制御コマンドを車両固有の形式に変換します。Autoware の制御コマンドの例:
 
-速度制御
-ステアリング制御
-車のライトコマンド
-等
-次に、車両インターフェイスはこれらのコマンドを次のような作動に変換します。
+   - 横方向のコントロール: ステアリングタイヤ角度、ステアリングタイヤ回転速度
+   - 縦方向のコントロール: 速度、加速度、ジャーク
 
-モーターとブレーキの作動
-ハンドル操作
-照明制御
-等
+2. 車両固有の形式の車両ステータス情報を Autoware メッセージに変換します。
+
+Autoware は、次のような制御コマンドを公開しています:
+
+- 速度制御
+- ステアリング制御
+- 車のライトコマンド
+- 等
+
+次に、車両インターフェイスはこれらのコマンドを次のような作動に変換します:
+
+- モーターとブレーキの作動
+- ハンドル操作
+- 照明制御
+- 等
+
 したがって、車両インターフェイスは、Autoware によって提供される入力コマンドを実現するために車両の制御デバイスを実行するモジュールと考えてください。
-
-![vehicle_interface_IO](images/Vehicle-Interface-Bus-ODD-Architecture.drawio.svg){ align=center } 車両インターフェースの入出力の例
-自分の車両を制御するためのインターフェイスには 2 種類があります。
-
-ターゲットステアリングとターゲット速度/加速度インターフェイス。(本書ではタイプAとします)
-一般化されたターゲット コマンド インターフェイス (つまり、アクセル/ブレーキ ペダル、ステアリング トルク)。(本書ではタイプBとします)
-タイプ A の場合、制御インターフェイスには目標ステアリングと目標速度/加速度が含まれます。
-
-したがって、このタイプでは、任意の速度または加速度によって速度制御が行われます。
-ステアリング制御は、所望のステアリング角度および/またはステアリング角度速度によって行われます。
-一方、タイプ B は、一般化されたターゲット コマンド インターフェイス (アクセル/ブレーキ ペダル、ステアリング トルクなど) を特徴とし、より動的で適応性のある制御スキームを導入します。この構成では、車両は、 の出力であるオートウェア作動コマンドから直接入力するように制御されraw_vehicle_cmd_converter、より直感的で人間に近い運転体験が可能になります。
-
-自分の車両をこのように使用する場合 (つまり、アクセルとブレーキ ペダルを制御する)、raw_vehicle_cmd_converterパッケージを使用して autoware 出力制御 cmd をブレーキ、アクセル、ステアリング マップに変換する必要があります。そのためには、ブレーキ、ガソリン、ステアリングの調整が必要になります。したがって、accel_brake_map_calibratorパッケージを使用してキャリブレーションを取得できます。車両の作動を調整する手順に従ってください。
-
-
-
-
-## What is the vehicle interface?
-
-The purpose of the vehicle interface package is to convert the control messages calculated from the autoware into a form that the vehicle can understand and transmit them to the vehicle (CAN, Serial message, etc.) and to decode the data coming from the vehicle and publish it through the ROS 2 topics that the autoware expects.
-So, we can say that the purposes of the vehicle_interface are:
-
-1. Converting Autoware control commands to a vehicle-specific format. Example control commands of autoware:
-
-   - lateral controls: steering tire angle, steering tire rotation rate
-   - longitudinal controls: speed, acceleration, jerk
-
-2. Converting vehicle status information in a vehicle-specific format to Autoware messages.
-
-Autoware publishes control commands such as:
-
-- Velocity control
-- Steering control
-- Car light commands
-- etc.
-
-Then, the vehicle interface converts these commands into actuation such like:
-
-- Motor and brake activation
-- Steering-wheel operation
-- Lighting control
-- etc.
-
-So think of the vehicle interface as a module that runs the vehicle's control device to realize the input commands provided by Autoware.
 
 <figure markdown>
   ![vehicle_interface_IO](images/Vehicle-Interface-Bus-ODD-Architecture.drawio.svg){ align=center }
   <figcaption>
-    An example of inputs and outputs for vehicle interface
+    車両インターフェースの入出力の例
   </figcaption>
 </figure>
 
-There are two types of interfaces for controlling your own vehicle:
+自分の車両を制御するためのインターフェイスには 2 種類があります:
 
-1. Target steering and target velocity/acceleration interface. (It will be named as Type A for this document)
-2. Generalized target command interface (i.e., accel/brake pedal, steering torque). (It will be named as Type B for this document)
+1. ターゲットステアリングとターゲット速度/加速度インターフェイス。(本書ではタイプAとします)
+2. 一般化されたターゲット コマンド インターフェイス (つまり、アクセル/ブレーキ ペダル、ステアリング トルク)。(本書ではタイプBとします)
 
-For Type A,
-where the control interface encompasses target steering and target velocity/acceleration.
+タイプ A の場合、
+制御インターフェイスには目標ステアリングと目標速度/加速度が含まれます。
 
-- So, at this type, speed control is occurred by desired velocity or acceleration.
-- Steering control is occurred by desired steering angle and/or steering angle velocity.
+- したがって、このタイプでは、任意の速度または加速度によって速度制御が行われます。
+- ステアリング制御は、所望のステアリング角度および/またはステアリング角度速度によって行われます。
 
-On the other hand, Type B, characterized by a generalized target command interface (e.g., accel/brake pedal, steering torque),
-introduces a more dynamic and adaptable control scheme.
-In this configuration,
-the vehicle
-controlled to direct input from autoware actuation commands which output of the `raw_vehicle_cmd_converter`,
-allowing for a more intuitive and human-like driving experience.
+一方、タイプ B は、一般化されたターゲット コマンド インターフェイス (アクセル/ブレーキ ペダル、ステアリング トルクなど) を特徴とし、
+より動的で適応性のある制御スキームを導入します。
+この構成では、
+車両は、
+`raw_vehicle_cmd_converter`の出力であるオートウェア作動コマンドから直接入力するように制御され、
+より直感的で人間に近い運転体験が可能になります。
 
 自分の車両をこのように使用する場合 
 (つまり、アクセルとブレーキ ペダルを制御する)、
