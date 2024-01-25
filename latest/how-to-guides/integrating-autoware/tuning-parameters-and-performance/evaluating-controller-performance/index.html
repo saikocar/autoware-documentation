@@ -21,7 +21,7 @@
     
     
       
-        <title>Evaluating controller performance - Autoware Documentation</title>
+        <title>コントローラーの性能を評価する - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#evaluating-the-controller-performance" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Evaluating controller performance
+              コントローラーの性能を評価する
             
           </span>
         </div>
@@ -3483,12 +3483,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Evaluating controller performance
+          コントローラーの性能を評価する
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Evaluating controller performance
+        コントローラーの性能を評価する
       </a>
       
         
@@ -3507,30 +3507,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-to-use" class="md-nav__link">
-    How to use
+  <a href="#_2" class="md-nav__link">
+    使い方
   </a>
   
-    <nav class="md-nav" aria-label="How to use">
+    <nav class="md-nav" aria-label="使い方">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#before-driving" class="md-nav__link">
-    Before Driving
+  <a href="#_3" class="md-nav__link">
+    運転する前に
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#after-driving" class="md-nav__link">
-    After Driving
+  <a href="#_4" class="md-nav__link">
+    運転後
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#tips" class="md-nav__link">
-    Tips
+  <a href="#_5" class="md-nav__link">
+    チップ
   </a>
   
 </li>
@@ -6629,30 +6629,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-to-use" class="md-nav__link">
-    How to use
+  <a href="#_2" class="md-nav__link">
+    使い方
   </a>
   
-    <nav class="md-nav" aria-label="How to use">
+    <nav class="md-nav" aria-label="使い方">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#before-driving" class="md-nav__link">
-    Before Driving
+  <a href="#_3" class="md-nav__link">
+    運転する前に
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#after-driving" class="md-nav__link">
-    After Driving
+  <a href="#_4" class="md-nav__link">
+    運転後
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#tips" class="md-nav__link">
-    Tips
+  <a href="#_5" class="md-nav__link">
+    チップ
   </a>
   
 </li>
@@ -6680,73 +6680,34 @@
   
 
 
-<div><p>コントローラーの性能を評価する
-control_performance_analysisこのページでは、パッケージを使用してコントローラーを評価する方法を説明します。</p>
-<p>control_performance_analysis制御モジュールの追従性能を解析し、車両の走行状態を監視するパッケージです。</p>
-<p>パッケージの詳細情報が必要な場合は、control_performance_analysisを参照してください。</p>
-<p>使い方
-運転する前に
-1. まず、Autoware を起動する必要があります。このツールは実際の車両の運転でも使用できます
-2.車両を初期化し、ゴール位置を送信してルートを作成する
-Autoware の起動に問題がある場合は、チュートリアルページを参照してください。
-3. control_パフォーマンス_分析パッケージを起動します
-ros2 launch control_performance_analysis controller_performance_analysis.launch.xml
-このコマンドを実行すると、トピックに駆動モニターとエラー変数が表示されるようになります。
-4. ソースターミナルで PlotJuggler を実行します
-source ~/autoware/install/setup.bash
-ros2 run plotjuggler plotjuggler
-お使いのコンピュータに PlotJuggler がインストールされていない場合は、こちらのインストール ガイドラインを参照してください。
-5. バッファ サイズを増やし (最大は 100)、レイアウトを次からインポートします。/autoware.universe/control/control_performance_analysis/config/controller_monitor.xml
-レイアウトをインポートした後、以下にリストされているトピックを指定してください。
-/localization/kinematic_state
-/車両/ステータス/ステアリング_ステータス
-/コントロールパフォーマンス/運転ステータス
-/control_パフォーマンス/パフォーマンス_vars
-ボックスにチェックを入れてIf present, use the timestamp in the field [header.stamp]、[OK] を選択してください。
-PlotJuggler を開始する</p>
-<ol>
-<li>これで、運転を開始できます。PlotJuggler ですべてのパフォーマンス変数と駆動変数が表示されるはずです。
-コントローラーモニター</li>
-</ol>
-<p>運転後
-1. 統計出力とすべてのデータをエクスポートして比較したり、後で使用したりできます
-統計データを使用すると、(最小、最大、平均) などのすべての統計値をエクスポートして、コントローラーを比較できます。
-CVS エクスポート</p>
-<p>すべてのデータをエクスポートして後で使用することもできます。再度調査するには、PlotJuggler を起動した後、.cvsデータ セクションからファイルをインポートします。
-データのインポート</p>
-<p>チップ
-車両位置をプロットできます。2 つの曲線を選択し (CTRL キーを押したまま)、マウスの右ボタンを使用してドラッグ アンド ドロップします。Help -&gt; Cheatsheet詳細なヒントについては、PlotJuggler の にアクセスしてください。
-XY 曲線のプロット</p>
-<p>プロット内にノイズのある曲線が多すぎる場合は、ここからodom_intervalと を調整して、ノイズのあるデータを避けることができます。low_pass_filter_gain</p>
-<h1 id="evaluating-the-controller-performance">Evaluating the controller performance<a class="headerlink" href="#evaluating-the-controller-performance" title="Permanent link">#</a></h1>
-<p>This page shows how to use <code>control_performance_analysis</code> package to evaluate the controllers.</p>
-<p><code>control_performance_analysis</code> is the package to analyze the tracking performance of a control module
-and monitor the driving status of the vehicle.</p>
-<p>If you need more detailed information about package, refer to the <a href="https://github.com/autowarefoundation/autoware.universe/tree/main/control/control_performance_analysis">control_performance_analysis</a>.</p>
-<h2 id="how-to-use">How to use<a class="headerlink" href="#how-to-use" title="Permanent link">#</a></h2>
-<h3 id="before-driving">Before Driving<a class="headerlink" href="#before-driving" title="Permanent link">#</a></h3>
-<h4 id="1-firstly-you-need-to-launch-autoware-you-can-also-use-this-tool-with-real-vehicle-driving">1. Firstly you need to launch Autoware. You can also use this tool with real vehicle driving<a class="headerlink" href="#1-firstly-you-need-to-launch-autoware-you-can-also-use-this-tool-with-real-vehicle-driving" title="Permanent link">#</a></h4>
-<h4 id="2-initialize-the-vehicle-and-send-goal-position-to-create-route">2. Initialize the vehicle and send goal position to create route<a class="headerlink" href="#2-initialize-the-vehicle-and-send-goal-position-to-create-route" title="Permanent link">#</a></h4>
+<div><h1 id="_1">コントローラーの性能を評価する<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<p>このページでは、<code>control_performance_analysis</code>パッケージを使用してコントローラーを評価する方法を説明します。</p>
+<p><code>control_performance_analysis</code>は制御モジュールの追従性能を解析し、車両の走行状態を監視するパッケージです。</p>
+<p>パッケージの詳細情報が必要な場合は<a href="https://github.com/autowarefoundation/autoware.universe/tree/main/control/control_performance_analysis">control_performance_analysis</a>を参照してください。</p>
+<h2 id="_2">使い方<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<h3 id="_3">運転する前に<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
+<h4 id="1-fautoware">1. Fまず、Autoware を起動する必要があります。このツールは実際の車両の運転でも使用できます<a class="headerlink" href="#1-fautoware" title="Permanent link">#</a></h4>
+<h4 id="2">2. 車両を初期化し、ゴール位置を送信してルートを作成する<a class="headerlink" href="#2" title="Permanent link">#</a></h4>
 <ul>
-<li>If you have any problem with launching Autoware, please see the <a href="../../../../tutorials/">tutorials</a> page.</li>
+<li>Autoware の起動に問題がある場合は、<a href="../../../../tutorials/">チュートリアル</a>ページを参照してください。</li>
 </ul>
-<h4 id="3-launch-the-control_performance_analysis-package">3. Launch the control_performance_analysis package<a class="headerlink" href="#3-launch-the-control_performance_analysis-package" title="Permanent link">#</a></h4>
+<h4 id="3-control_performance_analysis">3. control_performance_analysisパッケージを起動します<a class="headerlink" href="#3-control_performance_analysis" title="Permanent link">#</a></h4>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>control_performance_analysis<span class="w"> </span>controller_performance_analysis.launch.xml
 </code></pre></div>
 <ul>
-<li>After this command, you should be able to see the driving monitor and error variables in topics.</li>
+<li>このコマンドを実行すると、トピックに駆動モニターとエラー変数が表示されるようになります。</li>
 </ul>
-<h4 id="4-run-the-plotjuggler-in-sourced-terminal">4. Run the PlotJuggler in sourced terminal<a class="headerlink" href="#4-run-the-plotjuggler-in-sourced-terminal" title="Permanent link">#</a></h4>
+<h4 id="4-plotjuggler">4. ソースしたターミナルで PlotJuggler を実行します<a class="headerlink" href="#4-plotjuggler" title="Permanent link">#</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>~/autoware/install/setup.bash
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>run<span class="w"> </span>plotjuggler<span class="w"> </span>plotjuggler
 </code></pre></div>
 <ul>
-<li>If you do not have PlotJuggler in your computer, please refer <a href="https://github.com/facontidavide/PlotJuggler#installation">here</a> for installation guideline.</li>
+<li>お使いのコンピュータに PlotJuggler がインストールされていない場合は、<a href="https://github.com/facontidavide/PlotJuggler#installation">こちら</a>のインストール ガイドラインを参照してください。</li>
 </ul>
-<h4 id="5-increase-the-buffer-size-maximum-is-100-and-import-the-layout-from-autowareuniversecontrolcontrol_performance_analysisconfigcontroller_monitorxml">5. Increase the buffer size (maximum is 100), and import the layout from <code>/autoware.universe/control/control_performance_analysis/config/controller_monitor.xml</code><a class="headerlink" href="#5-increase-the-buffer-size-maximum-is-100-and-import-the-layout-from-autowareuniversecontrolcontrol_performance_analysisconfigcontroller_monitorxml" title="Permanent link">#</a></h4>
+<h4 id="5-100autowareuniversecontrolcontrol_performance_analysisconfigcontroller_monitorxml">5. バッファ サイズを増やし(最大100),レイアウトを<code>/autoware.universe/control/control_performance_analysis/config/controller_monitor.xml</code>からインポートします<a class="headerlink" href="#5-100autowareuniversecontrolcontrol_performance_analysisconfigcontroller_monitorxml" title="Permanent link">#</a></h4>
 <ul>
-<li>After import the layout, please specify the topics that are listed below.</li>
+<li>レイアウトをインポートした後、以下にリストされているトピックを指定してください。</li>
 </ul>
 <blockquote>
 <ul>
@@ -6757,28 +6718,28 @@ and monitor the driving status of the vehicle.</p>
 </ul>
 </blockquote>
 <ul>
-<li>Please mark the <code>If present, use the timestamp in the field [header.stamp]</code> box, then select the OK.</li>
+<li><code>[header.stamp]フィールドにライムスタンプが存在し、使用する場合は</code>ボックスにチェックを入れて、OKを選択してください。</li>
 </ul>
 <p><img alt="Start PlotJuggler" src="../images/evaluating-controller-performance/start-plotjuggler.png"></p>
-<h4 id="6-now-you-can-start-to-driving-you-should-see-all-the-performance-and-driving-variables-in-plotjuggler">6. Now, you can start to driving. You should see all the performance and driving variables in PlotJuggler<a class="headerlink" href="#6-now-you-can-start-to-driving-you-should-see-all-the-performance-and-driving-variables-in-plotjuggler" title="Permanent link">#</a></h4>
+<h4 id="6-plotjuggler">6. これで、運転を開始できます。PlotJuggler ですべてのパフォーマンス変数と駆動変数が表示されるはずです。<a class="headerlink" href="#6-plotjuggler" title="Permanent link">#</a></h4>
 <p><img alt="Controller Monitor" src="../images/evaluating-controller-performance/controller-monitor.png"></p>
-<h3 id="after-driving">After Driving<a class="headerlink" href="#after-driving" title="Permanent link">#</a></h3>
-<h4 id="1-you-can-export-the-statistical-output-and-all-data-to-compare-and-later-usage">1. You can export the statistical output and all data to compare and later usage<a class="headerlink" href="#1-you-can-export-the-statistical-output-and-all-data-to-compare-and-later-usage" title="Permanent link">#</a></h4>
+<h3 id="_4">運転後<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<h4 id="1">1. 統計出力とすべてのデータをエクスポートして比較したり、後で使用したりできます<a class="headerlink" href="#1" title="Permanent link">#</a></h4>
 <ul>
-<li>With statistical data, you can export the all statistical values like (min, max, average) to compare the controllers.</li>
+<li>統計データを使用すると、(最小、最大、平均) などのすべての統計値をエクスポートして、コントローラーを比較できます。</li>
 </ul>
 <p><img alt="CVS Export" src="../images/evaluating-controller-performance/export-cvs.png"></p>
 <ul>
-<li>You can also export all data to later use. To investigate them again, after launch PlotJuggler, import the <code>.cvs</code> file from data section.</li>
+<li>すべてのデータをエクスポートして後で使用することもできます。再度調査するには、PlotJuggler を起動した後、データ セクションから<code>.cvs</code>ファイルをインポートします。</li>
 </ul>
 <p><img alt="Import Data" src="../images/evaluating-controller-performance/import-data.png"></p>
-<h3 id="tips">Tips<a class="headerlink" href="#tips" title="Permanent link">#</a></h3>
+<h3 id="_5">チップ<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
 <ul>
-<li>You can plot the vehicle position. Select the two curve (keeping CTRL key pressed) and Drag &amp; Drop them using the <strong>RIGHT Mouse button</strong>. Please visit the <code>Help -&gt; Cheatsheet</code> in PlotJuggler to see more tips about it.</li>
+<li>車両位置をプロットできます。2 つの曲線を選択し (CTRL キーを押したまま)、<strong>マウスの右ボタン</strong>を使用してドラッグ アンド ドロップします。 詳細なヒントについては、PlotJuggler の<code>Help -&gt; Cheatsheet</code>にアクセスしてください</li>
 </ul>
 <p><img alt="Plot XY Curve" src="../images/evaluating-controller-performance/plot-xy.png"></p>
 <ul>
-<li>If you see too much noised curve in plots, you can adjust the <code>odom_interval</code> and <code>low_pass_filter_gain</code> from <a href="https://github.com/autowarefoundation/autoware.universe/blob/main/control/control_performance_analysis/config/control_performance_analysis.param.yaml">here</a> to avoid noised data.</li>
+<li>プロット内にノイズのある曲線が多すぎる場合は、<code>odom_interval</code>と<code>low_pass_filter_gain</code>を<a href="https://github.com/autowarefoundation/autoware.universe/blob/main/control/control_performance_analysis/config/control_performance_analysis.param.yaml">ここ</a>から調整して、ノイズのあるデータを避けることができます。</li>
 </ul>
 <!-- prettier-ignore --></div>
 
