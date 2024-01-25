@@ -1,266 +1,75 @@
-車両インターフェースの作成
-車両インターフェースの実装方法
+# 車両インターフェースの作成
+
+## 車両インターフェースの実装方法
+
 次の手順では、車両インターフェイスを作成する方法について説明します。
 
-1. 車両インターフェース用のディレクトリを作成します。
-車両インターフェースを作成することをお勧めします。<your-autoware-dir>/src/vehicle/external
+### 1. 車両インターフェース用のディレクトリを作成します。
 
-cd <your-autoware-dir>/src/vehicle/external
-2. 独自の車両インターフェースをインストールまたは実装する
-すでに完全な車両インターフェイス パッケージ ( など) がある場合はpacmod_interface、それを環境にインストールできます。そうでない場合は、独自の車両インターフェイスを自分で実装する必要があります。で新しいパッケージを作成しましょうros2 pkg create。次の例では、 という名前の車両インターフェイス パッケージを作成する方法を示しますmy_vehicle_interface。
-
-ros2 pkg create --build-type ament_cmake my_vehicle_interface
-次に、車両インターフェースの実装を に記述する必要がありますmy_vehicle_interface/src。繰り返しますが、この実装は車両の制御デバイスに非常に固有であるため、車両インターフェイスの実装方法を詳細に説明することはこのドキュメントの範囲を超えています。考慮される可能性のあるいくつかの要因を次に示します。
-
-車両を制御するために Autoware からの制御コマンド トピックの必要なトピックのサブスクリプションをいくつか示します。
-トピック名	トピックの種類	説明
-/コントロール/コマンド/control_cmd	autoware_auto_control_msgs/msg/AckermannControlCommand	このトピックには、ステアリング タイヤの角度、速度、加速度など、車両を制御するための主要なトピックが含まれています。
-/control/コマンド/gear_cmd	autoware_auto_vehicle_msgs/msg/GearCommand	このトピックには自動運転用のギア コマンドが含まれています。ギアの値を理解するにはメッセージ値を確認してください。このタイプのメッセージ定義を確認してください。
-/control/current_gate_mode	tier4_control_msgs/msg/GateMode	このトピックでは、オートウェアの制御について説明します。詳細については、GateModeメッセージ タイプを確認してください。
-/control/command/emergency_cmd	tier4_vehicle_msgs/msg/VehicleEmergencyStamped	このトピックでは、Autoware が緊急状態のときに緊急メッセージを送信します。詳細については、VehicleEmergencyStampedメッセージ タイプを確認してください。
-/control/command/turn_indicators_cmd	autoware_auto_vehicle_msgs/msg/TurnIndicatorsコマンド	このトピックでは、自分の車両の方向指示器について説明します。詳細については、TurnIndicatorsCommandメッセージ タイプを確認してください。
-/control/command/hazard_lights_cmd	autoware_auto_vehicle_msgs/msg/HazardLightsCommand	このトピックでは、ハザード ライトのコマンドを送信します。HazardLightsコマンドを確認してください
-/コントロール/コマンド/アクチュエーション_cmd	tier4_vehicle_msgs/msg/ActuationCommandStamped	このトピックは、車両インターフェイスのraw_vehicle_command_converterセクションで説明した TYPE B で車両の制御に使用する場合に有効になります。要約すると、車両でタイプ B を使用している場合、このトピックはアクセル、ブレーキ、ステアリング ホイール作動コマンドに含まれています。詳細については、ActuationCommandStampedメッセージ タイプを確認してください。
-等	等	等
-車両インターフェイスから Autoware への車両ステータス トピックのいくつかの必要なトピックの公開:
-トピック名	トピックの種類	説明
-/車両/ステータス/バッテリー_充電	tier4_vehicle_msgs/msg/BatteryStatus	このトピックにはバッテリーに関する情報が含まれています。詳細については、BatteryStatusメッセージ タイプを確認してください。この値は、燃料レベルなどを説明するために使用できます。
-/車両/ステータス/コントロールモード	autoware_auto_vehicle_msgs/msg/ControlModeReport	このトピックでは、車両の現在の制御モードについて説明します。詳細については、ControlModeReportメッセージ タイプを確認してください。
-/車両/ステータス/ギア_ステータス	autoware_auto_vehicle_msgs/msg/GearReport	このトピックには、車両の現在のギア状態が含まれます。詳細については、GearReportメッセージ タイプを確認してください。
-/車両/ステータス/ハザードライト_ステータス	autoware_auto_vehicle_msgs/msg/HazardLightsReport	このトピックでは、車両のハザード ライトのステータスについて説明します。詳細については、HazardLightsReportメッセージ タイプを確認してください。
-/車両/ステータス/turn_indicators_status	autoware_auto_vehicle_msgs/msg/TurnIndicatorsReport	このトピックでは、車両のステアリング ステータスを報告します。詳細については、SteeringReportメッセージ タイプを確認してください。
-/車両/ステータス/ステアリング_ステータス	autoware_auto_vehicle_msgs/msg/SteeringReport	このトピックでは、車両のステアリング ステータスを報告します。詳細については、SteeringReportメッセージ タイプを確認してください。
-/車両/ステータス/速度_ステータス	autoware_auto_vehicle_msgs/msg/VelocityReport	このトピックでは、車両の速度ステータスが表示されます。詳細については、VelocityReportメッセージ タイプを確認してください。
-等	等	等
-この図は、サンプル トピックとメッセージ タイプを説明する車両インターフェイスとオートウェアの通信の例です。
-
-![vehicle_communication](images/autoware-vehicle-communication.svg){ align=center } 車両とオートウェア通信のサンプル デモンストレーション。この図にはいくつかのトピックとタイプが含まれており、必要な制御コマンドや自動ウェアの更新に変更できます。
-車両インターフェイス上でこれらのトピックを使用してサブスクライバーとパブリッシャーを作成する必要があります。/control/command/control_cmdトピックのサブスクライブとパブリッシングの簡単なデモを使って説明しましょう/vehicle/status/gear_status。
-
-したがって、YOUR-OWN-VEHICLE-INTERFACE.hppヘッダー ファイルは次のようになります。
-
-...
-#include <autoware_auto_control_msgs/msg/ackermann_control_command.hpp>
-#include <autoware_auto_vehicle_msgs/msg/gear_report.hpp>
-...
-
-class <YOUR-OWN-INTERFACE> : public rclcpp::Node
-{
-public:
-    ...
-private:
-    ...
-    // from autoware
-    rclcpp::Subscription<autoware_auto_control_msgs::msg::AckermannControlCommand>::SharedPtr
-    control_cmd_sub_;
-    ...
-    // from vehicle
-    rclcpp::Publisher<autoware_auto_vehicle_msgs::msg::GearReport>::SharedPtr gear_status_pub_;
-    ...
-    // autoware command messages
-    ...
-    autoware_auto_control_msgs::msg::AckermannControlCommand::ConstSharedPtr control_cmd_ptr_;
-    ...
-    // callbacks
-    ...
-    void callback_control_cmd(
-    const autoware_auto_control_msgs::msg::AckermannControlCommand::ConstSharedPtr msg);
-    ...
-    void to_vehicle();
-    void from_vehicle();
-}
-.cppファイルYOUR-OWN-VEHICLE-INTERFACE.cppは次のようになります。
-
-#include <YOUR-OWN-VEHICLE-INTERFACE>/<YOUR-OWN-VEHICLE-INTERFACE>.hpp>
-...
-
-<YOUR-OWN-VEHICLE-INTERFACE>::<YOUR-OWN-VEHICLE-INTERFACE>()
-: Node("<YOUR-OWN-VEHICLE-INTERFACE>")
-{
-  ...
-  /* subscribers */
-  using std::placeholders::_1;
-  // from autoware
-  control_cmd_sub_ = create_subscription<autoware_auto_control_msgs::msg::AckermannControlCommand>(
-    "/control/command/control_cmd", 1, std::bind(&<YOUR-OWN-VEHICLE-INTERFACE>::callback_control_cmd, this, _1));
-  ...
-  // to autoware
-  gear_status_pub_ = create_publisher<autoware_auto_vehicle_msgs::msg::GearReport>(
-    "/vehicle/status/gear_status", rclcpp::QoS{1});
-  ...
-}
-
-void <YOUR-OWN-VEHICLE-INTERFACE>::callback_control_cmd(
-  const autoware_auto_control_msgs::msg::AckermannControlCommand::ConstSharedPtr msg)
-{
-  control_cmd_ptr_ = msg;
-}
-
-void <YOUR-OWN-VEHICLE-INTERFACE>::to_vehicle()
-{
-  ...
-  // you should implement this structure according to your own vehicle design
-  control_command_to_vehicle(control_cmd_ptr_);
-  ...
-}
-
-void <YOUR-OWN-VEHICLE-INTERFACE>::to_autoware()
-{
-  ...
-  // you should implement this structure according to your own vehicle design
-  autoware_auto_vehicle_msgs::msg::GearReport gear_report_msg;
-  convert_gear_status_to_autoware_msg(gear_report_msg);
-  gear_status_pub_->publish(gear_report_msg);
-  ...
-}
-必要に応じて制御値を変更します
-場合によっては、制御コマンドの変更が必要になる場合があります。たとえば、Autoware は車両速度情報を m/s 単位で要求しますが、車両が別の形式 (km/h など) で公開する場合は、Autoware に送信する前に変換する必要があります。
-3. 起動ファイルを準備する
-車両インターフェースを実装した後、または車両インターフェースを起動してデバッグしたい場合は、車両インターフェースの起動ファイルを作成し、それを車両とセンサーの説明ページの作成時にフォークして作成したパッケージvehicle_interface.launch.xmlに含めます。<VEHICLE_ID>_vehicle_launch
-
-混乱しないでください。my_vehicle_interface.launch.xmlまず、独自の車両インターフェース モジュール ( のような)の起動ファイルを作成し、それを別のディレクトリに含める必要があります。vehicle_interface.launch.xml詳細は次のとおりです。
-
-launchディレクトリにディレクトリを追加しmy_vehicle_interface、その中に独自の車両インターフェースの起動ファイルを作成します。ROS 2 ドキュメントの「起動ファイルの作成」を参照してください。
-
-vehicle_interface 用に作成された起動ファイルを<YOUR-VEHICLE-NAME>_launch/<YOUR-VEHICLE-NAME>_launch/launch/vehicle_interface.launch.xml開いてインクルードし、以下のように含まれる用語を追加します。
-
-<?xml version="1.0" encoding="UTF-8"?>
-<launch>
-    <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
-    <!-- please add your created vehicle interface launch file -->
-    <include file="$(find-pkg-share my_vehicle_interface)/launch/my_vehicle_interface.launch.xml">
-    </include>
-</launch>
-最終的に、ディレクトリ構造は以下のようになります。わかりやすくするためにほとんどのファイルは省略されていますが、ここに示されているファイルは、以前のプロセスと現在のプロセスで述べたように変更する必要があります。
-
-<your-autoware-dir>/
-└─ src/
-    └─ vehicle/
-        ├─ external/
-+       │   └─ <YOUR-VEHICLE-NAME>_interface/
-+       │       ├─ src/
-+       │       └─ launch/
-+       │            └─ my_vehicle_interface.launch.xml
-+       └─ <YOUR-VEHICLE-NAME>_launch/ (COPIED FROM sample_vehicle_launch)
-+           ├─ <YOUR-VEHICLE-NAME>_launch/
-+           │  ├─ launch/
-+           │  │  └─ vehicle_interface.launch.xml
-+           │  ├─ CMakeLists.txt
-+           │  └─ package.xml
-+           ├─ <YOUR-VEHICLE-NAME>_description/
-+           │  ├─ config/
-+           │  ├─ mesh/
-+           │  ├─ urdf/
-+           │  │  └─ vehicle.xacro
-+           │  ├─ CMakeLists.txt
-+           │  └─ package.xml
-+           └─ README.md
-4. 車両インターフェース パッケージと起動パッケージを構築する
-3 つのパッケージをビルドしますmy_vehicle_interface。<YOUR-VEHICLE-NAME>_launch または<YOUR-VEHICLE-NAME>_description、colcon build他の作業を行っている場合は、Autoware 全体をビルドすることもできます。
-
-colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select my_vehicle_interface <YOUR-VEHICLE-NAME>_launch <YOUR-VEHICLE-NAME>_description
-5. Autoware を起動するとき
-最後に、車両インターフェース モジュールの実装が完了しました。vehicle_model以下の例のように、適切なオプションを指定して Autoware を起動する必要があることに注意してください。この例では計画シミュレーターを起動しています。
-
-ros2 launch autoware_launch planning.launch.xml map_path:=$HOME/autoware_map/sample-map-planning vehicle_model:=<YOUR-VEHICLE-NAME> sensor_model:=<YOUR-VEHICLE-NAME>_sensor_kit
-チップ
-役立つヒントがいくつかあります。
-
-必要に応じて、車両インターフェースをより小さなパッケージに分割できます。その場合、ディレクトリ構造は以下のようになります (ただし、これが唯一の方法ではありません)。ですべてのパッケージを起動することを忘れないでくださいmy_vehicle_interface.launch.xml。
-
-<your-autoware-dir>/
-└─ src/
-    └─ vehicle/
-        ├─ external/
-        │   └─ my_vehicle_interface/
-        │       ├─ src/
-        │       │   ├─ package1/
-        │       │   ├─ package2/
-        │       │   └─ package3/
-        │       └─ launch/
-        │            └─ my_vehicle_interface.launch.xml
-        ├─ sample_vehicle_launch/
-        └─ my_vehicle_name_launch/
-車両インターフェイスを使用し、開いている git リポジトリからパッケージを起動する場合、または独自の git リポジトリを作成した場合は、autoware.repos以下の例のように、autoware フォルダーの直下にあるファイルにそれらのリポジトリを追加することを強くお勧めします。バージョンタグでブランチまたはコミットのハッシュを指定できます。
-
-# vehicle (this section should be somewhere in autoware.repos and add the below)
-vehicle/external/my_vehicle_interface:
-  type: git
-  url: https://github.com/<repository-name-B>/my_vehicle_interface.git
-  version: main
-次に、コマンドを使用して、環境全体を別のローカル デバイスに簡単にインポートできますvcs import。(ソースのインストール ガイドを参照してください)
-# Creating vehicle interface
-
-## How to implement a vehicle interface
-
-The following instructions describe how to create a vehicle interface.
-
-### 1. Create a directory for vehicle interface
-
-It is recommended to create your vehicle interface at `<your-autoware-dir>/src/vehicle/external`
+`<your-autoware-dir>/src/vehicle/external`に車両インターフェースを作成することをお勧めします。
 
 ```bash
 cd <your-autoware-dir>/src/vehicle/external
 ```
 
-### 2. Install or implement your own vehicle interface
+### 2. 独自の車両インターフェースをインストールまたは実装する
 
-If there is an already complete vehicle interface package (like [`pacmod_interface`](https://github.com/tier4/pacmod_interface/tree/main)), you can install it to your environment.
-If not, you have to implement your own vehicle interface by yourself.
-Let's create a new package by `ros2 pkg create`.
-The following example will show you how to create a vehicle interface package named `my_vehicle_interface`.
+すでに完全な車両インターフェイス パッケージ([`pacmod_interface`](https://github.com/tier4/pacmod_interface/tree/main)など)がある場合は、それを環境にインストールできます。
+そうでない場合は、独自の車両インターフェイスを自分で実装する必要があります。
+`ros2 pkg create`で新しいパッケージを作成しましょう。
+次の例では、`my_vehicle_interface`という名前の車両インターフェイス パッケージを作成する方法を示します。
 
 ```bash
 ros2 pkg create --build-type ament_cmake my_vehicle_interface
 ```
 
-Then, you should write your implementation of vehicle interface in `my_vehicle_interface/src`.
-Again, since this implementation is so specific to the control device of your vehicle, it is beyond the scope of this document to describe how to implement your vehicle interface in detail.
-Here are some factors that might be considered:
+次に、車両インターフェースの実装を`my_vehicle_interface/src`に記述する必要があります。
+繰り返しますが、この実装は車両の制御デバイスに非常に固有であるため、車両インターフェイスの実装方法を詳細に説明することはこのドキュメントの範囲を超えています。
+考慮される可能性のあるいくつかの要因を次に示します:
 
-- Some necessary topic subscription of control commands topics from Autoware to control your vehicle:
+- 車両を制御するために Autoware からの制御コマンド トピックの必要なトピックのサブスクリプションをいくつか示します:
 
-| Topic Name                           | Topic Type                                             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| トピック名                           | トピックの種類                                             | 説明                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | ------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| /control/command/control_cmd         | autoware_auto_control_msgs/msg/AckermannControlCommand | This topic includes main topics for controlling our vehicle like a steering tire angle, speed, acceleration, etc.                                                                                                                                                                                                                                                                                                                                                                                                               |
-| /control/command/gear_cmd            | autoware_auto_vehicle_msgs/msg/GearCommand             | This topic includes gear command for autonomous driving, please check message values to make sense of gears values. Please check [the message definition](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/GearCommand.idl) of this type.                                                                                                                                                                                                                                             |
-| /control/current_gate_mode           | tier4_control_msgs/msg/GateMode                        | This topic describes control on the autoware or not. Please check [GateMode](https://github.com/tier4/tier4_autoware_msgs/blob/tier4/universe/tier4_control_msgs/msg/GateMode.msg) message type for detailed information.                                                                                                                                                                                                                                                                                                       |
-| /control/command/emergency_cmd       | tier4_vehicle_msgs/msg/VehicleEmergencyStamped         | This topic sends emergency when autoware is on emergency state. Please check [VehicleEmergencyStamped](https://github.com/tier4/tier4_autoware_msgs/blob/tier4/universe/tier4_vehicle_msgs/msg/VehicleEmergencyStamped.msg) message type for detailed information.                                                                                                                                                                                                                                                              |
-| /control/command/turn_indicators_cmd | autoware_auto_vehicle_msgs/msg/TurnIndicatorsCommand   | This topic indicates a turn signal for your own vehicle. Please check [TurnIndicatorsCommand](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/TurnIndicatorsCommand.idl) message type for detailed information.                                                                                                                                                                                                                                                                      |
-| /control/command/hazard_lights_cmd   | autoware_auto_vehicle_msgs/msg/HazardLightsCommand     | This topic sends command for hazard lights. Please check [HazardLightsCommand](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/HazardLightsCommand.idl)                                                                                                                                                                                                                                                                                                                              |
-| /control/command/actuation_cmd       | tier4_vehicle_msgs/msg/ActuationCommandStamped         | This topic is enabled when you use `raw_vehicle_command_converter` for control your vehicle with TYPE B which we mentioned at [Vehicle interface](./vehicle-interface.md) section. In summary, if you are using Type B on your vehicle, this topic appeared and included with gas, brake, steering-wheel actuation commands. Please check [ActuationCommandStamped](https://github.com/tier4/tier4_autoware_msgs/blob/tier4/universe/tier4_vehicle_msgs/msg/ActuationCommandStamped.msg) message type for detailed information. |
-| etc.                                 | etc.                                                   | etc.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| /control/command/control_cmd         | autoware_auto_control_msgs/msg/AckermannControlCommand | このトピックには、ステアリング タイヤの角度、速度、加速度など、車両を制御するための主要なトピックが含まれています。                                                                                                                                                                                                                                                                                                                                                                                                               |
+| /control/command/gear_cmd            | autoware_auto_vehicle_msgs/msg/GearCommand             | このトピックには自動運転用のギア コマンドが含まれています。ギアの値を理解するにはこの型の[メッセージ値](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/GearCommand.idl)を確認してください。                                                                                                                                                                                                                                             |
+| /control/current_gate_mode           | tier4_control_msgs/msg/GateMode                        | このトピックでは、autowareの制御について説明します。詳細については、[GateMode](https://github.com/tier4/tier4_autoware_msgs/blob/tier4/universe/tier4_control_msgs/msg/GateMode.msg)メッセージ タイプを確認してください。                                                                                                                                                                                                                                                                                                       |
+| /control/command/emergency_cmd       | tier4_vehicle_msgs/msg/VehicleEmergencyStamped         | このトピックでは、Autoware が緊急状態のときに緊急メッセージを送信します。詳細については、[VehicleEmergencyStamped](https://github.com/tier4/tier4_autoware_msgs/blob/tier4/universe/tier4_vehicle_msgs/msg/VehicleEmergencyStamped.msg)メッセージ タイプを確認してください。                                                                                                                                                                                                                                                              |
+| /control/command/turn_indicators_cmd | autoware_auto_vehicle_msgs/msg/TurnIndicatorsCommand   | このトピックでは、自分の車両の方向指示器について説明します。詳細については、[TurnIndicatorsCommand](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/TurnIndicatorsCommand.idl)メッセージ タイプを確認してください。                                                                                                                                                                                                                                                                      |
+| /control/command/hazard_lights_cmd   | autoware_auto_vehicle_msgs/msg/HazardLightsCommand     | このトピックでは、ハザード ライトのコマンドを送信します。[HazardLightsCommand](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/HazardLightsCommand.idl)コマンドを確認してください                                                                                                                                                                                                                                                                                                                              |
+| /control/command/actuation_cmd       | tier4_vehicle_msgs/msg/ActuationCommandStamped         | このトピックは、[車両インターフェイス](./vehicle-interface.md)セクションで説明した TYPE B で車両の制御に`raw_vehicle_command_converter`を使用する場合に有効になります。 要約すると、車両でタイプ B を使用している場合、このトピックはアクセル、ブレーキ、ステアリング ホイール作動コマンドに含まれています。詳細については、[ActuationCommandStamped](https://github.com/tier4/tier4_autoware_msgs/blob/tier4/universe/tier4_vehicle_msgs/msg/ActuationCommandStamped.msg)メッセージ タイプを確認してください。 |
+| 等                                 | 等                                                   | 等                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
-- Some necessary topic publication of vehicle status topics from vehicle interface to Autoware:
+- 車両インターフェイスから Autoware への車両ステータス トピックのいくつかの必要なトピックの公開:
 
-| Topic Name                             | Topic Type                                          | Description                                                                                                                                                                                                                                                                   |
+| トピック名                             | トピックの種類                                          | 説明                                                                                                                                                                                                                                                                   |
 | -------------------------------------- | --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| /vehicle/status/battery_charge         | tier4_vehicle_msgs/msg/BatteryStatus                | This topic includes battery information. Please check [BatteryStatus](https://github.com/tier4/tier4_autoware_msgs/blob/tier4/universe/tier4_vehicle_msgs/msg/BatteryStatus.msg) message type for detailed information. You can use this value as describing fuel level, etc. |
-| /vehicle/status/control_mode           | autoware_auto_vehicle_msgs/msg/ControlModeReport    | This topic describes the current control mode of vehicle. Please check [ControlModeReport](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/ControlModeReport.idl) message type for detailed information.                           |
-| /vehicle/status/gear_status            | autoware_auto_vehicle_msgs/msg/GearReport           | This topic includes the current gear status of the vehicle. Please check [GearReport](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/GearReport.idl) message type for detailed information.                                       |
-| /vehicle/status/hazard_lights_status   | autoware_auto_vehicle_msgs/msg/HazardLightsReport   | This topic describes hazard light status of the vehicle. Please check [HazardLightsReport](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/HazardLightsReport.idl) message type for detailed information.                          |
-| /vehicle/status/turn_indicators_status | autoware_auto_vehicle_msgs/msg/TurnIndicatorsReport | This topic reports the steering status of the vehicle. Please check [SteeringReport](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/SteeringReport.idl) message type for detailed information.                                    |
-| /vehicle/status/steering_status        | autoware_auto_vehicle_msgs/msg/SteeringReport       | This topic reports the steering status of the vehicle. Please check [SteeringReport](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/SteeringReport.idl) message type for detailed information.                                    |
-| /vehicle/status/velocity_Status        | autoware_auto_vehicle_msgs/msg/VelocityReport       | This topic gives us the velocity status of the vehicle. Please check [VelocityReport](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/VelocityReport.idl) message type for detailed information.                                   |
-| etc.                                   | etc.                                                | etc.                                                                                                                                                                                                                                                                          |
+| /vehicle/status/battery_charge         | tier4_vehicle_msgs/msg/BatteryStatus                | このトピックにはバッテリーに関する情報が含まれています。詳細については、[BatteryStatus](https://github.com/tier4/tier4_autoware_msgs/blob/tier4/universe/tier4_vehicle_msgs/msg/BatteryStatus.msg)メッセージ タイプを確認してください。この値は、燃料レベルなどを説明するために使用できます。 |
+| /vehicle/status/control_mode           | autoware_auto_vehicle_msgs/msg/ControlModeReport    | このトピックでは、車両の現在の制御モードについて説明します。詳細については、[ControlModeReport](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/ControlModeReport.idl)メッセージ タイプを確認してください。                           |
+| /vehicle/status/gear_status            | autoware_auto_vehicle_msgs/msg/GearReport           | このトピックには、車両の現在のギア状態が含まれます。詳細については、[GearReport](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/GearReport.idl) メッセージ タイプを確認してください。                                      |
+| /vehicle/status/hazard_lights_status   | autoware_auto_vehicle_msgs/msg/HazardLightsReport   | このトピックでは、車両のハザード ライトのステータスについて説明します。詳細については、[HazardLightsReport](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/HazardLightsReport.idl)メッセージ タイプを確認してください。                          |
+| /vehicle/status/turn_indicators_status | autoware_auto_vehicle_msgs/msg/TurnIndicatorsReport | このトピックでは、車両のステアリング ステータスを報告します。詳細については、[SteeringReport](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/SteeringReport.idl)メッセージ タイプを確認してください。                                   |
+| /vehicle/status/steering_status        | autoware_auto_vehicle_msgs/msg/SteeringReport       | このトピックでは、車両のステアリング ステータスを報告します。詳細については、[SteeringReport](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/SteeringReport.idl) メッセージ タイプを確認してください。                                    |
+| /vehicle/status/velocity_Status        | autoware_auto_vehicle_msgs/msg/VelocityReport       | このトピックでは、車両の速度ステータスが表示されます。詳細については、[VelocityReport](https://github.com/tier4/autoware_auto_msgs/blob/tier4/main/autoware_auto_vehicle_msgs/msg/VelocityReport.idl)メッセージ タイプを確認してください。                                   |
+| 等                                   | 等                                                | 等                                                                                                                                                                                                                                                                          |
 
-This diagram as an example for communication of vehicle interface and autoware
-with describing sample topics and message types.
+この図は、サンプル トピックとメッセージ タイプを説明する
+車両インターフェイスとオートウェアの通信の例です。
 
 <figure markdown>
   ![vehicle_communication](images/autoware-vehicle-communication.svg){ align=center }
   <figcaption>
-    Sample demonstration of vehicle and autoware communication.
-    There are some topics and types included in this diagram and
-    it can be changed your desired control command or autoware updates.
+    車両とautowareの通信のサンプル デモンストレーション。
+    この図にはいくつかのトピックとタイプが含まれており、
+    必要な制御コマンドやautowareの更新に変更できます。
   </figcaption>
 </figure>
 
-You must create a subscriber and publisher with these topics on your vehicle interface.
-Let's
-explain with the simple demonstration of subscribing `/control/command/control_cmd` and publishing `/vehicle/status/gear_status` topics.
+車両インターフェイス上でこれらのトピックを使用してサブスクライバーとパブリッシャーを作成する必要があります。
+`/control/command/control_cmd`トピックのサブスクライブと`/vehicle/status/gear_status`トピックのパブリッシングの
+簡単なデモを使って説明しましょう
 
-So, your `YOUR-OWN-VEHICLE-INTERFACE.hpp` header file should be like this:
+したがって、YOUR-OWN-VEHICLE-INTERFACE.hpp`ヘッダー ファイルは次のようになります:
 
 ```c++
 ...
@@ -295,7 +104,7 @@ private:
 }
 ```
 
-And your `YOUR-OWN-VEHICLE-INTERFACE.cpp` .cpp file should be like this:
+`YOUR-OWN-VEHICLE-INTERFACE.cpp`.cppファイルは次のようになります:
 
 ```c++
 #include <YOUR-OWN-VEHICLE-INTERFACE>/<YOUR-OWN-VEHICLE-INTERFACE>.hpp>
@@ -343,22 +152,22 @@ void <YOUR-OWN-VEHICLE-INTERFACE>::to_autoware()
 
 ```
 
-- Modification of control values if needed
-  - In some cases, you may need to modify the control commands. For example, Autoware expects vehicle velocity information in m/s units, but if your vehicle publishes it in a different format (i.e., km/h), you must convert it before sending it to Autoware.
+- 必要に応じて制御値を変更します
+  - 場合によっては、制御コマンドの変更が必要になる場合があります。たとえば、Autoware は車両速度情報を m/s 単位で要求しますが、車両が別の形式 (km/h など) で公開する場合は、Autoware に送信する前に変換する必要があります。
 
-### 3. Prepare a launch file
+### 3. 起動ファイルを準備する
 
-After you implement your vehicle interface, or you want to debug it by launching it,
-create a launch file of your vehicle interface,
-and include it to `vehicle_interface.launch.xml` which included in `<VEHICLE_ID>_vehicle_launch` package
-that we forked and created
-at [creating vehicle and sensor description page](../creating-vehicle-and-sensor-description/creating-vehicle-and-sensor-description.md).
+車両インターフェースを実装した後、または車両インターフェースを起動してデバッグしたい場合は、
+車両インターフェースの起動ファイルを作成し、
+それを[車両とセンサーの説明ページの作成時](../creating-vehicle-and-sensor-description/creating-vehicle-and-sensor-description.md)に
+フォークして作成した`<VEHICLE_ID>_vehicle_launch`パッケージに含まれる
+`vehicle_interface.launch.xml`に含めます
 
-Do not get confused. First, you need to create a launch file for your own vehicle interface module (like `my_vehicle_interface.launch.xml`) **and then include that to `vehicle_interface.launch.xml` which exists in another directory.** Here are the details.
+混乱しないでください。まず、独自の車両インターフェース モジュール ((`my_vehicle_interface.launch.xml`のような)の起動ファイルを作成し、 **それを別のディレクトリにある`vehicle_interface.launch.xml`に含める必要があります。** 詳細は次のとおりです。
 
-1. Add a `launch` directory in the `my_vehicle_interface` directory, and create a launch file of your own vehicle interface in it. Take a look at [Creating a launch file](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Launch-Main.html) in the ROS 2 documentation.
+1. `my_vehicle_interface`ディレクトリに`launch`を追加し、その中に独自の車両インターフェースの起動ファイルを作成します。ROS 2 ドキュメントの[起動ファイルの作成](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Launch-Main.html)を参照してください。
 
-2. Include your launch file which is created for vehicle_interface to `<YOUR-VEHICLE-NAME>_launch/<YOUR-VEHICLE-NAME>_launch/launch/vehicle_interface.launch.xml` by opening it and add the included terms like below.
+2. vehicle_interface用に作成された起動ファイルを`<YOUR-VEHICLE-NAME>_launch/<YOUR-VEHICLE-NAME>_launch/launch/vehicle_interface.launch.xml`を開いてインクルードするために、以下のようにインクルード行を追加します。
 
 ```xml title="vehicle_interface.launch.xml"
 <?xml version="1.0" encoding="UTF-8"?>
@@ -370,8 +179,8 @@ Do not get confused. First, you need to create a launch file for your own vehicl
 </launch>
 ```
 
-Finally, your directory structure may look like below.
-Most of the files are omitted for clarity, but the files shown here needs modification as said in the previous and current process.
+最終的に、ディレクトリ構造は以下のようになります。
+わかりやすくするためにほとんどのファイルは省略されていますが、ここに示されているファイルは、以前のプロセスと現在のプロセスで述べたように変更する必要があります。
 
 ```diff
 <your-autoware-dir>/
@@ -398,29 +207,29 @@ Most of the files are omitted for clarity, but the files shown here needs modifi
 +           └─ README.md
 ```
 
-### 4. Build the vehicle interface package and the launch package
+### 4. 車両インターフェース パッケージと起動パッケージを構築する
 
-Build three packages `my_vehicle_interface`, `<YOUR-VEHICLE-NAME>_launch`
-and `<YOUR-VEHICLE-NAME>_description` by `colcon build`,
-or you can just build the entire Autoware if you have done other things.
+`my_vehicle_interface`、`<YOUR-VEHICLE-NAME>_launch`、
+`<YOUR-VEHICLE-NAME>_description`の3つのパッケージを`colcon build`でビルドします、
+あるいは他の作業を行っている場合は、Autoware 全体をビルドすることもできます。
 
 ```bash
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select my_vehicle_interface <YOUR-VEHICLE-NAME>_launch <YOUR-VEHICLE-NAME>_description
 ```
 
-### 5. When you launch Autoware
+### 5. Autoware を起動するとき
 
-Finally, you are done implementing your vehicle interface module! Be careful that you need to launch Autoware with the proper `vehicle_model` option like the example below. This example is launching planning simulator.
+最後に、車両インターフェース モジュールの実装が完了しました。以下の例のように、適切な`vehicle_model`オプションを指定して Autoware を起動する必要があることに注意してください。この例では計画シミュレーターを起動しています。
 
 ```bash
 ros2 launch autoware_launch planning.launch.xml map_path:=$HOME/autoware_map/sample-map-planning vehicle_model:=<YOUR-VEHICLE-NAME> sensor_model:=<YOUR-VEHICLE-NAME>_sensor_kit
 ```
 
-### Tips
+### チップ
 
-There are some tips that may help you.
+役立つヒントがいくつかあります。
 
-- You can subdivide your vehicle interface into smaller packages if you want. Then your directory structure may look like below (not the only way though). Do not forget to launch all packages in `my_vehicle_interface.launch.xml`.
+- 必要に応じて、車両インターフェースをより小さなパッケージに分割できます。その場合、ディレクトリ構造は以下のようになります (ただし、これが唯一の方法ではありません)。`my_vehicle_interface.launch.xml`ですべてのパッケージを起動することを忘れないでください。
 
   ```diff
   <your-autoware-dir>/
@@ -438,7 +247,7 @@ There are some tips that may help you.
           └─ my_vehicle_name_launch/
   ```
 
-- If you are using a vehicle interface and launch package from a open git repository, or created your own as a git repository, it is highly recommended to add those repositories to your `autoware.repos` file which is located to directly under your autoware folder like the example below. You can specify the branch or commit hash by the version tag.
+- 車両インターフェイスを使用し、開いている git リポジトリからパッケージを起動する場合、または独自の git リポジトリを作成した場合は、以下の例のように、autoware フォルダーの直下にある`autoware.repos`フォルダーの直下にあるファイルにそれらのリポジトリを追加することを強くお勧めします。バージョンタグでブランチまたはコミットのハッシュを指定できます。
 
   ```yaml title="autoware.repos"
   # vehicle (this section should be somewhere in autoware.repos and add the below)
@@ -448,4 +257,4 @@ There are some tips that may help you.
     version: main
   ```
 
-  Then you can import your entire environment easily to another local device by using the `vcs import` command. (See [the source installation guide](https://autowarefoundation.github.io/autoware-documentation/main/installation/autoware/source-installation/#how-to-set-up-a-workspace))
+  その後、`vcs import`コマンドを使用して、環境全体を別のローカル デバイスに簡単にインポートできます。([ソースインストールガイド](https://autowarefoundation.github.io/autoware-documentation/main/installation/autoware/source-installation/#how-to-set-up-a-workspace)を確認してください)
