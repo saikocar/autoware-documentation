@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>マップ起動ファイル - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#map-launch-files" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              マップ起動ファイル
             
           </span>
         </div>
@@ -6561,8 +6561,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#_2" class="md-nav__link">
+    概要
   </a>
   
 </li>
@@ -6585,70 +6585,44 @@
   
 
 
-<div><p>マップ起動ファイル
-概要
-「 Autoware の起動」autoware_launch.xmlページで説明したように、Autoware マップ スタックは で起動を開始します。パッケージには、 からマップ起動ファイルの呼び出しを開始するためのものが含まれています。この図は、Autoware マップ起動ファイル フロー およびパッケージの一部を説明しています。autoware_launchtier4_map_component.launch.xmlautoware_launch.xmlautoware_launchautoware.universe</p>
-<p><img align="center" alt="map-launch-flow" src="images/map_launch_flow.svg"> Autoware マップ起動フロー図</p>
-<div class="admonition 注記">
-<p class="admonition-title">注記</p>
-</div>
-<p>The Autoware project is a large project.
-Therefore, as we manage the Autoware project, we utilize specific
-arguments in the launch files.
-<abbr title="Robot Operating System">ROS</abbr> 2 offers an argument-overriding feature for these launch files.
-Please refer to <a href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html#parameter-overrides">the official <abbr title="Robot Operating System">ROS</abbr> 2 launch documentation</a> for further information.
-For instance,
-if we define an argument at the top-level launch,
-it will override the value on lower-level launches.
-tier4_map_launch パッケージの map.launch.py​​ 起動ファイルには、マッピングに必要なノード定義が直接含まれています。Autoware の現在の設計では、lanelet2_map_loader、 lanelet2_map_visualization、pointcloud_map_loader、およびvector_map_tf_generatorコンポーザブル ノードは に含まれていますmap_container。</p>
-<p>マップ起動ファイルには多くの変更オプションがありません (パラメーターは構成ファイルに含まれているため)。ただし、起動時に pointcloud および LANELET2 マップの名前を指定できます (デフォルト値は pointcloud_map.pcd および Lanlet2_map.osm)。たとえば、マップ ファイル名を変更する場合は、次のコマンド ライン引数を使用して Autoware を実行できます。</p>
-<p>ros2 launch autoware_launch autoware.launch.xml ... pointcloud_map_file:=<your-pcd-file-name> lanelet2_map_file:=<your-lanelet2-map-name> ...
-または、起動ファイルで変更することもできますautoware.launch.xml。</your-lanelet2-map-name></your-pcd-file-name></p>
-<ul>
-<li><arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"></arg></li>
-<li><arg name="lanelet2_map_file" default="\&lt;YOUR-LANELET2-MAP-NAME&gt;" description="lanelet2 map file name"></arg></li>
-<li><arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"></arg></li>
-<li><arg name="pointcloud_map_file" default="\&lt;YOUR-PCD-FILE-NAME&gt;" description="pointcloud map file name"></arg></li>
-</ul>
-<h1 id="map-launch-files">Map Launch Files<a class="headerlink" href="#map-launch-files" title="Permanent link">#</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<p>The Autoware map stacks start
-launching at <code>autoware_launch.xml</code> as we mentioned at <a href="../">Launch Autoware</a> page.
-The <code>autoware_launch</code> package includes <code>tier4_map_component.launch.xml</code>
-for starting map launch files invocation from <code>autoware_launch.xml</code>.
-This diagram describes some of the Autoware map launch files flow at <code>autoware_launch</code>
-and <code>autoware.universe</code> packages.</p>
+<div><h1 id="_1">マップ起動ファイル<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">概要<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p><a href="../">Autoware の起動</a>ページで説明したように、
+Autoware マップ スタックは<code>autoware_launch.xml</code>で起動を開始します。
+<code>autoware_launch</code>パッケージには、 <code>autoware_launch.xml</code>からマップ起動ファイルの呼び出しを開始するための
+<code>tier4_map_component.launch.xml</code>が含まれています。
+この図は、<code>autoware_launch</code>のAutoware マップ起動ファイル フローとautoware.universe`パッケージの一部を説明しています。</p>
 <figure>
 <p><img align="center" alt="map-launch-flow" src="images/map_launch_flow.svg">
   </p>
 <figcaption>
-    Autoware map launch flow diagram
+    Autoware マップ起動フロー図
   </figcaption>
 </figure>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The Autoware project is a large project.
-Therefore, as we manage the Autoware project, we utilize specific
-arguments in the launch files.
-<abbr title="Robot Operating System">ROS</abbr> 2 offers an argument-overriding feature for these launch files.
-Please refer to <a href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html#parameter-overrides">the official <abbr title="Robot Operating System">ROS</abbr> 2 launch documentation</a> for further information.
-For instance,
-if we define an argument at the top-level launch,
-it will override the value on lower-level launches.</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+<p>Autoware プロジェクトは大規模なプロジェクトです。
+したがって、Autoware プロジェクトを管理する際には、
+起動ファイル内の特定の引数を利用します。
+<abbr title="Robot Operating System">ROS</abbr> 2 は、これらの起動ファイルの引数をオーバーライドする機能を提供します。
+詳細については<a href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html#parameter-overrides">公式 <abbr title="Robot Operating System">ROS</abbr> 2 起動ドキュメント</a>を参照してください。
+たとえば、
+トップレベルの起動で引数を定義すると、
+下位レベルの起動ではその値がオーバーライドされます。</p>
 </div>
-<p>The map.launch.py launch file from the tier4_map_launch package directly includes
-the necessary node definitions for mapping. In the current design of Autoware, the <code>lanelet2_map_loader</code>,
-<code>lanelet2_map_visualization</code>, <code>pointcloud_map_loader</code>, and <code>vector_map_tf_generator</code> composable
-nodes are included in the <code>map_container</code>.</p>
-<p>We don't have many modification options in the map launching files
-(as the parameters are included in the config files).
-However, you can specify the names for your pointcloud and lanelet2 map during the launch
-(the default values are pointcloud_map.pcd and lanelet2_map.osm).
-For instance, if you wish to change your map file names, you can run Autoware using
-the following command line arguments:</p>
+<p>tier4_map_launch パッケージの map.launch.py​​ 起動ファイルには、
+マッピングに必要なノード定義が直接含まれています。Autoware の現在の設計では、<code>lanelet2_map_loader</code>,
+<code>lanelet2_map_visualization</code>, <code>pointcloud_map_loader</code>、 <code>vector_map_tf_generator</code>コンポーザブル ノードは
+<code>map_container</code>に含まれています。</p>
+<p>マップ起動ファイルには多くの変更オプションがありません
+(パラメーターは構成ファイルに含まれているため)。
+ただし、起動時に pointcloud および LANELET2 マップの名前を指定できます
+ (デフォルト値は pointcloud_map.pcd および Lanlet2_map.osm)。
+たとえば、マップ ファイル名を変更する場合は、
+次のコマンド ライン引数を使用して Autoware を実行できます:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>autoware.launch.xml<span class="w"> </span>...<span class="w"> </span>pointcloud_map_file:<span class="o">=</span>&lt;YOUR-PCD-FILE-NAME&gt;<span class="w"> </span>lanelet2_map_file:<span class="o">=</span>&lt;YOUR-LANELET2-MAP-NAME&gt;<span class="w"> </span>...
 </code></pre></div>
-<p>Or you can change it on your <code>autoware.launch.xml</code> launch file:</p>
+<p>または、<code>autoware.launch.xml</code>起動ファイルで変更することもできます:</p>
 <div class="highlight"><pre><span></span><code><span class="gd">- &lt;arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/&gt;</span>
 <span class="gi">+ &lt;arg name="lanelet2_map_file" default="&lt;YOUR-LANELET2-MAP-NAME&gt;" description="lanelet2 map file name"/&gt;</span>
 <span class="gd">- &lt;arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/&gt;</span>
