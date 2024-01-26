@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>AutowareでEagleyeを使用する - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#topic" class="md-skip">
+        <a href="#autowareeagleye" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              AutowareでEagleyeを使用する
             
           </span>
         </div>
@@ -6554,6 +6554,157 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eagleye" class="md-nav__link">
+    Eagleyeとは何か?
+  </a>
+  
+    <nav class="md-nav" aria-label="Eagleyeとは何か?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    依存関係
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    アーキテクチャ
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    要件
+  </a>
+  
+    <nav class="md-nav" aria-label="要件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#imu" class="md-nav__link">
+    IMUトピック
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    車速トピック
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gnss" class="md-nav__link">
+    GNSSトピック
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    車両に組み込むためのパラメータ変更
+  </a>
+  
+    <nav class="md-nav" aria-label="車両に組み込むためのパラメータ変更">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    トピック名とトピックの型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    センサーの周波数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    固定からポーズへの変換
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    その他のパラメータ
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    初期化に関する注意事項
+  </a>
+  
+    <nav class="md-nav" aria-label="初期化に関する注意事項">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 静的初期化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 動的初期化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    初期化の進行状況を確認する方法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    地理参照マップに関する注意事項
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -6570,138 +6721,70 @@
   
 
 
-<div><p>Autoware で Eagleye を使用する
-このページでは、 Autoware で使用するためにEagleye をセットアップする方法を説明します。統合提案の詳細については、こちらのディスカッションを参照してください。</p>
-<p>イーグリーとは何ですか？
-Eagleye は、MAP IV によって最初に開発されたオープンソースの <abbr title="Global Navigation Satellite System">GNSS</abbr>/<abbr title="Inertial Measurement Unit">IMU</abbr> ベースのローカライザーです。株式会社_ 低コストの <abbr title="Global Navigation Satellite System">GNSS</abbr> センサーと <abbr title="Inertial Measurement Unit">IMU</abbr> センサーを使用して車両の位置、方位、および高度の情報を提供することで、LiDAR および点群ベースの位置特定に代わる費用対効果の高い代替手段を提供します。</p>
-<p>依存関係
-以下のパッケージはautoware.reposにリストされているため、Autoware のセットアップ中に自動的にインストールされます。</p>
-<p>Eagleye (autoware-main ブランチ)
-RTKLIB <abbr title="Robot Operating System">ROS</abbr> ブリッジ(ros2-v0.1.0 ブランチ)
-LLH コンバーター(ros2 ブランチ)
-建築
-Eagleye は、Autoware ローカリゼーション スタックで次の 2 つの方法で利用できます。</p>
-<p>EKF ローカライザーにツイストのみをフィードします。</p>
-<p>Eagleye ツイストの統合</p>
-<p>Eagleye からツイストとポーズの両方を EKF ローカライザーにフィードします (ツイストは通常​​の で使用することもできますgyro_odometry)。</p>
-<p>Eagleye ポーズ ツイストの統合</p>
-<p>注: Eagleye を姿勢推定器として使用する場合は、RTK 位置決めが必要です。 一方、ツイスト推定器として使用する場合は必須ではありません。</p>
-<p>要件
-Eagleye では、入力として <abbr title="Global Navigation Satellite System">GNSS</abbr>、<abbr title="Inertial Measurement Unit">IMU</abbr>、車両速度が必要です。</p>
-<p>IMUトピック
-sensor_msgs/msg/ImuEagleye <abbr title="Inertial Measurement Unit">IMU</abbr> 入力でサポートされています。</p>
-<p>車速の話題
-geometry_msgs/msg/TwistStampedおよびgeometry_msgs/msg/TwistWithCovarianceStamped入力車両速度に対してサポートされます。</p>
-<p>GNSSトピック
-Eagleye には、<abbr title="Global Navigation Satellite System">GNSS</abbr> 受信機によって生成された緯度/経度の高さとドップラー速度が必要です。<abbr title="Global Navigation Satellite System">GNSS</abbr> <abbr title="Robot Operating System">ROS</abbr> ドライバーは次のメッセージを発行する必要があります。</p>
-<p>sensor_msgs/msg/NavSatFix: このメッセージには、緯度、経度、高さの情報が含まれています。
-geometry_msgs/msg/TwistWithCovarianceStamped: このメッセージには、<abbr title="Global Navigation Satellite System">GNSS</abbr> ドップラー速度情報が含まれています。Eagleye は、<abbr title="Global Navigation Satellite System">GNSS</abbr> <abbr title="Robot Operating System">ROS</abbr> ドライバーの例、ublox_gps および septentrio_gnss_driver を使用してテストされています。これらの各ドライバーに必要な設定は次のとおりです。
-<abbr title="Global Navigation Satellite System">GNSS</abbr> <abbr title="Robot Operating System">ROS</abbr> ドライバー  修正
-ublox_gps   追加の設定は必要ありません。これはデフォルト設定で公開されsensor_msgs/msg/NavSatFix、geometry_msgs/msg/TwistWithCovarianceStampedEagley によって要求されます。
-セプテントリオ_gnss_ドライバー  構成ファイルでpublish.navsatfixと を次のように設定しますpublish.twistgnss.yamltrue
-車両に組み込むためのパラメータ変更
-トピック名とトピックの種類
-ユーザーは、 で <abbr title="Global Navigation Satellite System">GNSS</abbr> 緯度、経度、高さ 、<abbr title="Global Navigation Satellite System">GNSS</abbr> ドップラー速度 、<abbr title="Inertial Measurement Unit">IMU</abbr> 、および車両速度の入力トピックを正しく指定する必要がありますeagleye_config.yaml。</p>
-<h1 id="topic">Topic<a class="headerlink" href="#topic" title="Permanent link">#</a></h1>
-<p>twist:
-  twist_type: 1 # TwistStamped : 0, TwistWithCovarianceStamped: 1
-  twist_topic: /sensing/vehicle_velocity_converter/twist_with_covariance
-imu_topic: /sensing/imu/tamagawa/imu_raw
-gnss:
-  velocity_source_type: 2 # rtklib_msgs/RtklibNav: 0, nmea_msgs/Sentence: 1, ublox_msgs/NavPVT: 2, geometry_msgs/TwistWithCovarianceStamped: 3
-  velocity_source_topic: /sensing/gnss/ublox/navpvt
-  llh_source_type: 2 # rtklib_msgs/RtklibNav: 0, nmea_msgs/Sentence: 1, sensor_msgs/NavSatFix: 2
-  llh_source_topic: /sensing/gnss/ublox/nav_sat_fix
-センサー周波数
-また、<abbr title="Global Navigation Satellite System">GNSS</abbr> と <abbr title="Inertial Measurement Unit">IMU</abbr> の周波数を設定する必要があります。eagleye_config.yaml</p>
-<p>common:
-  imu_rate: 50
-  gnss_rate: 5
-固定からポーズへの変換
-sensor_msgs/msg/NavSatFixに変換するためのパラメータをgeometry_msgs/msg/PoseWithCovarianceStampedに示しますgeo_pose_converter.launch.xml。別のジオイドまたは投影タイプを使用する場合は、これらのパラメータを変更します。</p>
-<p>その他のパラメータ
-他のパラメータについてはここで説明します。基本的には変更する必要はありません。</p>
-<p>初期化に関する注意事項
-Eagleye を適切に動作させるには、初期化プロセスが必要です。初期化しないと、ツイストの出力は生の値になり、ポーズ データは使用できなくなります。</p>
-<ol>
-<li>
-<p>静的初期化
-最初のステップは静的初期化です。これには、ヨーレート オフセットを推定するために、起動後約 5 秒間 Eaglelye を静止させておくことが含まれます。</p>
-</li>
-<li>
-<p>動的初期化
-次のステップは動的初期化です。これには、Eaglee を約 30 秒間直線で実行することが含まれます。このプロセスでは、車輪速度と方位角のスケール係数を推定します。</p>
-</li>
-</ol>
-<p>動的初期化が完了すると、Eagleye は修正されたツイストとポーズのデータ​​を提供できるようになります。</p>
-<p>初期化の進行状況を確認する方法
-TODO
-地理参照マップに関する注意事項
-適切に地理参照されていないマップを使用している場合、出力位置が点群マップに表示されない可能性があることに注意してください。単一の <abbr title="Global Navigation Satellite System">GNSS</abbr> アンテナの場合、<abbr title="Global Navigation Satellite System">GNSS</abbr> 測位が利用可能な環境で実行を開始してから、初期位置推定 (動的初期化) が完了するまでに数秒かかることがあります。</p>
-<h1 id="using-eagleye-with-autoware">Using Eagleye with Autoware<a class="headerlink" href="#using-eagleye-with-autoware" title="Permanent link">#</a></h1>
-<p>This page will show you how to set up <a href="https://github.com/MapIV/eagleye">Eagleye</a> in order to use it with Autoware.
-For the details of the integration proposal, please refer to <a href="https://github.com/orgs/autowarefoundation/discussions/3257">this discussion</a>.</p>
-<h2 id="what-is-eagleye">What is Eagleye?<a class="headerlink" href="#what-is-eagleye" title="Permanent link">#</a></h2>
-<p>Eagleye is an open-source <abbr title="Global Navigation Satellite System">GNSS</abbr>/<abbr title="Inertial Measurement Unit">IMU</abbr>-based localizer initially developed by <a href="https://map4.jp/">MAP IV. Inc</a>. It provides a cost-effective alternative to LiDAR and point cloud-based localization by using low-cost <abbr title="Global Navigation Satellite System">GNSS</abbr> and <abbr title="Inertial Measurement Unit">IMU</abbr> sensors to provide vehicle position, orientation, and altitude information.</p>
-<h3 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">#</a></h3>
-<p>The below packages are automatically installed during the setup of Autoware as they are listed in <a href="https://github.com/autowarefoundation/autoware/blob/main/autoware.repos">autoware.repos</a>.</p>
+<div><h1 id="autowareeagleye">AutowareでEagleyeを使用する<a class="headerlink" href="#autowareeagleye" title="Permanent link">#</a></h1>
+<p>このページでは、 Autoware で使用するために<a href="https://github.com/MapIV/eagleye">Eagleye</a>をセットアップする方法を説明します。
+統合提案の詳細については、<a href="https://github.com/orgs/autowarefoundation/discussions/3257">こちらのディスカッション</a>を参照してください。</p>
+<h2 id="eagleye">Eagleyeとは何か?<a class="headerlink" href="#eagleye" title="Permanent link">#</a></h2>
+<p>Eagleye は、<a href="https://map4.jp/">MAP IV. Inc</a>によって最初に開発されたオープンソースの <abbr title="Global Navigation Satellite System">GNSS</abbr>/<abbr title="Inertial Measurement Unit">IMU</abbr> ベースのローカライザーです。低コストの <abbr title="Global Navigation Satellite System">GNSS</abbr> センサーと <abbr title="Inertial Measurement Unit">IMU</abbr> センサーを使用して車両の位置、方位、および高度の情報を提供することで、LiDAR および点群ベースの位置特定に代わる費用対効果の高い代替手段を提供します。</p>
+<h3 id="_1">依存関係<a class="headerlink" href="#_1" title="Permanent link">#</a></h3>
+<p>以下のパッケージは<a href="https://github.com/autowarefoundation/autoware/blob/main/autoware.repos">autoware.repos</a>にリストされているため、Autoware のセットアップ中に自動的にインストールされます。</p>
 <ol>
 <li><a href="https://github.com/MapIV/eagleye.git">Eagleye</a> (autoware-main branch)</li>
 <li><a href="https://github.com/MapIV/rtklib_ros_bridge.git">RTKLIB <abbr title="Robot Operating System">ROS</abbr> Bridge</a> (ros2-v0.1.0 branch)</li>
 <li><a href="https://github.com/MapIV/llh_converter.git">LLH Converter</a> (ros2 branch)</li>
 </ol>
-<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">#</a></h2>
-<p>Eagleye can be utilized in the Autoware localization stack in two ways:</p>
+<h2 id="_2">アーキテクチャ<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>Eagleye は、Autoware ローカリゼーション スタックで次の 2 つの方法で利用できます:</p>
 <ol>
 <li>
-<p>Feed only twist into the EKF localizer.</p>
-<p><img alt="Eagleye twist integration" src="images/eagleye-integration-guide/eagleye_twist.drawio.svg"></p>
+<p>EKF ローカライザーにツイストのみをフィードします。</p>
+<p><img alt="Eagleye ツイストの統合" src="images/eagleye-integration-guide/eagleye_twist.drawio.svg"></p>
 </li>
 <li>
-<p>Feed both twist and pose from Eagleye into the EKF localizer (twist can also be used with regular <code>gyro_odometry</code>).</p>
-<p><img alt="Eagleye pose twist integration" src="images/eagleye-integration-guide/eagleye_pose_twist.drawio.svg"></p>
+<p>Eagleye からツイストとポーズの両方を EKF ローカライザーにフィードします (ツイストは通常​​の<code>gyro_odometry</code>で使用することもできます)。</p>
+<p><img alt="Eagleye ポーズ ツイストの統合" src="images/eagleye-integration-guide/eagleye_pose_twist.drawio.svg"></p>
 </li>
 </ol>
-<p><strong>Note: RTK positioning is required when using Eagleye as the pose estimator.</strong>
-On the other hand, it is not mandatory when using it as the twist estimator.</p>
-<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">#</a></h2>
-<p>Eagleye requires <abbr title="Global Navigation Satellite System">GNSS</abbr>, <abbr title="Inertial Measurement Unit">IMU</abbr> and vehicle speed as inputs.</p>
-<h3 id="imu-topic"><abbr title="Inertial Measurement Unit">IMU</abbr> topic<a class="headerlink" href="#imu-topic" title="Permanent link">#</a></h3>
-<p><code>sensor_msgs/msg/Imu</code> is supported for Eagleye <abbr title="Inertial Measurement Unit">IMU</abbr> input.</p>
-<h3 id="vehicle-speed-topic">Vehicle speed topic<a class="headerlink" href="#vehicle-speed-topic" title="Permanent link">#</a></h3>
-<p><code>geometry_msgs/msg/TwistStamped</code> and <code>geometry_msgs/msg/TwistWithCovarianceStamped</code> are supported for the input vehicle speed.</p>
-<h3 id="gnss-topic"><abbr title="Global Navigation Satellite System">GNSS</abbr> topic<a class="headerlink" href="#gnss-topic" title="Permanent link">#</a></h3>
-<p>Eagleye requires latitude/longitude height and doppler velocity generated by the <abbr title="Global Navigation Satellite System">GNSS</abbr> receiver.
-Your <abbr title="Global Navigation Satellite System">GNSS</abbr> <abbr title="Robot Operating System">ROS</abbr> driver must publish the following messages:</p>
+<p><strong>注記: Eagleye を姿勢推定器として使用する場合は、RTK 位置決めが必要です。</strong>
+一方、ツイスト推定器として使用する場合は必須ではありません。</p>
+<h2 id="_3">要件<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>Eagleye では、入力として <abbr title="Global Navigation Satellite System">GNSS</abbr>、<abbr title="Inertial Measurement Unit">IMU</abbr>、車両速度が必要です。</p>
+<h3 id="imu">IMUトピック<a class="headerlink" href="#imu" title="Permanent link">#</a></h3>
+<p><code>sensor_msgs/msg/Imu</code>はEagleye <abbr title="Inertial Measurement Unit">IMU</abbr> 入力でサポートされています。</p>
+<h3 id="_4">車速トピック<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<p><code>geometry_msgs/msg/TwistStamped</code>および<code>geometry_msgs/msg/TwistWithCovarianceStamped</code>は入力車両速度に対してサポートされます。</p>
+<h3 id="gnss">GNSSトピック<a class="headerlink" href="#gnss" title="Permanent link">#</a></h3>
+<p>Eagleye には、<abbr title="Global Navigation Satellite System">GNSS</abbr> 受信機によって生成された緯度/経度の高さとドップラー速度が必要です。
+<abbr title="Global Navigation Satellite System">GNSS</abbr> <abbr title="Robot Operating System">ROS</abbr> ドライバーは次のメッセージを発行する必要があります:</p>
 <ul>
-<li><code>sensor_msgs/msg/NavSatFix</code>: This message contains latitude, longitude, and height information.</li>
+<li><code>sensor_msgs/msg/NavSatFix</code>: このメッセージには、緯度、経度、高さの情報が含まれています。</li>
 <li>
-<p><code>geometry_msgs/msg/TwistWithCovarianceStamped</code>: This message contains gnss doppler velocity information.
+<p><code>geometry_msgs/msg/TwistWithCovarianceStamped</code>: このメッセージには、<abbr title="Global Navigation Satellite System">GNSS</abbr> ドップラー速度情報が含まれています。
   <!-- cspell: ignore ublox --></p>
-<p>Eagleye has been tested with the following example <abbr title="Global Navigation Satellite System">GNSS</abbr> <abbr title="Robot Operating System">ROS</abbr> drivers: ublox_gps and septentrio_gnss_driver. The settings needed for each of these drivers are as follows:</p>
+<p>Eagleye は、<abbr title="Global Navigation Satellite System">GNSS</abbr> <abbr title="Robot Operating System">ROS</abbr> ドライバーの次の例を使用してテストされています。: ublox_gpsおよびseptentrio_gnss_driver. これらの各ドライバーに必要な設定は次のとおりです:</p>
 </li>
 </ul>
 <table>
 <thead>
 <tr>
-<th><abbr title="Global Navigation Satellite System">GNSS</abbr> <abbr title="Robot Operating System">ROS</abbr> drivers</th>
-<th>modification</th>
+<th><abbr title="Global Navigation Satellite System">GNSS</abbr> ROSドライバー</th>
+<th>修正</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="https://github.com/KumarRobotics/ublox/tree/ros2/ublox_gps">ublox_gps</a></td>
-<td>No additional settings are required. It publishes <code>sensor_msgs/msg/NavSatFix</code> and <code>geometry_msgs/msg/TwistWithCovarianceStamped</code> required by Eagleye with default settings.</td>
+<td>追加の設定は必要ありません。これは<code>sensor_msgs/msg/NavSatFix</code>と<code>geometry_msgs/msg/TwistWithCovarianceStamped</code>がデフォルト設定で公開され、Eagleyeによって要求されます。</td>
 </tr>
 <tr>
 <td><a href="https://github.com/septentrio-gnss/septentrio_gnss_driver/tree/ros2">septentrio_gnss_driver</a></td>
-<td>Set <code>publish.navsatfix</code> and <code>publish.twist</code> in the config file <a href="https://github.com/septentrio-gnss/septentrio_gnss_driver/blob/ros2/config/gnss.yaml#L90"><code>gnss.yaml</code></a> to <code>true</code></td>
+<td><a href="https://github.com/septentrio-gnss/septentrio_gnss_driver/blob/ros2/config/gnss.yaml#L90"><code>gnss.yaml</code></a>構成ファイルで<code>publish.navsatfix</code>と<code>publish.twist</code>を<code>true</code> に設定します</td>
 </tr>
 </tbody>
 </table>
-<h2 id="parameter-modifications-for-integration-into-your-vehicle">Parameter Modifications for Integration into Your Vehicle<a class="headerlink" href="#parameter-modifications-for-integration-into-your-vehicle" title="Permanent link">#</a></h2>
-<h3 id="topic-name-topic-type">topic name &amp; topic type<a class="headerlink" href="#topic-name-topic-type" title="Permanent link">#</a></h3>
-<p>The users must correctly specify input topics for <abbr title="Global Navigation Satellite System">GNSS</abbr> latitude, longitude, and height , <abbr title="Global Navigation Satellite System">GNSS</abbr> doppler speed , <abbr title="Inertial Measurement Unit">IMU</abbr> , and vehicle speed in the <a href="https://github.com/MapIV/autoware_launch/blob/3f04a9dd7bc4a4c49d4ec790e3f6b9958ab822da/autoware_launch/config/localization/eagleye_config.param.yaml#L7-L16"><code>eagleye_config.yaml</code></a>.</p>
+<h2 id="_5">車両に組み込むためのパラメータ変更<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<h3 id="_6">トピック名とトピックの型<a class="headerlink" href="#_6" title="Permanent link">#</a></h3>
+<p>ユーザーは、 で <abbr title="Global Navigation Satellite System">GNSS</abbr> 緯度、経度、高さ 、<abbr title="Global Navigation Satellite System">GNSS</abbr> ドップラー速度 、<abbr title="Inertial Measurement Unit">IMU</abbr> 、および車両速度の入力トピックを<a href="https://github.com/MapIV/autoware_launch/blob/3f04a9dd7bc4a4c49d4ec790e3f6b9958ab822da/autoware_launch/config/localization/eagleye_config.param.yaml#L7-L16"><code>eagleye_config.yaml</code></a>で正しく指定する必要があります。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Topic</span>
 <span class="nt">twist</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">twist_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"> </span><span class="c1"># TwistStamped : 0, TwistWithCovarianceStamped: 1</span>
@@ -6713,32 +6796,32 @@ Your <abbr title="Global Navigation Satellite System">GNSS</abbr> <abbr title="R
 <span class="w">  </span><span class="nt">llh_source_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"> </span><span class="c1"># rtklib_msgs/RtklibNav: 0, nmea_msgs/Sentence: 1, sensor_msgs/NavSatFix: 2</span>
 <span class="w">  </span><span class="nt">llh_source_topic</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/sensing/gnss/ublox/nav_sat_fix</span>
 </code></pre></div>
-<h3 id="sensor-frequency">sensor frequency<a class="headerlink" href="#sensor-frequency" title="Permanent link">#</a></h3>
-<p>Also, the frequency of <abbr title="Global Navigation Satellite System">GNSS</abbr> and <abbr title="Inertial Measurement Unit">IMU</abbr> must be set in <a href="https://github.com/MapIV/autoware_launch/blob/3f04a9dd7bc4a4c49d4ec790e3f6b9958ab822da/autoware_launch/config/localization/eagleye_config.param.yaml#L36"><code>eagleye_config.yaml</code></a></p>
+<h3 id="_7">センサーの周波数<a class="headerlink" href="#_7" title="Permanent link">#</a></h3>
+<p>また、 <a href="https://github.com/MapIV/autoware_launch/blob/3f04a9dd7bc4a4c49d4ec790e3f6b9958ab822da/autoware_launch/config/localization/eagleye_config.param.yaml#L36"><code>eagleye_config.yaml</code></a>にGNSS と <abbr title="Inertial Measurement Unit">IMU</abbr> の周波数を設定する必要があります。</p>
 <div class="highlight"><pre><span></span><code><span class="nt">common</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">imu_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
 <span class="w">  </span><span class="nt">gnss_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 </code></pre></div>
-<h3 id="conversion-from-fix-to-pose">Conversion from fix to pose<a class="headerlink" href="#conversion-from-fix-to-pose" title="Permanent link">#</a></h3>
-<p>The parameters for converting <code>sensor_msgs/msg/NavSatFix</code> to <code>geometry_msgs/msg/PoseWithCovarianceStamped</code> is listed in <a href="https://github.com/MapIV/eagleye/blob/autoware-main/eagleye_util/geo_pose_converter/launch/geo_pose_converter.launch.xml"><code>geo_pose_converter.launch.xml</code></a>.
-If you use a different geoid or projection type, change these parameters.</p>
-<h3 id="other-parameters">Other parameters<a class="headerlink" href="#other-parameters" title="Permanent link">#</a></h3>
-<p>The other parameters are described <a href="https://github.com/MapIV/eagleye/tree/autoware-main/eagleye_rt/config">here</a>.
-Basically, these do not need to be changed .</p>
-<h2 id="notes-on-initialization">Notes on initialization<a class="headerlink" href="#notes-on-initialization" title="Permanent link">#</a></h2>
-<p>Eagleye requires an initialization process for proper operation. <strong>Without initialization, the output for twist will be in the raw value, and the pose data will not be available.</strong></p>
-<h3 id="1-static-initialization">1. Static Initialization<a class="headerlink" href="#1-static-initialization" title="Permanent link">#</a></h3>
-<p>The first step is static initialization, which involves allowing the Eagleye to remain stationary for approximately 5 seconds after startup to estimate the yaw-rate offset.</p>
-<h3 id="2-dynamic-initialization">2. Dynamic initialization<a class="headerlink" href="#2-dynamic-initialization" title="Permanent link">#</a></h3>
-<p>The next step is dynamic initialization, which involves running the Eagleye in a straight line for approximately 30 seconds. This process estimates the scale factor of wheel speed and azimuth angle.</p>
-<p>Once dynamic initialization is complete, the Eagleye will be able to provide corrected twist and pose data.</p>
-<h3 id="how-to-check-the-progress-of-initialization">How to check the progress of initialization<a class="headerlink" href="#how-to-check-the-progress-of-initialization" title="Permanent link">#</a></h3>
+<h3 id="_8">固定からポーズへの変換<a class="headerlink" href="#_8" title="Permanent link">#</a></h3>
+<p><code>sensor_msgs/msg/NavSatFix</code>を<code>geometry_msgs/msg/PoseWithCovarianceStamped</code>に変換するためのパラメータを<a href="https://github.com/MapIV/eagleye/blob/autoware-main/eagleye_util/geo_pose_converter/launch/geo_pose_converter.launch.xml"><code>geo_pose_converter.launch.xml</code></a>に示します。
+別のジオイドまたは投影タイプを使用する場合は、これらのパラメータを変更します。</p>
+<h3 id="_9">その他のパラメータ<a class="headerlink" href="#_9" title="Permanent link">#</a></h3>
+<p>他のパラメータについては<a href="https://github.com/MapIV/eagleye/tree/autoware-main/eagleye_rt/config">こちら</a>で説明します。
+基本的には変更する必要はありません。</p>
+<h2 id="_10">初期化に関する注意事項<a class="headerlink" href="#_10" title="Permanent link">#</a></h2>
+<p>Eagleye を適切に動作させるには、初期化プロセスが必要です。 <strong>初期化しないと、ツイストの出力は生の値になり、ポーズ データは使用できなくなります。</strong></p>
+<h3 id="1">1. 静的初期化<a class="headerlink" href="#1" title="Permanent link">#</a></h3>
+<p>最初のステップは静的初期化です。これには、ヨーレート オフセットを推定するために、起動後約 5 秒間 Eaglelye を静止させておくことが含まれます。</p>
+<h3 id="2">2. 動的初期化<a class="headerlink" href="#2" title="Permanent link">#</a></h3>
+<p>次のステップは動的初期化です。これには、Eagleye を約 30 秒間直線で実行することが含まれます。このプロセスでは、車輪速度と方位角のスケール係数を推定します。</p>
+<p>動的初期化が完了すると、Eagleye は修正されたツイストとポーズのデータ​​を提供できるようになります。</p>
+<h3 id="_11">初期化の進行状況を確認する方法<a class="headerlink" href="#_11" title="Permanent link">#</a></h3>
 <ul>
 <li><strong>TODO</strong></li>
 </ul>
-<h2 id="note-on-georeferenced-maps">Note on georeferenced maps<a class="headerlink" href="#note-on-georeferenced-maps" title="Permanent link">#</a></h2>
-<p>Note that the output position might not appear to be in the point cloud maps if you are using maps that are not properly georeferenced.
-In the case of a single <abbr title="Global Navigation Satellite System">GNSS</abbr> antenna, initial position estimation (dynamic initialization) can take several seconds to complete after starting to run in an environment where <abbr title="Global Navigation Satellite System">GNSS</abbr> positioning is available.</p>
+<h2 id="_12">地理参照マップに関する注意事項<a class="headerlink" href="#_12" title="Permanent link">#</a></h2>
+<p>適切に地理参照されていないマップを使用している場合、出力位置が点群マップに表示されない可能性があることに注意してください。
+単一の <abbr title="Global Navigation Satellite System">GNSS</abbr> アンテナの場合、<abbr title="Global Navigation Satellite System">GNSS</abbr> 測位が利用可能な環境で実行を開始してから、初期位置推定 (動的初期化) が完了するまでに数秒かかることがあります。</p>
 <!-- prettier-ignore --></div>
 
 
