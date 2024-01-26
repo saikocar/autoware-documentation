@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>位置推定起動ファイル - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#localization-launch-files" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              位置推定起動ファイル
             
           </span>
         </div>
@@ -6561,8 +6561,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#_2" class="md-nav__link">
+    概要
   </a>
   
 </li>
@@ -6592,134 +6592,90 @@
   
 
 
-<div><p>ローカリゼーション起動ファイル
-概要
-「Autoware の起動」autoware_launch.xmlページで説明したように、Autoware ローカリゼーション スタックは で起動を開始します。パッケージには、 ローカリゼーションを開始するための起動ファイルの呼び出しが含まれています。この図は、パッケージでの Autoware ローカリゼーション起動ファイル フローの一部を説明しています。autoware_launchtier4_localization_component.launch.xmlautoware_launch.xmlautoware_launchautoware.universe</p>
-<p><img align="center" alt="localization-launch-flow" src="images/localization_launch_flow.svg"> Autoware ローカリゼーション起動フロー図</p>
-<div class="admonition 注記">
-<p class="admonition-title">注記</p>
-</div>
-<p>The Autoware project is a large project.
-Therefore, as we manage the Autoware project, we utilize specific
-arguments in the launch files.
-<abbr title="Robot Operating System">ROS</abbr> 2 offers an argument-overriding feature for these launch files.
-Please refer to <a href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html#parameter-overrides">the official <abbr title="Robot Operating System">ROS</abbr> 2 launch documentation</a> for further information.
-For instance,
-if we define an argument at the top-level launch,
-it will override the value on lower-level launches.
-tier4_localization_component.launch.xml
-起動tier4_localization_component.launch.xmlファイルは、パッケージで起動されるメインのローカリゼーション コンポーネントですautoware_launch。この起動ファイルは、リポジトリからtier4_localization_launchパッケージlocalization.launch.xmlを呼び出します。tier4_localization_component.launch.xml でローカリゼーション起動引数を変更できます。autoware.universe</p>
-<p>TIER IV によって実装されている現在のローカライゼーション ランチャーは、複数のローカライゼーション方法 (姿勢推定器とねじれ推定器の両方) をサポートしています。 tier4_localization_component.launch.xmlには、起動する推定器を選択するための 2 つの引数があります。</p>
-<p>pose_source:ndtこの引数は、現在サポートしている(デフォルト)、yabloc、artagおよびローカライゼーション用のpass_estimator を指定しますeagleye。デフォルトでは、Autoware は姿勢推定器としてndt_scan_matcherを起動します。YabLoc をカメラベースの位置特定方法として使用できます。YabLoc の詳細については、 autoware.universe のYabLoc の READMEを参照してください。また、Eagleye を <abbr title="Global Navigation Satellite System">GNSS</abbr>、<abbr title="Inertial Measurement Unit">IMU</abbr>、ホイール オドメトリ ベースの位置特定方法として使用することもできます。Eagleye の詳細については、Eagleyeを参照してください。</p>
-<p>pose_sourceに引数を設定できますtier4_localization_component.launch.xml。たとえば、eagleye をポーズソースとして使用したい場合は、tier4_localization_component.launch.xml次のように更新する必要があります。</p>
-<ul>
-<li><arg name="pose_source" default="ndt" description="select pose_estimator: ndt, yabloc, eagleye"></arg></li>
-<li><arg name="pose_source" default="eagleye" description="select pose_estimator: ndt, yabloc, eagleye"></arg>
-また、コマンドラインを使用して起動引数をオーバーライドすることもできます。</li>
-</ul>
-<p>ros2 launch autoware_launch autoware.launch.xml ... pose_source:=eagleye
-twist_source:gyro_odomこの引数は、現在(デフォルト) およびをサポートしているTwist_estimator を指定しますeagleye。デフォルトでは、Autoware はねじれ推定器としてgyro_odometerを起動します。また、ツイストソースに eagleye を使用することもできます。Eagleyeを参照してください。ツイストソースを eaglee に変更したい場合は、tier4_localization_component.launch.xml次のように更新できます。</p>
-<ul>
-<li><arg name="twist_source" default="gyro_odom" description="select twist_estimator. gyro_odom, eagleye"></arg></li>
-<li><arg name="twist_source" default="eagleye" description="select twist_estimator. gyro_odom, eagleye"></arg>
-または、コマンドラインを使用して起動引数をオーバーライドすることもできます。</li>
-</ul>
-<p>ros2 launch autoware_launch autoware.launch.xml ... twist_source:=eagleye
-input_pointcloud:この引数は、ローカリゼーション ポイントクラウド パイプラインの入力ポイントクラウドを指定します。デフォルト値は、 センシングからのポイントクラウド前処理/sensing/lidar/top/outlier_filtered/pointcloudパイプラインの出力です。LiDAR トピック名に応じてこの値を変更することも、連結された点群の使用を選択することもできます。</p>
-<ul>
-<li><arg name="input_pointcloud" default="/sensing/lidar/top/outlier_filtered/pointcloud" description="The topic will be used in the localization util module"></arg></li>
-<li><arg name="input_pointcloud" default="/sensing/lidar/concatenated/pointcloud"></arg>
-これらの例のように、起動ファイルに必要なすべての引数を追加できますtier4_localization_component.launch.xml。ジャイロオドメーターのツイスト入力トピックを変更したい場合は、tier4_localization_component.launch.xml起動ファイルに次の引数を追加できます。</li>
-</ul>
-<ul>
-<li><arg name="input_vehicle_twist_with_covariance_topic" value="\&lt;YOUR-VEHICLE-TWIST-TOPIC-NAME&gt;"></arg>
-注:速度コンバーター パッケージから提供されるジャイロ走行距離計入力トピック。このパッケージは sensor_kit で起動されます。詳細については、速度コンバータ パッケージを確認してください。</li>
-</ul>
-<h1 id="localization-launch-files">Localization Launch Files<a class="headerlink" href="#localization-launch-files" title="Permanent link">#</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<p>The Autoware localization stacks start
-launching at <code>autoware_launch.xml</code> as we mentioned at <a href="../">Launch Autoware</a> page.
-The <code>autoware_launch</code> package includes <code>tier4_localization_component.launch.xml</code>
-for starting localization launch files invocation from <code>autoware_launch.xml</code>.
-This diagram describes some of the Autoware localization launch files flow at <code>autoware_launch</code> and <code>autoware.universe</code> packages.</p>
+<div><h1 id="_1">位置推定起動ファイル<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">概要<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p><a href="../">Autoware の起動</a>ページで説明したように、
+Autoware ローカリゼーション スタックは<code>autoware_launch.xml</code>で起動を開始します。
+<code>autoware_launch</code>パッケージには、<code>autoware_launch.xml</code>から位置推定を開始する
+起動ファイルの呼び出すための<code>tier4_localization_component.launch.xml</code>が含まれています。
+この図は、<code>autoware_launch</code>と<code>autoware.universe</code>パッケージでの Autoware ローカリゼーション起動ファイル フローの一部を説明しています。</p>
 <figure>
 <p><img align="center" alt="localization-launch-flow" src="images/localization_launch_flow.svg">
   </p>
 <figcaption>
-    Autoware localization launch flow diagram
+    Autoware位置推定起動フロー図
   </figcaption>
 </figure>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The Autoware project is a large project.
-Therefore, as we manage the Autoware project, we utilize specific
-arguments in the launch files.
-<abbr title="Robot Operating System">ROS</abbr> 2 offers an argument-overriding feature for these launch files.
-Please refer to <a href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html#parameter-overrides">the official <abbr title="Robot Operating System">ROS</abbr> 2 launch documentation</a> for further information.
-For instance,
-if we define an argument at the top-level launch,
-it will override the value on lower-level launches.</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+<p>Autoware プロジェクトは大規模なプロジェクトです。
+したがって、Autoware プロジェクトを管理する際には、
+起動ファイル内の特定の引数を利用します。
+<abbr title="Robot Operating System">ROS</abbr> 2 は、これらの起動ファイルの引数をオーバーライドする機能を提供します。
+詳細については<a href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html#parameter-overrides">公式 <abbr title="Robot Operating System">ROS</abbr> 2 起動ドキュメント</a>を参照してください。
+たとえば、
+トップレベルの起動で引数を定義すると、
+下位レベルの起動ではその値がオーバーライドされます。</p>
 </div>
 <h2 id="tier4_localization_componentlaunchxml">tier4_localization_component.launch.xml<a class="headerlink" href="#tier4_localization_componentlaunchxml" title="Permanent link">#</a></h2>
-<p>The <code>tier4_localization_component.launch.xml</code> launch file is the main localization component launch at the <code>autoware_launch</code> package.
-This launch file calls <code>localization.launch.xml</code> at <a href="https://github.com/autowarefoundation/autoware.universe/tree/main/launch/tier4_localization_launch">tier4_localization_launch</a> package from <code>autoware.universe</code> repository.
-We can modify localization launch arguments at tier4_localization_component.launch.xml.</p>
-<p>The current localization launcher implemented by TIER IV supports multiple localization methods, both pose estimators and twist estimators.
-<code>tier4_localization_component.launch.xml</code> has two arguments to select which estimators to launch:</p>
+<p><code>tier4_localization_component.launch.xml</code>起動ファイルは、<code>autoware_launch</code>パッケージで起動されるメインのローカリゼーション コンポーネントです。
+この起動ファイルは、<code>autoware.universe</code>リポジトリから<a href="https://github.com/autowarefoundation/autoware.universe/tree/main/launch/tier4_localization_launch">tier4_localization_launch</a>パッケージの<code>localization.launch.xml</code>を呼び出します。
+tier4_localization_component.launch.xml でローカリゼーション起動引数を変更できます。</p>
+<p>TIER IV によって実装されている現在の位置推定ランチャーは、複数のローカライゼーション方法 (姿勢推定器とねじれ推定器の両方) をサポートしています。T
+<code>tier4_localization_component.launch.xml</code>には、起動する推定器を選択するための 2 つの引数があります:</p>
 <ul>
 <li>
-<p><strong><code>pose_source:</code></strong> This argument specifies the pose_estimator, currently supporting <code>ndt</code> (default), <code>yabloc</code>, <code>artag</code> and <code>eagleye</code> for localization.
-  By default, Autoware launches <a href="https://github.com/autowarefoundation/autoware.universe/tree/main/localization/ndt_scan_matcher">ndt_scan_matcher</a> for pose estimator.
-  You can use YabLoc as a camera-based localization method.
-  For more details on YabLoc,
-  please refer to the <a href="https://github.com/autowarefoundation/autoware.universe/blob/main/localization/yabloc/README.md">README of YabLoc</a> in autoware.universe.
-  Also, you can use Eagleye as a <abbr title="Global Navigation Satellite System">GNSS</abbr> &amp; <abbr title="Inertial Measurement Unit">IMU</abbr> &amp; wheel odometry-based localization method. For more details on Eagleye, please refer to the <a href="./eagleye">Eagleye</a>.</p>
-<p>You can set <code>pose_source</code> argument on <code>tier4_localization_component.launch.xml</code>,
-for example, if you want to use eagleye as pose_source,
-you need to update <code>tier4_localization_component.launch.xml</code> like:</p>
+<p><strong><code>pose_source:</code></strong> この引数は、位置推定用のpose_estimatorを指定しますが、現在<code>ndt</code>(デフォルト)、<code>yabloc</code>、<code>artag</code>および<code>eagleye</code>をサポートしています。
+  デフォルトでは、Autoware は姿勢推定器として<a href="https://github.com/autowarefoundation/autoware.universe/tree/main/localization/ndt_scan_matcher">ndt_scan_matcher</a>起動します。
+  YabLoc をカメラベースの位置特定方法として使用できます。
+  YabLoc の詳細については、
+  autoware.universe の<a href="https://github.com/autowarefoundation/autoware.universe/blob/main/localization/yabloc/README.md">YabLoc の README</a>を参照してください。
+  また、Eagleye を <abbr title="Global Navigation Satellite System">GNSS</abbr>、<abbr title="Inertial Measurement Unit">IMU</abbr>、ホイール オドメトリ ベースの位置特定方法として使用することもできます。Eagleye の詳細については、<a href="./eagleye">Eagleye</a>を参照してください。</p>
+<p><code>tier4_localization_component.launch.xml</code>に<code>pose_source</code>引数を設定できます。
+たとえば、eagleye をポーズソースとして使用したい場合は、
+<code>tier4_localization_component.launch.xml</code>を次のように更新する必要があります:</p>
 <div class="highlight"><pre><span></span><code><span class="gd">- &lt;arg name="pose_source" default="ndt" description="select pose_estimator: ndt, yabloc, eagleye"/&gt;</span>
 <span class="gi">+ &lt;arg name="pose_source" default="eagleye" description="select pose_estimator: ndt, yabloc, eagleye"/&gt;</span>
 </code></pre></div>
-<p>Also, you can use command-line for overriding launch arguments:</p>
+<p>また、コマンドラインを使用して起動引数をオーバーライドすることもできます:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>autoware.launch.xml<span class="w"> </span>...<span class="w"> </span>pose_source:<span class="o">=</span>eagleye
 </code></pre></div>
 </li>
 </ul>
 <ul>
 <li>
-<p><strong><code>twist_source:</code></strong> This argument specifies the twist_estimator, currently supporting <code>gyro_odom</code> (default), and <code>eagleye</code>.
-  By default,
-  Autoware launches <a href="https://github.com/autowarefoundation/autoware.universe/tree/main/localization/gyro_odometer">gyro_odometer</a> for twist estimator.
-  Also, you can use eagleye for the twist source, please refer to the <a href="./eagleye">Eagleye</a>.
-  If you want to change your twist source to eagleye, you can update <code>tier4_localization_component.launch.xml</code> like:</p>
+<p><strong><code>twist_source:</code></strong> この引数は、Twist_estimatorを指定します。現在(<code>gyro_odom</code> デフォルト) および<code>eagleye</code>をサポートしています。
+  デフォルトでは、
+  Autoware はねじれ推定器として<a href="https://github.com/autowarefoundation/autoware.universe/tree/main/localization/gyro_odometer">gyro_odometer</a>を起動します。
+  また、ツイストソースに eagleye を使用することもできます。<a href="./eagleye">Eagleye</a>を参照してください。
+  ツイストソースを eaglee に変更したい場合は、<code>tier4_localization_component.launch.xml</code>を次のように更新できます:</p>
 <div class="highlight"><pre><span></span><code><span class="gd">- &lt;arg name="twist_source" default="gyro_odom" description="select twist_estimator. gyro_odom, eagleye"/&gt;</span>
 <span class="gi">+ &lt;arg name="twist_source" default="eagleye" description="select twist_estimator. gyro_odom, eagleye"/&gt;</span>
 </code></pre></div>
-<p>Or you can use command-line for overriding launch arguments:</p>
+<p>または、コマンドラインを使用して起動引数をオーバーライドすることもできます:</p>
 <div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>autoware.launch.xml<span class="w"> </span>...<span class="w"> </span>twist_source:<span class="o">=</span>eagleye
 </code></pre></div>
 </li>
 </ul>
 <ul>
 <li>
-<p><strong><code>input_pointcloud:</code></strong> This argument specifies the input pointcloud of the localization pointcloud pipeline. The default value is
-  <code>/sensing/lidar/top/outlier_filtered/pointcloud</code> which
-  is output of the <a href="https://autowarefoundation.github.io/autoware.universe/main/sensing/pointcloud_preprocessor/">pointcloud pre-processing</a> pipeline from sensing.
-  You can change this value according to your LiDAR topic name,
-  or you can choose to use concatenated point cloud:</p>
+<p><strong><code>input_pointcloud:</code></strong> この引数は、ローカリゼーション ポイントクラウド パイプラインの入力ポイントクラウドを指定します。デフォルト値は、
+  センシングからの<a href="https://autowarefoundation.github.io/autoware.universe/main/sensing/pointcloud_preprocessor/">ポイントクラウド前処理/</a> パイプラインの出力である<code>/sensing/lidar/top/outlier_filtered/pointcloud</code>です。
+  LiDAR トピック名に応じてこの値を変更することも、
+  連結された点群の使用を選択することもできます:</p>
 <div class="highlight"><pre><span></span><code><span class="gd">- &lt;arg name="input_pointcloud" default="/sensing/lidar/top/outlier_filtered/pointcloud" description="The topic will be used in the localization util module"/&gt;</span>
 <span class="gi">+ &lt;arg name="input_pointcloud" default="/sensing/lidar/concatenated/pointcloud"/&gt;</span>
 </code></pre></div>
 </li>
 </ul>
-<p>You can add every necessary argument
-to <code>tier4_localization_component.launch.xml</code> launch file like these examples.
-In case, if you want to change your gyro odometer twist input topic,
-you can add this argument on <code>tier4_localization_component.launch.xml</code> launch file:</p>
+<p>これらの例のように、
+必要なすべての引数を<code>tier4_localization_component.launch.xml</code> 起動ファイルに追加できます。
+ジャイロ オドメーター ツイスト入力トピックを変更したい場合は、
+<code>tier4_localization_component.launch.xml</code>起動ファイルに次の引数を追加できます:</p>
 <div class="highlight"><pre><span></span><code><span class="gi">+ &lt;arg name="input_vehicle_twist_with_covariance_topic" value="&lt;YOUR-VEHICLE-TWIST-TOPIC-NAME&gt;"/&gt;</span>
 </code></pre></div>
-<p><strong>Note:</strong> Gyro odometer input topic provided from velocity converter package. This package will be launched at sensor_kit. For more information,
-please check <a href="https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/vehicle_velocity_converter">velocity converter package</a>.</p>
+<p><strong>注記:</strong> 速度コンバーター パッケージから提供されるジャイロ走行距離計入力トピック。このパッケージは sensor_kit で起動されます。 詳細については、
+<a href="https://github.com/autowarefoundation/autoware.universe/tree/main/sensing/vehicle_velocity_converter">速度コンバータ パッケージ</a>を確認してください。</p>
 <!-- prettier-ignore --></div>
 
 
