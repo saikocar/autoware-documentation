@@ -21,7 +21,7 @@
     
     
       
-        <title>Index - Autoware Documentation</title>
+        <title>起動ファイルの制御 - Autoware Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#control-launch-files" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              起動ファイルの制御
             
           </span>
         </div>
@@ -6561,8 +6561,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#_2" class="md-nav__link">
+    概要
   </a>
   
 </li>
@@ -6592,86 +6592,47 @@
   
 
 
-<div><p>起動ファイルの制御
-概要
-Autoware コントロール スタックは、「Autoware の起動」autoware_launch.xmlページで説明されているように、起動を開始します。パッケージには、 からの制御起動ファイルの呼び出しを開始するためのものが含まれています。以下の図は、autoware_launch および autoware.universe パッケージ内の Autoware コントロール起動ファイルのフローを示しています。autoware_launchtier4_control_component.launch.xmlautoware_launch.xml</p>
-<p><img align="center" alt="control-launch-flow" src="images/control_launch_flow.svg"> Autoware コントロール起動フロー図</p>
-<div class="admonition 注記">
-<p class="admonition-title">注記</p>
-</div>
-<p>The Autoware project is a large project.
-Therefore, as we manage the Autoware project, we utilize specific
-arguments in the launch files.
-<abbr title="Robot Operating System">ROS</abbr> 2 offers an argument-overriding feature for these launch files.
-Please refer to <a href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html#parameter-overrides">the official <abbr title="Robot Operating System">ROS</abbr> 2 launch documentation</a> for further information.
-For instance,
-if we define an argument at the top-level launch,
-it will override the value on lower-level launches.
-tier4_control_component.launch.xml
-tier4_control_component.launch.xml 起動ファイルは、autoware_launch パッケージ内のメインの制御コンポーネント起動です。この起動ファイルは、autoware.universe リポジトリ内のtier4_control_launchパッケージから control.launch.xml を呼び出します。tier4_control_component.launch.xml でコントロール起動引数を変更できます。さらに、tier4_control_component.launch.xml は他のコントロール起動ファイルの最上位起動ファイルとして機能するため、調整が必要なその他の必要な引数を追加できます。以下に、事前定義されたコントロール起動引数をいくつか示します。</p>
-<p>lateral_controller_mode:この引数は、ラテラル コントローラーのアルゴリズムを決定します。デフォルト値は ですmpc。純粋な追求に変更するには、ファイル内で次の更新を行いますtier4_control_component.launch.xml。</p>
-<ul>
-<li><arg name="lateral_controller_mode" default="mpc"></arg></li>
-<li><arg name="lateral_controller_mode" default="pure_pursuit"></arg>
-enable_autonomous_emergency_braking:この引数により、特定の状況下で自律的な緊急ブレーキが有効になります。詳細については、自動緊急ブレーキ (AEB) のページを参照してください。これを有効にするには、ファイル内の値を更新しますtier4_control_component.launch.xml。</li>
-</ul>
-<ul>
-<li><arg name="enable_autonomous_emergency_braking" default="false"></arg></li>
-<li><arg name="enable_autonomous_emergency_braking" default="true"></arg>
-enable_predicted_path_checker:この引数は、予測パス チェッカー モジュールを有効にします。詳細については、予測パス チェッカーのページを参照してください。これを有効にするには、ファイル内の値を更新しますtier4_control_component.launch.xml。</li>
-</ul>
-<ul>
-<li><arg name="enable_predicted_path_checker" default="false"></arg></li>
-<li><arg name="enable_predicted_path_checker" default="true"></arg></li>
-</ul>
-<div class="admonition 注記">
-<p class="admonition-title">注記</p>
-</div>
-<p>You can also use this arguments as command line arguments:
-</p><div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>autoware.launch.xml<span class="w"> </span>...<span class="w"> </span>enable_predicted_path_checker:<span class="o">=</span><span class="nb">true</span><span class="w"> </span>lateral_controller_mode:<span class="o">=</span>pure_pursuit<span class="w"> </span>...
-</code></pre></div>
-tier4_control_component.launch.xml の事前定義引数については上で説明しました。ただし、autoware_launch 制御構成パラメーターには、多数の制御引数が含まれています。
-<h1 id="control-launch-files">Control Launch Files<a class="headerlink" href="#control-launch-files" title="Permanent link">#</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<p>The Autoware control stacks start
-launching at <code>autoware_launch.xml</code> as mentioned on the <a href="../">Launch Autoware</a> page.
-The <code>autoware_launch</code> package includes <code>tier4_control_component.launch.xml</code>
-for initiating control launch files invocation from <code>autoware_launch.xml</code>.
-The diagram below illustrates the flow of Autoware control launch files within the autoware_launch and autoware.universe packages.</p>
+<div><h1 id="_1">起動ファイルの制御<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h2 id="_2">概要<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>Autoware コントロール スタックは、
+<a href="../">Autoware の起動</a>ページで説明されているように、<code>autoware_launch.xml</code>で起動を開始します。
+<code>autoware_launch</code>パッケージには、
+<code>autoware_launch.xml</code>からの制御起動ファイルの呼び出しを開始するための<code>tier4_control_component.launch.xml</code>が含まれています。
+以下の図は、autoware_launch および autoware.universe パッケージ内の Autoware コントロール起動ファイルのフローを示しています。</p>
 <figure>
 <p><img align="center" alt="control-launch-flow" src="images/control_launch_flow.svg">
   </p>
 <figcaption>
-    Autoware control launch flow diagram
+    Autoware コントロール起動フロー図
   </figcaption>
 </figure>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The Autoware project is a large project.
-Therefore, as we manage the Autoware project, we utilize specific
-arguments in the launch files.
-<abbr title="Robot Operating System">ROS</abbr> 2 offers an argument-overriding feature for these launch files.
-Please refer to <a href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html#parameter-overrides">the official <abbr title="Robot Operating System">ROS</abbr> 2 launch documentation</a> for further information.
-For instance,
-if we define an argument at the top-level launch,
-it will override the value on lower-level launches.</p>
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+<p>Autoware プロジェクトは大規模なプロジェクトです。
+したがって、Autoware プロジェクトを管理する際には、
+起動ファイル内の特定の引数を利用します。
+<abbr title="Robot Operating System">ROS</abbr> 2 は、これらの起動ファイルの引数をオーバーライドする機能を提供します。
+詳細については<a href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html#parameter-overrides">公式 <abbr title="Robot Operating System">ROS</abbr> 2 起動ドキュメント</a>を参照してください。
+例えば、
+トップレベルの起動時に引数を定義すると、
+下位レベルの起動時に値をオーバーライドします。</p>
 </div>
 <h2 id="tier4_control_componentlaunchxml">tier4_control_component.launch.xml<a class="headerlink" href="#tier4_control_componentlaunchxml" title="Permanent link">#</a></h2>
-<p>The tier4_control_component.launch.xml launch file is the main control component launch in the autoware_launch package.
-This launch file calls control.launch.xml from the <a href="https://github.com/autowarefoundation/autoware.universe/tree/main/launch/tier4_control_launch">tier4_control_launch</a> package
-within the autoware.universe repository.
-We can modify control launch arguments in tier4_control_component.launch.xml.
-Additionally,
-we can add any other necessary arguments
-that need adjustment since tier4_control_component.launch.xml serves as the top-level launch file for other control launch files.
-Here are some predefined control launch arguments:</p>
+<p>tier4_control_component.launch.xml 起動ファイルは、autoware_launch パッケージ内のメインの制御コンポーネント起動です。
+この起動ファイルは、autoware.universe リポジトリ内の<a href="https://github.com/autowarefoundation/autoware.universe/tree/main/launch/tier4_control_launch">tier4_control_launch</a>パッケージから
+control.launch.xmlを呼び出します。
+tier4_control_component.launch.xml でコントロール起動引数を変更できます。
+さらに
+tier4_control_component.launch.xml は他のコントロール起動ファイルの最上位起動ファイルとして機能するため、
+調整が必要なその他の必要な引数を追加できます。
+以下に、事前定義されたコントロール起動引数をいくつか示します:</p>
 <ul>
 <li>
-<p><strong><code>lateral_controller_mode:</code></strong> This argument determines
-  the lateral controller algorithm.
-  The default value is <code>mpc</code>.
-  To change it to pure pursuit,
-  make the following update in your <code>tier4_control_component.launch.xml</code> file:</p>
+<p><strong><code>lateral_controller_mode:</code></strong> この引数は、
+  ラテラル コントローラーのアルゴリズムを決定します。
+  デフォルト値は<code>mpc</code>です。
+  pure pursuitに変更するには、
+  <code>tier4_control_component.launch.xml</code>ファイル内で次の更新を行います:</p>
 <div class="highlight"><pre><span></span><code><span class="gd">- &lt;arg name="lateral_controller_mode" default="mpc"/&gt;</span>
 <span class="gi">+ &lt;arg name="lateral_controller_mode" default="pure_pursuit"/&gt;</span>
 </code></pre></div>
@@ -6679,11 +6640,11 @@ Here are some predefined control launch arguments:</p>
 </ul>
 <ul>
 <li>
-<p><strong><code>enable_autonomous_emergency_braking:</code></strong> This argument enables autonomous emergency
-  braking under specific conditions.
-  Please refer to the <a href="https://autowarefoundation.github.io/autoware.universe/main/control/autonomous_emergency_braking/">Autonomous emergency braking (AEB)</a> page for
-  more information.
-  To enable it, update the value in the <code>tier4_control_component.launch.xml</code> file:</p>
+<p><strong><code>enable_autonomous_emergency_braking:</code></strong> の引数により、
+  特定の状況下で自律的な緊急ブレーキが有効になります。
+  詳細については、<a href="https://autowarefoundation.github.io/autoware.universe/main/control/autonomous_emergency_braking/">自動緊急ブレーキ (AEB) </a>のページを
+  参照してください。.
+  これを有効にするには、<code>tier4_control_component.launch.xml</code>ファイル内の値を更新します:</p>
 <div class="highlight"><pre><span></span><code><span class="gd">- &lt;arg name="enable_autonomous_emergency_braking" default="false"/&gt;</span>
 <span class="gi">+ &lt;arg name="enable_autonomous_emergency_braking" default="true"/&gt;</span>
 </code></pre></div>
@@ -6691,23 +6652,23 @@ Here are some predefined control launch arguments:</p>
 </ul>
 <ul>
 <li>
-<p><strong><code>enable_predicted_path_checker:</code></strong> This argument enables the predicted path checker module.
-  Please refer to the <a href="https://autowarefoundation.github.io/autoware.universe/main/control/predicted_path_checker/">Predicted Path Checker</a> page for
-  more information.
-  To enable it, update the value in the <code>tier4_control_component.launch.xml</code> file:</p>
+<p><strong><code>enable_predicted_path_checker:</code></strong> この引数は、予測パス チェッカー モジュールを有効にします。
+  詳細については、<a href="https://autowarefoundation.github.io/autoware.universe/main/control/predicted_path_checker/">予測パス チェッカー</a>のページを
+  参照してください。
+  これを有効にするには、<code>tier4_control_component.launch.xml</code>ファイル内の値を更新します:</p>
 <div class="highlight"><pre><span></span><code><span class="gd">- &lt;arg name="enable_predicted_path_checker" default="false"/&gt;</span>
 <span class="gi">+ &lt;arg name="enable_predicted_path_checker" default="true"/&gt;</span>
 </code></pre></div>
 </li>
 </ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You can also use this arguments as command line arguments:
+<div class="admonition 注記">
+<p class="admonition-title">注記</p>
+<p>この引数をコマンドライン引数として使用することもできます:
 </p><div class="highlight"><pre><span></span><code>ros2<span class="w"> </span>launch<span class="w"> </span>autoware_launch<span class="w"> </span>autoware.launch.xml<span class="w"> </span>...<span class="w"> </span>enable_predicted_path_checker:<span class="o">=</span><span class="nb">true</span><span class="w"> </span>lateral_controller_mode:<span class="o">=</span>pure_pursuit<span class="w"> </span>...
 </code></pre></div>
 </div>
-<p>The predefined arguments in tier4_control_component.launch.xml have been explained above.
-However, numerous control arguments are included in the autoware_launch control config parameters.</p>
+<p>tier4_control_component.launch.xml の事前定義引数については上で説明しました。
+ただし、autoware_launch 制御構成パラメーターには、多数の制御引数が含まれています。</p>
 <!-- prettier-ignore --></div>
 
 
