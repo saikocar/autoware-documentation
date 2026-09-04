@@ -1,0 +1,24 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="-eLsT5M5MsxqVsXI705U">
+    <mxGraphModel dx="752" dy="671" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="RI455oHKn3sogozSJYw0-3" edge="1" parent="1" source="RI455oHKn3sogozSJYw0-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=oval;endFill=0;startArrow=classic;startFill=1;dashed=1;dashPattern=8 4 1 4;strokeWidth=4;" target="RI455oHKn3sogozSJYw0-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RI455oHKn3sogozSJYw0-4" connectable="0" parent="RI455oHKn3sogozSJYw0-3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="んｓｄんｆｊｓｆｄ" vertex="1">
+          <mxGeometry relative="1" x="0.0351" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RI455oHKn3sogozSJYw0-1" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="この部分" vertex="1">
+          <mxGeometry height="80" width="80" x="50" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="RI455oHKn3sogozSJYw0-2" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="" vertex="1">
+          <mxGeometry height="80" width="80" x="360" y="230" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
